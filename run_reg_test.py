@@ -30,8 +30,9 @@ logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO);
 def run_iverilog_for_rtl_file(rtl_file):
   status = 0
   include_dir = os.path.dirname(rtl_file)
-  cmd = "iverilog " + rtl_file + "-o " + rtl_file + ".o" + " -I " + include_dir
-  subprocess.run(cmd, shell=True, check=True) 
+  cmd = "iverilog " + rtl_file + " -o " + rtl_file + ".o" + " -y " + include_dir
+  process = subprocess.run(cmd, shell=True, check=True)
+  status = process.returncode
   return status
 
 #####################################################################
@@ -43,17 +44,14 @@ def test_rtl_list(file_db):
   space_limit = 80 # Maximum space tuned for the screen width
   for rtl in file_db.keys():
     # Find bitfile dirpath
-    output_file = os.path.dirname(file_db[rtl])
-    logging.info(file_db[rtl])
     # Create a space when logging
-    logging_space = "." * (space_limit - len(file_db(rtl)))
-    logging.info(logging_space)
-    status = run_iverilog_for_rtl_file(file_db[rtl])
+    logging_space = " " + "." * (space_limit - len(rtl) - 2) + " "
+    status = run_iverilog_for_rtl_file(rtl)
     num_failures = num_failures + status; 
-    if (status):
-      logging.info("[Pass]")
+    if (status == 0):
+      logging.info(rtl + logging_space + "[Pass]")
     else:
-      logging.info("[Fail]")
+      logging.info(rtl + logging_space + "[Fail]")
   return num_failures
 
 
@@ -65,7 +63,7 @@ def read_yaml_to_file_db(yaml_filename):
   with open(yaml_filename, 'r') as stream:
     try:
       file_db = yaml.load(stream, Loader=yaml.FullLoader)
-      logging.info("Found " + str(len(file_db)) + " files to compress")
+      logging.info("Found " + str(len(file_db)) + " files to test")
     except yaml.YAMLError as exc:
       logging.error(exc)
       exit(error_codes["FILE_ERROR"]);
@@ -96,7 +94,7 @@ if __name__ == '__main__':
   file_db = {}
 
   # Test all the files
-  read_yaml_to_file_db(file_db, args.file_list)
+  file_db = read_yaml_to_file_db(args.file_list)
   num_errors = 0
   num_errors = test_rtl_list(file_db)
   logging.info("Tested " + str(len(file_db)) + " benchmarks")

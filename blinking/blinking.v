@@ -8,7 +8,7 @@ module blinking(
 );
 
 input clk;
-output out;
+output reg out;
 
   always @(posedge clk) begin
     out = ~out;
