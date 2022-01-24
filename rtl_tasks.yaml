@@ -8,8 +8,6 @@ and2_pipelined/and2_pipelined.v:
 and4/and4.v:
 asyn_spram_4x1/asyn_spram_4x1.v:
 blinking/blinking.v:
-config_loader/bitstream_loader.v:
-config_loader/configuration_manager.v:
 dual_port_ram_16k/dual_port_ram_16k.v:
 dual_port_ram_1k/dual_port_ram_1k.v:
 or2/or2.v:
