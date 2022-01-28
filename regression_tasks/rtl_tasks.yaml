@@ -18,3 +18,9 @@ signal_gen/pulse_generator.v:
 signal_gen/reset_generator.v:
 syn_spram_4x1/syn_spram_4x1.v:
 test_mode_low/test_mode_low.v:
+counters/counter_128bit_async_reset/counter.v:
+counters/counter_128bit_async_resetb/counter.v:
+counters/counter_4bit_2clock/counter_4bit_2clock.v:
+counters/counter_8bit_async_reset/counter.v:
+counters/counter_8bit_async_resetb/counter.v:
+counters/counter_8bit_sync_reset/counter.v:
