@@ -1,9 +1,9 @@
-module counter_tb;
+module counter8_async_reset_tb;
 
   reg clk, reset;
-  wire [127:0] result;
+  wire [7:0] result;
 
-  counter DUT(
+  counter8_async_reset DUT(
     .clk(clk), 
     .reset(reset), 
     .result(result)

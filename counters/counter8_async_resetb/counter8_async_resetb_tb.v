@@ -1,17 +1,17 @@
-module counter_tb;
+module counter8_async_resetb_tb;
 
-  reg clk, reset;
+  reg clk, resetb;
   wire [7:0] result;
 
-  counter DUT(
+  counter8_async_resetb DUT(
     .clk(clk), 
-    .reset(reset), 
+    .resetb(resetb), 
     .result(result)
   );
   
   initial begin
-    #0 reset = 1'b1; clk = 1'b0;
-    #100 reset = 1'b0;
+    #0 resetb = 1'b0; clk = 1'b0;
+    #100 resetb = 1'b1;
   end
 
   always begin

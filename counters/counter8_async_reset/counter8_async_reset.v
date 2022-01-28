@@ -3,7 +3,7 @@
 //  Author:        Xifan Tang
 ////////////////////////////////////////
 
-module counter_8bit_async_reset (
+module counter8_async_reset (
 	clk,
 	reset,
 	result
