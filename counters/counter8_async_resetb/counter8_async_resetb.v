@@ -3,7 +3,7 @@
 //  Author:        Xifan Tang
 ////////////////////////////////////////
 
-module counter (
+module counter8_async_resetb (
 	clk,
 	resetb,
 	result

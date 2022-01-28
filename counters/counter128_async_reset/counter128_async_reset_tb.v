@@ -1,17 +1,17 @@
-module counter_tb;
+module counter128_async_reset_tb;
 
-  reg clk, resetb;
+  reg clk, reset;
   wire [127:0] result;
 
-  counter DUT(
+  counter128_async_reset DUT(
     .clk(clk), 
-    .resetb(resetb), 
+    .reset(reset), 
     .result(result)
   );
   
   initial begin
-    #0 reset = 1'b0; clk = 1'b0;
-    #100 reset = 1'b1;
+    #0 reset = 1'b1; clk = 1'b0;
+    #100 reset = 1'b0;
   end
 
   always begin

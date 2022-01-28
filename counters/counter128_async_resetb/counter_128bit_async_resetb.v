@@ -3,21 +3,21 @@
 //  Author:        Xifan Tang
 ////////////////////////////////////////
 
-module counter (
+module counter128_async_resetb (
 	clk,
-	reset,
+	resetb,
 	result
 );
 
 	input clk;
-	input reset;
-	output [7:0] result;
+	input resetb;
+	output [127:0] result;
 
-	reg [7:0] result;
+	reg [127:0] result;
 
-	always @(posedge clk or posedge reset)
+	always @(posedge clk or negedge resetb)
 	begin
-		if (reset) 
+		if (~resetb) 
 			result = 0;		
 		else 
 			result = result + 1;

@@ -1,9 +1,9 @@
-module counter_tb;
+module counter8_sync_reset_tb;
 
 	reg clk_counter, rst_counter;
 	wire [7:0] q_counter;
 
-	counter_original C_1(
+	counter8_sync_reset C_1(
 		clk_counter, 
 		q_counter, 
 		rst_counter);
