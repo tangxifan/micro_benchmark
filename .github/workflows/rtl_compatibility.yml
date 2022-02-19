@@ -60,7 +60,8 @@ jobs:
       golden_modified: ${{ steps.changes.outputs.status_code == 'true' }}
     strategy:
       fail-fast: false
-      benchmark_suite_name: ["simple_gates", "simple_registers", "dsp", "fsm", "interface", "processors", "ram"]
+      matrix:
+        benchmark_suite_name: ["simple_gates", "simple_registers", "dsp", "fsm", "interface", "processors", "ram"]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2.1.0
