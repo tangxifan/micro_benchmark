@@ -58,6 +58,9 @@ jobs:
     outputs:
       # this is output as string, see https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idoutputs
       golden_modified: ${{ steps.changes.outputs.status_code == 'true' }}
+    strategy:
+      fail-fast: false
+      benchmark_suite_name: ["simple_gates", "simple_registers", "dsp", "fsm", "interface", "processors", "ram"]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2.1.0
@@ -78,4 +81,4 @@ jobs:
       - name: Compile RTL code
         shell: bash
         run: |
-         make compile_rtl
+         make compile BENCHMARK_SUITE_NAME=${{ matrix.benchmark_suite_name }}
