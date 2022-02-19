@@ -1,0 +1,7 @@
+./asyn_spram_4x1/asyn_spram_4x1.v:
+./dual_port_ram_16k/dual_port_ram_16k.v:
+./dual_port_ram_1k/dual_port_ram_1k.v:
+./fifo/rtl/fifo.v:
+./fifo/rtl/sync_dual_port_ram.v:
+./pipelined_8bit_adder/pipelined_8bit_adder.v:
+./syn_spram_4x1/syn_spram_4x1.v:
