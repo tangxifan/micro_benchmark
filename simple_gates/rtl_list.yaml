@@ -1,0 +1,11 @@
+adder/adder_16/adder_16.v:
+adder/adder_4/adder_4.v:
+adder/adder_6/adder_6.v:
+adder/adder_8/adder_8.v:
+and2/and2.v:
+and2_latch/and2_latch.v:
+and2_latch_2clock/and2_latch_2clock.v:
+and2_or2/and2_or2.v:
+and2_pipelined/and2_pipelined.v:
+and4/and4.v:
+or2/or2.v:

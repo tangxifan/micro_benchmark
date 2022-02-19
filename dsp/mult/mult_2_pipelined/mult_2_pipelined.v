@@ -17,8 +17,9 @@ always @(posedge clk) begin
   a_reg <= a;
   b_reg <= b;
   out_reg <= a_reg * b_reg;
-  out = out_reg;
 end
+
+assign out = out_reg;
 
 endmodule
 
