@@ -44,8 +44,10 @@ def run_cocotb_for_rtl_file(rtl_file):
   include_dir = os.path.dirname(rtl_file)
   os.chdir(include_dir)
   cmd = "make"
-  process = subprocess.run(cmd, shell=True, check=True)
-  status = process.returncode
+  make_process = subprocess.Popen(cmd, stderr=subprocess.STDOUT)
+  status = error_codes["SUCCESS"]
+  if (make_process.wait()) != 0:
+    status = error_codes["ERROR"]
   os.chdir(curr_dir)
   return status
 
