@@ -1,4 +1,4 @@
-name: RTL Compatibility
+name: RTL Verification
 
 # Only run for pull requests as we care contribution to the master
 # - There are changes in RTL files
