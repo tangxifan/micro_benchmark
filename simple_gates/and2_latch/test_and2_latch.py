@@ -36,7 +36,7 @@ async def test_and2_latch(dut):
  
       await FallingEdge(dut.clk)
       expected_d = a & b
-      dut._log.info("d is %s", dut.c.value)
+      dut._log.info("d is %s", dut.d.value)
       dut._log.info("expected_d is %s", expected_d)
       assert dut.d.value == expected_d, "d does not match expected value!"
       dut._log.info("==== End Test case %d ====", test_id)
