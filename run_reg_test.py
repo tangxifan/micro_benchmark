@@ -41,7 +41,7 @@ def run_iverilog_for_rtl_file(rtl_file):
 def run_cocotb_for_rtl_file(rtl_file):
   status = 0
   include_dir = os.path.dirname(rtl_file)
-  cmd = "cd " + include_dir + " && make && cd " + os.get_cwd()
+  cmd = "cd " + include_dir + " && make && cd " + os.getcwd()
   process = subprocess.run(cmd, shell=True, check=True)
   status = process.returncode
   return status
@@ -116,7 +116,7 @@ if __name__ == '__main__':
   parser = argparse.ArgumentParser(description='Run regression tests for RTL benchmarks')
   parser.add_argument('--type',
                       required=True,
-                      help='Describe the type of test to run [compile|cocotb]')
+                      help='Describe the type of test to run [compile|cocotb_test]')
   parser.add_argument('--file_list',
                       required=True,
                       help='A file contains a list of RTL files to test')
@@ -131,7 +131,7 @@ if __name__ == '__main__':
   num_errors = 0
   if (args.type == "compile"):
     num_errors = test_rtl_list(file_db)
-  elif (args.type == "cocotb"):
+  elif (args.type == "cocotb_test"):
     num_errors += test_cocotb_rtl_list(file_db)
   else:
     logging.error("Unknown type of test")
