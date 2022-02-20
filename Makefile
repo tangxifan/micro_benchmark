@@ -17,7 +17,13 @@ rtl_list:
 compile:
 	echo "======== Test RTL compilation for ${BENCHMARK_SUITE_NAME} ========"; \
 	currDir=$${PWD} && cd ${BENCHMARK_SUITE_NAME} && \
-	${PYTHON_EXEC} ../run_reg_test.py --file ${RTL_LIST_YAML} && \
+	${PYTHON_EXEC} ../run_reg_test.py --type compile --file ${RTL_LIST_YAML} && \
+	cd $${currDir} \
+
+test:
+	echo "======== Test RTL compilation for ${BENCHMARK_SUITE_NAME} ========"; \
+	currDir=$${PWD} && cd ${BENCHMARK_SUITE_NAME} && \
+	${PYTHON_EXEC} ../run_reg_test.py --type test --file ${RTL_LIST_YAML} && \
 	cd $${currDir} \
 
 clean:
