@@ -36,6 +36,17 @@ def run_iverilog_for_rtl_file(rtl_file):
   return status
 
 #####################################################################
+# Run cocotb Makefile for a given RTL
+#####################################################################
+def run_cocotb_for_rtl_file(rtl_file):
+  status = 0
+  include_dir = os.path.dirname(rtl_file)
+  cmd = "cd " + include_dir + " && make && cd " + os.get_cwd()
+  process = subprocess.run(cmd, shell=True, check=True)
+  status = process.returncode
+  return status
+
+#####################################################################
 # For each RTL file in the list,
 # - compile with iVerilog
 #####################################################################
@@ -54,6 +65,24 @@ def test_rtl_list(file_db):
       logging.info(rtl + logging_space + "[Fail]")
   return num_failures
 
+#####################################################################
+# For each RTL file in the list,
+# - Run cocotb tests
+#####################################################################
+def test_cocotb_rtl_list(file_db):
+  num_failures = 0
+  space_limit = 80 # Maximum space tuned for the screen width
+  for rtl in file_db.keys():
+    # Find bitfile dirpath
+    # Create a space when logging
+    logging_space = " " + "." * (space_limit - len(rtl) - 2) + " "
+    status = run_cocotb_for_rtl_file(rtl)
+    num_failures = num_failures + status; 
+    if (status == 0):
+      logging.info(rtl + logging_space + "[Pass]")
+    else:
+      logging.info(rtl + logging_space + "[Fail]")
+  return num_failures
 
 #####################################################################
 # Read file database to a yaml file
@@ -85,6 +114,9 @@ if __name__ == '__main__':
 
   # Parse the options and apply sanity checks
   parser = argparse.ArgumentParser(description='Run regression tests for RTL benchmarks')
+  parser.add_argument('--type',
+                      required=True,
+                      help='Describe the type of test to run [compile|cocotb]')
   parser.add_argument('--file_list',
                       required=True,
                       help='A file contains a list of RTL files to test')
@@ -95,8 +127,16 @@ if __name__ == '__main__':
 
   # Test all the files
   file_db = read_yaml_to_file_db(args.file_list)
+
   num_errors = 0
-  num_errors = test_rtl_list(file_db)
+  if (args.type == "compile"):
+    num_errors = test_rtl_list(file_db)
+  elif (args.type == "cocotb"):
+    num_errors += test_cocotb_rtl_list(file_db)
+  else:
+    logging.error("Unknown type of test")
+    exit(error_codes["ERROR"])
+
   logging.info("Tested " + str(len(file_db)) + " benchmarks")
   logging.info("\tPassed " + str(len(file_db) - num_errors))
   logging.info("\tFailed " + str(num_errors))
@@ -104,3 +144,4 @@ if __name__ == '__main__':
     exit(error_codes["SUCCESS"])
   else:
     exit(error_codes["ERROR"])
+
