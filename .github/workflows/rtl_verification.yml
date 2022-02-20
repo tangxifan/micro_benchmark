@@ -48,7 +48,7 @@ jobs:
             echo "::set-output name=source_modified::true"
           fi
 
-  rtl_compilation:
+  rtl_verification:
     runs-on: ubuntu-latest
     defaults:
       run:
