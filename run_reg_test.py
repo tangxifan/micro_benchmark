@@ -9,6 +9,8 @@ import subprocess
 import tarfile
 import yaml
 import re
+import time
+from datetime import timedelta
 
 #####################################################################
 # Error codes
@@ -90,16 +92,23 @@ def test_cocotb_rtl_list(file_db):
   num_failures = 0
   space_limit = 80 # Maximum space tuned for the screen width
   for rtl in file_db.keys():
-    # Find bitfile dirpath
+    # Log runtime
+    start_time = time.time()
     # Create a space when logging
     logging_space = " " + "." * (space_limit - len(rtl) - 2) + " "
     status = run_cocotb_for_rtl_file(rtl)
     status = check_cocotb_results(rtl)
     num_failures = num_failures + status; 
+    end_time = time.time()
     if (status == 0):
       logging.info(rtl + logging_space + "[Pass]")
     else:
       logging.info(rtl + logging_space + "[Fail]")
+    # Show runtime
+    time_diff = timedelta(seconds=(end_time - start_time))
+    time_str = "took " + str(time_diff)
+    time_logging_space = "." * (space_limit - len(time_str) - 2) + " "
+    logging.info(time_logging_space + time_str)
   return num_failures
 
 #####################################################################
