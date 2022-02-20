@@ -27,4 +27,4 @@ cocotb_test:
 	cd $${currDir} \
 
 clean:
-	rm **/*.o
+	find . -name '*.o' -delete
