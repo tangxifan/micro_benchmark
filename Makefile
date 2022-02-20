@@ -21,7 +21,7 @@ compile:
 	cd $${currDir} \
 
 cocotb_test:
-	echo "======== Test RTL compilation for ${BENCHMARK_SUITE_NAME} ========"; \
+	echo "======== Run Cocotb tests for ${BENCHMARK_SUITE_NAME} ========"; \
 	currDir=$${PWD} && cd ${BENCHMARK_SUITE_NAME} && \
 	${PYTHON_EXEC} ../run_reg_test.py --type cocotb_test --file ${RTL_LIST_YAML} && \
 	cd $${currDir} \
