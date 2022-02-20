@@ -40,10 +40,13 @@ def run_iverilog_for_rtl_file(rtl_file):
 #####################################################################
 def run_cocotb_for_rtl_file(rtl_file):
   status = 0
+  curr_dir = os.getcwd()
   include_dir = os.path.dirname(rtl_file)
-  cmd = "cd " + include_dir + " && make && cd " + os.getcwd()
+  os.chdir(include_dir)
+  cmd = "make"
   process = subprocess.run(cmd, shell=True, check=True)
   status = process.returncode
+  os.chdir(curr_dir)
   return status
 
 #####################################################################
