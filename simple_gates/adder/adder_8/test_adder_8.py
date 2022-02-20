@@ -20,7 +20,7 @@ async def test_adder_8(dut):
     dut._log.info("======== BEGIN iteration %d ========", cycle)
     a = random.randint(0, pow(2, adder_size) - 1)
     b = random.randint(0, pow(2, adder_size) - 1)
-    cin = random.randint(0, 1)
+    cin = random.randint(0, 0)
     dut.a.value = BinaryValue(a, n_bits=adder_size).integer
     dut.b.value = BinaryValue(b, n_bits=adder_size).integer
     dut.cin.value = cin
