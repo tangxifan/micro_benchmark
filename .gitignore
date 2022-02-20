@@ -1,0 +1,19 @@
+# Mac OS temp files
+**/.DS_Store
+
+# iVerilog outputs
+**/*.o
+
+# Waveform files
+**/*.vcd
+
+# PDK file
+pdk/**
+
+# Cocotb outputs
+__pycache__
+sim_build
+results.xml
+
+# Sphinx documentation
+docs/build/

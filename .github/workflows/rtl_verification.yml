@@ -1,0 +1,88 @@
+name: RTL Verification
+
+# Only run for pull requests as we care contribution to the master
+# - There are changes in RTL files
+on:
+  pull_request:
+    path:
+      - ".github/**"
+      - "**/*.v"
+      - "**/*.py"
+      - "Makefile"
+  push:
+    branches:
+      - 'main'
+
+# Env variables for the runner
+env:
+  EDA_TOOL_PATH: /home/users/eda_tools/
+
+jobs:
+  detect_rtl_changes:
+    runs-on: ubuntu-latest
+    outputs:
+      source_modified: ${{ steps.git-diff-rtl.outputs.source_modified }}
+    steps:
+      - name: Cancel previous
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+
+      - name: Checkout code
+        uses: actions/checkout@v2.1.0
+
+      - name: Get Sub-modules
+        run: |
+          git submodule init
+          git submodule update --recursive
+
+      - name: Detect rtl changes
+        id: git-diff-rtl
+        run: |
+          git fetch
+          git diff origin/main HEAD --name-status -- ':**/*.v' ':.github/**' ':Makefile' ':**/.py'
+          if git diff origin/main HEAD --name-status --exit-code -- ':**/*.v' ':.github/**' ':Makefile' ':**/.py'; then
+            echo "::set-output name=source_modified::false"
+          else
+            echo "Detect changes in RTL. Require compilation check"
+            echo "::set-output name=source_modified::true"
+          fi
+
+  rtl_verification:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    needs: detect_rtl_changes
+    # Triggered when a pull request is a label of 'force_netlist_generation' or on main branch
+    if: needs.detect_rtl_changes.outputs.source_modified == 'true' || contains(github.event.pull_request.labels.*.name, 'force_rtl_verification') || github.ref == 'refs/heads/main'
+    outputs:
+      # this is output as string, see https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idoutputs
+      golden_modified: ${{ steps.changes.outputs.status_code == 'true' }}
+    strategy:
+      fail-fast: false
+      matrix:
+#        benchmark_suite_name: ["simple_gates", "simple_registers", "dsp", "fsm", "interface", "processors", "ram"]
+        benchmark_suite_name: ["simple_gates"]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2.1.0
+
+      - name: Get Sub-modules
+        run: |
+          git submodule init
+          git submodule update --recursive
+
+      - name: Install dependencies
+        run: |
+          bash .github/workflows/install_dependencies.sh
+          bash .github/workflows/install_python_packages.sh
+
+      - name: Echo third-party tool versions
+        run: |
+          iverilog -V
+
+      - name: Cocotb test
+        shell: bash
+        run: |
+         make cocotb_test BENCHMARK_SUITE_NAME=${{ matrix.benchmark_suite_name }}

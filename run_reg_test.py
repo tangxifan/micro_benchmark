@@ -9,6 +9,8 @@ import subprocess
 import tarfile
 import yaml
 import re
+import time
+from datetime import timedelta
 
 #####################################################################
 # Error codes
@@ -36,6 +38,34 @@ def run_iverilog_for_rtl_file(rtl_file):
   return status
 
 #####################################################################
+# Run cocotb Makefile for a given RTL
+#####################################################################
+def run_cocotb_for_rtl_file(rtl_file):
+  status = 0
+  curr_dir = os.getcwd()
+  include_dir = os.path.dirname(rtl_file)
+  os.chdir(include_dir)
+  cmd = "make"
+  make_process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+  status = error_codes["SUCCESS"]
+  if (make_process.wait()) != 0:
+    status = error_codes["ERROR"]
+  os.chdir(curr_dir)
+  return status
+
+#####################################################################
+# Check cocotb results file and report any failures captured
+#####################################################################
+def check_cocotb_results(rtl_file):
+  status = 0
+  include_dir = os.path.dirname(rtl_file)
+  result_f = open(include_dir + "/results.xml", "r")
+  for line in result_f:
+    if re.search("failure", line):
+      status += 1
+  return status
+
+#####################################################################
 # For each RTL file in the list,
 # - compile with iVerilog
 #####################################################################
@@ -43,17 +73,51 @@ def test_rtl_list(file_db):
   num_failures = 0
   space_limit = 80 # Maximum space tuned for the screen width
   for rtl in file_db.keys():
-    # Find bitfile dirpath
+    # Log runtime
+    start_time = time.time()
     # Create a space when logging
     logging_space = " " + "." * (space_limit - len(rtl) - 2) + " "
     status = run_iverilog_for_rtl_file(rtl)
     num_failures = num_failures + status; 
+    end_time = time.time()
     if (status == 0):
       logging.info(rtl + logging_space + "[Pass]")
     else:
       logging.info(rtl + logging_space + "[Fail]")
+    # Show runtime
+    time_diff = timedelta(seconds=(end_time - start_time))
+    time_str = "took " + str(time_diff)
+    time_logging_space = "." * (space_limit - len(time_str) - 2) + " "
+    logging.info(time_logging_space + time_str)
+
   return num_failures
 
+#####################################################################
+# For each RTL file in the list,
+# - Run cocotb tests
+#####################################################################
+def test_cocotb_rtl_list(file_db):
+  num_failures = 0
+  space_limit = 80 # Maximum space tuned for the screen width
+  for rtl in file_db.keys():
+    # Log runtime
+    start_time = time.time()
+    # Create a space when logging
+    logging_space = " " + "." * (space_limit - len(rtl) - 2) + " "
+    status = run_cocotb_for_rtl_file(rtl)
+    status = check_cocotb_results(rtl)
+    num_failures = num_failures + status; 
+    end_time = time.time()
+    if (status == 0):
+      logging.info(rtl + logging_space + "[Pass]")
+    else:
+      logging.info(rtl + logging_space + "[Fail]")
+    # Show runtime
+    time_diff = timedelta(seconds=(end_time - start_time))
+    time_str = "took " + str(time_diff)
+    time_logging_space = "." * (space_limit - len(time_str) - 2) + " "
+    logging.info(time_logging_space + time_str)
+  return num_failures
 
 #####################################################################
 # Read file database to a yaml file
@@ -85,6 +149,9 @@ if __name__ == '__main__':
 
   # Parse the options and apply sanity checks
   parser = argparse.ArgumentParser(description='Run regression tests for RTL benchmarks')
+  parser.add_argument('--type',
+                      required=True,
+                      help='Describe the type of test to run [compile|cocotb_test]')
   parser.add_argument('--file_list',
                       required=True,
                       help='A file contains a list of RTL files to test')
@@ -95,8 +162,16 @@ if __name__ == '__main__':
 
   # Test all the files
   file_db = read_yaml_to_file_db(args.file_list)
+
   num_errors = 0
-  num_errors = test_rtl_list(file_db)
+  if (args.type == "compile"):
+    num_errors = test_rtl_list(file_db)
+  elif (args.type == "cocotb_test"):
+    num_errors += test_cocotb_rtl_list(file_db)
+  else:
+    logging.error("Unknown type of test")
+    exit(error_codes["ERROR"])
+
   logging.info("Tested " + str(len(file_db)) + " benchmarks")
   logging.info("\tPassed " + str(len(file_db) - num_errors))
   logging.info("\tFailed " + str(num_errors))
@@ -104,3 +179,4 @@ if __name__ == '__main__':
     exit(error_codes["SUCCESS"])
   else:
     exit(error_codes["ERROR"])
+
