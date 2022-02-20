@@ -52,6 +52,18 @@ def run_cocotb_for_rtl_file(rtl_file):
   return status
 
 #####################################################################
+# Check cocotb results file and report any failures captured
+#####################################################################
+def check_cocotb_results(rtl_file):
+  status = 0
+  include_dir = os.path.dirname(rtl_file)
+  result_f = open(include_dir + "/results.xml", "r")
+  for line in result_f:
+    if re.search("failure", line):
+      status += 1
+  return status
+
+#####################################################################
 # For each RTL file in the list,
 # - compile with iVerilog
 #####################################################################
@@ -82,6 +94,7 @@ def test_cocotb_rtl_list(file_db):
     # Create a space when logging
     logging_space = " " + "." * (space_limit - len(rtl) - 2) + " "
     status = run_cocotb_for_rtl_file(rtl)
+    status = check_cocotb_results(rtl)
     num_failures = num_failures + status; 
     if (status == 0):
       logging.info(rtl + logging_space + "[Pass]")
