@@ -27,4 +27,9 @@ cocotb_test:
 	cd $${currDir} \
 
 clean:
+	echo "======== Remove all the iverilog outputs ========"; \
 	find . -name '*.o' -delete
+	echo "======== Remove all the cocotb tests ========"; \
+	find . -type f -name '__pycache__' -delete
+	find . -name 'results.xml' -delete
+	find . -type f -name 'sim_build' -delete
