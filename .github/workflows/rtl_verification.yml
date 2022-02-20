@@ -82,7 +82,7 @@ jobs:
         run: |
           iverilog -V
 
-      - name: Compile RTL code
+      - name: Cocotb test
         shell: bash
         run: |
          make cocotb_test BENCHMARK_SUITE_NAME=${{ matrix.benchmark_suite_name }}
