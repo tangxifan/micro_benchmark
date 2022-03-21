@@ -11,7 +11,7 @@ from cocotb.triggers import RisingEdge
 from cocotb.triggers import FallingEdge
 
 @cocotb.test()
-async def test_counter16(dut):
+async def test_down_counter16(dut):
 
 	################################################################
 	# Clock Generation
