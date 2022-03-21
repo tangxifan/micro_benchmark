@@ -63,7 +63,7 @@ jobs:
       fail-fast: false
       matrix:
 #        benchmark_suite_name: ["simple_gates", "simple_registers", "dsp", "fsm", "interface", "processors", "ram"]
-        benchmark_suite_name: ["simple_gates"]
+        benchmark_suite_name: ["simple_gates", "simple_registers"]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2.1.0
