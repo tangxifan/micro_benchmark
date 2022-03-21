@@ -13,6 +13,7 @@ pdk/**
 # Cocotb outputs
 __pycache__
 sim_build
+cocotb_sim.log
 results.xml
 
 # Sphinx documentation
