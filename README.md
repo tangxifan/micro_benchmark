@@ -6,6 +6,11 @@
 
 Version: see [`VERSION.md`](VERSION.md)
 
+## Documentation
+
+Full documentation can be found at [here](https://micro-benchmark.readthedocs.io/)
+## Benchmarks
+
 Benchmarks are categorized in the following directories, depending their logic functions:
 
 - dsp: Digital Signal Processing (DSP) -related applications
