@@ -26,17 +26,22 @@ build:
  - "*.make"
  - CMakeLists.txt
  - cmake
-IPs:
- - ips/**
-RTL:
- - rtl/**
-gate-level:
- - gl/**
-reports:
- - reports/**
-Scripts:
- - tcl_templates/**
- - utils/**
+rtl:
+ - simple_gates/**.v
+ - simple_registers/**.v
+ - dsp/**.v
+ - fsm/**.v
+ - interface/**.v
+ - processors/**.v
+ - ram/**.v
+cocotb:
+ - simple_gates/**.py
+ - simple_registers/**.py
+ - dsp/**.py
+ - fsm/**.py
+ - interface/**.py
+ - processors/**.py
+ - ram/**.py
 
 # Tag pull requests with the languages used to make it easy to see what is
 # being used.
