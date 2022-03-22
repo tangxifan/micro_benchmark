@@ -10,6 +10,8 @@
 
    ci
 
+   version_number
+
 .. toctree::
    :maxdepth: 2
 
