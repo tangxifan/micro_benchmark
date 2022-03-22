@@ -3,85 +3,43 @@
 Naming Convention
 =================
 
-Cell Names
-----------
+Counter Design Names
+--------------------
 
-.. note:: we refer to standard cell wrapper here. Wrappers are built to make netlists portable between PDKs as well as across standard cell libraries in a PDK.
+We recommend developers to follow the naming convention when adding any counter designs
 
-For code readability, the cell name should follow the convention
-::
-  <Cell_Function><Set_Features><Reset_Features><Output_Features><Drive_Strength>_<Wrapper>
+.. code-block::
 
-.. option:: Cell_Function
+   counter[down]<size>_[async|sync]_[set|reset|setb|resetb]
 
-  Name of logic function, e.g., AND2, XNOR3, etc.
-
-.. option:: Set_Features
-
-  This is mainly for sequential cells, e.g., D-type flip-flops. If a cell contains a set signal, its existence and polarity must be inferreable by the cell name. The available options are 
+.. option:: down 
   
-  - S: Asynchronous active-high set 
-  - SYNS: Synchronous active-hight set
-  - SN: Asynchronous active-low set
-  - SYNSN: Synchronous active-low set
+   represent a counting down counter
 
-  .. note:: For cells without set, this keyword should be empty
+.. option:: size
 
-.. option:: Reset_Features
+   size is an integer, indicating the number of bits for a counter
 
-  This is mainly for sequential cells, e.g., D-type flip-flops. If a cell contains a reset signal, its existence and polarity must be inferreable by the cell name. The available options are 
-  
-  - R: Asynchronous active-high reset 
-  - SYNR: Synchronous active-hight reset
-  - RN: Asynchronous active-low reset
-  - SYNRN: Synchronous active-low reset
+.. option:: [async|sync]
 
-  .. note:: For cells without reset, this keyword should be empty
+   represent the feature of reset and set signal
 
-.. option:: Output_Features
+.. option:: [setp|resetp|setn|resetn]
 
-  This is mainly for sequential cells, e.g., D-type flip-flops.
+   indicates the existence of reset/set signal as well as polarity.
+   In particular, suffix ``p`` denotes active-high signals while suffix ``n`` denotes active-low signals
 
-  - If not specified, the sequential cell contains a pair of differential outputs, e.g., ``Q`` and ``QN``
-  - If specified, the sequential cell only contains single output, e.g., ``Q`` 
+For instance,
 
-  The available options are
-  
-  - Q: single output which is positive
-  - QN: single ouput which is negative
+.. code-block::
 
-  .. note:: For cells without reset, this keyword should be empty
+    counterdown8_async_resetn
 
-.. option:: Drive_Strength
+shows a counter with the following features:
 
-  This is to specify the drive strength of a cell
-
-  - If not specified, we assume minimum drive strength, i.e., ``D0``.
-  - If specified, we expect a format of ``D<int>``, where the integer indicates the drive strength
-
-.. option:: Wrapper
-
-  This is to specify if the cell is a wrapper of an existing standard cell
-
-  - If not specified, we assume this cell contains RTL
-  - If specified, we assume this cell is a wrapper of an existing standard cell
-
-A quick example
-::
-  NAND2D4_WRAPPER
-
-represents a wrapper for a standard cell that is a 2-input NAND gate with a drive strength of 4
-
-Another example
-::
-  SDFFSSYNRNQ
-
-represents a scan-chain flip-flop which contains
- 
-  - Asynchronous active-high set
-  - Synchronous active-low reset
-  - Single output
-
+- counting down
+- 8-bit in width
+- Asynchronous active-low reset
 
 Pin Names
 ---------
