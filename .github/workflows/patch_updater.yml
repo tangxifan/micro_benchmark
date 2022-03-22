@@ -27,7 +27,6 @@ jobs:
         run: echo "::set-output name=message::$GITHUB_REPOSITORY"
 
       - name: Insert Patch Count
-          pr_assignee: $${ github.actor }}                  # Comma-separated list (no spaces)
         if: "!contains(steps.log.outputs.message, 'Updated Patch Count') && contains(steps.repo.outputs.message, 'tangxifan/micro_benchmark')"
         run: |
           sed -i "s/[0-9]*$/`git log ${TAG_COMMIT}  --oneline | wc -l`/" ${VERSION_FILE}
