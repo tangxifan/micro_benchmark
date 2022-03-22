@@ -6,7 +6,7 @@ Version Number
 Convention
 ----------
 
-OpenFPGA follows the `semantic versioning <www.semver.org>`_, where the version number is in the form of
+This project follows the `semantic versioning <www.semver.org>`_, where the version number is in the form of
 
 .. code-block::
 
