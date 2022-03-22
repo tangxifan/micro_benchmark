@@ -2,6 +2,7 @@
 
 [![RTL Compatibility](https://github.com/tangxifan/micro_benchmark/actions/workflows/rtl_compatibility.yml/badge.svg)](https://github.com/tangxifan/micro_benchmark/actions/workflows/rtl_compatibility.yml)
 [![RTL Verification](https://github.com/tangxifan/micro_benchmark/actions/workflows/rtl_verification.yml/badge.svg)](https://github.com/tangxifan/micro_benchmark/actions/workflows/rtl_verification.yml)
+[![Documentation Status](https://readthedocs.org/projects/micro-benchmark/badge/?version=latest)](https://micro-benchmark.readthedocs.io/en/latest/?badge=latest)
 
 Version: see [`VERSION.md`](VERSION.md)
 
