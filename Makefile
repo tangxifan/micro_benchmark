@@ -11,6 +11,13 @@ RTL_LIST_YAML = rtl_list.yaml
 
 .SILENT:
 
+# Put it first so that "make" without argument is like "make help".
+export COMMENT_EXTRACT
+
+# Put it first so that "make" without argument is like "make help".
+help:
+	@${PYTHON_EXEC} -c "$$COMMENT_EXTRACT"
+
 rtl_list:
 # This command generates a list of RTL designs under a given specific benchmark suite name
 # This list is used by regression test script as an input file
@@ -45,3 +52,13 @@ clean:
 	find . -name 'results.xml' -delete
 	find . -name 'cocotb_sim.log' -delete
 	find . -type f -name 'sim_build' -delete
+
+# Functions to extract comments from Makefiles
+define COMMENT_EXTRACT
+import re
+with open ('Makefile', 'r' ) as f:
+    matches = re.finditer('^([a-zA-Z-_]*):.*\n#(.*)', f.read(), flags=re.M)
+    for _, match in enumerate(matches, start=1):
+        header, content = match[1], match[2]
+        print(f"  {header:10} {content}")
+endef
