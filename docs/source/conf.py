@@ -34,7 +34,7 @@ import sphinxcontrib.bibtex
 
 # -- Project information -----------------------------------------------------
 
-project = u'TSMC22ULP MPW 2022/04'
+project = u'Micro Benchmark for FPGA'
 copyright = u'2022 Xifan Tang'
 author = u'Xifan Tang'
 
@@ -136,10 +136,10 @@ bibtex_bibfiles =['appendix/z_reference.bib']
 # a list of builtin themes.
 #
 #html_theme = 'alabaster'
-#html_theme = 'sphinx_rtd_theme'
+html_theme = 'sphinx_rtd_theme'
 #html_theme = 'bizstyle'
 #html_theme = 'sphinx_book_theme'
-html_theme = 'furo'
+#html_theme = 'furo'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -178,7 +178,7 @@ def setup(app):
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'tsmc22ulp_mpw_2204_doc'
+htmlhelp_basename = 'micro_benchmark_doc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -205,7 +205,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'tsmc22ulp_mpw_2204.tex', u'TSMC 22nm ULP MPW 2022/04 Documentation',
+    (master_doc, 'micro_benchmark.tex', u'Micro Benchmark Documentation',
      u'Xifan Tang', 'manual'),
 ]
 
@@ -215,7 +215,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'tsmc22ulp_mpw_2204', u'TSMC 22nm ULP MPW 2022/04 Documentation',
+    (master_doc, 'micro_benchmark', u'Micro Benchmark Documentation',
      [author], 1)
 ]
 
@@ -226,8 +226,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'tsmc22ulp_mpw_2204', u'TSMC 22nm ULP MPW 2022/04 Documentation',
-     author, 'tsmc22ulp_mpw_2204', 'One line description of project.',
+    (master_doc, 'micro_benchmark', u'Micro Benchmark Documentation',
+     author, 'micro_benchmark', 'One line description of project.',
      'Miscellaneous'),
 ]
 
