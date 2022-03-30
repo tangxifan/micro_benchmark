@@ -31,7 +31,7 @@ async def test_counterup16_1clk_posedge_sync_resetn(dut):
   rst_counter_rand = random.randint(0, num_cycles*test_cases)
 
   dut.reset.value = assert_rst
-  await ClockCycles(dut.clock0, 2)
+  await ClockCycles(dut.clock0, 4)
 
   dut._log.info("Reset Test0:: count is %d", dut.count.value)
   dut._log.info("Reset Test0:: expected_count is %d", expected_count)
