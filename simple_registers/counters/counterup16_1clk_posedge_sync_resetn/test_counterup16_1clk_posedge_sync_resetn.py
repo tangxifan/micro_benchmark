@@ -21,14 +21,14 @@ async def test_counterup16_1clk_posedge_sync_resetn(dut):
   ################################################################
 
   # Test all the cases
-  test_cases = 4
+  test_cases = 1
   COUNTER_SIZE = 16
   num_cycles = pow(2, COUNTER_SIZE)
   COUNTER_MAX_VAL = num_cycles - 1 
   assert_rst = 0
   deassert_rst = 1
   expected_count = 0
-  rst_counter_rand = random.randint(0, num_cycles*test_cases)
+  rst_counter_rand = random.randint(0, int((num_cycles*test_cases)/COUNTER_SIZE))
 
   dut.reset.value = assert_rst
   await ClockCycles(dut.clock0, 4)
@@ -40,7 +40,7 @@ async def test_counterup16_1clk_posedge_sync_resetn(dut):
   await FallingEdge(dut.clock0)
   dut.reset.value = deassert_rst
 
-  for cycle in range(num_cycles*test_cases):
+  for cycle in range(int((num_cycles*test_cases)/COUNTER_SIZE)): # Divided by COUNTER_SIZE just to reduce runtime
     if cycle == rst_counter_rand:
       dut.reset.value = assert_rst
       dut._log.info("Reset Test1:: Driving reset randomly!")

@@ -21,14 +21,14 @@ async def test_counterdown16_1clk_posedge_async_resetn(dut):
   ################################################################
   
   # Test all the cases
-  test_cases = 4
+  test_cases = 1
   COUNTER_SIZE = 16
   num_cycles = pow(2, COUNTER_SIZE)
   COUNTER_MIN_VAL = 0 
   assert_rst = 0
   deassert_rst = 1
   expected_count = 0Xffff
-  rst_counter_rand = random.randint(0, num_cycles*test_cases)
+  rst_counter_rand = random.randint(0, int((num_cycles*test_cases)/COUNTER_SIZE))
   
   dut.reset.value = assert_rst
   await ClockCycles(dut.clock0, 2)
@@ -52,7 +52,7 @@ async def test_counterdown16_1clk_posedge_async_resetn(dut):
   dut.reset.value = deassert_rst
   await FallingEdge(dut.clock0)
   
-  for cycle in range(num_cycles*test_cases):
+  for cycle in range(int((num_cycles*test_cases)/COUNTER_SIZE)): # Divided by COUNTER_SIZE just to reduce runtime
     if cycle == rst_counter_rand:
       dut.reset.value = assert_rst
       dut._log.info("Reset Test2:: Driving reset randomly!")
