@@ -10,6 +10,54 @@ from cocotb.triggers import Timer, ClockCycles
 from cocotb.triggers import RisingEdge
 from cocotb.triggers import FallingEdge
 
+async def reset_dut(reset, active_high, delay_ns, duration_ns):
+  ASSERT_RST = 0
+  DEASSERT_RST = 1
+  if (active_high):
+    ASSERT_RST = 1
+    DEASSERT_RST = 0
+  # Wait sometime to start if required
+  if (delay_ns > 0):
+    reset.value = DEASSERT_RST
+    await Timer(delay_ns, units='ns')
+  reset.value = ASSERT_RST
+  await Timer(duration_ns, units='ns')
+  reset.value = DEASSERT_RST
+  reset._log.debug("Reset complete")
+
+# Counter test
+async def counter(dut, clk, cnt, msg):
+  # Test all the cases
+  test_cases = 1
+  COUNTER_SIZE = 16
+  num_cycles = pow(2, COUNTER_SIZE)
+  COUNTER_MIN_VAL = 0 
+  assert_rst = 0
+  deassert_rst = 1
+  expected_count = 0Xffff
+  
+  dut._log.info("Reset Test0:: %s is %d", msg, cnt.value)
+  dut._log.info("Reset Test0:: expected_count is %d", expected_count)
+  assert cnt.value == expected_count, msg + "does not match expected value!"
+  
+  for cycle in range(int((num_cycles*test_cases)/COUNTER_SIZE)): # Divided by COUNTER_SIZE just to reduce runtime 
+    await RisingEdge(clk)
+    if expected_count == COUNTER_MIN_VAL or dut.reset.value == assert_rst:
+      expected_count = 0Xffff
+      if dut.reset.value == assert_rst:
+        dut._log.info("Reset Test1:: Reset in Middle!")
+    else:
+      expected_count -= 1
+      
+    await FallingEdge(clk)
+    if dut.reset.value == assert_rst:
+      dut._log.info("Reset Test1:: Reset in Middle!")
+      expected_count = 0Xffff
+
+    dut._log.info("%s is %d",msg,cnt.value)
+    dut._log.info("expected_count is %d", expected_count)
+    assert cnt.value == expected_count, msg + " does not match expected value!"
+
 @cocotb.test()
 async def test_counterdown16_4clk_posedge_async_resetn(dut):
 
@@ -23,220 +71,18 @@ async def test_counterdown16_4clk_posedge_async_resetn(dut):
   cocotb.start_soon(Clock(dut.clock2, CLK2_PERIOD, units="ns").start())
   CLK3_PERIOD = 40 # [ns]
   cocotb.start_soon(Clock(dut.clock3, CLK3_PERIOD, units="ns").start())
+  max_clock = max(CLK3_PERIOD,CLK2_PERIOD,CLK1_PERIOD,CLK0_PERIOD)
+  
+  await cocotb.start_soon(reset_dut(dut.reset, False, 0, 1))
+  rst_in_middle_thread = cocotb.start_soon(reset_dut(dut.reset, False, 8000, max_clock))
 
-  ################################################################
-  
-  # Counter0 test
-  ################################################################
-  
-  # Test all the cases
-  test_cases = 2
-  COUNTER_SIZE = 16
-  num_cycles = pow(2, COUNTER_SIZE)
-  COUNTER_MIN_VAL = 0 
-  assert_rst = 0
-  deassert_rst = 1
-  expected_count = 0Xffff
-  rst_counter_rand = random.randint(0, num_cycles*test_cases)
-  
-  dut.reset.value = assert_rst
-  await ClockCycles(dut.clock0, 2)
-  
-  await RisingEdge(dut.clock0)
-  dut.reset.value = deassert_rst
-  
-  await FallingEdge(dut.clock0)
-  dut._log.info("Reset Test0:: count0 is %d", dut.cnt0_16.value)
-  dut._log.info("Reset Test0:: expected_count is %d", expected_count)
-  assert dut.cnt0_16.value == expected_count, "count0 does not match expected value!"
+  counter_thread0 = cocotb.start_soon(counter(dut, dut.clock0, dut.cnt0_16, "count0"))
+  counter_thread1 = cocotb.start_soon(counter(dut, dut.clock1, dut.cnt1_16, "count1"))
+  counter_thread2 = cocotb.start_soon(counter(dut, dut.clock2, dut.cnt2_16, "count2"))
+  counter_thread3 = cocotb.start_soon(counter(dut, dut.clock3, dut.cnt3_16, "count3"))
 
-  await ClockCycles(dut.clock0, 20)
-  await RisingEdge(dut.clock0)
-  dut.reset.value = assert_rst
-  await FallingEdge(dut.clock0)
-  dut._log.info("Reset Test1:: count0 is %d", dut.cnt0_16.value)
-  dut._log.info("Reset Test1:: expected_count is %d", expected_count)
-  assert dut.cnt0_16.value == expected_count, "count0 does not match expected value!"
-  await RisingEdge(dut.clock0)
-  dut.reset.value = deassert_rst
-  await FallingEdge(dut.clock0)
-  
-  for cycle in range(num_cycles*test_cases):
-    if cycle == rst_counter_rand:
-      dut.reset.value = assert_rst
-      dut._log.info("Reset Test2:: Driving reset randomly!")
-    else:
-      dut.reset.value = deassert_rst
-      
-    await RisingEdge(dut.clock0)
-    if expected_count == COUNTER_MIN_VAL or dut.reset.value == assert_rst:
-      expected_count = 0Xffff
-    else:
-      expected_count -= 1
-      
-    await FallingEdge(dut.clock0)
-    dut._log.info("count0 is %d", dut.cnt0_16.value)
-    dut._log.info("expected_count is %d", expected_count)
-    assert dut.cnt0_16.value == expected_count, "count0 does not match expected value!"
-
-  ################################################################
-  
-  # Counter1 test
-  ################################################################
-  
-  test_cases = 2
-  COUNTER_SIZE = 16
-  num_cycles = pow(2, COUNTER_SIZE)
-  COUNTER_MIN_VAL = 0 
-  assert_rst = 0
-  deassert_rst = 1
-  expected_count = 0Xffff
-  rst_counter_rand = random.randint(0, num_cycles*test_cases)
-  
-  dut.reset.value = assert_rst
-  await ClockCycles(dut.clock1, 2)
-  
-  await RisingEdge(dut.clock1)
-  dut.reset.value = deassert_rst
-  
-  await FallingEdge(dut.clock1)
-  dut._log.info("Reset Test0:: count1 is %d", dut.cnt1_16.value)
-  dut._log.info("Reset Test0:: expected_count1 is %d", expected_count)
-  assert dut.cnt1_16.value == expected_count, "count1 does not match expected value!"
-
-  await ClockCycles(dut.clock1, 20)
-  await RisingEdge(dut.clock1)
-  dut.reset.value = assert_rst
-  await FallingEdge(dut.clock1)
-  dut._log.info("Reset Test1:: count1 is %d", dut.cnt1_16.value)
-  dut._log.info("Reset Test1:: expected_count1 is %d", expected_count)
-  assert dut.cnt1_16.value == expected_count, "count1 does not match expected value!"
-  await RisingEdge(dut.clock1)
-  dut.reset.value = deassert_rst
-  await FallingEdge(dut.clock1)
-  
-  for cycle in range(num_cycles*test_cases):
-    if cycle == rst_counter_rand:
-      dut.reset.value = assert_rst
-      dut._log.info("Reset Test2:: Driving reset randomly!")
-    else:
-      dut.reset.value = deassert_rst
-      
-    await RisingEdge(dut.clock1)
-    if expected_count == COUNTER_MIN_VAL or dut.reset.value == assert_rst:
-      expected_count = 0Xffff
-    else:
-      expected_count -= 1
-      
-    await FallingEdge(dut.clock1)
-    dut._log.info("count1 is %d", dut.cnt1_16.value)
-    dut._log.info("expected_count1 is %d", expected_count)
-    assert dut.cnt1_16.value == expected_count, "count1 does not match expected value!"
-
-  ################################################################
-  
-  # Counter2 test
-  ################################################################
-  
-  test_cases = 2
-  COUNTER_SIZE = 16
-  num_cycles = pow(2, COUNTER_SIZE)
-  COUNTER_MIN_VAL = 0 
-  assert_rst = 0
-  deassert_rst = 1
-  expected_count = 0Xffff
-  rst_counter_rand = random.randint(0, num_cycles*test_cases)
-  
-  dut.reset.value = assert_rst
-  await ClockCycles(dut.clock2, 2)
-  
-  await RisingEdge(dut.clock2)
-  dut.reset.value = deassert_rst
-  
-  await FallingEdge(dut.clock2)
-  dut._log.info("Reset Test0:: count2 is %d", dut.cnt2_16.value)
-  dut._log.info("Reset Test0:: expected_count2 is %d", expected_count)
-  assert dut.cnt2_16.value == expected_count, "count2 does not match expected value!"
-
-  await ClockCycles(dut.clock2, 20)
-  await RisingEdge(dut.clock2)
-  dut.reset.value = assert_rst
-  await FallingEdge(dut.clock2)
-  dut._log.info("Reset Test1:: count2 is %d", dut.cnt2_16.value)
-  dut._log.info("Reset Test1:: expected_count2 is %d", expected_count)
-  assert dut.cnt2_16.value == expected_count, "count2 does not match expected value!"
-  await RisingEdge(dut.clock2)
-  dut.reset.value = deassert_rst
-  await FallingEdge(dut.clock2)
-  
-  for cycle in range(num_cycles*test_cases):
-    if cycle == rst_counter_rand:
-      dut.reset.value = assert_rst
-      dut._log.info("Reset Test2:: Driving reset randomly!")
-    else:
-      dut.reset.value = deassert_rst
-      
-    await RisingEdge(dut.clock2)
-    if expected_count == COUNTER_MIN_VAL or dut.reset.value == assert_rst:
-      expected_count = 0Xffff
-    else:
-      expected_count -= 1
-      
-    await FallingEdge(dut.clock2)
-    dut._log.info("count2 is %d", dut.cnt2_16.value)
-    dut._log.info("expected_count2 is %d", expected_count)
-    assert dut.cnt2_16.value == expected_count, "count2 does not match expected value!"
-
-  ################################################################
-  
-  # Counter3 test
-  ################################################################
-  
-  test_cases = 2
-  COUNTER_SIZE = 16
-  num_cycles = pow(2, COUNTER_SIZE)
-  COUNTER_MIN_VAL = 0 
-  assert_rst = 0
-  deassert_rst = 1
-  expected_count = 0Xffff
-  rst_counter_rand = random.randint(0, num_cycles*test_cases)
-  
-  dut.reset.value = assert_rst
-  await ClockCycles(dut.clock3, 2)
-  
-  await RisingEdge(dut.clock3)
-  dut.reset.value = deassert_rst
-  
-  await FallingEdge(dut.clock3)
-  dut._log.info("Reset Test0:: count3 is %d", dut.cnt3_16.value)
-  dut._log.info("Reset Test0:: expected_count3 is %d", expected_count)
-  assert dut.cnt3_16.value == expected_count, "count3 does not match expected value!"
-
-  await ClockCycles(dut.clock3, 20)
-  await RisingEdge(dut.clock3)
-  dut.reset.value = assert_rst
-  await FallingEdge(dut.clock3)
-  dut._log.info("Reset Test1:: count3 is %d", dut.cnt3_16.value)
-  dut._log.info("Reset Test1:: expected_count3 is %d", expected_count)
-  assert dut.cnt3_16.value == expected_count, "count3 does not match expected value!"
-  await RisingEdge(dut.clock3)
-  dut.reset.value = deassert_rst
-  await FallingEdge(dut.clock3)
-  
-  for cycle in range(num_cycles*test_cases):
-    if cycle == rst_counter_rand:
-      dut.reset.value = assert_rst
-      dut._log.info("Reset Test2:: Driving reset randomly!")
-    else:
-      dut.reset.value = deassert_rst
-      
-    await RisingEdge(dut.clock3)
-    if expected_count == COUNTER_MIN_VAL or dut.reset.value == assert_rst:
-      expected_count = 0Xffff
-    else:
-      expected_count -= 1
-      
-    await FallingEdge(dut.clock3)
-    dut._log.info("count3 is %d", dut.cnt3_16.value)
-    dut._log.info("expected_count3 is %d", expected_count)
-    assert dut.cnt3_16.value == expected_count, "count3 does not match expected value!"
+  # Wait to finish all the threads
+  await counter_thread3
+  await counter_thread2
+  await counter_thread1
+  await counter_thread0
