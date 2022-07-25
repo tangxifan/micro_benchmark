@@ -13,6 +13,7 @@
 #./counters/counter8_sync_reset/counter8_sync_reset.v:
 #./counters/counter8_sync_reset/counter8_sync_reset_tb.v:
 ./counters/counterup16_1clk_posedge_async_resetp/counterup16_1clk_posedge_async_resetp.v:
+./counters/counterdown16_1clk_negedge_async_resetp/counterdown16_1clk_negedge_async_resetp.v:
 ./counters/counterdown16_1clk_posedge_async_resetp/counterdown16_1clk_posedge_async_resetp.v:
 ./counters/counterup16_1clk_posedge_async_resetn/counterup16_1clk_posedge_async_resetn.v:
 #./counters/counter128_async_resetb/counter128_async_resetb_tb.v:
@@ -26,3 +27,4 @@
 #./signal_gen/pulse_generator.v:
 #./signal_gen/clock_divider.v:
 #./blinking/blinking.v:
+./ff/dffnr/dffnr.v:
