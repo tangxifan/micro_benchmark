@@ -3,3 +3,5 @@
 ./FSM_three_code/FSM_second.v:
 ./FSM_three_code/FSM_three_tb.v:
 ./FSM_three_code/FSM_top.v:
+./scalable_seq_detector/scalable_seq_detector.v:
+
