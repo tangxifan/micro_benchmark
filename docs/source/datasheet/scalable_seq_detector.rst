@@ -8,10 +8,7 @@ Scalable Sequence Detector
 
 Introduction
 ~~~~~~~~~~~~~
-
-Each Logic Block (CLB) consists of 12 Logic Elements (LEs) as shown in :numref:`fig_clb_arch`.
-All the pins of the LEs are directly wired to CLB pins without a local routing architecture.
-Feedback connections between LEs are implemented by the global routing architecture outside the CLBs.
+This benchmark is to detect any sequence of length equal to 2^STATE_BITS. This is a finite state machine based on moore model. All output signals/msgs depends only on current state of machine. The design is scalable, STATE_BITS defines the number of states, the hardware shall be generated based on STATE_BITS. Also, the sequence needs to be passed to DUT as a bus signal, while the x inputs takes sequence bit by bit for detection and msgs are shown on output signals. 
 
 .. _fig_scalable_seq_detector:
 
@@ -26,3 +23,7 @@ Scalable Sequence Detector schematic
 
 Performance
 ~~~~~~~~~~~~~
+.. figure:: ./figures/scalable_seq_detector_synthesis_report.svg
+  :width: 100%
+  :alt: Scalable Sequence Detector schematic
+Scalable Sequence Detector schematic
