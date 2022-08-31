@@ -23,7 +23,7 @@ Scalable Sequence Detector schematic
 
 Performance
 ~~~~~~~~~~~~~
-.. figure:: ./figures/scalable_seq_detector_synthesis_report.svg
+.. figure:: ./figures/scalable_seq_detector_synthesis_report.png
   :width: 100%
   :alt: Scalable Sequence Detector schematic
 Scalable Sequence Detector schematic
