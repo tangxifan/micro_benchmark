@@ -34,6 +34,7 @@ async def test_counterdown16_1clk_posedge_async_resetn(dut):
   await ClockCycles(dut.clock0, 2)
   
   await RisingEdge(dut.clock0)
+  await Timer(1, units="ns")
   dut.reset.value = deassert_rst
   
   await FallingEdge(dut.clock0)
@@ -49,6 +50,7 @@ async def test_counterdown16_1clk_posedge_async_resetn(dut):
   dut._log.info("Reset Test1:: expected_count is %d", expected_count)
   assert dut.count.value == expected_count, "count does not match expected value!"
   await RisingEdge(dut.clock0)
+  await Timer(1, units="ns")
   dut.reset.value = deassert_rst
   await FallingEdge(dut.clock0)
   
