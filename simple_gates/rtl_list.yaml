@@ -8,4 +8,4 @@ and2_latch_2clock/and2_latch_2clock.v:
 and2_or2/and2_or2.v:
 and2_pipelined/and2_pipelined.v:
 and4/and4.v:
-or2/or2.v:
+#or2/or2.v:
