@@ -27,4 +27,4 @@
 #./signal_gen/pulse_generator.v:
 #./signal_gen/clock_divider.v:
 #./blinking/blinking.v:
-./ff/dffnr/dffnr.v:
+#./ff/dffnr/dffnr.v:
