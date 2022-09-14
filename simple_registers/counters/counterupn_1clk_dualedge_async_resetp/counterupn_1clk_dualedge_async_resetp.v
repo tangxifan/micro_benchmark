@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
+// Company: Rapid Silicon
 // Engineer: M Usman Kiani
 // 
 // Create Date: 09/07/2022 03:03:52 PM
