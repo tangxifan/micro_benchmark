@@ -45,11 +45,5 @@ module counterupn_1clk_dualedge_async_resetp(clk, q_counter, rst_counter);
         end
 
     assign q_counter = q_counter1 + q_counter2;
-
-    initial begin
-        $dumpfile("wave.vcd");
-        $dumpvars(0, counterupn_1clk_dualedge_async_resetp);
-
-    end
     
 endmodule
