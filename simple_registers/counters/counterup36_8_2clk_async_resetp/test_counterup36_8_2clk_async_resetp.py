@@ -98,13 +98,21 @@ async def test_counterup36_8_2clk_async_resetp(dut):
     dut._log.info("expected value of counter16 in binary %s", expected_out_str2)
    
     #dut._log.info("Direct value dut %s",dut.count_w.value)
-    counter16_str = BinaryValue(dut.count_w.value.value,n_bits=36, bigEndian=False).binstr
-    dut._log.info("Binary check dut %s",counter16_str)
+    counter16_str = BinaryValue(dut.out1.value.value,n_bits=2772, bigEndian=False).binstr
+    #dut._log.info("Binary check dut %s",counter16_str)
     
-    print(counter16_str[28:36])
-    print(counter16_str[16:28])    
-    print(counter16_str[0:16]) 
+    #print(counter16_str[28:36])
+    #print(counter16_str[16:28])    
+    #print(counter16_str[0:16]) 
+#
+    #assert counter16_str[0:16] == expected_out_str2, "counter 16 bit does not match expected value!"        
+    #assert counter16_str[16:28] == expected_out_str1, "counter 12 bit does not match expected value!"
+    #assert counter16_str[28:36] == expected_out_str0, "counter 8 bit does not match expected value!"
+  
+  ins = 76
 
-    assert counter16_str[28:36] == expected_out_str0, "counter 8 bit does not match expected value!"
-    assert counter16_str[16:28] == expected_out_str1, "counter 12 bit does not match expected value!"
-    assert counter16_str[0:16] == expected_out_str2, "counter 16 bit does not match expected value!"        
+  for cycle in range(ins): # Divided by COUNTER_SIZE just to reduce runtime
+
+    assert counter16_str[ (ins*36):((ins*36)+16) ] == expected_out_str2, "counter 16 bit does not match expected value!"        
+    assert counter16_str[((ins*36)+16) : ((ins*36)+28)] == expected_out_str1, "counter 12 bit does not match expected value!"
+    assert counter16_str[((ins*36)+28):((ins*36)+36)] == expected_out_str0, "counter 8 bit does not match expected value!"
