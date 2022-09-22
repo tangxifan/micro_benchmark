@@ -1,3 +1,4 @@
+# Counters
 #./counters/counter8_async_reset/counter8_async_reset.v:
 #./counters/counter8_async_reset/counter8_async_reset_tb.v:
 #./counters/counter4_2clock/counter4_2clock_tb.v:
@@ -21,6 +22,9 @@
 #./counters/counter128_async_reset/counter128_async_reset_tb.v:
 #./counters/counter128_async_reset/counter128_async_reset.v:
 ./counters/counterdown16_1clk_posedge_sync_resetn/counterdown16_1clk_posedge_sync_resetn.v:
+./counters/counterupn_1clk_dualedge_async_resetp/counterupn_1clk_dualedge_async_resetp.v:
+./counters/counterup36_8_2clk_async_resetp/counterup36_8_2clk_async_resetp.v:
+./counters/counterup32_1clk_posedge_async_reset_n_instances/counterup32_1clk_async_reset_n_instances.v:
 #./config_loader/bitstream_loader.v:
 #./config_loader/configuration_manager.v:
 #./signal_gen/reset_generator.v:
