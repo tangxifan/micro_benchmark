@@ -153,6 +153,18 @@ def test_cocotb_rtl_list(file_db, simulator, max_num_jobs, new_thread_wait_time)
   return num_failures
 
 #####################################################################
+# Count the number of task to run
+#####################################################################
+def count_num_tasks_from_file_db(file_db):
+  num_tasks = 0
+  for rtl in file_db.keys():
+    # Only counts those with a cocotb directory
+    if "cocotb_dir" in file_db[rtl]:
+      num_tasks += 1
+    
+  return num_tasks
+
+#####################################################################
 # Read file database to a yaml file
 #####################################################################
 def read_yaml_to_file_db(yaml_filename):
@@ -161,7 +173,7 @@ def read_yaml_to_file_db(yaml_filename):
     try:
       file_db = yaml.load(stream, Loader=yaml.FullLoader)
       if file_db :
-        logging.info("Found " + str(len(file_db)) + " files to test")
+        logging.info("Found " + str(count_num_tasks_from_file_db(file_db)) + " files to test")
     except yaml.YAMLError as exc:
       logging.error(exc)
       exit(error_codes["FILE_ERROR"]);
@@ -211,8 +223,14 @@ if __name__ == '__main__':
   num_errors = 0
   num_errors += test_cocotb_rtl_list(file_db, args.simulator, args.j, args.new_thread_wait_time)
 
-  logging.info("Tested " + str(len(file_db)) + " benchmarks")
-  logging.info("\tPassed " + str(len(file_db) - num_errors))
+  # Sanity check
+  num_tasks = count_num_tasks_from_file_db(file_db)
+  if (num_tasks < num_errors):
+    logging.error("Detect more errors (" + str(num_tasks) + ") than the number of test cases (" + str(num_errors) + ")");
+    exit(error_codes["ERROR"])
+
+  logging.info("Tested " + str(num_tasks) + " benchmarks")
+  logging.info("\tPassed " + str(num_tasks - num_errors))
   logging.info("\tFailed " + str(num_errors))
   if (num_errors == 0):
     exit(error_codes["SUCCESS"])
