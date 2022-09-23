@@ -55,7 +55,7 @@ module scalable_seq_detector  #(
 `ifdef COCOTB_SIM
 initial begin
   $dumpfile ("waves.vcd");
-  $dumpvars (0, scalable_fsm);
+  $dumpvars (0, scalable_seq_detector);
   #1;
 end
 `endif
