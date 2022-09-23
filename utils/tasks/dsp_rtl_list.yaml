@@ -1,0 +1,69 @@
+FIR_filter_firBlock_left:
+  source:
+    - dsp/FIR_filter/FIR_filter_firBlock_left_output_verilog_debug.v
+  top_module: FIR_filter_firBlock_left
+
+mac_12:
+  source:
+    - dsp/mac/mac_12/mac_12.v
+  top_module: mac_12
+
+mac_16:
+  source:
+    - dsp/mac/mac_16/mac_16.v
+  top_module: mac_16
+
+mac_18:
+  source:
+    - dsp/mac/mac_18/mac_18.v
+  top_module: mac_18
+
+mac_2:
+  source:
+    - dsp/mac/mac_2/mac_2.v
+  top_module: mac_2
+
+mac_20:
+  source:
+    - dsp/mac/mac_20/mac_20.v
+  top_module: mac_20
+
+mac_32:
+  source:
+    - dsp/mac/mac_32/mac_32.v
+  top_module: mac_32
+
+mac_36:
+  source:
+    - dsp/mac/mac_36/mac_36.v
+  top_module: mac_36
+
+mac_4:
+  source:
+    - dsp/mac/mac_4/mac_4.v
+  top_module: mac_4
+
+mac_6:
+  source:
+    - dsp/mac/mac_6/mac_6.v
+  top_module: mac_6
+
+mac_8:
+  source:
+    - dsp/mac/mac_8/mac_8.v
+  top_module: mac_8
+
+mac_8_9:
+  source:
+    - dsp/mac/mac_8_9/mac_8_9.v
+  top_module: mac_8_9
+
+mac_9:
+  source:
+    - dsp/mac/mac_9/mac_9.v
+  top_module: mac_9
+
+mult_2_pipelined:
+  source:
+    - dsp/mult/mult_2_pipelined/mult_2_pipelined.v
+  top_module: mult_2_pipelined

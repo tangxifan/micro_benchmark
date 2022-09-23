@@ -1,0 +1,14 @@
+riscv_posedge_clk:
+  source:
+    - processors/RISC_posedge_clk/rtl/ALU.v
+    - processors/RISC_posedge_clk/rtl/Controller.v
+    - processors/RISC_posedge_clk/rtl/IR.v
+    - processors/RISC_posedge_clk/rtl/Memory.v
+    - processors/RISC_posedge_clk/rtl/Mux_31.v
+    - processors/RISC_posedge_clk/rtl/Mux_51.v
+    - processors/RISC_posedge_clk/rtl/PC.v
+    - processors/RISC_posedge_clk/rtl/Reg_1bit.v
+    - processors/RISC_posedge_clk/rtl/Reg_8bit.v
+    - processors/RISC_posedge_clk/rtl/RISC_core_mem_top.v
+    - processors/RISC_posedge_clk/rtl/RISC_core_top.v
+  top_module: RISC_core_top
