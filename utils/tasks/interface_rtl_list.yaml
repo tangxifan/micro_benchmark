@@ -1,0 +1,33 @@
+routing_test:
+  source:
+    - interface/routing_test/routing_test.v
+  top_module: routing_test
+
+SAPone:
+  source:
+    - interface/SAPone/rtl/ACC.v
+    - interface/SAPone/rtl/ADDSUB.v
+    - interface/SAPone/rtl/BRegister.v
+    - interface/SAPone/rtl/Controller.v
+    - interface/SAPone/rtl/IR.v
+    - interface/SAPone/rtl/MAR.v
+    - interface/SAPone/rtl/OutputRegister.v
+    - interface/SAPone/rtl/PC.v
+    - interface/SAPone/rtl/ROM.v
+    - interface/SAPone/rtl/SAPone.v
+  top_module: SAPone
+
+k4n4_test_modes:
+  source:
+    - interface/test_modes/k4_N4/K4N4_test_modes.v
+  top_module: K4N4_test_modes
+
+k6n10_test_modes:
+  source:
+    - interface/test_modes/k6_N10/K6N10_test_modes.v
+  top_module: K6N10_test_modes
+  
+test_mode_low:
+  source:
+    - interface/test_mode_low/test_mode_low.v
+  top_module: test_mode_low

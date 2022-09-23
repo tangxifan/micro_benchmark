@@ -85,8 +85,9 @@ Update workflow
 
 - If you are adding a benchmark to an existing category, you need to update the list.
 
-See `example<https://github.com/tangxifan/micro_benchmark/blob/main/simple_gates/rtl_list.yaml>`_
+See an example under ``utils/tasks/simple_gates_rtl_list.yaml``
 
+.. note:: For file format of the list file, please see :ref:`file_format_rtl_list`
 
 - If you are creating a new category for benchmark, you need to update workflows by adding the benchmark suite to configuration matrix.
 

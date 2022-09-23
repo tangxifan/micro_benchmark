@@ -29,47 +29,35 @@ logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO);
 #####################################################################
 # Compile a RTL with iVerilog
 #####################################################################
-def run_iverilog_for_rtl_file(rtl_file):
+def run_iverilog_for_rtl_file(rtl_files, top_module, output_dir):
+  # Check if all the rtl sources exist
+  rtl_file_list = []
+  for rtl_f in rtl_files:
+    rtl_f_abspath = os.path.abspath(rtl_f)
+    if not os.path.exists(rtl_f_abspath):
+      raise IOError("RTL source not found: " + rtl_f_abspath)
+ 
+    rtl_file_list.append(rtl_f_abspath)
+
+  # Create temp output directory
+  if not os.path.isdir(output_dir):
+    os.makedirs(output_dir)
+
+  # Run iverilog compilation
   status = 0
-  include_dir = os.path.dirname(rtl_file)
-  cmd = "iverilog " + rtl_file + " -o " + rtl_file + ".o" + " -y " + include_dir
+  cmd = "iverilog "
+  for rtl_f in rtl_file_list:
+    cmd += rtl_f + " "
+  cmd += " -o " + output_dir + "/" + top_module + ".o"
   process = subprocess.run(cmd, shell=True, check=True)
   status = process.returncode
-  return status
-
-#####################################################################
-# Run cocotb Makefile for a given RTL
-#####################################################################
-def run_cocotb_for_rtl_file(rtl_file):
-  status = 0
-  curr_dir = os.getcwd()
-  include_dir = os.path.dirname(rtl_file)
-  os.chdir(include_dir)
-  cmd = "make" + " > cocotb_sim.log"
-  make_process = subprocess.Popen(cmd, shell=True, stderr=subprocess.STDOUT)
-  status = error_codes["SUCCESS"]
-  if (make_process.wait()) != 0:
-    status = error_codes["ERROR"]
-  os.chdir(curr_dir)
-  return status
-
-#####################################################################
-# Check cocotb results file and report any failures captured
-#####################################################################
-def check_cocotb_results(rtl_file):
-  status = 0
-  include_dir = os.path.dirname(rtl_file)
-  result_f = open(include_dir + "/results.xml", "r")
-  for line in result_f:
-    if re.search("failure", line):
-      status += 1
   return status
 
 #####################################################################
 # For each RTL file in the list,
 # - compile with iVerilog
 #####################################################################
-def test_rtl_list(file_db):
+def test_rtl_list(file_db, temp_dir):
   num_failures = 0
   space_limit = 80 # Maximum space tuned for the screen width
   for rtl in file_db.keys():
@@ -77,7 +65,7 @@ def test_rtl_list(file_db):
     start_time = time.time()
     # Create a space when logging
     logging_space = " " + "." * (space_limit - len(rtl) - 2) + " "
-    status = run_iverilog_for_rtl_file(rtl)
+    status = run_iverilog_for_rtl_file(file_db[rtl]["source"], file_db[rtl]["top_module"], temp_dir)
     num_failures = num_failures + status; 
     end_time = time.time()
     if (status == 0):
@@ -90,33 +78,6 @@ def test_rtl_list(file_db):
     time_logging_space = "." * (space_limit - len(time_str) - 2) + " "
     logging.info(time_logging_space + time_str)
 
-  return num_failures
-
-#####################################################################
-# For each RTL file in the list,
-# - Run cocotb tests
-#####################################################################
-def test_cocotb_rtl_list(file_db):
-  num_failures = 0
-  space_limit = 80 # Maximum space tuned for the screen width
-  for rtl in file_db.keys():
-    # Log runtime
-    start_time = time.time()
-    # Create a space when logging
-    logging_space = " " + "." * (space_limit - len(rtl) - 2) + " "
-    status = run_cocotb_for_rtl_file(rtl)
-    status = check_cocotb_results(rtl)
-    num_failures = num_failures + status; 
-    end_time = time.time()
-    if (status == 0):
-      logging.info(rtl + logging_space + "[Pass]")
-    else:
-      logging.info(rtl + logging_space + "[Fail]")
-    # Show runtime
-    time_diff = timedelta(seconds=(end_time - start_time))
-    time_str = "took " + str(time_diff)
-    time_logging_space = "." * (space_limit - len(time_str) - 2) + " "
-    logging.info(time_logging_space + time_str)
   return num_failures
 
 #####################################################################
@@ -148,13 +109,13 @@ if __name__ == '__main__':
   # Execute when the module is not initialized from an import statement
 
   # Parse the options and apply sanity checks
-  parser = argparse.ArgumentParser(description='Run regression tests for RTL benchmarks')
-  parser.add_argument('--type',
-                      required=True,
-                      help='Describe the type of test to run [compile|cocotb_test]')
+  parser = argparse.ArgumentParser(description='Run regression tests for compiling RTL benchmarks')
   parser.add_argument('--file_list',
                       required=True,
                       help='A file contains a list of RTL files to test')
+  parser.add_argument('--temp_dir',
+                      default="_iverilog_temp",
+                      help='A directory contains intermediate files during test')
   args = parser.parse_args()
 
   # Create an empty database
@@ -164,13 +125,7 @@ if __name__ == '__main__':
   file_db = read_yaml_to_file_db(args.file_list)
 
   num_errors = 0
-  if (args.type == "compile"):
-    num_errors = test_rtl_list(file_db)
-  elif (args.type == "cocotb_test"):
-    num_errors += test_cocotb_rtl_list(file_db)
-  else:
-    logging.error("Unknown type of test")
-    exit(error_codes["ERROR"])
+  num_errors = test_rtl_list(file_db, args.temp_dir)
 
   logging.info("Tested " + str(len(file_db)) + " benchmarks")
   logging.info("\tPassed " + str(len(file_db) - num_errors))

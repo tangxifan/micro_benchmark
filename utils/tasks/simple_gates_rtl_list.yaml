@@ -1,0 +1,65 @@
+adder_16:
+  source:
+    - simple_gates/adder/adder_16/adder_16.v
+  top_module: adder_16
+  cocotb_dir: simple_gates/adder/adder_16
+
+adder_4:
+  source:
+    - simple_gates/adder/adder_4/adder_4.v
+  top_module: adder_4
+  cocotb_dir: simple_gates/adder/adder_4
+
+adder_6:
+  source:
+    - simple_gates/adder/adder_6/adder_6.v
+  top_module: adder_6
+  cocotb_dir: simple_gates/adder/adder_6
+
+adder_8:
+  source:
+    - simple_gates/adder/adder_8/adder_8.v
+  top_module: adder_8
+  cocotb_dir: simple_gates/adder/adder_8
+
+and2:
+  source:
+    - simple_gates/and2/and2.v
+  top_module: and2
+  cocotb_dir: simple_gates/and2
+
+and2_latch:
+  source:
+    - simple_gates/and2_latch/and2_latch.v
+  top_module: and2_latch
+  cocotb_dir: simple_gates/and2_latch
+
+and2_latch_2clock:
+  source:
+    - simple_gates/and2_latch_2clock/and2_latch_2clock.v
+  top_module: and2_latch_2clock
+  cocotb_dir: simple_gates/and2_latch_2clock
+
+and2_or2:
+  source:
+    - simple_gates/and2_or2/and2_or2.v
+  top_module: and2_or2
+  cocotb_dir: simple_gates/and2_or2
+
+and2_pipelined:
+  source:
+    - simple_gates/and2_pipelined/and2_pipelined.v
+  top_module: and2_pipelined
+  cocotb_dir: simple_gates/and2_pipelined
+
+and4:
+  source:
+    - simple_gates/and4/and4.v
+  top_module: and4
+  cocotb_dir: simple_gates/and4
+
+or2:
+  source:
+    - simple_gates/or2/or2.v
+  top_module: or2
+  cocotb_dir: simple_gates/or2

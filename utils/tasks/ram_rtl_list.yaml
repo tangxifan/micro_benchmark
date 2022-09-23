@@ -1,0 +1,30 @@
+async_spram_4x1:
+  source:
+    - ram/asyn_spram_4x1/asyn_spram_4x1.v
+  top_module: asyn_spram_4x1
+
+dual_port_ram_16k:
+  source:
+    - ram/dual_port_ram_16k/dual_port_ram_16k.v
+  top_module: dual_port_ram_16k
+
+dual_port_ram_1k:
+  source:
+    - ram/dual_port_ram_1k/dual_port_ram_1k.v
+  top_module: dual_port_ram_1k
+
+fifo_dual_port_ram:
+  source:
+    - ram/fifo/rtl/fifo.v
+    - ram/fifo/rtl/sync_dual_port_ram.v
+  top_module: fifo
+
+pipelined_8bit_adder:
+  source:
+    - ram/pipelined_8bit_adder/pipelined_8bit_adder.v
+  top_module: pipelined_8bit_adder
+
+syn_spram_4x1:
+  source:
+    - ram/syn_spram_4x1/syn_spram_4x1.v
+  top_module: syn_spram_4x1

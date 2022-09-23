@@ -1,0 +1,96 @@
+# Counters
+#./counters/counter8_async_reset/counter8_async_reset.v:
+#./counters/counter8_async_resetb/counter8_async_resetb.v:
+#./counters/counter8_sync_reset/counter8_sync_reset.v:
+#./counters/counter4_2clock/counter4_2clock.v:
+#./counters/counter128_async_resetb/counter128_async_resetb.v:
+#./counters/counter128_async_reset/counter128_async_reset.v:
+#./config_loader/bitstream_loader.v:
+#./config_loader/configuration_manager.v:
+#./signal_gen/reset_generator.v:
+#./signal_gen/pulse_generator.v:
+#./signal_gen/clock_divider.v:
+#./blinking/blinking.v:
+
+counterdown16_1clk_negedge_async_resetp:
+  source:
+    - simple_registers/counters/counterdown16_1clk_negedge_async_resetp/counterdown16_1clk_negedge_async_resetp.v
+  top_module: counterdown16_1clk_negedge_async_resetp
+  cocotb_dir: simple_registers/counters/counterdown16_1clk_negedge_async_resetp
+
+counterdown16_1clk_posedge_async_resetn:
+  source:
+    - simple_registers/counters/counterdown16_1clk_posedge_async_resetn/counterdown16_1clk_posedge_async_resetn.v
+  top_module: counterdown16_1clk_posedge_async_resetn
+  cocotb_dir: simple_registers/counters/counterdown16_1clk_posedge_async_resetn
+
+counterdown16_1clk_posedge_async_resetp:
+  source:
+    - simple_registers/counters/counterdown16_1clk_posedge_async_resetp/counterdown16_1clk_posedge_async_resetp.v
+  top_module: counterdown16_1clk_posedge_async_resetp
+  cocotb_dir: simple_registers/counters/counterdown16_1clk_posedge_async_resetp
+
+counterdown16_1clk_posedge_sync_resetn:
+  source:
+    - simple_registers/counters/counterdown16_1clk_posedge_sync_resetn/counterdown16_1clk_posedge_sync_resetn.v
+  top_module: counterdown16_1clk_posedge_sync_resetn
+  cocotb_dir: simple_registers/counters/counterdown16_1clk_posedge_sync_resetn
+
+counterdown16_4clk_posedge_async_resetn:
+  source:
+    - simple_registers/counters/counterdown16_4clk_posedge_async_resetn/counterdown16.v
+    - simple_registers/counters/counterdown16_4clk_posedge_async_resetn/counterdown16_4clk_posedge_async_resetn.v
+  top_module: counterdown16_4clk_posedge_async_resetn
+  cocotb_dir: simple_registers/counters/counterdown16_4clk_posedge_async_resetn
+
+counterup16_1clk_posedge_async_resetn:
+  source:
+    - simple_registers/counters/counterup16_1clk_posedge_async_resetn/counterup16_1clk_posedge_async_resetn.v
+  top_module: counterup16_1clk_posedge_async_resetn
+  cocotb_dir: simple_registers/counters/counterup16_1clk_posedge_async_resetn
+
+counterup16_1clk_posedge_async_resetp:
+  source:
+    - simple_registers/counters/counterup16_1clk_posedge_async_resetp/counterup16_1clk_posedge_async_resetp.v
+  top_module: counterup16_1clk_posedge_async_resetp
+  cocotb_dir: simple_registers/counters/counterup16_1clk_posedge_async_resetp
+
+counterup16_1clk_posedge_sync_resetn:
+  source:
+    - simple_registers/counters/counterup16_1clk_posedge_sync_resetn/counterup16_1clk_posedge_sync_resetn.v
+  top_module: counterup16_1clk_posedge_sync_resetn
+  cocotb_dir: simple_registers/counters/counterup16_1clk_posedge_sync_resetn
+
+counterup16_4clk_posedge_async_resetn:
+  source:
+    - simple_registers/counters/counterup16_4clk_posedge_async_resetn/counterup16.v
+    - simple_registers/counters/counterup16_4clk_posedge_async_resetn/counterup16_4clk_posedge_async_resetn.v
+  top_module: counterup16_4clk_posedge_async_resetn
+  cocotb_dir: simple_registers/counters/counterup16_4clk_posedge_async_resetn
+
+counterup32_1clk_async_reset_n_instances:
+  source:
+    - simple_registers/counters/counterup32_1clk_async_reset_n_instances/counterup32_1clk_async_reset_n_instances.v
+  top_module: counterup32_1clk_async_reset_n_instances
+  cocotb_dir: simple_registers/counters/counterup32_1clk_async_reset_n_instances
+
+counterup36_8_2clk_async_resetp:
+  source:
+    - simple_registers/counters/counterup36_8_2clk_async_resetp/counterup16_1clk_async_resetp.v
+    - simple_registers/counters/counterup36_8_2clk_async_resetp/counterup8_1clk_async_resetp.v
+    - simple_registers/counters/counterup36_8_2clk_async_resetp/counterup12_1clk_async_resetp.v
+    - simple_registers/counters/counterup36_8_2clk_async_resetp/counterup36_8_2clk_async_resetp.v
+  top_module: counterup36_8_2clk_async_resetp
+  cocotb_dir: simple_registers/counters/counterup36_8_2clk_async_resetp
+
+counterupn_1clk_dualedge_async_resetp:
+  source:
+    - simple_registers/counters/counterupn_1clk_dualedge_async_resetp/counterupn_1clk_dualedge_async_resetp.v
+  top_module: counterupn_1clk_dualedge_async_resetp
+  cocotb_dir: simple_registers/counters/counterupn_1clk_dualedge_async_resetp
+
+dffnr:
+  source:
+    - simple_registers/ff/dffnr/dffnr.v
+  top_module: dffnr
+  cocotb_dir: simple_registers/ff/dffnr
