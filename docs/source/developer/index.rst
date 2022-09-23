@@ -7,6 +7,8 @@
    naming_convention
 
    contributor_guidelines
+  
+   file_format
 
    ci
 
