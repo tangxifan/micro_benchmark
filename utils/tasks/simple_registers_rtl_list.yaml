@@ -34,6 +34,7 @@ counterdown16_1clk_posedge_sync_resetn:
 
 counterdown16_4clk_posedge_async_resetn:
   source:
+    - simple_registers/counters/counterdown16_4clk_posedge_async_resetn/counterdown16.v
     - simple_registers/counters/counterdown16_4clk_posedge_async_resetn/counterdown16_4clk_posedge_async_resetn.v
   top_module: counterdown16_4clk_posedge_async_resetn
 
