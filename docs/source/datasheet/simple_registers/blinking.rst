@@ -32,7 +32,7 @@ It can reflect the maximum speed of an FPGA between a LUT and a flip-flop.
 
 .. list-table:: Estimated resource Utilization
   :widths: 20 15 15 15 15 15
-  :header_rows: 1
+  :header-rows: 1
   :class: longtable
 
   * - Tool/Resource
