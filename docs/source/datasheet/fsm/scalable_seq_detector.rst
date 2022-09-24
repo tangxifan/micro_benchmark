@@ -10,10 +10,17 @@ Introduction
 ~~~~~~~~~~~~~
 This benchmark is to detect any sequence of length equal to 2^STATE_BITS. This is a finite state machine based on moore model. All output signals/msgs depends only on current state of machine. The design is scalable, STATE_BITS defines the number of states, the hardware shall be generated based on STATE_BITS. Also, the sequence needs to be passed to DUT as a bus signal, while the x inputs takes sequence bit by bit for detection and msgs are shown on output signals. 
 
+
+Source codes
+~~~~~~~~~~~~
+
+See details in ``fsm/scalable_seq_detector``
+
+
 .. _fig_scalable_seq_detector:
 
 Block Diagram / Schematic
-~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
 .. figure:: ./figures/scalable_seq_detector.svg
   :width: 100%
   :alt: Scalable Sequence Detector schematic
@@ -23,8 +30,9 @@ Block Diagram / Schematic
 .. _performance_scalable_seq_detector:
 
 Performance
-~~~~~~~~~~~~~
+~~~~~~~~~~~
 .. figure:: ./figures/scalable_seq_detector_synthesis_report.png
   :width: 100%
   :alt: Scalable Sequence Detector schematic
-Scalable Sequence Detector schematic
+
+  Scalable Sequence Detector performance report using Xilinx Vivado
