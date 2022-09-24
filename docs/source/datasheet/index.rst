@@ -4,9 +4,9 @@
 .. toctree::
    :maxdepth: 2
 
-   simple_registers
+   simple_registers/index
    
 .. toctree::
    :maxdepth: 2
 
-   scalable_seq_detector
+   fsm/index

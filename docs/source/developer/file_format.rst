@@ -1,10 +1,12 @@
 .. _file_format:
 
+File Formats
+------------
 
 .. _file_format_rtl_list:
 
-RTL List
---------
+RTL List File
+`````````````
 
 The RTL list file is in yaml format, where users can define one or multiple RTL projects.
 
