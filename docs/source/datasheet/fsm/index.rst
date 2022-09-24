@@ -1,5 +1,7 @@
 .. _datasheet_fsm:
-   Finite State Machines
+   
+Finite State Machines
+=====================
  
 .. toctree::
    :maxdepth: 2

@@ -1,5 +1,7 @@
 .. _datasheet_fsm:
-   Simple Registers
+   
+Simple Registers
+================
  
 .. toctree::
    :maxdepth: 2
