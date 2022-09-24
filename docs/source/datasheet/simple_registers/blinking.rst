@@ -12,6 +12,13 @@ It is a 1-bit clock divider, which outputs half frequency of the input clock.
 Block Diagram
 ~~~~~~~~~~~~~
 
+.. figure:: ./figures/blinking.svg
+  :width: 100%
+  :alt: Blinking schematic
+
+  Blinking schematic
+
+
 Performance
 ~~~~~~~~~~~
 

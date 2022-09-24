@@ -17,7 +17,8 @@ Block Diagram / Schematic
 .. figure:: ./figures/scalable_seq_detector.svg
   :width: 100%
   :alt: Scalable Sequence Detector schematic
-Scalable Sequence Detector schematic
+
+  Scalable Sequence Detector schematic
 
 .. _performance_scalable_seq_detector:
 
