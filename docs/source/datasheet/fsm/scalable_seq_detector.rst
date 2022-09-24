@@ -1,4 +1,4 @@
-.. _datasheet_scalable_seq_detector:
+.. _datasheet_fsm_scalable_seq_detector:
 
 Scalable Sequence Detector
 ------------------------
