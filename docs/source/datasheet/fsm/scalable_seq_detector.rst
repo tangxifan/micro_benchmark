@@ -1,7 +1,7 @@
 .. _datasheet_fsm_scalable_seq_detector:
 
 Scalable Sequence Detector
-------------------------
+--------------------------
 .. warning:: This benchmark may have some modification/addition of features in future.
 
 .. _datasheet_scalable_seq_detector_introduction:
@@ -36,3 +36,28 @@ Performance
   :alt: Scalable Sequence Detector schematic
 
   Scalable Sequence Detector performance report using Xilinx Vivado
+
+.. warning:: The following resource utilization is just an estimation! Different tools in different versions may result differently.
+
+.. list-table:: Estimated resource Utilization
+  :header-rows: 1
+  :class: longtable
+
+  * - Tool/Resource
+    - Inputs
+    - Outputs
+    - LUT4
+    - FF
+    - Carry
+    - DSP
+    - BRAM
+  * - General
+    - 10
+    - 37
+    - 28
+    - 3
+    - 0
+    - 0
+    - 0
+
+

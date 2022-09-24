@@ -30,18 +30,23 @@ Performance
 Expect to consume only 1 LUT and 1 flip-flop of an FPGA.
 It can reflect the maximum speed of an FPGA between a LUT and a flip-flop.
 
+.. warning:: The following resource utilization is just an estimation! Different tools in different versions may result differently.
+
 .. list-table:: Estimated resource Utilization
-  :widths: 20 15 15 15 15 15
   :header-rows: 1
   :class: longtable
 
   * - Tool/Resource
+    - Inputs
+    - Outputs
     - LUT4
     - FF
     - Carry
     - DSP
     - BRAM
   * - General
+    - 0
+    - 1
     - 1
     - 1
     - 0
