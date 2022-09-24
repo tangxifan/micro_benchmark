@@ -13,7 +13,7 @@ Block Diagram
 ~~~~~~~~~~~~~
 
 .. figure:: ./figures/blinking_schematic.svg
-  :width: 100%
+  :width: 60%
   :alt: Blinking schematic
 
   Blinking schematic
