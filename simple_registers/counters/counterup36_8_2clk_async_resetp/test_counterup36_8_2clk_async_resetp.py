@@ -16,7 +16,7 @@ async def test_counterup36_8_2clk_async_resetp(dut):
   ## Create clocks
   CLK_PERIOD = 10 # [ns]
   cocotb.start_soon(Clock(dut.clock0, CLK_PERIOD, units="ns").start())
-  cocotb.start_soon(Clock(dut.clock1, CLK_PERIOD, units="ns").start())
+  #cocotb.start_soon(Clock(dut.clock1, CLK_PERIOD, units="ns").start())
   
   test_cases = 1
   COUNTER_SIZE = 8
@@ -32,7 +32,7 @@ async def test_counterup36_8_2clk_async_resetp(dut):
   COUNTER_MAX_VAL3 = num_cycles3 - 1 
   c1 = COUNTER_SIZE+COUNTER_SIZE2+COUNTER_SIZE3
   dut.reset.value = 1
-  dut.reset1.value = 1
+  #dut.reset1.value = 1
   
   expected_count = 0
   expected_count1 = 0
@@ -41,7 +41,7 @@ async def test_counterup36_8_2clk_async_resetp(dut):
   rst_counter_rand = random.randint(0, int((num_cycles*test_cases)/COUNTER_SIZE*COUNTER_SIZE2))
 
   await ClockCycles(dut.clock0, 50)
-  await ClockCycles(dut.clock1, 50)
+  #await ClockCycles(dut.clock1, 50)
   assert dut.out2.value == 0, "counter in top module does not matched"
   await Timer(1, units="ns")
   dut.reset.value = 0
@@ -54,7 +54,7 @@ async def test_counterup36_8_2clk_async_resetp(dut):
       dut.reset.value = 1
       
       await RisingEdge(dut.clock0)
-      await RisingEdge(dut.clock1)
+      #await RisingEdge(dut.clock1)
 
       dut._log.info("Reset Test2:: Driving reset randomly!")
     else:
