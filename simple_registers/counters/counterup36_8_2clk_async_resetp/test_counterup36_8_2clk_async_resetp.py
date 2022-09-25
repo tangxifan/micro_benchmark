@@ -41,7 +41,7 @@ async def test_counterup36_8_2clk_async_resetp(dut):
   rst_counter_rand = random.randint(0, int((num_cycles*test_cases)/COUNTER_SIZE*COUNTER_SIZE2))
 
   await ClockCycles(dut.clock0, 50)
-  #await ClockCycles(dut.clock1, 50)
+
   assert dut.out2.value == 0, "counter in top module does not matched"
   await Timer(1, units="ns")
   dut.reset.value = 0

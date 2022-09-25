@@ -15,7 +15,7 @@ module counterup36_8_2clk_async_resetp (clock0,reset,out1,out2);
 
 
 	cluster_counters a0(clock0, reset, count_w);
-	counterup16_1clk_async_resetp b0(.clk(clock0), .reset(reset), .count(out2));
+	counterup12_1clk_async_resetp b0(.clk(clock0), .reset(reset), .count(out2));
 
 	generate
 	genvar k;
