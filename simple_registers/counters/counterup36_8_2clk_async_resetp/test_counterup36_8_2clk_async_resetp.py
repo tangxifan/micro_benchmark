@@ -98,7 +98,7 @@ async def test_counterup36_8_2clk_async_resetp(dut):
     dut._log.info("expected value of counter16 in binary %s", expected_out_str2)
    
     #dut._log.info("Direct value dut %s",dut.count_w.value)
-    counter16_str = BinaryValue(dut.out1.value.value,n_bits=2772, bigEndian=False).binstr
+    counter16_str = BinaryValue(dut.out1.value.value,n_bits=2700, bigEndian=False).binstr
     #dut._log.info("Binary check dut %s",counter16_str)
     
     #print(counter16_str[28:36])
