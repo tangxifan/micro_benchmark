@@ -109,7 +109,7 @@ async def test_counterup36_8_2clk_async_resetp(dut):
     #assert counter16_str[16:28] == expected_out_str1, "counter 12 bit does not match expected value!"
     #assert counter16_str[28:36] == expected_out_str0, "counter 8 bit does not match expected value!"
   
-  ins = 76
+  ins = 74
 
   for cycle in range(ins): # Divided by COUNTER_SIZE just to reduce runtime
 

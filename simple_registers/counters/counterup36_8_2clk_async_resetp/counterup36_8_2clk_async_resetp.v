@@ -6,7 +6,7 @@
 
 module counterup36_8_2clk_async_resetp (clock0,clock1,reset,reset1,out1,out2);
 	parameter N=36;
-	parameter size = 77;
+	parameter size = 75;
 	input clock0,clock1;
 	input reset,reset1;
 	output [(size*N)-1:0] out1;
