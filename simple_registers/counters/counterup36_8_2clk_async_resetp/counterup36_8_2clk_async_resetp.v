@@ -1,21 +1,21 @@
 /////////////////////////////////////////
-//  Functionality: four 36 bit up counter + seperate 8 bit counter 
+//  Functionality: 36 bit up counter + seperate 12 bit counter 
 //	operating upon 2 different clocks 
 //  Coder: M Usman Kiani
 ////////////////////////////////////////
 
-module counterup36_8_2clk_async_resetp (clock0,clock1,reset,reset1,out1,out2);
+module counterup36_8_2clk_async_resetp (clock0,reset,out1,out2);
 	parameter N=36;
-	parameter size = 77;
-	input clock0,clock1;
-	input reset,reset1;
+	parameter size = 75;
+	input clock0;
+	input reset;
 	output [(size*N)-1:0] out1;
 	wire [N-1:0] count_w;
-	output [7:0] out2;
+	output [11:0] out2;
 
 
 	cluster_counters a0(clock0, reset, count_w);
-	counterup8_1clk_async_resetp b0(.clk(clock1), .reset(reset1), .count(out2));
+	counterup12_1clk_async_resetp b0(.clk(clock0), .reset(reset), .count(out2));
 
 	generate
 	genvar k;

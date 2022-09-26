@@ -16,7 +16,7 @@ async def test_counterup36_8_2clk_async_resetp(dut):
   ## Create clocks
   CLK_PERIOD = 10 # [ns]
   cocotb.start_soon(Clock(dut.clock0, CLK_PERIOD, units="ns").start())
-  cocotb.start_soon(Clock(dut.clock1, CLK_PERIOD, units="ns").start())
+  #cocotb.start_soon(Clock(dut.clock1, CLK_PERIOD, units="ns").start())
   
   test_cases = 1
   COUNTER_SIZE = 8
@@ -32,7 +32,7 @@ async def test_counterup36_8_2clk_async_resetp(dut):
   COUNTER_MAX_VAL3 = num_cycles3 - 1 
   c1 = COUNTER_SIZE+COUNTER_SIZE2+COUNTER_SIZE3
   dut.reset.value = 1
-  dut.reset1.value = 1
+  #dut.reset1.value = 1
   
   expected_count = 0
   expected_count1 = 0
@@ -41,7 +41,7 @@ async def test_counterup36_8_2clk_async_resetp(dut):
   rst_counter_rand = random.randint(0, int((num_cycles*test_cases)/COUNTER_SIZE*COUNTER_SIZE2))
 
   await ClockCycles(dut.clock0, 50)
-  await ClockCycles(dut.clock1, 50)
+
   assert dut.out2.value == 0, "counter in top module does not matched"
   await Timer(1, units="ns")
   dut.reset.value = 0
@@ -54,7 +54,7 @@ async def test_counterup36_8_2clk_async_resetp(dut):
       dut.reset.value = 1
       
       await RisingEdge(dut.clock0)
-      await RisingEdge(dut.clock1)
+      #await RisingEdge(dut.clock1)
 
       dut._log.info("Reset Test2:: Driving reset randomly!")
     else:
@@ -98,7 +98,7 @@ async def test_counterup36_8_2clk_async_resetp(dut):
     dut._log.info("expected value of counter16 in binary %s", expected_out_str2)
    
     #dut._log.info("Direct value dut %s",dut.count_w.value)
-    counter16_str = BinaryValue(dut.out1.value.value,n_bits=2772, bigEndian=False).binstr
+    counter16_str = BinaryValue(dut.out1.value.value,n_bits=2700, bigEndian=False).binstr
     #dut._log.info("Binary check dut %s",counter16_str)
     
     #print(counter16_str[28:36])
@@ -109,7 +109,7 @@ async def test_counterup36_8_2clk_async_resetp(dut):
     #assert counter16_str[16:28] == expected_out_str1, "counter 12 bit does not match expected value!"
     #assert counter16_str[28:36] == expected_out_str0, "counter 8 bit does not match expected value!"
   
-  ins = 76
+  ins = 74
 
   for cycle in range(ins): # Divided by COUNTER_SIZE just to reduce runtime
 
