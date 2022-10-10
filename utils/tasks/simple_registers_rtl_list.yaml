@@ -78,6 +78,7 @@ counterup36_8_2clk_async_resetp:
   source:
     - simple_registers/counters/counterup36_8_2clk_async_resetp/counterup16_1clk_async_resetp.v
     - simple_registers/counters/counterup36_8_2clk_async_resetp/counterup8_1clk_async_resetp.v
+    - simple_registers/counters/counterup36_8_2clk_async_resetp/counterup10_1clk_async_resetp.v
     - simple_registers/counters/counterup36_8_2clk_async_resetp/counterup12_1clk_async_resetp.v
     - simple_registers/counters/counterup36_8_2clk_async_resetp/counterup36_8_2clk_async_resetp.v
   top_module: counterup36_8_2clk_async_resetp
