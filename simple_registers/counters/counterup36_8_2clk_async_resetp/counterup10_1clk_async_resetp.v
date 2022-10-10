@@ -1,5 +1,5 @@
 ////////////////////////////////////////
-//  Functionality: 10 bit down counter 
+//  Functionality: 10 bit up counter 
 //  Coder: M Usman Kiani
 ////////////////////////////////////////
 
@@ -14,7 +14,7 @@ module counterup10_1clk_async_resetp(clk, reset, count);
 	
 	always @ (posedge clk or posedge reset) begin
 		if (reset)
-		  count <= 0 ;
+		  count <= 0;
 		else 
 		  count <= count + 1;
 	end
