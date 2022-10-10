@@ -6,16 +6,16 @@
 
 module counterup36_8_2clk_async_resetp (clock0,reset,out1,out2);
 	parameter N=36;
-	parameter size = 75;
+	parameter size = 77;
 	input clock0;
 	input reset;
 	output [(size*N)-1:0] out1;
 	wire [N-1:0] count_w;
-	output [11:0] out2;
+	output [9:0] out2;
 
 
 	cluster_counters a0(clock0, reset, count_w);
-	counterup12_1clk_async_resetp b0(.clk(clock0), .reset(reset), .count(out2));
+	counterup10_1clk_async_resetp b0(.clk(clock0), .reset(reset), .count(out2));
 
 	generate
 	genvar k;
