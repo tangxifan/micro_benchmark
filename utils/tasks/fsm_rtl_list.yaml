@@ -1,3 +1,9 @@
+fsm_seq_detector:
+  source:
+    - fsm/fsm_seq_detector/fsm_seq_detector.v
+  top_module: fsm_seq_detector
+  cocotb_dir: fsm/fsm_seq_detector
+
 fsm_three_node:
   source:
     - fsm/FSM_three_code/FSM_hour.v
