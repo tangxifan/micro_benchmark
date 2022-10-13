@@ -23,6 +23,7 @@ module scalable_seq_detector  #(
   wire [STATE_BITS-1:0]   next_state  [2**STATE_BITS-1:0];
   wire [STATE_BITS-1:0]   final_next_state;
   reg  [STATE_BITS-1:0]   curr_state;
+  assign curr_state_p = curr_state;
   genvar i;
 
 // state transitions
