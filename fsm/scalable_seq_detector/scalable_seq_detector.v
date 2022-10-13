@@ -15,6 +15,7 @@ module scalable_seq_detector  #(
   input wire reset,
   input wire x,
   input wire [2**STATE_BITS-1:0] sequence_str,
+  output wire   [STATE_BITS-1:0] curr_state_p,
   output wire start, mid, stop, first_half, second_half,
   output wire [31:0] msg
 );
