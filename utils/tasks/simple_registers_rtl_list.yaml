@@ -95,3 +95,10 @@ dffnr:
     - simple_registers/ff/dffnr/dffnr.v
   top_module: dffnr
   cocotb_dir: simple_registers/ff/dffnr
+  
+counterup16_7clk_posedge_async_resetn:
+  source:
+    - simple_registers/counters/counterup16_7clk_posedge_async_resetn/counterup16.v
+    - simple_registers/counters/counterup16_7clk_posedge_async_resetn/counterup16_7clk_posedge_async_resetn.v
+  top_module: counterup16_7clk_posedge_async_resetn
+  cocotb_dir: simple_registers/counters/counterup16_7clk_posedge_async_resetn  
