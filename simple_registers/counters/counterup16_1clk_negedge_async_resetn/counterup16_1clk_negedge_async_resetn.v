@@ -10,7 +10,7 @@ module counterup16_1clk_negedge_async_resetn(clock0, reset, count);
 	
 
 
-	always @ (negedge clock0 or posedge reset) begin
+	always @ (negedge clock0 or negedge reset) begin
 		if (reset == 1'b0) begin
 			count <= 0;
 		end 
@@ -20,3 +20,4 @@ module counterup16_1clk_negedge_async_resetn(clock0, reset, count);
 	end
 
 endmodule
+

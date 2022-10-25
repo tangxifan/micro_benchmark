@@ -45,18 +45,18 @@ async def test_counterdown16_1clk_negedge_async_resetp(dut):
   for cycle in range(int((num_cycles)/COUNTER_SIZE)):  
     if cycle == rst_counter_rand:
       dut.reset.value = assert_rst
-      await RisingEdge(dut.clock0)
+      await FallingEdge(dut.clock0)
       dut._log.info("Reset Test2:: Driving reset randomly!")
     else:
       dut.reset.value = deassert_rst
       
-    await RisingEdge(dut.clock0)
+    await FallingEdge(dut.clock0)
     if expected_count == COUNTER_MIN_VAL or dut.reset.value == assert_rst:
       expected_count = 0Xffff
     else:
       expected_count -= 1
       
-    await FallingEdge(dut.clock0)
+    await RisingEdge(dut.clock0)
     dut._log.info("count is %d", dut.count.value)
     dut._log.info("expected_count is %d", expected_count)
     assert dut.count.value == expected_count, "count does not match expected value!"
