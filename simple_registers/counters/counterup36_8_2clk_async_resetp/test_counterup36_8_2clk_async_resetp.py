@@ -43,9 +43,10 @@ async def test_counterup36_8_2clk_async_resetp(dut):
   expected_count2 = 0
   expected_count3 = 0
 
-  divider = COUNTER_SIZE3
-  rst_counter_rand = random.randint(0, int((num_cycles*test_cases)/COUNTER_SIZE*COUNTER_SIZE2))
-  rst_counter_rand1 = random.randint(0, int((num_cycles*test_cases)/COUNTER_SIZE4))
+  divider = COUNTER_SIZE3 * COUNTER_SIZE2
+
+  rst_counter_rand = random.randint(10, 30)   ## quick reset to reduce simulation time
+  rst_counter_rand1 = random.randint(20, 40)
 
   await ClockCycles(dut.clock0, 50)
 
@@ -57,9 +58,9 @@ async def test_counterup36_8_2clk_async_resetp(dut):
   for cycle in range(int((num_cycles*test_cases)/COUNTER_SIZE3*COUNTER_SIZE4*COUNTER_SIZE)): #testing counter 10 bit 
 
     if cycle == rst_counter_rand1:
-      await Timer(1, units="ns")
-      dut.reset.value = 1
       await RisingEdge(dut.clock0)
+      dut.reset.value = 1
+      await Timer(5, units="ns")
       dut._log.info("Reset Test2:: Driving reset randomly!")
     else:
       dut.reset.value = 0
@@ -81,9 +82,9 @@ async def test_counterup36_8_2clk_async_resetp(dut):
   for cycle in range(int((num_cycles3*test_cases)/divider)): # Divided by COUNTER_SIZE just to reduce runtime
 
     if cycle == rst_counter_rand:
-      await Timer(1, units="ns")
-      dut.reset.value = 1
       await RisingEdge(dut.clock0)
+      dut.reset.value = 1
+      await Timer(5, units="ns")
       dut._log.info("Reset Test2:: Driving reset randomly!")
     else:
       dut.reset.value = 0
