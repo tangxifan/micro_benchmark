@@ -156,3 +156,9 @@ counterup16_1clk_posedge_sync_resetp:
     - simple_registers/counters/counterup16_1clk_posedge_sync_resetp/counterup16_1clk_posedge_sync_resetp.v
   top_module: counterup16_1clk_posedge_sync_resetp
   cocotb_dir: simple_registers/counters/counterup16_1clk_posedge_sync_resetp
+
+clk_divider:
+  source:
+    - simple_registers/clk_divider/clk_divider.v
+  top_module: clk_divider
+  cocotb_dir: simple_registers/clk_divider  
