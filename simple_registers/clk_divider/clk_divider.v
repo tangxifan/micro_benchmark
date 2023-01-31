@@ -30,12 +30,12 @@ end
 else begin  clk_o = ~clk_o; end
 end
 
-
+/*
 `ifdef COCOTB_SIM
 initial begin
  $fsdbDumpfile("waves.fsdb");
  $fsdbDumpvars(0,"+struct","+mda","+all");
 end
 `endif
-
+*/
 endmodule
