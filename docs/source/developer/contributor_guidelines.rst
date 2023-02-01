@@ -92,3 +92,16 @@ See an example under ``utils/tasks/simple_gates_rtl_list.yaml``
 - If you are creating a new category for benchmark, you need to update workflows by adding the benchmark suite to configuration matrix.
 
 See `example <https://github.com/tangxifan/micro_benchmark/blob/0c864fe677b52c1355923ba8d9effd387a4eab9b/.github/workflows/rtl_verification.yml#L65-L66>`_
+
+Update documentation
+^^^^^^^^^^^^^^^^^^^^
+
+Each benchmark should be properly documented using the existing template.
+Documentation should covers the following factors
+
+- An brief introduction about the benchmark, presenting the motivation and principles.
+- Point to where the source code is located in the repository. Show guidelines about how to compile source codes if special rules are applied.
+- A block diagram or a gate-level illustration, depending on the complexity of the design
+- Performance prediction. Prefer to show resource utilization for at least one existing FPGA.
+
+See `example <https://micro-benchmark.readthedocs.io/en/latest/datasheet/simple_registers/blinking/>`_
