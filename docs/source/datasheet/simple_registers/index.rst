@@ -7,3 +7,4 @@ Simple Registers
    :maxdepth: 2
 
    blinking
+   clk_divider
