@@ -27,7 +27,7 @@ Block Diagram
 Performance
 ~~~~~~~~~~~
 
-Expect to consume only 1 LUT and 1 flip-flop of an FPGA.
+Expect to consume only 2 LUT and 2 flip-flop of an FPGA.
 It can reflect the maximum speed of an FPGA between a LUT and a flip-flop.
 
 .. warning:: The following resource utilization is just an estimation! Different tools in different versions may result differently.
@@ -47,8 +47,8 @@ It can reflect the maximum speed of an FPGA between a LUT and a flip-flop.
   * - General
     - 0
     - 1
-    - 1
-    - 1
+    - 2
+    - 2
     - 0
     - 0
     - 0
