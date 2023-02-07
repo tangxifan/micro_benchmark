@@ -8,3 +8,4 @@ Simple Registers
 
    blinking
    clk_divider
+   pwm_generator
