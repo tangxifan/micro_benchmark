@@ -162,3 +162,9 @@ clk_divider:
     - simple_registers/clk_divider/clk_divider.v
   top_module: clk_divider
   cocotb_dir: simple_registers/clk_divider  
+
+pwm_generator:
+  source:
+    - simple_registers/pwm_generator/pwm_generator.v
+  top_module: pwm_generator
+  cocotb_dir: simple_registers/pwm_generator    
