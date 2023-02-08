@@ -3,7 +3,6 @@ module pwm_generator(clk, reset, pwm);
     output reg pwm;
 
     // Clock divider parameters
-    parameter DIVISOR = 100;
     reg [31:0] counter;
 
     // PWM parameters
@@ -19,10 +18,7 @@ module pwm_generator(clk, reset, pwm);
             pwm <= 1'b1;
         end else if (counter == (PERIOD * DUTY_CYCLE / 100)) begin
             pwm <= 1'b0;
-        end else if (counter == (PERIOD)) begin
-            counter <= 0;
-        end else begin
-            counter <= counter + 1;
+
         end
     end
 
@@ -30,7 +26,7 @@ module pwm_generator(clk, reset, pwm);
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             counter <= 0;
-        end else if (counter == DIVISOR - 1) begin
+        end else if (counter == PERIOD -1) begin
             counter <= 0;
         end else begin
             counter <= counter + 1;
