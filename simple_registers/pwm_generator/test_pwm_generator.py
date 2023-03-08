@@ -37,7 +37,6 @@ async def monitor_pwm(dut):
         if high_count + low_count >= period:
             high_count = 0
             low_count = 0
-        #print("High count low count",high_count,low_count)
         i=i+1
 
 @cocotb.test()

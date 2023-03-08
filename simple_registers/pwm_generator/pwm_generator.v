@@ -3,24 +3,22 @@ module pwm_generator(clk, reset, pwm);
     output reg pwm;
 
     // Clock divider parameters
+
     reg [31:0] counter;
 
     // PWM parameters
     parameter PERIOD = 100;
     parameter DUTY_CYCLE = 80;
-
     // Logic to generate PWM signal
-    always @(posedge clk or posedge reset) begin
-        if (reset) begin
-            counter <= 0;
-            pwm <= 1'b0;
-        end else if (counter == 0) begin
-            pwm <= 1'b1;
-        end else if (counter == (PERIOD * DUTY_CYCLE / 100)) begin
-            pwm <= 1'b0;
-
-        end
-    end
+     always @(posedge clk or posedge reset) begin
+         if (reset) begin
+             pwm <= 1'b0;
+         end else if (counter == 0) begin
+             pwm <= 1'b1;
+         end else if (counter == (PERIOD * DUTY_CYCLE / 100)) begin
+             pwm <= 1'b0;
+         end
+     end
 
     // Clock divider
     always @(posedge clk or posedge reset) begin
@@ -32,6 +30,10 @@ module pwm_generator(clk, reset, pwm);
             counter <= counter + 1;
         end
     end
+initial begin
+$fsdbDumpfile("waves.fsdb");
+$fsdbDumpvars;
+end
 
 
 endmodule

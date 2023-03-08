@@ -7,7 +7,7 @@
 
 module clk_divider(rst,clk_i, clk_o);
 
-input wire rst;
+input rst;
 input wire clk_i;
 output reg clk_o;
 
@@ -16,19 +16,19 @@ reg  int_clk;
 
 always @(posedge clk_i or posedge rst) begin
  if(rst)begin
- int_clk = 0; 
+ int_clk = 1; 
  clk_o = 0;
  end
  else begin int_clk = ~int_clk; end
 end
 
-always @(posedge int_clk or posedge rst) begin
-if(rst)begin
- int_clk = 0; 
- clk_o = 0;
-end
-else begin  clk_o = ~clk_o; end
-end
+always @(posedge int_clk) begin
 
+    clk_o = ~clk_o; 
+end
+initial begin
+$fsdbDumpfile("waves.fsdb");
+$fsdbDumpvars;
+end
 
 endmodule
