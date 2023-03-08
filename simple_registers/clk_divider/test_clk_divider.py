@@ -24,14 +24,16 @@ async def clk_divider(dut):
   await RisingEdge(dut.clk_i)
   await RisingEdge(dut.clk_i)
   dut.rst.value = 0
-  await RisingEdge(dut.clk_i)
-
+ 
+ # Wait for 2 positive edges on the input clock
+  for i in range(2):
+      await RisingEdge(dut.clk_i)
 
   # Check that the output clk_o is 1
   await FallingEdge(dut.clk_i)  
   assert int(dut.clk_o.value) == 1, "does not match expected value!"
 
-  # Wait for 3 positive edges on the input clock
+  # Wait for 2 positive edges on the input clock
   for i in range(2):
       await RisingEdge(dut.clk_i)
 
@@ -39,7 +41,7 @@ async def clk_divider(dut):
   await FallingEdge(dut.clk_i) 
   assert int(dut.clk_o.value) == 0, "does not match expected value!"
 
-  # Wait for 3 more positive edges on the input clock
+  # Wait for 2 more positive edges on the input clock
   for i in range(2):
       await RisingEdge(dut.clk_i)
 
