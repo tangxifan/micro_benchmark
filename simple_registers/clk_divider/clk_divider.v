@@ -26,9 +26,6 @@ always @(posedge int_clk) begin
 
     clk_o = ~clk_o; 
 end
-initial begin
-$fsdbDumpfile("waves.fsdb");
-$fsdbDumpvars;
-end
+
 
 endmodule

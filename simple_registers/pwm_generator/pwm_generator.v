@@ -30,10 +30,7 @@ module pwm_generator(clk, reset, pwm);
             counter <= counter + 1;
         end
     end
-initial begin
-$fsdbDumpfile("waves.fsdb");
-$fsdbDumpvars;
-end
+
 
 
 endmodule
