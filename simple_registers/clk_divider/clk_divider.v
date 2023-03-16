@@ -5,7 +5,7 @@
 ////////////////////////////////////////
 `timescale 1ns / 1ps
 
-module clk_divider(rst,clk_i, clk_o);
+module clk_divider(rst, clk_i, clk_o);
 
 input rst;
 input wire clk_i;
@@ -15,16 +15,19 @@ reg  int_clk;
 
 
 always @(posedge clk_i or posedge rst) begin
- if(rst)begin
- int_clk = 1; 
- clk_o = 0;
+ if (rst) begin
+   int_clk = 1; 
+ end else begin
+   int_clk = ~int_clk;
  end
- else begin int_clk = ~int_clk; end
 end
 
 always @(posedge int_clk) begin
-
+  if (rst) begin
+    clk_o = 0;
+  end else begin
     clk_o = ~clk_o; 
+  end
 end
 
 
