@@ -40,8 +40,8 @@ jobs:
         id: git-diff-rtl
         run: |
           git fetch
-          git diff origin/main HEAD --name-status -- ':**/*.v' ':.github/**' ':Makefile' ':utils/**'
-          if git diff origin/main HEAD --name-status --exit-code -- ':**/*.v' ':.github/**' ':Makefile' ':utils/**'; then
+          git diff origin/main HEAD --name-status -- . ':(exclude)docs/**' ':(exclude).readthedocs.yml'
+          if git diff origin/main HEAD --name-status --exit-code -- ':(exclude)docs/**' ':(exclude).readthedocs.yml'; then
             echo "::set-output name=source_modified::false"
           else
             echo "Detect changes in RTL. Require compilation check"
