@@ -2,7 +2,11 @@
 # used by Read The Docs to install python required 
 # modules with pip.
 
+# Workaround to fix the bug: https://github.com/readthedocs/readthedocs.org/issues/9038
+Jinja2<3.1 
+
 # Themes
+sphinx-rtd-theme
 #sphinx-book-theme
 #furo
 
