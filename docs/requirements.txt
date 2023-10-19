@@ -2,6 +2,9 @@
 # used by Read The Docs to install python required 
 # modules with pip.
 
+# Package required to include markdown file in RST
+m2r2
+
 # Workaround to fix the bug: https://github.com/readthedocs/readthedocs.org/issues/9038
 Jinja2<3.1 
 
