@@ -1,0 +1,57 @@
+name: Update VexRiscV to latest
+
+# Only run for pull requests as we care contribution to the master
+# - There are changes in RTL files
+on:
+  workflow_dispatch:
+
+env:
+  # Update the commit id when a major/minor version update is required
+  BRANCH_NAME: vexriscv_autoupdate
+  COMMIT_TITLE: "VexRiscV auto-update"
+
+jobs:
+  update_rtl:
+    name: Update RTL
+    runs-on: ubuntu-latest
+    # Triggered when a pull request is a label of 'force_bitstream_generation' or on main branch
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Cancel previous
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+
+      - name: Checkout repo
+        uses: actions/checkout@v2.4.0
+
+      - name: Install dependencies
+        run: |
+          sudo bash ./.github/workflows/install_dependencies_vexriscv_ubuntu22p04.sh 
+
+      - name: Pull latest VexRiscV
+        shell: bash
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          make vexriscv
+
+      - name: Push changes # push the output folder to your repo
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{env.BRANCH_NAME}}
+
+      - name: Create Auto PR
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: ${{env.BRANCH_NAME}}           # name of branch for PR
+          destination_branch: "main"                      # name of branch on which PR go
+          pr_title: "VexRiscV update for ${{ github.ref }} into main" # Title of pull request
+          pr_body: ":crown: *An automated PR*"              # Full markdown support, requires pr_title
+          pr_reviewer: "tangxifan"                          # Comma-separated list (no spaces)
+          pr_assignee: "tangxifan"                    # Comma-separated list (no spaces)
+          pr_label: "auto-pr"                               # Comma-separated list (no spaces)
+          pr_allow_empty: true                              # Creates pull request even if there are no changes
+          github_token: ${{ secrets.GITHUB_TOKEN }}

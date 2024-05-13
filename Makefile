@@ -14,6 +14,14 @@ RTL_LIST_YAML = ${UTIL_TASK_DIR}/${BENCHMARK_SUITE_NAME}_rtl_list.yaml
 
 NUM_JOBS=4
 IVERILOG_TEMP_DIR = _iverilog_temp
+TMP_VEXRISC5 = _tmp_vexrisc5
+VEXRISC5_GIT_URL = https://github.com/SpinalHDL/VexRiscv.git
+VEXRISC5_RTL = VexRiscv.v
+VEXRISC5_LDIR_PREFIX = ${PWD}/processors/VexRiscv
+VEXRISC5S_LDIR= ${VEXRISC5_LDIR_PREFIX}_small/rtl/
+VEXRISC5F_LDIR= ${VEXRISC5_LDIR_PREFIX}_full/rtl/
+VEXRISC5_MURAX_RTL = Murax.v
+VEXRISC5_MURAX_LDIR= ${VEXRISC5_LDIR_PREFIX}_murax/rtl/
 
 .SILENT:
 
@@ -46,6 +54,23 @@ clean:
 	find . -name 'results.xml' -delete
 	find . -name 'cocotb_sim.log' -delete
 	find . -type f -name 'sim_build' -delete
+
+vexriscv:
+# This command will checkout the latest VexRiscV, then update RTL and testbenches
+	echo "==== Clone latest VexRiscV from github repo: ${VEXRISC5_GIT_URL} ====" && \
+	currDir=$${PWD} && rm -rf ${TMP_VEXRISC5} && \
+	git clone ${VEXRISC5_GIT_URL} ${TMP_VEXRISC5} && \
+    cd ${TMP_VEXRISC5} && \
+	echo "==== Generate VexRiscV small version and update local copy ====" && \
+	sbt "runMain vexriscv.demo.GenSmallest" && mkdir -p ${VEXRISC5S_LDIR} && cp ${VEXRISC5_RTL} ${VEXRISC5S_LDIR} && \
+	echo "==== Generate VexRiscV full version and update local copy ====" && \
+	sbt "runMain vexriscv.demo.GenFull" && mkdir -p ${VEXRISC5F_LDIR} && cp ${VEXRISC5_RTL} ${VEXRISC5F_LDIR} && \
+	echo "==== Generate VexRiscV Murax and update local copy ====" && \
+	sbt "runMain vexriscv.demo.Murax" && mkdir -p ${VEXRISC5_MURAX_LDIR} && cp ${VEXRISC5_MURAX_RTL} ${VEXRISC5_MURAX_LDIR} && \
+	cd $${currDir} && \
+	echo "==== Update git track list ====" && \
+	git add ${VEXRISC5_LDIR_PREFIX}* && \
+	echo "==== Done ====" || exit 1;
 
 # Functions to extract comments from Makefiles
 define COMMENT_EXTRACT
