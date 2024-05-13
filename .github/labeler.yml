@@ -10,76 +10,76 @@
 # General areas
 documentation:
 - changed-files:
- - any-glob-to-any-file: 'docs/*'
- - any-glob-to-any-file: 'docs/**/*'
- - any-glob-to-any-file: '*README*'
- - any-glob-to-any-file: '*.md'
- - any-glob-to-any-file: '*.rst'
- - any-glob-to-any-file: '.readthedocs.yml'
+  - any-glob-to-any-file: 'docs/*'
+  - any-glob-to-any-file: 'docs/**/*'
+  - any-glob-to-any-file: '*README*'
+  - any-glob-to-any-file: '*.md'
+  - any-glob-to-any-file: '*.rst'
+  - any-glob-to-any-file: '.readthedocs.yml'
 github:
 - changed-files:
- - any-glob-to-any-file: .github/*
- - any-glob-to-any-file: .github/**/*
+  - any-glob-to-any-file: .github/*
+  - any-glob-to-any-file: .github/**/*
 docker:
 - changed-files:
- - any-glob-to-any-file: Dockerfile
- - any-glob-to-any-file: "*docker*"
+  - any-glob-to-any-file: Dockerfile
+  - any-glob-to-any-file: "*docker*"
 build:
 - changed-files:
- - any-glob-to-any-file: Makefile
- - any-glob-to-any-file: "*.make"
- - any-glob-to-any-file: CMakeLists.txt
- - any-glob-to-any-file: cmake
+  - any-glob-to-any-file: Makefile
+  - any-glob-to-any-file: "*.make"
+  - any-glob-to-any-file: CMakeLists.txt
+  - any-glob-to-any-file: cmake
 rtl:
 - changed-files:
- - any-glob-to-any-file: simple_gates/**.v
- - any-glob-to-any-file: simple_registers/**.v
- - any-glob-to-any-file: dsp/**.v
- - any-glob-to-any-file: fsm/**.v
- - any-glob-to-any-file: interface/**.v
- - any-glob-to-any-file: processors/**.v
- - any-glob-to-any-file: ram/**.v
+  - any-glob-to-any-file: simple_gates/**.v
+  - any-glob-to-any-file: simple_registers/**.v
+  - any-glob-to-any-file: dsp/**.v
+  - any-glob-to-any-file: fsm/**.v
+  - any-glob-to-any-file: interface/**.v
+  - any-glob-to-any-file: processors/**.v
+  - any-glob-to-any-file: ram/**.v
 cocotb:
 - changed-files:
- - any-glob-to-any-file: simple_gates/**.py
- - any-glob-to-any-file: simple_registers/**.py
- - any-glob-to-any-file: dsp/**.py
- - any-glob-to-any-file: fsm/**.py
- - any-glob-to-any-file: interface/**.py
- - any-glob-to-any-file: processors/**.py
- - any-glob-to-any-file: ram/**.py
+  - any-glob-to-any-file: simple_gates/**.py
+  - any-glob-to-any-file: simple_registers/**.py
+  - any-glob-to-any-file: dsp/**.py
+  - any-glob-to-any-file: fsm/**.py
+  - any-glob-to-any-file: interface/**.py
+  - any-glob-to-any-file: processors/**.py
+  - any-glob-to-any-file: ram/**.py
 
 # Tag pull requests with the languages used to make it easy to see what is
 # being used.
 lang-hdl:
 - changed-files:
- - any-glob-to-any-file: "*.v"
- - any-glob-to-any-file: "*.sv"
+  - any-glob-to-any-file: "*.v"
+  - any-glob-to-any-file: "*.sv"
 lang-cpp:
 - changed-files:
- - any-glob-to-any-file: "*.c*"
- - any-glob-to-any-file: "*.h"
+  - any-glob-to-any-file: "*.c*"
+  - any-glob-to-any-file: "*.h"
 lang-perl:
 - changed-files:
- - any-glob-to-any-file: "*.pl"
- - any-glob-to-any-file: "*perl*"
+  - any-glob-to-any-file: "*.pl"
+  - any-glob-to-any-file: "*perl*"
 lang-python:
 - changed-files:
- - any-glob-to-any-file: "*.py"
+  - any-glob-to-any-file: "*.py"
 lang-shell:
 - changed-files:
- - any-glob-to-any-file: "*.sh"
+  - any-glob-to-any-file: "*.sh"
 lang-tcl:
 - changed-files:
- - any-glob-to-any-file: "*.tcl"
+  - any-glob-to-any-file: "*.tcl"
 lang-netlist:
 - changed-files:
- - any-glob-to-any-file: "*.blif"
- - any-glob-to-any-file: "*.eblif"
- - any-glob-to-any-file: "*.edif"
- - any-glob-to-any-file: "*.vqm"
+  - any-glob-to-any-file: "*.blif"
+  - any-glob-to-any-file: "*.eblif"
+  - any-glob-to-any-file: "*.edif"
+  - any-glob-to-any-file: "*.vqm"
 lang-make:
 - changed-files:
- - any-glob-to-any-file: "*.make"
- - any-glob-to-any-file: Makefile
- - any-glob-to-any-file: CMakeLists.txt
+  - any-glob-to-any-file: "*.make"
+  - any-glob-to-any-file: Makefile
+  - any-glob-to-any-file: CMakeLists.txt

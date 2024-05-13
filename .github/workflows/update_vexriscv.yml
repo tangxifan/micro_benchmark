@@ -14,7 +14,6 @@ jobs:
   update_rtl:
     name: Update RTL
     runs-on: ubuntu-latest
-    # Triggered when a pull request is a label of 'force_bitstream_generation' or on main branch
     strategy:
       fail-fast: false
     steps:
@@ -36,6 +35,7 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           make vexriscv
+          git commit -m '[processor] update VexRiscV netlists to the latest'
 
       - name: Push changes # push the output folder to your repo
         uses: ad-m/github-push-action@master
@@ -52,6 +52,6 @@ jobs:
           pr_body: ":crown: *An automated PR*"              # Full markdown support, requires pr_title
           pr_reviewer: "tangxifan"                          # Comma-separated list (no spaces)
           pr_assignee: "tangxifan"                    # Comma-separated list (no spaces)
-          pr_label: "auto-pr"                               # Comma-separated list (no spaces)
-          pr_allow_empty: true                              # Creates pull request even if there are no changes
+          pr_label: "auto-pr,vexriscv"                               # Comma-separated list (no spaces)
+          pr_allow_empty: false                              # Creates pull request even if there are no changes
           github_token: ${{ secrets.GITHUB_TOKEN }}

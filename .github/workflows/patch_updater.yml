@@ -1,8 +1,6 @@
 name: Count Patches
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *'
 
 env:
   TAG_COMMIT: 18b263c..
