@@ -14,6 +14,8 @@ RTL_LIST_YAML = ${UTIL_TASK_DIR}/${BENCHMARK_SUITE_NAME}_rtl_list.yaml
 
 NUM_JOBS=4
 IVERILOG_TEMP_DIR = _iverilog_temp
+
+# VexRiscV
 TMP_VEXRISC5 = _tmp_vexrisc5
 VEXRISC5_GIT_URL = https://github.com/SpinalHDL/VexRiscv.git
 VEXRISC5_RTL = VexRiscv.v
@@ -22,6 +24,16 @@ VEXRISC5S_LDIR= ${VEXRISC5_LDIR_PREFIX}_small/rtl/
 VEXRISC5F_LDIR= ${VEXRISC5_LDIR_PREFIX}_full/rtl/
 VEXRISC5_MURAX_RTL = Murax.v
 VEXRISC5_MURAX_LDIR= ${VEXRISC5_LDIR_PREFIX}_murax/rtl/
+
+# Verilog-SPI
+TMP_VSPI = _tmp_vspi
+VSPI_GIT_URL = https://github.com/janschiefer/verilog_spi.git
+VSPI_LDIR_PREFIX = ${PWD}/interface/verilog_spi
+VSPI_RTL_FLIST = "clock_divider.v" "neg_edge_det.v" "pos_edge_det.v" "spi2.v" "spi_module.v"
+VSPI_TB_FLIST = "testbench.v"
+VSPI_MISC_FLIST = "README.md" "LICENSE"
+VSPI_LDIR_RTL = ${VSPI_LDIR_PREFIX}/rtl/
+VSPI_LDIR_TB = ${VSPI_LDIR_PREFIX}/testbench/
 
 .SILENT:
 
@@ -70,6 +82,33 @@ vexriscv:
 	cd $${currDir} && \
 	echo "==== Update git track list ====" && \
 	git add ${VEXRISC5_LDIR_PREFIX}* && \
+	echo "==== Done ====" || exit 1;
+
+spi:
+# This command will checkout the latest SPI, then update RTL and testbenches
+	echo "==== Clone latest verilog-spi from github repo: ${VSPI_GIT_URL} ====" && \
+	currDir=$${PWD} && rm -rf ${TMP_VSPI} && \
+	git clone ${VSPI_GIT_URL} ${TMP_VSPI} && \
+    cd ${TMP_VSPI} && \
+	echo "==== Update RTL ====" && \
+	mkdir -p ${VSPI_LDIR_TB} && \
+	for f in ${VSPI_RTL_FLIST} ; \
+	do cp $${f} ${VSPI_LDIR_RTL} || exit 1; \
+	done && \
+	echo "==== Update Testbench ====" && \
+	mkdir -p ${VSPI_LDIR_TB} \
+	for f in ${VSPI_TB_FLIST} ; \
+	do cp $${f} ${VSPI_LDIR_TB} || exit 1; \
+	done && \
+	echo "==== Update Documentation ====" && \
+	mkdir -p ${VSPI_LDIR_PREFIX} \
+	for f in ${VSPI_MISC_FLIST} ; \
+	do cp $${f} ${VSPI_LDIR_PREFIX} || exit 1; \
+	done && \
+	echo `git rev-parse HEAD` > ${VSPI_LDIR_PREFIX}/VERSION.md
+	cd $${currDir} && \
+	echo "==== Update git track list ====" && \
+	git add ${VSPI_LDIR_PREFIX}* && \
 	echo "==== Done ====" || exit 1;
 
 # Functions to extract comments from Makefiles
