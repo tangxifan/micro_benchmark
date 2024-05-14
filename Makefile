@@ -6,6 +6,11 @@
 # 
 SHELL = bash
 PYTHON_EXEC ?= python3
+VERSION_FILE = VERSION.md
+TAGGED_COMMIT_FILE = .TAGGED_COMMIT
+INFRA_ROOT = ${PWD}/utils/
+VERSION_BUMP_TYPE = minor
+FORCE_COMMIT_VERSION_UPDATE = off
 BENCHMARK_SUITE_NAME = simple_gates
 UTIL_DIR = utils
 UTIL_SCRIPT_DIR = ${UTIL_DIR}/scripts
@@ -172,6 +177,19 @@ cordic:
 	git add ${CORDIC_LDIR_PREFIX} && \
 	echo "==== Done ====" || exit 1;
 
+update_version:
+# Update the patch count in the version number
+	echo "======== Bump up patch count in the version number ========"; \
+	${PYTHON_EXEC} ${INFRA_ROOT}/scripts/version_updater.py --version_file ${VERSION_FILE} --tagged_commit ${TAGGED_COMMIT_FILE} --force_commit ${FORCE_COMMIT_VERSION_UPDATE}	
+
+release_version:
+# Update the patch count in the version number
+	echo "======== Bump up release in the version number ========"; \
+	${PYTHON_EXEC} ${INFRA_ROOT}/scripts/version_updater.py --version_file ${VERSION_FILE} --tagged_commit ${TAGGED_COMMIT_FILE} --release --bump_type ${VERSION_BUMP_TYPE}	
+
+generate_initial_tagged_commit:
+# Create the first version of tagged commit file, used for version update
+	git rev-list --max-parents=0 --abbrev-commit HEAD > ${TAGGED_COMMIT_FILE}
 
 # Functions to extract comments from Makefiles
 define COMMENT_EXTRACT
