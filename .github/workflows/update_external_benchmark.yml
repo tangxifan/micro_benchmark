@@ -1,4 +1,4 @@
-name: Update VexRiscV to latest
+name: Update external benchmarks
 
 # Only run for pull requests as we care contribution to the master
 # - There are changes in RTL files
@@ -7,8 +7,8 @@ on:
 
 env:
   # Update the commit id when a major/minor version update is required
-  BRANCH_NAME: vexriscv_autoupdate
-  COMMIT_TITLE: "VexRiscV auto-update"
+  BRANCH_NAME: ext_benchmark_autoupdate
+  COMMIT_TITLE: "External benchmark auto-update"
 
 jobs:
   update_rtl:
@@ -29,13 +29,15 @@ jobs:
         run: |
           sudo bash ./.github/workflows/install_dependencies_vexriscv_ubuntu22p04.sh 
 
-      - name: Pull latest VexRiscV
+      - name: Pull latest external benchmarks
         shell: bash
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           make vexriscv
           git commit -m '[processor] update VexRiscV netlists to the latest'
+          make verilog-spi
+          git commit -m '[processor] update Verilog-spi netlists to the latest'
 
       - name: Push changes # push the output folder to your repo
         uses: ad-m/github-push-action@master
@@ -48,10 +50,10 @@ jobs:
         with:
           source_branch: ${{env.BRANCH_NAME}}           # name of branch for PR
           destination_branch: "main"                      # name of branch on which PR go
-          pr_title: "VexRiscV update for ${{ github.ref }} into main" # Title of pull request
+          pr_title: "External benchmark update for ${{ github.ref }} into main" # Title of pull request
           pr_body: ":crown: *An automated PR*"              # Full markdown support, requires pr_title
           pr_reviewer: "tangxifan"                          # Comma-separated list (no spaces)
           pr_assignee: "tangxifan"                    # Comma-separated list (no spaces)
-          pr_label: "auto-pr,vexriscv"                               # Comma-separated list (no spaces)
+          pr_label: "auto-pr,vexriscv,spi"                               # Comma-separated list (no spaces)
           pr_allow_empty: false                              # Creates pull request even if there are no changes
           github_token: ${{ secrets.GITHUB_TOKEN }}
