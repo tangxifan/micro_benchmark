@@ -39,6 +39,7 @@ VSPI_LDIR_TB = ${VSPI_LDIR_PREFIX}/testbench/
 TMP_DSPFLT = _tmp_dspfilter
 DSPFLT_GIT_URL = https://github.com/ZipCPU/dspfilters.git
 DSPFLT_LDIR_PREFIX = ${PWD}/dsp/dspfilters
+DSPFLT_RTL_FLIST = "boxcar.v" "delayw.v" "fastfir.v" "genericfir.v" "iiravg.v" "lfsr_gal.v" "ratfil.v" "slowfil_srl.v" "slowsymf.v" "subfildown.v" "cheapspectral.v" "dspswitch.v" "firtap.v" "histogram.v" "lfsr_fib.v" "lfsr.v" "shalfband.v" "slowfil.v" "smplfir.v"
 DSPFLT_MISC_FLIST = "README.md"
 DSPFLT_LDIR_RTL = ${DSPFLT_LDIR_PREFIX}/rtl/
 
@@ -46,6 +47,7 @@ DSPFLT_LDIR_RTL = ${DSPFLT_LDIR_PREFIX}/rtl/
 TMP_CORDIC = _tmp_cordic
 CORDIC_GIT_URL = https://github.com/ZipCPU/cordic.git
 CORDIC_LDIR_PREFIX = ${PWD}/dsp/cordic
+CORDIC_RTL_FLIST = "cordic.v" "quadtbl_ltbl.hex" "quadtbl.v" "quarterwav.v" "seqpolar.v" "sintable.v" "quadtbl_ctbl.hex" "quadtbl_qtbl.hex" "quarterwav.hex" "seqcordic.v" "sintable.hex" "topolar.v"
 CORDIC_MISC_FLIST = "README.md"
 CORDIC_LDIR_RTL = ${CORDIC_LDIR_PREFIX}/rtl/
 
@@ -130,13 +132,14 @@ dspfilters:
 	echo "==== Clone latest dspfilters from github repo: ${DSPFLT_GIT_URL} ====" && \
 	currDir=$${PWD} && rm -rf ${TMP_DSPFLT} && \
 	git clone ${DSPFLT_GIT_URL} ${TMP_DSPFLT} && \
-    cd ${TMP_DSPFLT} && \
+    cd ${TMP_DSPFLT}/rtl && \
 	echo "==== Update RTL ====" && \
 	mkdir -p ${DSPFLT_LDIR_RTL} && \
-	for f in `rtl/*.v` ; \
+	for f in ${DSPFLT_RTL_FLIST}; \
 	do cp $${f} ${DSPFLT_LDIR_RTL} || exit 1; \
-	done && \
+	done && cd $${currDir} && \
 	echo "==== Update Documentation ====" && \
+    cd ${TMP_DSPFLT} && \
 	mkdir -p ${DSPFLT_LDIR_PREFIX} && \
 	for f in ${DSPFLT_MISC_FLIST} ; \
 	do cp $${f} ${DSPFLT_LDIR_PREFIX} || exit 1; \
@@ -152,12 +155,12 @@ cordic:
 	echo "==== Clone latest cordic from github repo: ${CORDIC_GIT_URL} ====" && \
 	currDir=$${PWD} && rm -rf ${TMP_CORDIC} && \
 	git clone ${CORDIC_GIT_URL} ${TMP_CORDIC} && \
-    cd ${TMP_CORDIC} && \
+    cd ${TMP_CORDIC}/rtl && \
 	echo "==== Update RTL ====" && \
 	mkdir -p ${CORDIC_LDIR_RTL} && \
-	for f in `rtl/*.v` ; \
+	for f in ${DSPFLT_RTL_FLIST}; \
 	do cp $${f} ${CORDIC_LDIR_RTL} || exit 1; \
-	done && \
+	done && cd $${currDir} && \
 	echo "==== Update Documentation ====" && \
 	mkdir -p ${CORDIC_LDIR_PREFIX} && \
 	for f in ${CORDIC_MISC_FLIST} ; \
