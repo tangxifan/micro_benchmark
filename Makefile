@@ -84,31 +84,31 @@ vexriscv:
 	git add ${VEXRISC5_LDIR_PREFIX}* && \
 	echo "==== Done ====" || exit 1;
 
-spi:
+verilog-spi:
 # This command will checkout the latest SPI, then update RTL and testbenches
 	echo "==== Clone latest verilog-spi from github repo: ${VSPI_GIT_URL} ====" && \
 	currDir=$${PWD} && rm -rf ${TMP_VSPI} && \
 	git clone ${VSPI_GIT_URL} ${TMP_VSPI} && \
     cd ${TMP_VSPI} && \
 	echo "==== Update RTL ====" && \
-	mkdir -p ${VSPI_LDIR_TB} && \
+	mkdir -p ${VSPI_LDIR_RTL} && \
 	for f in ${VSPI_RTL_FLIST} ; \
 	do cp $${f} ${VSPI_LDIR_RTL} || exit 1; \
 	done && \
 	echo "==== Update Testbench ====" && \
-	mkdir -p ${VSPI_LDIR_TB} \
+	mkdir -p ${VSPI_LDIR_TB} && \
 	for f in ${VSPI_TB_FLIST} ; \
 	do cp $${f} ${VSPI_LDIR_TB} || exit 1; \
 	done && \
 	echo "==== Update Documentation ====" && \
-	mkdir -p ${VSPI_LDIR_PREFIX} \
+	mkdir -p ${VSPI_LDIR_PREFIX} && \
 	for f in ${VSPI_MISC_FLIST} ; \
 	do cp $${f} ${VSPI_LDIR_PREFIX} || exit 1; \
 	done && \
-	echo `git rev-parse HEAD` > ${VSPI_LDIR_PREFIX}/VERSION.md
+	echo `git rev-parse HEAD` > ${VSPI_LDIR_PREFIX}/VERSION.md && \
 	cd $${currDir} && \
 	echo "==== Update git track list ====" && \
-	git add ${VSPI_LDIR_PREFIX}* && \
+	git add ${VSPI_LDIR_PREFIX} && \
 	echo "==== Done ====" || exit 1;
 
 # Functions to extract comments from Makefiles
