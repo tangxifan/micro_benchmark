@@ -38,6 +38,10 @@ jobs:
           git diff-index --quiet HEAD || git commit -a -m '[benchmark] update VexRiscV netlists to the latest'
           make verilog-spi
           git diff-index --quiet HEAD || git commit -a -m '[benchmark] update Verilog-spi netlists to the latest'
+          make dspfilters
+          git diff-index --quiet HEAD || git commit -a -m '[benchmark] update dspfilters netlists to the latest'
+          make cordic
+          git diff-index --quiet HEAD || git commit -a -m '[benchmark] update cordic netlists to the latest'
 
       - name: Push changes # push the output folder to your repo
         uses: ad-m/github-push-action@master
