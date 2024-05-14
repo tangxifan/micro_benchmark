@@ -35,9 +35,9 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           make vexriscv
-          git commit -m '[processor] update VexRiscV netlists to the latest'
+          git diff-index --quiet HEAD || git commit -a -m '[benchmark] update VexRiscV netlists to the latest'
           make verilog-spi
-          git commit -m '[processor] update Verilog-spi netlists to the latest'
+          git diff-index --quiet HEAD || git commit -a -m '[benchmark] update Verilog-spi netlists to the latest'
 
       - name: Push changes # push the output folder to your repo
         uses: ad-m/github-push-action@master
