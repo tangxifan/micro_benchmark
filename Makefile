@@ -158,7 +158,7 @@ cordic:
     cd ${TMP_CORDIC}/rtl && \
 	echo "==== Update RTL ====" && \
 	mkdir -p ${CORDIC_LDIR_RTL} && \
-	for f in ${DSPFLT_RTL_FLIST}; \
+	for f in ${CORDIC_RTL_FLIST}; \
 	do cp $${f} ${CORDIC_LDIR_RTL} || exit 1; \
 	done && cd $${currDir} && \
 	echo "==== Update Documentation ====" && \
