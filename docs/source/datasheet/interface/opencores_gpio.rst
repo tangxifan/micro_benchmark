@@ -25,7 +25,7 @@ goran.djakovic@flextronics.si
 Revision History
 ----------------
 
-.. table:: List of All Software Accessible Registers
+.. table:: Revision history
 
    +-----+--------+------------+-----------------------------------------+
    | **  | **     | **Author** | **Description**                         |
