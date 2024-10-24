@@ -241,7 +241,7 @@ wbuart32:
 	mkdir -p ${WBURT32_LDIR_RTL} && \
 	for f in ${WBURT32_RTL_FLIST} ; \
 	do cp $${f} ${WBURT32_LDIR_RTL} || exit 1; \
-	done && \
+	done && cd $${currDir} && \
 	echo "==== Update Documentation ====" && \
 	mkdir -p ${WBURT32_LDIR_PREFIX} && \
 	for f in ${WBURT32_MISC_FLIST} ; \
@@ -285,7 +285,7 @@ uberddr3:
 	mkdir -p ${UBERDDR3_LDIR_RTL} && \
 	for f in ${UBERDDR3_RTL_FLIST} ; \
 	do cp $${f} ${UBERDDR3_LDIR_RTL} || exit 1; \
-	done && \
+	done && cd $${currDir} && \
 	echo "==== Update Documentation ====" && \
 	mkdir -p ${UBERDDR3_LDIR_PREFIX} && \
 	for f in ${UBERDDR3_MISC_FLIST} ; \
