@@ -776,10 +776,10 @@ write 0x20 to Transmit register, set WR bit.
 .. note:: Please note that the time for the Interrupt Service Routine is not shown here. It is assumed that the ISR is much faster then the I2C cycle time, and therefore not visible.
 
 Appendix A
-==========
+----------
 
 Synthesis results
------------------
+~~~~~~~~~~~~~~~~~
 
 Synthesis tool: Synplify Pro
 
