@@ -3,10 +3,12 @@
 GPIO IP Core
 ============
 
-Specification
--------------
+.. figure:: ./figures/OpenCores.png
 
-*Authors:*
+Specification
+
+Authors
+-------
 
 *Damjan Lampret*
 
@@ -23,7 +25,7 @@ goran.djakovic@flextronics.si
 Revision History
 ----------------
 
-.. table:: Table 1. List of All Software Accessible Registers
+.. table:: List of All Software Accessible Registers
 
    +-----+--------+------------+-----------------------------------------+
    | **  | **     | **Author** | **Description**                         |
@@ -58,12 +60,12 @@ dedicated controllers in a system and require simple input and/or output
 software controlled signals.
 
 Source codes
-------------
+~~~~~~~~~~~~
 
 See details in ``interface/opencores_gpio``
 
 Features
---------
+~~~~~~~~
 
 The following lists the main features of GPIO IP core:
 
@@ -114,14 +116,14 @@ of four main building blocks:
 
 .. _fig_opencores_gpio_core_arch:
 
-.. figure:: ./figures/opencores_gpio/image1.png
+.. figure:: ./figures/opencores_gpio/core_arch.png
   :width: 100%
   :alt: Core Architecture
 
   Core Architecture
 
 Clocks
-------
+~~~~~~
 
 The GPIO core has two clock domains. All registers except RGPIO_IN are
 in system clock domain.
@@ -130,17 +132,17 @@ RGPIO_IN register can be clocked by system clock or by external clock
 reference.
 
 WISHBONE Interface
-------------------
+~~~~~~~~~~~~~~~~~~
 
 WISHBONE interface connects GPIO core to the host system. It is WISHBONE
 SoC Interconnection specification Rev. B compliant. The implementation
 implements a 32-bit bus width and does not support other bus widths.
 
-.. figure:: ./figures/opencores_gpio/image3.png
+.. figure:: ./figures/wbcompatible.png
    :width: 100%
 
 GPIO Registers
---------------
+~~~~~~~~~~~~~~
 
 The GPIO IP Core has several software accessible registers. Most
 registers have the same width as number of general-purpose I/O signals
@@ -148,14 +150,14 @@ and they can be from 1 – 32 bits. The host through these registers
 programs type and operation of each general-purpose I/O signal.
 
 Auxiliary Inputs
-----------------
+~~~~~~~~~~~~~~~~
 
 The auxiliary inputs can bypass RGPIO_OUT outputs based on programming
 of RPGIO_AUX register. Auxiliary inputs are used to multiplex other
 on-chip peripherals on GPIO pins.
 
 Interface to External I/O Cells and Pads
-----------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 External interface connects GPIO core to external I/O ring cells and
 pads. To support open-drain or three-state outputs, appropriate
@@ -165,12 +167,19 @@ Part of external interface is also ECLK register. It can be used to
 register inputs based on external clock reference.
 
 Operation
+---------
 
 This section describes the operation of the GPIO core. The GPIO core
 provides toggling of general-purpose outputs and sampling of
 general-purpose inputs under software control.
 
-Figure 2. Block Diagram of GPIO Logic
+.. _fig_opencores_gpio_block_diagram:
+
+.. figure:: ./figures/opencores_gpio/block_diagram.png
+  :width: 100%
+  :alt: Block diagram
+
+  Block Diagram of GPIO Logic
 
 General-purpose inputs can generate interrupts so that software does not
 have to be in poll mode all the time when sampling inputs.
@@ -183,7 +192,7 @@ multiplexed together with the GPIO pins. For this purpose, auxiliary
 inputs can be multiplexed on general-purpose outputs.
 
 Hardware Reset
---------------
+~~~~~~~~~~~~~~
 
 Following hardware reset all general-purpose I/O signals are set into
 input mode. Meaning, all output drivers are disabled. All interrupts are
@@ -192,7 +201,7 @@ Gpio_eclk signal is not used to latch inputs into RGPIO_IN register;
 instead system clock is used.
 
 General-Purpose I/O as Polled Input
------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To use general-purpose I/O as input only, corresponding bit in RGPIO_OE
 register must be cleared to select input mode. Bit RGPIO_CTRL[INTE] and
@@ -205,7 +214,7 @@ RGPIO_ECLK appropriate bit is set, on gpio_eclk edge. Which clock edge
 is selected, is defined by value of RGPIO_NEC appropriate bit.
 
 General-Purpose I/O as Input in Interrupt Mode
-----------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To use general-purpose I/O as input with generation of interrupts,
 corresponding bit in RGPIO_OE register must be cleared to select input
@@ -230,7 +239,7 @@ Another way to de-assert interrupts is to disable them by clearing
 control bit RGPIO_CTRL[INTE].
 
 General-Purpose I/O as Output
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To enable general-purpose I/O output driver, corresponding bit in
 RGPIO_OE must be set. Corresponding bit in RGPIO_OUT register must be
@@ -242,7 +251,7 @@ Clearing bit in RGPIO_OE register will disable output driver and enable
 three-state or open-drain.
 
 General-Purpose I/O as Bi-Directional I/O
------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To use general-purpose I/O as bi-directional signal, corresponding bit
 in RGPIO_OE must be toggled to enable or disable three-state or
@@ -264,19 +273,15 @@ Another way to de-assert interrupts is to disable them by clearing
 control bit RGPIO_CTRL[INTE]
 
 General-Purpose I/O driven by Auxiliary Input
----------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To drive general-purpose output with auxiliary input, corresponding bit
 in RGPIO_OE must be set to enable output driver. Corresponding bit in
 RGPIO_AUX must be set to enable multiplexing of auxiliary input onto
 general-purpose output.
 
-.. _section-5:
-
-4
-=
-
 Registers
+---------
 
 This section describes all control and status register inside the GPIO
 core. The *Address* field indicates address in hexadecimal. *Width*
@@ -288,9 +293,9 @@ Width of most registers is user selectable and is set by the user of the
 GPIO core at synthesis time.
 
 Registers list
---------------
+~~~~~~~~~~~~~~
 
-.. table:: Table 2. Input Register
+.. table:: Input Register
 
    +------------+----------+-----+-----+---------------------------------+
    | Name       | Address  | Wi  | Acc | Description                     |
@@ -328,13 +333,13 @@ Registers list
    +------------+----------+-----+-----+---------------------------------+
 
 Register RGPIO_IN description
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 RGPIO_IN register latches general-purpose inputs. Reference clock is
 either system clock or ECLK input. Selection between both clocks is
 performed with RGPIO_ECLK register.
 
-.. table:: Table 3. Output Register
+.. table:: Output Register
 
    +------+-------+--------+---------------------------------------------+
    | Bit  | A     | Reset  | Description                                 |
@@ -345,13 +350,13 @@ performed with RGPIO_ECLK register.
    +------+-------+--------+---------------------------------------------+
 
 Register RGPIO_OUT description
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 RGPIO_OUT register drives general-purpose outputs. Additionally,
 external I/O cells can be operated open-drain or three-state with
 RGPIO_OE register.
 
-.. table:: Table 4. Output Enable Register
+.. table:: Output Enable Register
 
    +------+-------+--------+---------------------------------------------+
    | Bit  | A     | Reset  | Description                                 |
@@ -362,7 +367,7 @@ RGPIO_OE register.
    +------+-------+--------+---------------------------------------------+
 
 Register RGPIO_OE description
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 RGPIO_OE enables output/bi-directional mode of operation for each
 general-purpose I/O signal. When bit is set, corresponding
@@ -370,7 +375,7 @@ general-purpose output driver is enabled. When bit is cleared,
 output/bi-directional driver is operating in open-drain or three-state
 mode.
 
-.. table:: Table 5. Interrupt Enable Register
+.. table:: Interrupt Enable Register
 
    +------+-------+--------+---------------------------------------------+
    | Bit  | A     | Reset  | Description                                 |
@@ -381,7 +386,7 @@ mode.
    +------+-------+--------+---------------------------------------------+
 
 Register RGPIO_INTE description
--------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 RGPIO_INTE register defines which general-purpose inputs generate
 interrupt to the host. When bit is set, corresponding general-purpose
@@ -389,7 +394,7 @@ input generates interrupt.
 
 See also global interrupt enable bit RGPIO_CTRL[INTE].
 
-.. table:: Table 6. Trigger Register
+.. table:: Trigger Register
 
    +------+-------+--------+---------------------------------------------+
    | Bit  | A     | Reset  | Description                                 |
@@ -400,7 +405,7 @@ See also global interrupt enable bit RGPIO_CTRL[INTE].
    +------+-------+--------+---------------------------------------------+
 
 Register RGPIO_PTRIG description
---------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 RGPIO_PTRIG register defines which edge of a general-purpose input
 generates an interrupt. Generation of an interrupt must be first enabled
@@ -409,7 +414,7 @@ When bit is set, corresponding input generates an interrupt when
 positive edge is encountered. When bit is cleared, corresponding input
 generates an interrupt when negative edge is encountered.
 
-.. table:: Table 7. Auxiliary Inputs Register
+.. table:: Auxiliary Inputs Register
 
    +------+-------+--------+---------------------------------------------+
    | Bit  | A     | Reset  | Description                                 |
@@ -420,13 +425,13 @@ generates an interrupt when negative edge is encountered.
    +------+-------+--------+---------------------------------------------+
 
 Register RGPIO_AUX description
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 RGPIO_AUX multiplexes auxiliary inputs to general-purpose outputs. When
 bit is set, corresponding auxiliary input drives corresponding
 general-purpose output instead of a bit in RGPIO_OUT register.
 
-.. table:: Table 8. Control Register
+.. table:: Control Register
 
    +------+-------+--------+---------------------------------------------+
    | Bit  | A     | Reset  | Description                                 |
@@ -439,13 +444,13 @@ general-purpose output instead of a bit in RGPIO_OUT register.
    +------+-------+--------+---------------------------------------------+
 
 Register RGPIO_CTRL description
--------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Control bits in RGPIO_CTRL register control operation of entire GPIO
 core as opposed to bits in all other registers that control only
 individual general-purpose I/O signals.
 
-.. table:: Table 9. Interrupt Status Register
+.. table:: Interrupt Status Register
 
    +------+-------+--------+---------------------------------------------+
    | Bit  | A     | Reset  | Description                                 |
@@ -465,7 +470,7 @@ individual general-purpose I/O signals.
    +------+-------+--------+---------------------------------------------+
 
 Register RGPIO_INTS description
--------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 RGPIO_INTS register is interrupt status register for GPIO inputs. Bits
 in RGPIO_INTS are set by GPIO core when corresponding inputs meet
@@ -473,7 +478,7 @@ RGPIO_PTRIG criteria and cause an interrupt.
 
 To de-assert an interrupt request, CPU must clear RGPIO_INTS register.
 
-.. table:: Table 10. WISHBONE Interface’ Signals
+.. table:: WISHBONE Interface’ Signals
 
    +------+-------+--------+---------------------------------------------+
    | Bit  | A     | Reset  | Description                                 |
@@ -486,9 +491,9 @@ To de-assert an interrupt request, CPU must clear RGPIO_INTS register.
    +------+-------+--------+---------------------------------------------+
 
 Register RGPIO_ECLK description
--------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. table:: Table 11. Auxiliary input signals
+.. table:: Auxiliary input signals
 
    +------+-------+--------+---------------------------------------------+
    | Bit  | A     | Reset  | Description                                 |
@@ -500,32 +505,27 @@ Register RGPIO_ECLK description
    |      |       |        | clock is used to latch input signal.        |
    +------+-------+--------+---------------------------------------------+
 
-Table 10. ECLK Register
-
 Register RGPIO_NEC description
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-+------+-------+--------+---------------------------------------------+
-| Bit  | A     | Reset  | Description                                 |
-| #    | ccess |        |                                             |
-+------+-------+--------+---------------------------------------------+
-| 1 -  | R/W   | 0x0    | When set, gpio_eclk is active on negative   |
-| 32   |       |        | edge. When cleared, gpio_eclk is active on  |
-|      |       |        | positive edge. This bit has no function     |
-|      |       |        | when appropriate bit in RGPIO_ECLK is       |
-|      |       |        | cleared.                                    |
-+------+-------+--------+---------------------------------------------+
+.. table:: ECLK Register
 
-Table 11. NEC Register
+    +------+-------+--------+---------------------------------------------+
+    | Bit  | A     | Reset  | Description                                 |
+    | #    | ccess |        |                                             |
+    +------+-------+--------+---------------------------------------------+
+    | 1 -  | R/W   | 0x0    | When set, gpio_eclk is active on negative   |
+    | 32   |       |        | edge. When cleared, gpio_eclk is active on  |
+    |      |       |        | positive edge. This bit has no function     |
+    |      |       |        | when appropriate bit in RGPIO_ECLK is       |
+    |      |       |        | cleared.                                    |
+    +------+-------+--------+---------------------------------------------+
 
-.. _section-6:
-
-5
-=
 
 IO ports
+--------
 
-GPIO IP core has three interfaces. Figure 3 below shows all three
+GPIO IP core has three interfaces. :numref:`fig_opencores_gpio_core_interface` below shows all three
 interfaces:
 
 -  WISHBONE host interface
@@ -534,73 +534,83 @@ interfaces:
 
 -  Interface to external I/O cells and pads
 
-Figure 3. Core Interfaces
+.. _fig_opencores_gpio_core_interface:
+
+.. figure:: ./figures/opencores_gpio/core_interface.png
+  :width: 100%
+  :alt: Core Interface
+
+  Core Interface
 
 WISHBONE host interface
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 The host interface is a WISHBONE Rev B compliant interface. GPIO IP core
 works as a slave device only. When it needs the intervention of the
 local microcontroller, it will assert INTA_O.
 
-+----------+------+----------+---------------------------------------+
-| Port     | W    | D        | Description                           |
-|          | idth | irection |                                       |
-+----------+------+----------+---------------------------------------+
-| wb_clk_i | 1    | Input    | Clock inputs                          |
-+----------+------+----------+---------------------------------------+
-| wb_rst_i | 1    | Input    | Reset input                           |
-+----------+------+----------+---------------------------------------+
-| wb_cyc_i | 1    | Inputs   | Indicates valid bus cycle (core       |
-|          |      |          | select)                               |
-+----------+------+----------+---------------------------------------+
-| wb_adr_i | 15   | Inputs   | Address inputs                        |
-+----------+------+----------+---------------------------------------+
-| wb_dat_i | 32   | Inputs   | Data inputs                           |
-+----------+------+----------+---------------------------------------+
-| wb_dat_o | 32   | Outputs  | Data outputs                          |
-+----------+------+----------+---------------------------------------+
-| wb_sel_i | 4    | Inputs   | Indicates valid bytes on data bus     |
-|          |      |          | (during valid cycle it must be 0xf)   |
-+----------+------+----------+---------------------------------------+
-| wb_ack_o | 1    | Output   | Acknowledgment output (indicates      |
-|          |      |          | normal transaction termination)       |
-+----------+------+----------+---------------------------------------+
-| wb_err_o | 1    | Output   | Error acknowledgment output           |
-|          |      |          | (indicates an abnormal transaction    |
-|          |      |          | termination)                          |
-+----------+------+----------+---------------------------------------+
-| wb_rty_o | 1    | Output   | Not used                              |
-+----------+------+----------+---------------------------------------+
-| wb_we_i  | 1    | Input    | Write transaction when asserted high  |
-+----------+------+----------+---------------------------------------+
-| wb_stb_i | 1    | Input    | Indicates valid data transfer cycle   |
-+----------+------+----------+---------------------------------------+
-| w        | 1    | Output   | Interrupt output                      |
-| b_inta_o |      |          |                                       |
-+----------+------+----------+---------------------------------------+
+.. table:: NEC Register
+
+  +----------+------+----------+---------------------------------------+
+  | Port     | W    | D        | Description                           |
+  |          | idth | irection |                                       |
+  +----------+------+----------+---------------------------------------+
+  | wb_clk_i | 1    | Input    | Clock inputs                          |
+  +----------+------+----------+---------------------------------------+
+  | wb_rst_i | 1    | Input    | Reset input                           |
+  +----------+------+----------+---------------------------------------+
+  | wb_cyc_i | 1    | Inputs   | Indicates valid bus cycle (core       |
+  |          |      |          | select)                               |
+  +----------+------+----------+---------------------------------------+
+  | wb_adr_i | 15   | Inputs   | Address inputs                        |
+  +----------+------+----------+---------------------------------------+
+  | wb_dat_i | 32   | Inputs   | Data inputs                           |
+  +----------+------+----------+---------------------------------------+
+  | wb_dat_o | 32   | Outputs  | Data outputs                          |
+  +----------+------+----------+---------------------------------------+
+  | wb_sel_i | 4    | Inputs   | Indicates valid bytes on data bus     |
+  |          |      |          | (during valid cycle it must be 0xf)   |
+  +----------+------+----------+---------------------------------------+
+  | wb_ack_o | 1    | Output   | Acknowledgment output (indicates      |
+  |          |      |          | normal transaction termination)       |
+  +----------+------+----------+---------------------------------------+
+  | wb_err_o | 1    | Output   | Error acknowledgment output           |
+  |          |      |          | (indicates an abnormal transaction    |
+  |          |      |          | termination)                          |
+  +----------+------+----------+---------------------------------------+
+  | wb_rty_o | 1    | Output   | Not used                              |
+  +----------+------+----------+---------------------------------------+
+  | wb_we_i  | 1    | Input    | Write transaction when asserted high  |
+  +----------+------+----------+---------------------------------------+
+  | wb_stb_i | 1    | Input    | Indicates valid data transfer cycle   |
+  +----------+------+----------+---------------------------------------+
+  | w        | 1    | Output   | Interrupt output                      |
+  | b_inta_o |      |          |                                       |
+  +----------+------+----------+---------------------------------------+
 
 .. _auxiliary-inputs-1:
 
 Auxiliary inputs
-----------------
+~~~~~~~~~~~~~~~~
 
 The auxiliary inputs can bypass RGPIO_OUT outputs based on programming
 of RPGIO_AUX register. Auxiliary inputs are used to multiplex other
 on-chip peripherals on GPIO pins.
 
-+----------+------+----------+---------------------------------------+
-| Port     | W    | D        | Description                           |
-|          | idth | irection |                                       |
-+----------+------+----------+---------------------------------------+
-| aux_i    | 1 -  | Inputs   | GPIO auxiliary inputs                 |
-|          | 32   |          |                                       |
-+----------+------+----------+---------------------------------------+
+.. table:: Auxiliary input signals
+
+  +----------+------+----------+---------------------------------------+
+  | Port     | W    | D        | Description                           |
+  |          | idth | irection |                                       |
+  +----------+------+----------+---------------------------------------+
+  | aux_i    | 1 -  | Inputs   | GPIO auxiliary inputs                 |
+  |          | 32   |          |                                       |
+  +----------+------+----------+---------------------------------------+
 
 .. _interface-to-external-io-cells-and-pads-1:
 
 Interface to external I/O cells and pads
-----------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 External interface connects GPIO core to external I/O ring cells and
 pads. To support open-drain or three-state outputs, I/O cells with
@@ -609,27 +619,28 @@ open-drain or three-state support must be used.
 Part of external interface is also ECLK signal. It can be used to
 register inputs based on external clock reference.
 
-+-------------+-------+----------+------------------------------------+
-| Port        | Width | D        | Description                        |
-|             |       | irection |                                    |
-+-------------+-------+----------+------------------------------------+
-| in_pad_i    | 1 –   | Inputs   | GPIO inputs                        |
-|             | 32    |          |                                    |
-+-------------+-------+----------+------------------------------------+
-| out_pad_o   | 1 –   | Outputs  | GPIO outputs                       |
-|             | 32    |          |                                    |
-+-------------+-------+----------+------------------------------------+
-| o           | 1 –   | Outputs  | GPIO output drivers enables (for   |
-| en_padoen_o | 32    |          | three-state or open-drain drivers) |
-+-------------+-------+----------+------------------------------------+
-| ex          | 1     | Input    | Alternative GPIO inputs' latch     |
-| t_clk_pad_i |       |          | clock                              |
-+-------------+-------+----------+------------------------------------+
+.. table:: External interface
 
-Table13. External interface
+  +-------------+-------+----------+------------------------------------+
+  | Port        | Width | D        | Description                        |
+  |             |       | irection |                                    |
+  +-------------+-------+----------+------------------------------------+
+  | in_pad_i    | 1 –   | Inputs   | GPIO inputs                        |
+  |             | 32    |          |                                    |
+  +-------------+-------+----------+------------------------------------+
+  | out_pad_o   | 1 –   | Outputs  | GPIO outputs                       |
+  |             | 32    |          |                                    |
+  +-------------+-------+----------+------------------------------------+
+  | o           | 1 –   | Outputs  | GPIO output drivers enables (for   |
+  | en_padoen_o | 32    |          | three-state or open-drain drivers) |
+  +-------------+-------+----------+------------------------------------+
+  | ex          | 1     | Input    | Alternative GPIO inputs' latch     |
+  | t_clk_pad_i |       |          | clock                              |
+  +-------------+-------+----------+------------------------------------+
 
-A
-=
+
+Appendix
+--------
 
 Core HW Configuration
 
@@ -637,336 +648,185 @@ This section describes parameters that are set by the user of the core
 and define configuration of the core. Parameters must be set by the user
 before actual use of the core in simulation or synthesis.
 
-//
-
-// Number of GPIO I/O signals
-
-//
-
-// This is the most important parameter of the GPIO IP core. It defines
-how many
-
-// I/O signals core has. Range is from 1 to 32. If more than 32 I/O
-signals are
-
-// required, use several instances of GPIO IP core.
-
-//
-
-// Default is 16.
-
-//
-
-\`define GPIO_IOS 31
-
-//depending on number of GPIO_IOS, define this...
-
-// for example: if there is 26 GPIO_IOS, define GPIO_LINES26
-
-//
-
-\`define GPIO_LINES31
-
-//
-
-// Undefine this one if you don't want to remove GPIO block from your
-design
-
-// but you also don't need it. When it is undefined, all GPIO ports
-still
-
-// remain valid and the core can be synthesized however internally there
-is
-
-// no GPIO funationality.
-
-//
-
-// Defined by default (duhh !).
-
-//
-
-\`define GPIO_IMPLEMENTED
-
-//
-
-// Define to register all WISHBONE outputs.
-
-//
-
-// Register outputs if you are using GPIO core as a block and
-synthesizing
-
-// and place&routing it separately from the rest of the system.
-
-//
-
-// If you do not need registered outputs, you can save some area by not
-defining
-
-// this macro. By default it is defined.
-
-//
-
-\`define GPIO_REGISTERED_WB_OUTPUTS
-
-//
-
-// Define to register all GPIO pad outputs.
-
-//
-
-// Register outputs if you are using GPIO core as a block and
-synthesizing
-
-// and place&routing it separately from the rest of the system.
-
-//
-
-// If you do not need registered outputs, you can save some area by not
-defining
-
-// this macro. By default it is defined.
-
-//
-
-\`define GPIO_REGISTERED_IO_OUTPUTS
-
-//
-
-// Define to avoid using negative edge clock flip-flops for external
-clock
-
-// (caused by NEC register. Instead an inverted external clock with
-
-// positive edge clock flip-flops will be used.
-
-//
-
-// By default it is not defined.
-
-//
-
-//`define GPIO_NO_NEGEDGE_FLOPS
-
-//
-
-// If GPIO_NO_NEGEDGE_FLOPS is defined, a mux needs to be placed on
-external clock
-
-// clk_pad_i to implement RGPIO_CTRL[NEC] functionality. If no mux is
-allowed on
-
-// clock signal, enable the following define.
-
-//
-
-// By default it is not defined.
-
-//
-
-//`define GPIO_NO_CLKPAD_LOGIC
-
-//
-
-// Undefine if you don't need to read GPIO registers except for RGPIO_IN
-register.
-
-// When it is undefined all reads of GPIO registers return RGPIO_IN
-register. This
-
-// is usually useful if you want really small area (for example when
-implemented in
-
-// FPGA).
-
-//
-
-// To follow GPIO IP core specification document this one must be
-defined. Also to
-
-// successfully run the test bench it must be defined. By default it is
-defined.
-
-//
-
-\`define GPIO_READREGS
-
-//
-
-// Full WISHBONE address decoding
-
-//
-
-// It is is undefined, partial WISHBONE address decoding is performed.
-
-// Undefine it if you need to save some area.
-
-//
-
-// By default it is defined.
-
-//
-
-\`define GPIO_FULL_DECODE
-
-//
-
-// Strict 32-bit WISHBONE access
-
-//
-
-// If this one is defined, all WISHBONE accesses must be 32-bit. If it
-is
-
-// not defined, err_o is asserted whenever 8- or 16-bit access is made.
-
-// Undefine it if you need to save some area.
-
-//
-
-// By default it is defined.
-
-//
-
-//`define GPIO_STRICT_32BIT_ACCESS
-
-//
-
-\`ifdef GPIO_STRICT_32BIT_ACCESS
-
-\`else
-
-// added by gorand :
-
-// if GPIO_STRICT_32BIT_ACCESS is not defined,
-
-// depending on number of gpio I/O lines, the following are defined :
-
-// if the number of I/O lines is in range 1-8, GPIO_WB_BYTES1 is
-defined,
-
-// if the number of I/O lines is in range 9-16, GPIO_WB_BYTES2 is
-defined,
-
-// if the number of I/O lines is in range 17-24, GPIO_WB_BYTES3 is
-defined,
-
-// if the number of I/O lines is in range 25-32, GPIO_WB_BYTES4 is
-defined,
-
-\`define GPIO_WB_BYTES4
-
-\`endif
-
-//
-
-// WISHBONE address bits used for full decoding of GPIO registers.
-
-//
-
-\`define GPIO_ADDRHH 7
-
-\`define GPIO_ADDRHL 6
-
-\`define GPIO_ADDRLH 1
-
-\`define GPIO_ADDRLL 0
-
-//
-
-// Bits of WISHBONE address used for partial decoding of GPIO registers.
-
-//
-
-// Default 5:2.
-
-//
-
-\`define GPIO_OFS_BITS \`GPIO_ADDRHL-1:`GPIO_ADDRLH+1
-
-//
-
-// Addresses of GPIO registers
-
-//
-
-// To comply with GPIO IP core specification document they must go from
-
-// address 0 to address 0x18 in the following order: RGPIO_IN,
-RGPIO_OUT,
-
-// RGPIO_OE, RGPIO_INTE, RGPIO_PTRIG, RGPIO_AUX and RGPIO_CTRL
-
-//
-
-// If particular register is not needed, it's address definition can be
-omitted
-
-// and the register will not be implemented. Instead a fixed default
-value will
-
-// be used.
-
-//
-
-\`define GPIO_RGPIO_IN 4'h0 // Address 0x00
-
-\`define GPIO_RGPIO_OUT 4'h1 // Address 0x04
-
-\`define GPIO_RGPIO_OE 4'h2 // Address 0x08
-
-\`define GPIO_RGPIO_INTE 4'h3 // Address 0x0c
-
-\`define GPIO_RGPIO_PTRIG 4'h4 // Address 0x10
-
-\`define GPIO_RGPIO_AUX 4'h5 // Address 0x14
-
-\`define GPIO_RGPIO_CTRL 4'h6 // Address 0x18
-
-\`define GPIO_RGPIO_INTS 4'h7 // Address 0x1c
-
-\`define GPIO_RGPIO_ECLK 4'h8 // Address 0x20
-
-\`define GPIO_RGPIO_NEC 4'h9 // Address 0x24
-
-//
-
-// Default values for unimplemented GPIO registers
-
-//
-
-\`define GPIO_DEF_RGPIO_IN \`GPIO_IOS'h0
-
-\`define GPIO_DEF_RGPIO_OUT \`GPIO_IOS'h0
-
-\`define GPIO_DEF_RGPIO_OE \`GPIO_IOS'h0
-
-\`define GPIO_DEF_RGPIO_INTE \`GPIO_IOS'h0
-
-\`define GPIO_DEF_RGPIO_PTRIG \`GPIO_IOS'h0
-
-\`define GPIO_DEF_RGPIO_AUX \`GPIO_IOS'h0
-
-\`define GPIO_DEF_RGPIO_CTRL \`GPIO_IOS'h0
-
-\`define GPIO_DEF_RGPIO_ECLK \`GPIO_IOS'h0
-
-\`define GPIO_DEF_RGPIO_NEC \`GPIO_IOS'h0
-
-//
-
-// RGPIO_CTRL bits
-
-//
-
-// To comply with the GPIO IP core specification document they must go
-from
-
-// bit 0 to bit 1 in the following order: INTE, INT
-
-//
-
-\`define GPIO_RGPIO_CTRL_INTE 0
-
-\`define GPIO_RGPIO_CTRL_INTS 1
+.. code-block::
+
+  //
+  // Number of GPIO I/O signals
+  //
+  // This is the most important parameter of the GPIO IP core. It defines
+  how many
+  // I/O signals core has. Range is from 1 to 32. If more than 32 I/O
+  signals are
+  // required, use several instances of GPIO IP core.
+  //
+  // Default is 16.
+  //
+  \`define GPIO_IOS 31
+  //depending on number of GPIO_IOS, define this...
+  // for example: if there is 26 GPIO_IOS, define GPIO_LINES26
+  //
+  \`define GPIO_LINES31
+  //
+  // Undefine this one if you don't want to remove GPIO block from your
+  design
+  // but you also don't need it. When it is undefined, all GPIO ports
+  still
+  // remain valid and the core can be synthesized however internally there
+  is
+  // no GPIO funationality.
+  //
+  // Defined by default (duhh !).
+  //
+  \`define GPIO_IMPLEMENTED
+  //
+  // Define to register all WISHBONE outputs.
+  //
+  // Register outputs if you are using GPIO core as a block and
+  synthesizing
+  // and place&routing it separately from the rest of the system.
+  //
+  // If you do not need registered outputs, you can save some area by not
+  defining
+  // this macro. By default it is defined.
+  //
+  \`define GPIO_REGISTERED_WB_OUTPUTS
+  //
+  // Define to register all GPIO pad outputs.
+  //
+  // Register outputs if you are using GPIO core as a block and
+  synthesizing
+  // and place&routing it separately from the rest of the system.
+  //
+  // If you do not need registered outputs, you can save some area by not
+  defining
+  // this macro. By default it is defined.
+  //
+  \`define GPIO_REGISTERED_IO_OUTPUTS
+  //
+  // Define to avoid using negative edge clock flip-flops for external
+  clock
+  // (caused by NEC register. Instead an inverted external clock with
+  // positive edge clock flip-flops will be used.
+  //
+  // By default it is not defined.
+  //
+  //`define GPIO_NO_NEGEDGE_FLOPS
+  //
+  // If GPIO_NO_NEGEDGE_FLOPS is defined, a mux needs to be placed on
+  external clock
+  // clk_pad_i to implement RGPIO_CTRL[NEC] functionality. If no mux is
+  allowed on
+  // clock signal, enable the following define.
+  //
+  // By default it is not defined.
+  //
+  //`define GPIO_NO_CLKPAD_LOGIC
+  //
+  // Undefine if you don't need to read GPIO registers except for RGPIO_IN
+  register.
+  // When it is undefined all reads of GPIO registers return RGPIO_IN
+  register. This
+  // is usually useful if you want really small area (for example when
+  implemented in
+  // FPGA).
+  //
+  // To follow GPIO IP core specification document this one must be
+  defined. Also to
+  // successfully run the test bench it must be defined. By default it is
+  defined.
+  //
+  \`define GPIO_READREGS
+  //
+  // Full WISHBONE address decoding
+  //
+  // It is is undefined, partial WISHBONE address decoding is performed.
+  // Undefine it if you need to save some area.
+  //
+  // By default it is defined.
+  //
+  \`define GPIO_FULL_DECODE
+  //
+  // Strict 32-bit WISHBONE access
+  //
+  // If this one is defined, all WISHBONE accesses must be 32-bit. If it
+  is
+  // not defined, err_o is asserted whenever 8- or 16-bit access is made.
+  // Undefine it if you need to save some area.
+  //
+  // By default it is defined.
+  //
+  //`define GPIO_STRICT_32BIT_ACCESS
+  //
+  \`ifdef GPIO_STRICT_32BIT_ACCESS
+  \`else
+  // added by gorand :
+  // if GPIO_STRICT_32BIT_ACCESS is not defined,
+  // depending on number of gpio I/O lines, the following are defined :
+  // if the number of I/O lines is in range 1-8, GPIO_WB_BYTES1 is
+  defined,
+  // if the number of I/O lines is in range 9-16, GPIO_WB_BYTES2 is
+  defined,
+  // if the number of I/O lines is in range 17-24, GPIO_WB_BYTES3 is
+  defined,
+  // if the number of I/O lines is in range 25-32, GPIO_WB_BYTES4 is
+  defined,
+  \`define GPIO_WB_BYTES4
+  \`endif
+  //
+  // WISHBONE address bits used for full decoding of GPIO registers.
+  //
+  \`define GPIO_ADDRHH 7
+  \`define GPIO_ADDRHL 6
+  \`define GPIO_ADDRLH 1
+  \`define GPIO_ADDRLL 0
+  //
+  // Bits of WISHBONE address used for partial decoding of GPIO registers.
+  //
+  // Default 5:2.
+  //
+  \`define GPIO_OFS_BITS \`GPIO_ADDRHL-1:`GPIO_ADDRLH+1
+  //
+  // Addresses of GPIO registers
+  //
+  // To comply with GPIO IP core specification document they must go from
+  // address 0 to address 0x18 in the following order: RGPIO_IN,
+  RGPIO_OUT,
+  // RGPIO_OE, RGPIO_INTE, RGPIO_PTRIG, RGPIO_AUX and RGPIO_CTRL
+  //
+  // If particular register is not needed, it's address definition can be
+  omitted
+  // and the register will not be implemented. Instead a fixed default
+  value will
+  // be used.
+  //
+  \`define GPIO_RGPIO_IN 4'h0 // Address 0x00
+  \`define GPIO_RGPIO_OUT 4'h1 // Address 0x04
+  \`define GPIO_RGPIO_OE 4'h2 // Address 0x08
+  \`define GPIO_RGPIO_INTE 4'h3 // Address 0x0c
+  \`define GPIO_RGPIO_PTRIG 4'h4 // Address 0x10
+  \`define GPIO_RGPIO_AUX 4'h5 // Address 0x14
+  \`define GPIO_RGPIO_CTRL 4'h6 // Address 0x18
+  \`define GPIO_RGPIO_INTS 4'h7 // Address 0x1c
+  \`define GPIO_RGPIO_ECLK 4'h8 // Address 0x20
+  \`define GPIO_RGPIO_NEC 4'h9 // Address 0x24
+  //
+  // Default values for unimplemented GPIO registers
+  //
+  \`define GPIO_DEF_RGPIO_IN \`GPIO_IOS'h0
+  \`define GPIO_DEF_RGPIO_OUT \`GPIO_IOS'h0
+  \`define GPIO_DEF_RGPIO_OE \`GPIO_IOS'h0
+  \`define GPIO_DEF_RGPIO_INTE \`GPIO_IOS'h0
+  \`define GPIO_DEF_RGPIO_PTRIG \`GPIO_IOS'h0
+  \`define GPIO_DEF_RGPIO_AUX \`GPIO_IOS'h0
+  \`define GPIO_DEF_RGPIO_CTRL \`GPIO_IOS'h0
+  \`define GPIO_DEF_RGPIO_ECLK \`GPIO_IOS'h0
+  \`define GPIO_DEF_RGPIO_NEC \`GPIO_IOS'h0
+  //
+  // RGPIO_CTRL bits
+  //
+  // To comply with the GPIO IP core specification document they must go
+  from
+  // bit 0 to bit 1 in the following order: INTE, INT
+  //
+  \`define GPIO_RGPIO_CTRL_INTE 0
+  \`define GPIO_RGPIO_CTRL_INTS 1
