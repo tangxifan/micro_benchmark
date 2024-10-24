@@ -70,7 +70,7 @@ WBURT32_GIT_URL = https://github.com/ZipCPU/wbuart32.git
 WBURT32_LDIR_PREFIX = ${PWD}/interface/wbuart32
 WBURT32_RTL_FLIST = "axiluart.v" "rxuart.v" "rxuartlite.v" "skidbuffer.v" "txuart.v" "txuartlite.v" "ufifo.v" "wbuart-insert.v" "wbuart.v"
 WBURT32_MISC_FLIST = "README.md" "LICENSE"
-WBURT32_LDIR_RTL = ${WBI2C_LDIR_PREFIX}/rtl/
+WBURT32_LDIR_RTL = ${WBURT32_LDIR_PREFIX}/rtl/
 
 # wbspi-master
 TMP_WBSPIM = _tmp_wbspim
@@ -315,7 +315,7 @@ generate_initial_tagged_commit:
 define COMMENT_EXTRACT
 import re
 with open ('Makefile', 'r' ) as f:
-    matches = re.finditer('^([a-zA-Z-_]*):.*\n#(.*)', f.read(), flags=re.M)
+    matches = re.finditer('^([a-zA-Z-_0-9]*):.*\n#(.*)', f.read(), flags=re.M)
     for _, match in enumerate(matches, start=1):
         header, content = match[1], match[2]
         print(f"  {header:10} {content}")
