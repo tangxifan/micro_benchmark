@@ -1,8 +1,10 @@
-.. image:: figures/opencores_gpio/image1.png
+.. _datasheet_interface_opencores_gpio:
 
 GPIO IP Core
+============
 
 Specification
+-------------
 
 *Authors:*
 
@@ -18,9 +20,8 @@ goran.djakovic@flextronics.si
 
 **December 17, 2003**
 
-*This page has been intentionally left blank.*
-
-**Revision History**
+Revision History
+----------------
 
 .. table:: Table 1. List of All Software Accessible Registers
 
@@ -48,132 +49,18 @@ goran.djakovic@flextronics.si
    |     |        | Djakovic   |                                         |
    +-----+--------+------------+-----------------------------------------+
 
-Table Of Contents
-=================
-
-`Introduction 7 <#__RefHeading___Toc59430581>`__
-
-`Features 7 <#features>`__
-
-`Architecture 8 <#__RefHeading___Toc59430583>`__
-
-`Clocks 8 <#clocks>`__
-
-`WISHBONE Interface 9 <#wishbone-interface>`__
-
-`GPIO Registers 9 <#gpio-registers>`__
-
-`Auxiliary Inputs 9 <#auxiliary-inputs>`__
-
-`Interface to External I/O Cells and Pads
-9 <#interface-to-external-io-cells-and-pads>`__
-
-`Operation 10 <#__RefHeading___Toc59430589>`__
-
-`Hardware Reset 11 <#hardware-reset>`__
-
-`General-Purpose I/O as Polled Input
-11 <#general-purpose-io-as-polled-input>`__
-
-`General-Purpose I/O as Input in Interrupt Mode
-11 <#general-purpose-io-as-input-in-interrupt-mode>`__
-
-`General-Purpose I/O as Output 12 <#general-purpose-io-as-output>`__
-
-`General-Purpose I/O as Bi-Directional I/O
-12 <#general-purpose-io-as-bi-directional-io>`__
-
-`General-Purpose I/O driven by Auxiliary Input
-12 <#general-purpose-io-driven-by-auxiliary-input>`__
-
-`Registers 13 <#__RefHeading___Toc59430596>`__
-
-`Registers list 13 <#registers-list>`__
-
-`Register RGPIO_IN description 13 <#register-rgpio_in-description>`__
-
-`Register RGPIO_OUT description 14 <#register-rgpio_out-description>`__
-
-`Register RGPIO_OE description 14 <#register-rgpio_oe-description>`__
-
-`Register RGPIO_INTE description
-14 <#register-rgpio_inte-description>`__
-
-`Register RGPIO_PTRIG description
-14 <#register-rgpio_ptrig-description>`__
-
-`Register RGPIO_AUX description 15 <#register-rgpio_aux-description>`__
-
-`Register RGPIO_CTRL description
-15 <#register-rgpio_ctrl-description>`__
-
-`Register RGPIO_INTS description
-15 <#register-rgpio_ints-description>`__
-
-`Register RGPIO_ECLK description
-16 <#register-rgpio_eclk-description>`__
-
-`Register RGPIO_NEC description 16 <#register-rgpio_nec-description>`__
-
-`IO ports 17 <#__RefHeading___Toc59430608>`__
-
-`WISHBONE host interface 17 <#wishbone-host-interface>`__
-
-`Auxiliary inputs 18 <#auxiliary-inputs-1>`__
-
-`Interface to external I/O cells and pads
-18 <#interface-to-external-io-cells-and-pads-1>`__
-
-`Core HW Configuration 19 <#__RefHeading___Toc59430612>`__
-
-Table Of Figures
-================
-
-`Figure 1. Core Architecture 8 <#__RefHeading___Toc59430613>`__
-
-`Figure 2. Block Diagram of GPIO Logic
-10 <#__RefHeading___Toc59430614>`__
-
-`Figure 3. Core Interfaces 17 <#__RefHeading___Toc59430615>`__
-
-Table Of Tables
-===============
-
-`Table 1. List of All Software Accessible Registers
-13 <#__RefHeading___Toc59430740>`__
-
-`Table 2. Input Register 13 <#__RefHeading___Toc59430741>`__
-
-`Table 3. Output Register 14 <#__RefHeading___Toc59430742>`__
-
-`Table 4. Output Enable Register 14 <#__RefHeading___Toc59430743>`__
-
-`Table 5. Interrupt Enable Register 14 <#__RefHeading___Toc59430744>`__
-
-`Table 6. Trigger Register 15 <#__RefHeading___Toc59430745>`__
-
-`Table 7. Auxiliary Inputs Register 15 <#__RefHeading___Toc59430746>`__
-
-`Table 8. Control Register 15 <#__RefHeading___Toc59430747>`__
-
-`Table 9. Interrupt Status Register 15 <#__RefHeading___Toc59430748>`__
-
-`Table 10. WISHBONE Interface’ Signals
-18 <#__RefHeading___Toc59430749>`__
-
-`Table 11. Auxiliary input signals 18 <#__RefHeading___Toc59430750>`__
-
-.. _section-1:
-
-1
-=
-
 Introduction
+------------
 
 The GPIO IP core is user-programmable general-purpose I/O controller.
 Its use is to implement functions that are not implemented with the
 dedicated controllers in a system and require simple input and/or output
 software controlled signals.
+
+Source codes
+------------
+
+See details in ``interface/opencores_gpio``
 
 Features
 --------
@@ -211,14 +98,10 @@ The following lists the main features of GPIO IP core:
 
 -  WISHBONE SoC Interconnection Rev. B compliant interface
 
-.. _section-2:
-
-2
-=
-
 Architecture
+------------
 
-Figure 1 below shows general architecture of GPIO IP core. It consists
+:numref:`fig_opencores_gpio_core_arch` below shows general architecture of GPIO IP core. It consists
 of four main building blocks:
 
 -  WISHBONE host interface
@@ -229,9 +112,13 @@ of four main building blocks:
 
 -  Interface to external I/O cells and pads
 
-Figure 1. Core Architecture
+.. _fig_opencores_gpio_core_arch:
 
-.. _section-3:
+.. figure:: ./figures/opencores_gpio/image1.png
+  :width: 100%
+  :alt: Core Architecture
+
+  Core Architecture
 
 Clocks
 ------
@@ -249,9 +136,8 @@ WISHBONE interface connects GPIO core to the host system. It is WISHBONE
 SoC Interconnection specification Rev. B compliant. The implementation
 implements a 32-bit bus width and does not support other bus widths.
 
-.. image:: vertopal_ff0d1046c1394b699937bd3998799348/media/image3.png
-   :width: 4.79167in
-   :height: 2.39583in
+.. figure:: ./figures/opencores_gpio/image3.png
+   :width: 100%
 
 GPIO Registers
 --------------
@@ -277,11 +163,6 @@ open-drain or three-state I/O cells must be used.
 
 Part of external interface is also ECLK register. It can be used to
 register inputs based on external clock reference.
-
-.. _section-4:
-
-3
-=
 
 Operation
 
