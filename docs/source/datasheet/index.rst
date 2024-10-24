@@ -10,3 +10,8 @@
    :maxdepth: 2
 
    fsm/index
+
+.. toctree::
+   :maxdepth: 2
+
+   interface/index
