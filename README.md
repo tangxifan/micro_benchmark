@@ -6,6 +6,30 @@
 
 Version: see [`VERSION.md`](VERSION.md)
 
+## Licenses
+
+Most of the benchmarks are in MIT license. 
+
+> [!NOTE]
+> Please note that external benchmarks which may not be in compatible licenses. For each external benchmarks, LICENSE file can be found under its location
+
+
+The list of external benchmarks is as follows. Please double check before using.
+
+- interface/opencores\_can
+- interface/opencores\_gpio
+- interface/opencores\_i2c
+- interface/opencores\_ptc
+- interface/opencores\_spi
+- interface/opencores\_simple\_spi
+- interface/opencores\_uart16550
+- interface/verilog\_spi
+- processors/VexRiscv\_full
+- processors/VexRiscv\_murax
+- processors/VexRiscv\_small
+- dsp/dspfilters
+- dsp/cordic
+
 ## Documentation
 
 Full documentation can be found at [here](https://micro-benchmark.readthedocs.io/)
