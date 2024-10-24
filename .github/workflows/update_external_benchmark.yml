@@ -42,6 +42,14 @@ jobs:
           git diff-index --quiet HEAD || git commit -a -m '[benchmark] update dspfilters netlists to the latest'
           make cordic
           git diff-index --quiet HEAD || git commit -a -m '[benchmark] update cordic netlists to the latest'
+          make wbi2c
+          git diff-index --quiet HEAD || git commit -a -m '[benchmark] update wbi2c netlists to the latest'
+          make wbspi_master
+          git diff-index --quiet HEAD || git commit -a -m '[benchmark] update wbspi_master netlists to the latest'
+          make wbuart32
+          git diff-index --quiet HEAD || git commit -a -m '[benchmark] update wbuart32 netlists to the latest'
+          make uberddr3
+          git diff-index --quiet HEAD || git commit -a -m '[benchmark] update uberddr3 netlists to the latest'
 
       - name: Push changes # push the output folder to your repo
         uses: ad-m/github-push-action@master
