@@ -81,7 +81,7 @@ WBSPIM_MISC_FLIST = "README.md" "LICENSE"
 WBSPIM_LDIR_RTL = ${WBSPIM_LDIR_PREFIX}/rtl/
 
 # uberddr3
-TMP_UBERDDR3 = _tmp_wbspim
+TMP_UBERDDR3 = _tmp_uberddr
 UBERDDR3_GIT_URL = https://github.com/AngeloJacobo/UberDDR3.git
 UBERDDR3_LDIR_PREFIX = ${PWD}/interface/uberddr3
 UBERDDR3_RTL_FLIST = "ddr3_controller.v" "ddr3_phy.v" "ddr3_top.v"
