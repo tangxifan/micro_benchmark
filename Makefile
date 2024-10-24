@@ -280,7 +280,7 @@ uberddr3:
 	echo "==== Clone latest UberDDR3 from github repo: ${UBERDDR3_GIT_URL} ====" && \
 	currDir=$${PWD} && rm -rf ${TMP_UBERDDR3} && \
 	git clone ${UBERDDR3_GIT_URL} ${TMP_UBERDDR3} && \
-    cd ${TMP_UBERDDR3} && \
+    cd ${TMP_UBERDDR3}/rtl && \
 	echo "==== Update RTL ====" && \
 	mkdir -p ${UBERDDR3_LDIR_RTL} && \
 	for f in ${UBERDDR3_RTL_FLIST} ; \
