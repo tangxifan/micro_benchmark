@@ -113,7 +113,7 @@ WISHBONE interface signals
   +------------+------+---------+--------------------------------------+
   
 Other internal signals
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 .. table:: Other internal signals
 
@@ -133,7 +133,7 @@ Other internal signals
   +---------+------+--------+--------------------------------------------+
   
 External (off-chip) connections
--------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. table:: external connections
 
@@ -159,7 +159,7 @@ External (off-chip) connections
   +------------+-----+--------+----------------------------------------+
   
 Clocks
-------
+~~~~~~
 
 .. table:: Clocks table
 
