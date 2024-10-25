@@ -199,10 +199,10 @@ is an output from a slave device and an input to a master device.
 .. note:: M68HC11 compatibility - The M68HC11 features a Slave Select signal. To reduce resource usage, this core does not. Use a GPIO core, like the OpenCores simple_gpio core, to generate the Slave Select signal(s), if this functionality is required.
 
 Registers
-=========
+---------
 
 Registers List
---------------
+~~~~~~~~~~~~~~
 
 .. table:: Registers
 
@@ -221,7 +221,7 @@ Registers List
   +--------+------------+------+-------+--------------------------------+
   
 Serial Peripheral Control Register [SPCR]
------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. table:: SPI control registers
 
