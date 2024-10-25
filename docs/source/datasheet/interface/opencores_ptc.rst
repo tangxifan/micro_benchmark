@@ -1,5 +1,14 @@
-Author: Damjan Lampret
-======================
+.. _datasheet_interface_opencores_ptc:
+
+PWM/Timer/Counter IP Core
+=========================
+
+Specification
+
+Authors
+-------
+
+Damjan Lampret
 
 *lampret@opencores.org*
 
@@ -8,11 +17,11 @@ Author: Damjan Lampret
 **February 28, 2001**
 
 **Preliminary Draft**
----------------------
 
-**Revision History**
+Revision History
+----------------
 
-.. table:: Table 1. List of All Software Accessible Registers
+.. table:: Revision history
 
    +-----+---------+------------------+----------------------------------+
    | R   | Date    | Author           | Description                      |
@@ -25,101 +34,15 @@ Author: Damjan Lampret
    |     |         |                  |                                  |
    +-----+---------+------------------+----------------------------------+
 
-Table Of Contents
-=================
-
-`Introduction 6 <#__RefHeading___Toc508330757>`__
-
-`Features 6 <#features>`__
-
-`Architecture 7 <#__RefHeading___Toc508330759>`__
-
-`Clocks 7 <#clocks>`__
-
-`WISHBONE Interface 8 <#wishbone-interface>`__
-
-`PTC Registers 8 <#ptc-registers>`__
-
-`PTC Circuitry 8 <#ptc-circuitry>`__
-
-`Interface to External I/O Cells and Pads
-8 <#interface-to-external-io-cells-and-pads>`__
-
-`Operation 9 <#__RefHeading___Toc508330765>`__
-
-`Hardware Reset 10 <#hardware-reset>`__
-
-`PWM Mode 10 <#pwm-mode>`__
-
-`Timer/Counter Mode 10 <#timercounter-mode>`__
-
-`Gate Feature 11 <#gate-feature>`__
-
-`Interrupt Feature 11 <#interrupt-feature>`__
-
-`Capture Feature 11 <#capture-feature>`__
-
-`Registers 12 <#__RefHeading___Toc508330772>`__
-
-`Registers list 12 <#registers-list>`__
-
-`Register RPTC_CNTR description 12 <#register-rptc_cntr-description>`__
-
-`Register RPTC_HRC description 12 <#register-rptc_hrc-description>`__
-
-`Register RPTC_LRC description 13 <#register-rptc_lrc-description>`__
-
-`Register RPTC_CTRL description 13 <#register-rptc_ctrl-description>`__
-
-`IO ports 15 <#__RefHeading___Toc508330778>`__
-
-`WISHBONE host interface 15 <#wishbone-host-interface>`__
-
-`Interface to external I/O cells and pads
-16 <#interface-to-external-io-cells-and-pads-1>`__
-
-`Core HW Configuration 17 <#__RefHeading___Toc508330781>`__
-
-Table Of Figures
-================
-
-`Figure 1. Core’s Architecture 7 <#__RefHeading___Toc508330782>`__
-
-`Figure 2. Block Diagram of PTC Logic
-9 <#__RefHeading___Toc508330783>`__
-
-`Figure 3. Core’s Interfaces 15 <#__RefHeading___Toc508330784>`__
-
-Table Of Tables
-===============
-
-`Table 1. List of All Software Accessible Registers
-12 <#__RefHeading___Toc508330785>`__
-
-`Table 2. Main PTC Counter 12 <#__RefHeading___Toc508330786>`__
-
-`Table 3. RPTC_HRC Register 13 <#__RefHeading___Toc508330787>`__
-
-`Table 4. RPTC_LRC Register 13 <#__RefHeading___Toc508330788>`__
-
-`Table 5. Control Register 14 <#__RefHeading___Toc508330789>`__
-
-`Table 6. WISHBONE Interface’ Signals
-16 <#__RefHeading___Toc508330790>`__
-
-`Table 7. External interface 16 <#__RefHeading___Toc508330791>`__
-
-1
-=
-
 Introduction
+------------
 
 The PWM/Timer/Counter (PTC) IP core is a user-programmable PWM, Timer
 and Counter controller. Its use is to implement functions like Pulse
 Width Modulation (PWM), timer and counter facilities.
 
 Features
---------
+~~~~~~~~
 
 The following lists the main features of PTC IP core:
 
@@ -139,14 +62,10 @@ The following lists the main features of PTC IP core:
 
 -  WISHBONE SoC Interconnection Rev. B compliant interface
 
-.. _section-1:
-
-2
-=
-
 Architecture
+------------
 
-Figure 1 below shows general architecture of PTC IP core. It consists of
+:numref:`fig_opencores_ptc_core_arch` below shows general architecture of PTC IP core. It consists of
 four main building blocks:
 
 -  WISHBONE host interface
@@ -157,12 +76,16 @@ four main building blocks:
 
 -  Interface to external I/O cells and pads
 
-Figure 1. Core’s Architecture
+.. _fig_opencores_ptc_core_arch:
 
-.. _section-2:
+.. figure:: ./figures/opencores_ptc/core_arch.png
+  :width: 100%
+  :alt: Core Architecture
+
+  Core Architecture
 
 Clocks
-------
+~~~~~~
 
 The PTC core has two clock domains. All registers except RPTC_CNTR are
 in system clock domain.
@@ -171,50 +94,51 @@ RPTC_CNTR register can be clocked by either system clock or by external
 clock reference.
 
 WISHBONE Interface
-------------------
+~~~~~~~~~~~~~~~~~~
 
 WISHBONE slave interface connects PTC core to the host system. It is
 WISHBONE SoC Interconnection specification Rev. B compliant. The
 implementation implements a 32-bit bus width and does not support other
 bus widths.
 
-.. image:: figures/opencores_ptc/image2.png
-   :width: 4.79167in
-   :height: 2.39583in
+.. figure:: figures/wbcompatible.png
+   :width: 100%
 
 PTC Registers
--------------
+~~~~~~~~~~~~~
 
 The PTC IP Core has several software accessible registers. The host
 through these registers programs type and operation of the PTC core.
 
 PTC Circuitry
--------------
+~~~~~~~~~~~~~
 
 The PTC core circuitry consists of clock dividers and reference
 comparators for PWM and counter/timer. It also includes an interrupt
 generator.
 
 Interface to External I/O Cells and Pads
-----------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 External interface connects PTC core to external I/O ring cells and
 pads. External interface is made of eclk/gate input, capture input, PWM
 output and PWM output driver enable. PWM output can be three-stated with
 the provided enable signal for the output driver.
 
-.. _section-3:
-
-3
-=
-
 Operation
+---------
 
 This section describes the operation of the PTC core. The PTC core
 provides PWM, timer and counter facilities. Selection between modes is
 done implicitly with configuration of the control bits.
 
-Figure 2. Block Diagram of PTC Logic
+.. _fig_opencores_ptc_block_diagram:
+
+.. figure:: ./figures/opencores_ptc/block_diagram.png
+  :width: 100%
+  :alt: Block diagram
+
+  Block Diagram of PTC Logic
 
 When operating in PWM mode, the PTC core generates binary signal with
 user-programmable low and high periods. Clock source for the PWM can be
@@ -240,14 +164,14 @@ completes after reaching value in the RPTC_LRC register. These two modes
 are called single-run and continues run.
 
 Hardware Reset
---------------
+~~~~~~~~~~~~~~
 
 Following hardware reset PWM output driver is disabled. Interrupt
 request signal is masked. Ptc_ecgt signal is not used for incrementing
 the RPTC_CNTR register; instead system clock is used.
 
 PWM Mode
---------
+~~~~~~~~
 
 To operate in PWM mode, RPTC_HRC and RPTC_LRC should be set with the
 value of low and high periods of the PWM output signal. RPTC_HRC is
@@ -268,7 +192,7 @@ RPTC_HRC and RPTC_LRC, and these two registers can be set without
 software control with the ptc_capt signal.
 
 Timer/Counter Mode
-------------------
+~~~~~~~~~~~~~~~~~~
 
 To operate in timer/counter mode, only RPTC_LRC or even neither of
 capture/reference registers is required. In this mode system clock or
@@ -280,7 +204,7 @@ Usually interrupts are enabled in timer/counter mode. This is done with
 the RPTC_CTRL[INTE].
 
 Gate Feature
-------------
+~~~~~~~~~~~~
 
 If system clock is used to increment RPTC_CNTR, ptc_ecgt input signal
 can be used to gate the system clock and not increment the RPTC_CNTR
@@ -288,14 +212,14 @@ register. Which level of the ptc_ecgt has gating capability depends on
 value of the RPTC_CTRL[NEC].
 
 Interrupt Feature
------------------
+~~~~~~~~~~~~~~~~~
 
 Whenever RPTC_CNTR equals to the value of the RPTC_HRC or RPTC_LRC, an
 interrupt request can be asserted. This depends if RPTC_CTRL[INTE] bit
 is set.
 
 Capture Feature
----------------
+~~~~~~~~~~~~~~~
 
 Input signal ptc_capt can be used to capture value of the current
 RPTC_CNTR into RPTC_HRC or LPTC_LRC registers. Into which
@@ -305,12 +229,8 @@ register and on negative edge value is captured into RPTC_LRC register.
 
 In order to enable capture feature, RPTC_CTRL[CAPTE] must be set.
 
-.. _section-4:
-
-4
-=
-
 Registers
+---------
 
 This section describes all control and status register inside the PTC
 core. The *Address* field indicates address in hexadecimal. *Width*
@@ -319,9 +239,9 @@ valid access types for that register. R/W stands for read and write
 access and R stands for read only access.
 
 Registers list
---------------
+~~~~~~~~~~~~~~
 
-.. table:: Table 2. Main PTC Counter
+.. table:: Main PTC Counter
 
    +------------+----------+-----+-----+---------------------------------+
    | Name       | Address  | Wi  | Acc | Description                     |
@@ -341,7 +261,7 @@ Registers list
    +------------+----------+-----+-----+---------------------------------+
 
 Register RPTC_CNTR description
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 RPTC_CNTR register is the actual counter register. It is incremented at
 every counter/timer clock cycle. Source clock is either system clock or
@@ -357,7 +277,7 @@ RPTC_CNTR can be reset with the RPTC_CTRL[RST].
 RPTC_CNTR can operate in either single-run mode or continues mode. Mode
 is selected with the RPTC_CTRL[SINGLE].
 
-.. table:: Table 3. RPTC_HRC Register
+.. table:: RPTC_HRC Register
 
    +------+-------+--------+---------------------------------------------+
    | Bit  | A     | Reset  | Description                                 |
@@ -367,9 +287,9 @@ is selected with the RPTC_CTRL[SINGLE].
    +------+-------+--------+---------------------------------------------+
 
 Register RPTC_HRC description
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-RPTC_HRC register is a 2\ :sup:`nd` out of two reference/capture
+RPTC_HRC register is a 2nd out of two reference/capture
 registers. It has two functions:
 
 -  In reference mode it is used to assert high PWM output or to generate
@@ -378,7 +298,7 @@ registers. It has two functions:
 -  In capture mode it captures RPTC_CNTR value on high value of ptc_capt
    signal
 
-.. table:: Table 4. RPTC_LRC Register
+.. table:: RPTC_LRC Register
 
    +------+-------+--------+---------------------------------------------+
    | Bit  | A     | Reset  | Description                                 |
@@ -391,9 +311,9 @@ The RPTC_HRC should have lower value than RPTC_LRC. This is because PWM
 output goes first high and later low.
 
 Register RPTC_LRC description
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-RPTC_LRC register is a 1\ :sup:`st` out of two reference/capture
+RPTC_LRC register is a 1st out of two reference/capture
 registers. It has two functions:
 
 -  In reference mode it is used to assert low PWM output or to generate
@@ -402,7 +322,7 @@ registers. It has two functions:
 -  In capture mode it captures RPTC_CNTR value on low value of ptc_capt
    signal
 
-.. table:: Table 5. Control Register
+.. table:: Control Register
 
    +------+-------+--------+---------------------------------------------+
    | Bit  | A     | Reset  | Description                                 |
@@ -415,11 +335,11 @@ The RPTC_LRC should have higher value than RPTC_HRC. This is because PWM
 output goes first high and later low.
 
 Register RPTC_CTRL description
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Control bits in RPTC_CTRL register control operation of PTC core.
 
-.. table:: Table 6. WISHBONE Interface’ Signals
+.. table:: WISHBONE Interface Signals
 
    +------+-------+--------+---------------------------------------------+
    | Bit  | A     | Reset  | Description                                 |
@@ -498,29 +418,31 @@ Control bits in RPTC_CTRL register control operation of PTC core.
    |      |       |        | When cleared, capture function is masked.   |
    +------+-------+--------+---------------------------------------------+
 
-.. _section-5:
-
-5
-=
-
 IO ports
+--------
 
-PTC IP core has two interfaces. Figure 3 below shows both interfaces:
+PTC IP core has two interfaces. :numref:`fig_opencores_ptc_core_interface` below shows both interfaces:
 
 -  WISHBONE host interface
 
 -  Interface to external I/O cells and pads
 
-Figure 3. Core’s Interfaces
+.. _fig_opencores_ptc_core_interface:
+
+.. figure:: ./figures/opencores_ptc/core_interface.png
+  :width: 100%
+  :alt: Block diagram
+
+  Core's Interfaces
 
 WISHBONE host interface
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 The host interface is a WISHBONE Rev B compliant interface. PTC IP core
 works as a slave device only. When it needs the intervention of the
 local microcontroller, it will assert INTA_O.
 
-.. table:: Table 7. External interface
+.. table:: WISHBONE interface signals
 
    +----------+------+----------+---------------------------------------+
    | Port     | W    | D        | Description                           |
@@ -561,30 +483,33 @@ local microcontroller, it will assert INTA_O.
 .. _interface-to-external-io-cells-and-pads-1:
 
 Interface to external I/O cells and pads
-----------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 External interface connects PTC core to external I/O ring cells and
 pads. Interface consists out of three signals: eclk/gate signal, capture
 signal, PWM output and PWM output driver enable.
 
-+-------------+-------+----------+------------------------------------+
-| Port        | Width | D        | Description                        |
-|             |       | irection |                                    |
-+-------------+-------+----------+------------------------------------+
-| ptc_ecgt    | 1     | Input    | EClk/Gate input                    |
-+-------------+-------+----------+------------------------------------+
-| Ptc_capt    | 1     | Input    | Capture input                      |
-+-------------+-------+----------+------------------------------------+
-| ptc_pwm     | 1     | Output   | PWM output                         |
-+-------------+-------+----------+------------------------------------+
-| ptc_oen     | 1     | Output   | PWM output driver enable (for      |
-|             |       |          | three-state or open-drain driver)  |
-+-------------+-------+----------+------------------------------------+
+.. table:: External interface
 
-A
-=
+  +-------------+-------+----------+------------------------------------+
+  | Port        | Width | D        | Description                        |
+  |             |       | irection |                                    |
+  +-------------+-------+----------+------------------------------------+
+  | ptc_ecgt    | 1     | Input    | EClk/Gate input                    |
+  +-------------+-------+----------+------------------------------------+
+  | Ptc_capt    | 1     | Input    | Capture input                      |
+  +-------------+-------+----------+------------------------------------+
+  | ptc_pwm     | 1     | Output   | PWM output                         |
+  +-------------+-------+----------+------------------------------------+
+  | ptc_oen     | 1     | Output   | PWM output driver enable (for      |
+  |             |       |          | three-state or open-drain driver)  |
+  +-------------+-------+----------+------------------------------------+
+
+Appendix
+--------
 
 Core HW Configuration
+~~~~~~~~~~~~~~~~~~~~~
 
 This section describes parameters that are set by the user of the core
 and define configuration of the core. Parameters must be set by the user

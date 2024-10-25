@@ -56,6 +56,38 @@ CORDIC_RTL_FLIST = "cordic.v" "quadtbl_ltbl.hex" "quadtbl.v" "quarterwav.v" "seq
 CORDIC_MISC_FLIST = "README.md"
 CORDIC_LDIR_RTL = ${CORDIC_LDIR_PREFIX}/rtl/
 
+# wbi2c
+TMP_WBI2C = _tmp_wbi2c
+WBI2C_GIT_URL = https://github.com/ZipCPU/wbi2c.git
+WBI2C_LDIR_PREFIX = ${PWD}/interface/wbi2c
+WBI2C_RTL_FLIST = "axili2ccpu.v" "axisi2c.v" "lli2cm.v" "wbi2ccpu.v" "wbi2cmaster.v" "wbi2cslave.v"
+WBI2C_MISC_FLIST = "README.md"
+WBI2C_LDIR_RTL = ${WBI2C_LDIR_PREFIX}/rtl/
+
+# wbuart32
+TMP_WBURT32 = _tmp_wbuart32
+WBURT32_GIT_URL = https://github.com/ZipCPU/wbuart32.git
+WBURT32_LDIR_PREFIX = ${PWD}/interface/wbuart32
+WBURT32_RTL_FLIST = "axiluart.v" "rxuart.v" "rxuartlite.v" "skidbuffer.v" "txuart.v" "txuartlite.v" "ufifo.v" "wbuart-insert.v" "wbuart.v"
+WBURT32_MISC_FLIST = "README.md" "LICENSE"
+WBURT32_LDIR_RTL = ${WBURT32_LDIR_PREFIX}/rtl/
+
+# wbspi-master
+TMP_WBSPIM = _tmp_wbspim
+WBSPIM_GIT_URL = https://github.com/daringpatil3134/SPI_Serial_Peripheral_Interface_Verilog_Modules.git
+WBSPIM_LDIR_PREFIX = ${PWD}/interface/wbspi_master
+WBSPIM_RTL_FLIST = "spi_clgen.v" "spi_defines.v" "spi_shift_reg.v" "spi_slave.v" "spi_top.v" "wishbone_master.v"
+WBSPIM_MISC_FLIST = "README.md" "LICENSE"
+WBSPIM_LDIR_RTL = ${WBSPIM_LDIR_PREFIX}/rtl/
+
+# uberddr3
+TMP_UBERDDR3 = _tmp_uberddr
+UBERDDR3_GIT_URL = https://github.com/AngeloJacobo/UberDDR3.git
+UBERDDR3_LDIR_PREFIX = ${PWD}/interface/uberddr3
+UBERDDR3_RTL_FLIST = "ddr3_controller.v" "ddr3_phy.v" "ddr3_top.v"
+UBERDDR3_MISC_FLIST = "README.md" "LICENSE"
+UBERDDR3_LDIR_RTL = ${UBERDDR3_LDIR_PREFIX}/rtl/
+
 .SILENT:
 
 # Put it first so that "make" without argument is like "make help".
@@ -177,6 +209,94 @@ cordic:
 	git add ${CORDIC_LDIR_PREFIX} && \
 	echo "==== Done ====" || exit 1;
 
+wbi2c:
+# This command will checkout the latest Wishbone-I2C, then update RTL and testbenches
+	echo "==== Clone latest wbi2c from github repo: ${WBI2C_GIT_URL} ====" && \
+	currDir=$${PWD} && rm -rf ${TMP_WBI2C} && \
+	git clone ${WBI2C_GIT_URL} ${TMP_WBI2C} && \
+    cd ${TMP_WBI2C}/rtl && \
+	echo "==== Update RTL ====" && \
+	mkdir -p ${WBI2C_LDIR_RTL} && \
+	for f in ${WBI2C_RTL_FLIST} ; \
+	do cp $${f} ${WBI2C_LDIR_RTL} || exit 1; \
+	done && \
+	echo "==== Update Documentation ====" && \
+	mkdir -p ${WBI2C_LDIR_PREFIX} && \
+	for f in ${WBI2C_MISC_FLIST} ; \
+	do cp $${f} ${WBI2C_LDIR_PREFIX} || exit 1; \
+	done && \
+	echo `git rev-parse HEAD` > ${WBI2C_LDIR_PREFIX}/VERSION.md && \
+	cd $${currDir} && \
+	echo "==== Update git track list ====" && \
+	git add ${WBI2C_LDIR_PREFIX} && \
+	echo "==== Done ====" || exit 1;
+
+wbuart32:
+# This command will checkout the latest Wishbone-uart, then update RTL and testbenches
+	echo "==== Clone latest wbuart32 from github repo: ${WBURT32_GIT_URL} ====" && \
+	currDir=$${PWD} && rm -rf ${TMP_WBURT32} && \
+	git clone ${WBURT32_GIT_URL} ${TMP_WBURT32} && \
+    cd ${TMP_WBURT32}/rtl && \
+	echo "==== Update RTL ====" && \
+	mkdir -p ${WBURT32_LDIR_RTL} && \
+	for f in ${WBURT32_RTL_FLIST} ; \
+	do cp $${f} ${WBURT32_LDIR_RTL} || exit 1; \
+	done && cd $${currDir} && \
+	echo "==== Update Documentation ====" && \
+	mkdir -p ${WBURT32_LDIR_PREFIX} && \
+	for f in ${WBURT32_MISC_FLIST} ; \
+	do cp $${f} ${WBURT32_LDIR_PREFIX} || exit 1; \
+	done && \
+	echo `git rev-parse HEAD` > ${WBURT32_LDIR_PREFIX}/VERSION.md && \
+	cd $${currDir} && \
+	echo "==== Update git track list ====" && \
+	git add ${WBURT32_LDIR_PREFIX} && \
+	echo "==== Done ====" || exit 1;
+
+wbspi_master:
+# This command will checkout the latest Wishbone-spi-master, then update RTL and testbenches
+	echo "==== Clone latest wbspi_master from github repo: ${WBSPIM_GIT_URL} ====" && \
+	currDir=$${PWD} && rm -rf ${TMP_WBSPIM} && \
+	git clone ${WBSPIM_GIT_URL} ${TMP_WBSPIM} && \
+    cd ${TMP_WBSPIM} && \
+	echo "==== Update RTL ====" && \
+	mkdir -p ${WBSPIM_LDIR_RTL} && \
+	for f in ${WBSPIM_RTL_FLIST} ; \
+	do cp $${f} ${WBSPIM_LDIR_RTL} || exit 1; \
+	done && \
+	echo "==== Update Documentation ====" && \
+	mkdir -p ${WBSPIM_LDIR_PREFIX} && \
+	for f in ${WBSPIM_MISC_FLIST} ; \
+	do cp $${f} ${WBSPIM_LDIR_PREFIX} || exit 1; \
+	done && \
+	echo `git rev-parse HEAD` > ${WBSPIM_LDIR_PREFIX}/VERSION.md && \
+	cd $${currDir} && \
+	echo "==== Update git track list ====" && \
+	git add ${WBSPIM_LDIR_PREFIX} && \
+	echo "==== Done ====" || exit 1;
+
+uberddr3:
+# This command will checkout the latest UberDDR3, then update RTL and testbenches
+	echo "==== Clone latest UberDDR3 from github repo: ${UBERDDR3_GIT_URL} ====" && \
+	currDir=$${PWD} && rm -rf ${TMP_UBERDDR3} && \
+	git clone ${UBERDDR3_GIT_URL} ${TMP_UBERDDR3} && \
+    cd ${TMP_UBERDDR3}/rtl && \
+	echo "==== Update RTL ====" && \
+	mkdir -p ${UBERDDR3_LDIR_RTL} && \
+	for f in ${UBERDDR3_RTL_FLIST} ; \
+	do cp $${f} ${UBERDDR3_LDIR_RTL} || exit 1; \
+	done && cd $${currDir} && \
+	echo "==== Update Documentation ====" && \
+	mkdir -p ${UBERDDR3_LDIR_PREFIX} && \
+	for f in ${UBERDDR3_MISC_FLIST} ; \
+	do cp $${f} ${UBERDDR3_LDIR_PREFIX} || exit 1; \
+	done && \
+	echo `git rev-parse HEAD` > ${UBERDDR3_LDIR_PREFIX}/VERSION.md && \
+	cd $${currDir} && \
+	echo "==== Update git track list ====" && \
+	git add ${UBERDDR3_LDIR_PREFIX} && \
+	echo "==== Done ====" || exit 1;
+
 update_version:
 # Update the patch count in the version number
 	echo "======== Bump up patch count in the version number ========"; \
@@ -195,7 +315,7 @@ generate_initial_tagged_commit:
 define COMMENT_EXTRACT
 import re
 with open ('Makefile', 'r' ) as f:
-    matches = re.finditer('^([a-zA-Z-_]*):.*\n#(.*)', f.read(), flags=re.M)
+    matches = re.finditer('^([a-zA-Z-_0-9]*):.*\n#(.*)', f.read(), flags=re.M)
     for _, match in enumerate(matches, start=1):
         header, content = match[1], match[2]
         print(f"  {header:10} {content}")
