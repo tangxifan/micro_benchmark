@@ -3,7 +3,7 @@
 Wishbone QSPI 
 -------------
 
-.. note:: This project comes from `opencores <https://opencores.org/projects/wbqspiflash>`_
+.. note:: This project comes from `opencores <https://opencores.org/projects/qspiflash>`_
 
 .. only:: builder_html
 
