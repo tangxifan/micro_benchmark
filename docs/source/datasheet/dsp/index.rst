@@ -9,3 +9,5 @@ DSP
    cordic_core
 
    cr_div
+
+   signed_integer_divider
