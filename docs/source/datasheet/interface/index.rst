@@ -19,3 +19,7 @@ Interface
    wbscope
 
    tiny_spi
+
+   wb_lcd
+
+   wb_lcd_ramless
