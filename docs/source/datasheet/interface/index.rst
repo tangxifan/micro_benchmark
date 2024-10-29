@@ -27,3 +27,5 @@ Interface
    wbqspiflash
 
    wb_rs232_syscon
+
+   sockit_owm
