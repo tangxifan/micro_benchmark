@@ -11,3 +11,5 @@ DSP
    cr_div
 
    signed_integer_divider
+
+   pid_controller
