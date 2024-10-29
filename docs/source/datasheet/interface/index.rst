@@ -25,3 +25,5 @@ Interface
    wb_lcd_ramless
 
    wbqspiflash
+
+   wb_rs232_syscon
