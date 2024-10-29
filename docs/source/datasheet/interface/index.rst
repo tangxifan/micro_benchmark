@@ -31,3 +31,5 @@ Interface
    sockit_owm
 
    spimaster
+
+   rtcclock
