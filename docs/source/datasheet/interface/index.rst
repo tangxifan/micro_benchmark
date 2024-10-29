@@ -23,3 +23,5 @@ Interface
    wb_lcd
 
    wb_lcd_ramless
+
+   wbqspiflash
