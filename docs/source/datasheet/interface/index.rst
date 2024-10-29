@@ -17,3 +17,5 @@ Interface
    opencores_gpio
 
    wbscope
+
+   tiny_spi
