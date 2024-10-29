@@ -24,11 +24,21 @@ The list of external benchmarks is as follows. Please double check before using.
 - interface/opencores\_simple\_spi
 - interface/opencores\_uart16550
 - interface/verilog\_spi
+- interface/wb\_lcd
+- interface/wb\_lcd\_ramless
+- interface/wb\_rs232\_syscon
+- interface/wbscope
+- interface/wbqspiflash
+- interface/tiny\_spi
 - processors/VexRiscv\_full
 - processors/VexRiscv\_murax
 - processors/VexRiscv\_small
 - dsp/dspfilters
 - dsp/cordic
+- dsp/cordic\_core
+- dsp/pid\_controller
+- dsp/cr\_div
+- dsp/signed\_integer\_divider
 
 ## Documentation
 
