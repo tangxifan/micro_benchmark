@@ -15,3 +15,8 @@
    :maxdepth: 2
 
    interface/index
+
+.. toctree::
+   :maxdepth: 2
+
+   dsp/index
