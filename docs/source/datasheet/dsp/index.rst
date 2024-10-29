@@ -7,3 +7,5 @@ DSP
    :maxdepth: 2
 
    cordic_core
+
+   cr_div
