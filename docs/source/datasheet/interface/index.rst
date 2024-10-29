@@ -15,3 +15,15 @@ Interface
    opencores_i2c
 
    opencores_gpio
+
+   wbscope
+
+   tiny_spi
+
+   wb_lcd
+
+   wb_lcd_ramless
+
+   wbqspiflash
+
+   wb_rs232_syscon
