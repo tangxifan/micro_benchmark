@@ -15,3 +15,5 @@ Interface
    opencores_i2c
 
    opencores_gpio
+
+   wbscope
