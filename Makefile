@@ -89,10 +89,10 @@ UBERDDR3_MISC_FLIST = "README.md" "LICENSE"
 UBERDDR3_LDIR_RTL = ${UBERDDR3_LDIR_PREFIX}/rtl/
 
 # rs-485
-TMP_UBERDDR3 = _tmp_rs485
+TMP_RS485 = _tmp_rs485
 RS485_GIT_URL = https://github.com/baseli/RS-485.git
 RS485_LDIR_PREFIX = ${PWD}/interface/rs485
-RS485_RTL_FLIST = "clkdiv.v" "clk_div_9600.v" "crccheck.v" "deletezero.v" "hdlc_recivedata.v" "hdlc_senddata.v" "insertzero.v" "rs_top.v" "rsrx.v" "rstx.v" "rx.v" "tx.v"
+RS485_RTL_FLIST = "clkdiv.v" "clkdiv_9600.v" "crccheck.v" "deletezero.v" "hdlc_recivedata.v" "hdlc_senddata.v" "insertzero.v" "rs_top.v" "rsrx.v" "rstx.v" "rx.v" "tx.v"
 RS485_TB_FLIST = "deletezero_tb.v" "hdlc_recivedata_tb.v" "hdlc_senddata_tb.v" "insertzero_tb.v" "rs_top_tb.v"
 RS485_MISC_FLIST = "README.md"
 RS485_LDIR_RTL = ${RS485_LDIR_PREFIX}/rtl/
@@ -323,7 +323,7 @@ rs485:
 	mkdir -p ${RS485_LDIR_TB} && \
 	for f in ${RS485_TB_FLIST} ; \
 	do cp $${f} ${RS485_LDIR_TB} || exit 1; \
-	done && \
+	done && cd $${currDir} && \
 	echo "==== Update Documentation ====" && \
 	mkdir -p ${RS485_LDIR_PREFIX} && \
 	for f in ${RS485_MISC_FLIST} ; \
