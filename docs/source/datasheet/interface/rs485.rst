@@ -7,4 +7,4 @@ RS485 Interface
 
 .. only:: builder_html
 
-Detailed manual can be found :download:`here <../../_static/rs485_manual.pdf>`
+Detailed manual can be found on github
