@@ -33,3 +33,5 @@ Interface
    rtcclock
 
    rs485
+
+   cf_ldpc

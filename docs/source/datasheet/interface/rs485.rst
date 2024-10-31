@@ -1,4 +1,4 @@
-.. _datasheet_interface_wb_rs232_syscon:
+.. _datasheet_interface_rs485:
 
 RS485 Interface
 ---------------
