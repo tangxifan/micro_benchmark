@@ -1,0 +1,10 @@
+.. _datasheet_interface_rs485:
+
+RS485 Interface
+---------------
+
+.. note:: This project comes from `github <https://github.com/baseli/RS-485/tree/master>`_
+
+.. only:: builder_html
+
+Detailed manual can be found on github

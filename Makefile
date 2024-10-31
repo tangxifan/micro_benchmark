@@ -88,6 +88,16 @@ UBERDDR3_RTL_FLIST = "ddr3_controller.v" "ddr3_phy.v" "ddr3_top.v"
 UBERDDR3_MISC_FLIST = "README.md" "LICENSE"
 UBERDDR3_LDIR_RTL = ${UBERDDR3_LDIR_PREFIX}/rtl/
 
+# rs-485
+TMP_RS485 = _tmp_rs485
+RS485_GIT_URL = https://github.com/baseli/RS-485.git
+RS485_LDIR_PREFIX = ${PWD}/interface/rs485
+RS485_RTL_FLIST = "clkdiv.v" "clkdiv_9600.v" "crccheck.v" "deletezero.v" "hdlc_recivedata.v" "hdlc_senddata.v" "insertzero.v" "rs_top.v" "rsrx.v" "rstx.v" "rx.v" "tx.v"
+RS485_TB_FLIST = "deletezero_tb.v" "hdlc_recivedata_tb.v" "hdlc_senddata_tb.v" "insertzero_tb.v" "rs_top_tb.v"
+RS485_MISC_FLIST = "README.md"
+RS485_LDIR_RTL = ${RS485_LDIR_PREFIX}/rtl/
+RS485_LDIR_TB = ${RS485_LDIR_PREFIX}/testbench/
+
 .SILENT:
 
 # Put it first so that "make" without argument is like "make help".
@@ -296,6 +306,35 @@ uberddr3:
 	echo "==== Update git track list ====" && \
 	git add ${UBERDDR3_LDIR_PREFIX} && \
 	echo "==== Done ====" || exit 1;
+
+rs485:
+# This command will checkout the latest RS485, then update RTL and testbenches
+	echo "==== Clone latest rs485 from github repo: ${RS485_GIT_URL} ====" && \
+	currDir=$${PWD} && rm -rf ${TMP_RS485} && \
+	git clone ${RS485_GIT_URL} ${TMP_RS485} && \
+    cd ${TMP_RS485}/code && \
+	echo "==== Update RTL ====" && \
+	mkdir -p ${RS485_LDIR_RTL} && \
+	for f in ${RS485_RTL_FLIST} ; \
+	do cp $${f} ${RS485_LDIR_RTL} || exit 1; \
+	done && cd $${currDir} && \
+	echo "==== Update Testbench ====" && \
+    cd ${TMP_RS485}/simulate && \
+	mkdir -p ${RS485_LDIR_TB} && \
+	for f in ${RS485_TB_FLIST} ; \
+	do cp $${f} ${RS485_LDIR_TB} || exit 1; \
+	done && cd $${currDir} && \
+	echo "==== Update Documentation ====" && \
+	mkdir -p ${RS485_LDIR_PREFIX} && \
+	for f in ${RS485_MISC_FLIST} ; \
+	do cp $${f} ${RS485_LDIR_PREFIX} || exit 1; \
+	done && \
+	echo `git rev-parse HEAD` > ${RS485_LDIR_PREFIX}/VERSION.md && \
+	cd $${currDir} && \
+	echo "==== Update git track list ====" && \
+	git add ${RS485_LDIR_PREFIX} && \
+	echo "==== Done ====" || exit 1;
+
 
 update_version:
 # Update the patch count in the version number
