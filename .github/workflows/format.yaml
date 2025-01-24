@@ -34,6 +34,10 @@ jobs:
         with:
           submodules: false
 
+      - name: Install dependencies
+        run: |
+          bash .github/workflows/install_dependencies.sh
+
       - name: Dump tool versions
         run: |
           black --version

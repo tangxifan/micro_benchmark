@@ -1,3 +1,8 @@
 numpy
 cocotb==1.6.1
 pytest==6.2.5
+
+# Python linter and formatter
+click==8.0.2 # Our version of black needs an older version of click (https://stackoverflow.com/questions/71673404/importerror-cannot-import-name-unicodefun-from-click)
+black==24.3.0
+pylint==2.7.4
