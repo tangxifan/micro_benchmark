@@ -1,0 +1,42 @@
+name: Code Format
+
+# Run CI on push, PR, and weekly.
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+# We want to cancel previous runs for a given PR or branch / ref if another CI
+# run is requested.
+# See: https://docs.github.com/en/actions/using-jobs/using-concurrency
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+# Multiple job to tests
+jobs:
+  change_detect:
+    name: "Check"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - name: "Python"
+            code_type: "-py"
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          submodules: false
+
+      - name: Dump tool versions
+        run: |
+          black --version
+
+      - name: Check format
+        run: make check-format${{ matrix.config.code_type }}
