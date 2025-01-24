@@ -17,6 +17,10 @@ UTIL_SCRIPT_DIR = ${UTIL_DIR}/scripts
 UTIL_TASK_DIR = ${UTIL_DIR}/tasks
 RTL_LIST_YAML = ${UTIL_TASK_DIR}/${BENCHMARK_SUITE_NAME}_rtl_list.yaml
 
+# Format executables
+PYTHON_FORMAT_EXEC ?= black
+BENCHMARK_SUITE_LIST = "simple_gates" "simple_registers" "fsm" "dsp" "interface" "processors" "ram"
+
 NUM_JOBS=4
 IVERILOG_TEMP_DIR = _iverilog_temp
 
@@ -349,6 +353,17 @@ release_version:
 generate_initial_tagged_commit:
 # Create the first version of tagged commit file, used for version update
 	git rev-list --max-parents=0 --abbrev-commit HEAD > ${TAGGED_COMMIT_FILE}
+
+format-py:
+# Format all the python scripts under this project, excluding submodule and symbolic links
+	for f in `find ${BENCHMARK_SUITE_LIST} -type f -iname *.py`; \
+	do \
+	${PYTHON_FORMAT_EXEC} $${f} --line-length 100 || exit 1; \
+	done
+
+check-format-py:
+# Check if all the python files are in the expected format
+	${INFRA_ROOT}/scripts/check-format.sh -py
 
 # Functions to extract comments from Makefiles
 define COMMENT_EXTRACT
