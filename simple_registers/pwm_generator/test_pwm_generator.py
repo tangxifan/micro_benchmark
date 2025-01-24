@@ -1,4 +1,3 @@
-
 #####################################################################
 # Test the functionality of clk_divider
 #####################################################################
@@ -21,10 +20,10 @@ async def monitor_pwm(dut):
     low_time = period - high_time
     high_count = 0
     low_count = 0
-    i=0
-    #await FallingEdge(dut.reset)
-    
-    while(i<1000):      
+    i = 0
+    # await FallingEdge(dut.reset)
+
+    while i < 1000:
         await RisingEdge(dut.clk)
         if dut.pwm.value.integer == 1:
             high_count += 1
@@ -37,13 +36,14 @@ async def monitor_pwm(dut):
         if high_count + low_count >= period:
             high_count = 0
             low_count = 0
-        i=i+1
+        i = i + 1
+
 
 @cocotb.test()
 async def pwm_test_generator(dut):
     # Create a clock and start it running
-    CLK0_PERIOD = 10 # [ns]
-    #dut.clk.value <= 0
+    CLK0_PERIOD = 10  # [ns]
+    # dut.clk.value <= 0
     cocotb.start_soon(Clock(dut.clk, CLK0_PERIOD, units="ns").start())
     await RisingEdge(dut.clk)
 
@@ -62,6 +62,5 @@ async def pwm_test_generator(dut):
         await RisingEdge(dut.clk)
 
     # Stop the clock
-    #clk.stop()
+    # clk.stop()
     await monitor_thread
-
