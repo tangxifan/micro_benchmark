@@ -72,4 +72,5 @@ mult_2x2:
   source:
     - dsp/mult/mult_2x2/mult_2x2.v
   top_module: mult_2x2
+  cocotb_dir: dsp/mult/mult_2x2
 
