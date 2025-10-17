@@ -1,5 +1,5 @@
 numpy
-cocotb==1.6.1
+cocotb==1.9.2
 pytest==6.2.5
 
 # Python linter and formatter
