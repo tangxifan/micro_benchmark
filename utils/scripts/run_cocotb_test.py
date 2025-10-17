@@ -65,7 +65,7 @@ def run_cocotb_for_rtl_file(rtl_file, simulator):
 #####################################################################
 def thread_run_cocotb_for_rtl_file(thread_sema, rtl_file, rtl_abspath, simulator, job_status, job_time):
   with thread_sema:
-    thread_name = threading.currentThread().getName()
+    thread_name = threading.current_thread().name
 
     # Log runtime
     start_time = time.time()
