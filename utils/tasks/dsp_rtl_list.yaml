@@ -74,3 +74,9 @@ mult_2x2:
   top_module: mult_2x2
   cocotb_dir: dsp/mult/mult_2x2
 
+mult_4x4:
+  source:
+    - dsp/mult/mult_4x4/mult_4x4.v
+  top_module: mult_4x4
+  cocotb_dir: dsp/mult/mult_4x4
+
