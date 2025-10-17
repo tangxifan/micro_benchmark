@@ -3,12 +3,12 @@
 //  Author:        Xifan Tang
 //-------------------------------------------------------
 
-module mult_2x2(a, b, out);
+module mult_2x2(A, B, Y);
 parameter DATA_WIDTH = 2;  /* declare a parameter. default required */
-input [DATA_WIDTH - 1 : 0] a, b;
-output [DATA_WIDTH - 1 : 0] out;
+input [DATA_WIDTH - 1 : 0] A, B;
+output [DATA_WIDTH + DATA_WIDTH - 1 : 0] Y;
 
-assign out = a * b;
+assign Y = A * B;
 
 endmodule
 
