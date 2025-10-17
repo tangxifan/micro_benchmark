@@ -85,3 +85,11 @@ jobs:
         shell: bash
         run: |
          make cocotb_test BENCHMARK_SUITE_NAME=${{ matrix.benchmark_suite_name }} NUM_JOBS=2
+
+      - name: upload result
+        uses: actions/upload-artifact@v4
+        if: ${{ failure() }}
+        with:
+          name: my-artifact
+          path: ${{github.workspace}}/${{ matrix.benchmark_suite_name }}
+
