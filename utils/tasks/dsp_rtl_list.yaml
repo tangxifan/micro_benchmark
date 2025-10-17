@@ -67,3 +67,16 @@ mult_2_pipelined:
   source:
     - dsp/mult/mult_2_pipelined/mult_2_pipelined.v
   top_module: mult_2_pipelined
+
+mult_2x2:
+  source:
+    - dsp/mult/mult_2x2/mult_2x2.v
+  top_module: mult_2x2
+  cocotb_dir: dsp/mult/mult_2x2
+
+mult_4x4:
+  source:
+    - dsp/mult/mult_4x4/mult_4x4.v
+  top_module: mult_4x4
+  cocotb_dir: dsp/mult/mult_4x4
+
