@@ -84,4 +84,4 @@ jobs:
       - name: Cocotb test
         shell: bash
         run: |
-         make cocotb_test BENCHMARK_SUITE_NAME=${{ matrix.benchmark_suite_name }}
+         make cocotb_test BENCHMARK_SUITE_NAME=${{ matrix.benchmark_suite_name }} NUM_JOBS=2
