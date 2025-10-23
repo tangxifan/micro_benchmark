@@ -3,7 +3,7 @@
 #####################################################################
 import random
 import cocotb
-from cocotb.binary import BinaryValue
+from cocotb.types import LogicArray
 from cocotb.clock import Clock
 from cocotb.triggers import Timer
 from cocotb.triggers import RisingEdge
@@ -24,15 +24,15 @@ async def test_mult_4x4(dut):
         # Test the outputs of each 14x10 multiplier
         A = random.randint(0, pow(2, nbits_A) - 1)
         B = random.randint(0, pow(2, nbits_B) - 1)
-        dut.A.value = BinaryValue(A, n_bits=nbits_A, bigEndian=False)
-        dut.B.value = BinaryValue(B, n_bits=nbits_B, bigEndian=False)
+        dut.A.value = LogicArray(A, nbits_A)
+        dut.B.value = LogicArray(B, nbits_B)
 
-        await Timer(1, units="ns")
+        await Timer(1, "ns")
         dut._log.info("A is %d", dut.A.value)
         dut._log.info("B is %d", dut.B.value)
 
         # Calculate expected values of output
-        expected_out = dut.A.value.integer * dut.B.value.integer
+        expected_out = dut.A.value.to_unsigned() * dut.B.value.to_unsigned()
 
         dut._log.info("expected_out is %d", expected_out)
         dut._log.info("Actual %d", dut.Y.value)
@@ -45,15 +45,15 @@ async def test_mult_4x4(dut):
     dut._log.info("======== BEGIN Test %d ========", test_id)
     A = pow(2, nbits_A) - 1
     B = pow(2, nbits_B) - 1
-    dut.A.value = BinaryValue(A, n_bits=nbits_A, bigEndian=False)
-    dut.B.value = BinaryValue(B, n_bits=nbits_B, bigEndian=False)
+    dut.A.value = LogicArray(A, nbits_A)
+    dut.B.value = LogicArray(B, nbits_B)
 
-    await Timer(1, units="ns")
+    await Timer(1, "ns")
     dut._log.info("A is %d", dut.A.value)
     dut._log.info("B is %d", dut.B.value)
 
     # Calculate expected values of output
-    expected_out = dut.A.value.integer * dut.B.value.integer
+    expected_out = dut.A.value.to_unsigned() * dut.B.value.to_unsigned()
     dut._log.info("expected_out is %d", expected_out)
 
     assert dut.Y.value == expected_out, "Y does not match expected value!"
@@ -63,15 +63,15 @@ async def test_mult_4x4(dut):
     dut._log.info("======== BEGIN Test %d ========", test_id)
     A = 0
     B = 0
-    dut.A.value = BinaryValue(A, n_bits=nbits_A, bigEndian=False)
-    dut.B.value = BinaryValue(B, n_bits=nbits_B, bigEndian=False)
+    dut.A.value = LogicArray(A, nbits_A)
+    dut.B.value = LogicArray(B, nbits_B)
 
-    await Timer(1, units="ns")
+    await Timer(1, "ns")
     dut._log.info("A is %d", dut.A.value)
     dut._log.info("B is %d", dut.B.value)
 
     # Calculate expected values of output
-    expected_out = dut.A.value.integer * dut.B.value.integer
+    expected_out = dut.A.value.to_unsigned() * dut.B.value.to_unsigned()
     dut._log.info("expected_out is %d", expected_out)
 
     assert dut.Y.value == expected_out, "Y does not match expected value!"
@@ -81,15 +81,15 @@ async def test_mult_4x4(dut):
     dut._log.info("======== BEGIN Test %d ========", test_id)
     A = pow(2, nbits_A) - 1
     B = random.randint(0, pow(2, nbits_B) - 1)
-    dut.A.value = BinaryValue(A, n_bits=nbits_A, bigEndian=False)
-    dut.B.value = BinaryValue(B, n_bits=nbits_B, bigEndian=False)
+    dut.A.value = LogicArray(A, nbits_A)
+    dut.B.value = LogicArray(B, nbits_B)
 
-    await Timer(1, units="ns")
+    await Timer(1, "ns")
     dut._log.info("A is %d", dut.A.value)
     dut._log.info("B is %d", dut.B.value)
 
     # Calculate expected values of output
-    expected_out = dut.A.value.integer * dut.B.value.integer
+    expected_out = dut.A.value.to_unsigned() * dut.B.value.to_unsigned()
     dut._log.info("expected_out is %d", expected_out)
 
     assert dut.Y.value == expected_out, "Y does not match expected value!"
@@ -99,15 +99,15 @@ async def test_mult_4x4(dut):
     dut._log.info("======== BEGIN Test %d ========", test_id)
     A = random.randint(0, pow(2, nbits_A) - 1)
     B = pow(2, nbits_B) - 1
-    dut.A.value = BinaryValue(A, n_bits=nbits_A, bigEndian=False)
-    dut.B.value = BinaryValue(B, n_bits=nbits_B, bigEndian=False)
+    dut.A.value = LogicArray(A, nbits_A)
+    dut.B.value = LogicArray(B, nbits_B)
 
-    await Timer(1, units="ns")
+    await Timer(1, "ns")
     dut._log.info("A is %d", dut.A.value)
     dut._log.info("B is %d", dut.B.value)
 
     # Calculate expected values of output
-    expected_out = dut.A.value.integer * dut.B.value.integer
+    expected_out = dut.A.value.to_unsigned() * dut.B.value.to_unsigned()
     dut._log.info("expected_out is %d", expected_out)
 
     assert dut.Y.value == expected_out, "Y does not match expected value!"
@@ -117,15 +117,15 @@ async def test_mult_4x4(dut):
     dut._log.info("======== BEGIN Test %d ========", test_id)
     A = 0
     B = pow(2, nbits_B) - 1
-    dut.A.value = BinaryValue(A, n_bits=nbits_A, bigEndian=False)
-    dut.B.value = BinaryValue(B, n_bits=nbits_B, bigEndian=False)
+    dut.A.value = LogicArray(A, nbits_A)
+    dut.B.value = LogicArray(B, nbits_B)
 
-    await Timer(1, units="ns")
+    await Timer(1, "ns")
     dut._log.info("A is %d", dut.A.value)
     dut._log.info("B is %d", dut.B.value)
 
     # Calculate expected values of output
-    expected_out = dut.A.value.integer * dut.B.value.integer
+    expected_out = dut.A.value.to_unsigned() * dut.B.value.to_unsigned()
     dut._log.info("expected_out is %d", expected_out)
 
     assert dut.Y.value == expected_out, "Y does not match expected value!"
@@ -135,15 +135,15 @@ async def test_mult_4x4(dut):
     dut._log.info("======== BEGIN Test %d ========", test_id)
     A = pow(2, nbits_A) - 1
     B = 0
-    dut.A.value = BinaryValue(A, n_bits=nbits_A, bigEndian=False)
-    dut.B.value = BinaryValue(B, n_bits=nbits_B, bigEndian=False)
+    dut.A.value = LogicArray(A, nbits_A)
+    dut.B.value = LogicArray(B, nbits_B)
 
-    await Timer(1, units="ns")
+    await Timer(1, "ns")
     dut._log.info("A is %d", dut.A.value)
     dut._log.info("B is %d", dut.B.value)
 
     # Calculate expected values of output
-    expected_out = dut.A.value.integer * dut.B.value.integer
+    expected_out = dut.A.value.to_unsigned() * dut.B.value.to_unsigned()
     dut._log.info("expected_out is %d", expected_out)
 
     assert dut.Y.value == expected_out, "Y does not match expected value!"

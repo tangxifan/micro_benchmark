@@ -3,7 +3,7 @@
 #####################################################################
 import random
 import cocotb
-from cocotb.binary import BinaryValue
+from cocotb.types import LogicArray
 from cocotb.clock import Clock
 from cocotb.triggers import Timer, ClockCycles
 from cocotb.triggers import RisingEdge
@@ -18,10 +18,10 @@ async def test_scalable_seq_detector(dut):
     # Initialize
     dut.x.value = 0
     dut.reset.value = 0
-    dut.sequence_str.value = BinaryValue(SEQ_STR, n_bits=SEQ_BITS, bigEndian=False)
+    dut.sequence_str.value = LogicArray(SEQ_STR, SEQ_BITS)
     # Clock Generation
     CLK_PERIOD = 10  # [ns]
-    cocotb.start_soon(Clock(dut.clock0, CLK_PERIOD, units="ns").start())
+    cocotb.start_soon(Clock(dut.clock0, CLK_PERIOD, "ns").start())
     # apply reset
     await ClockCycles(dut.clock0, 3)
     dut.reset.value = 1
@@ -33,7 +33,7 @@ async def test_scalable_seq_detector(dut):
     for seq_item in range(8):
         dut._log.info("======== BEGIN Sequence item: %d ========", seq_item)
         # sending each sequence item
-        dut.x.value = BinaryValue(SEQ_STR[SEQ_BITS - 1 - seq_item]).integer
+        dut.x.value = LogicArray(SEQ_STR[SEQ_BITS - 1 - seq_item]).to_unsigned()
         if seq_item == 0:
             expected_start = 1
             expected_stop = 0
