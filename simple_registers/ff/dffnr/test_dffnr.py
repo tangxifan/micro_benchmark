@@ -3,7 +3,7 @@
 #####################################################################
 import random
 import cocotb
-from cocotb.binary import BinaryValue
+from cocotb.types import LogicArray
 from cocotb.clock import Clock
 from cocotb.triggers import Timer
 from cocotb.triggers import RisingEdge
@@ -17,7 +17,7 @@ CLEAR_DISABLE = 0
 # Configure the dut with a given mode bit
 # See truth table in documentation as a reference
 # async def config_mode(dut, mode_bits):
-#  dut.mode_i.value = BinaryValue(mode_bits).integer
+#  dut.mode_i.value = LogicArray(mode_bits).to_unsigned()
 
 
 @cocotb.test()
@@ -37,7 +37,7 @@ async def test_dffnr(dut):
     ################################################################
     # Create clocks
     CLK_PERIOD = 10  # [ns]
-    cocotb.start_soon(Clock(dut.clk_i, CLK_PERIOD, units="ns").start())
+    cocotb.start_soon(Clock(dut.clk_i, CLK_PERIOD, "ns").start())
 
     # Just wait a very short period, apply reset
     await Timer(CLK_PERIOD / 10)

@@ -4,7 +4,7 @@
 import random
 import numpy as np
 import cocotb
-from cocotb.binary import BinaryValue
+from cocotb.types import LogicArray
 from cocotb.clock import Clock
 from cocotb.triggers import Timer, ClockCycles
 from cocotb.triggers import RisingEdge
@@ -20,9 +20,9 @@ async def reset_dut(reset, active_high, delay_ns, duration_ns):
     # Wait sometime to start if required
     if delay_ns > 0:
         reset.value = DEASSERT_RST
-        await Timer(delay_ns, units="ns")
+        await Timer(delay_ns, "ns")
     reset.value = ASSERT_RST
-    await Timer(duration_ns, units="ns")
+    await Timer(duration_ns, "ns")
     reset.value = DEASSERT_RST
     reset._log.debug("Reset complete")
 
@@ -68,13 +68,13 @@ async def test_counterup16_4clk_posedge_async_resetn(dut):
     ################################################################
     # Clock Generation
     CLK0_PERIOD = 10  # [ns]
-    cocotb.start_soon(Clock(dut.clock0, CLK0_PERIOD, units="ns").start())
+    cocotb.start_soon(Clock(dut.clock0, CLK0_PERIOD, "ns").start())
     CLK1_PERIOD = 20  # [ns]
-    cocotb.start_soon(Clock(dut.clock1, CLK1_PERIOD, units="ns").start())
+    cocotb.start_soon(Clock(dut.clock1, CLK1_PERIOD, "ns").start())
     CLK2_PERIOD = 30  # [ns]
-    cocotb.start_soon(Clock(dut.clock2, CLK2_PERIOD, units="ns").start())
+    cocotb.start_soon(Clock(dut.clock2, CLK2_PERIOD, "ns").start())
     CLK3_PERIOD = 40  # [ns]
-    cocotb.start_soon(Clock(dut.clock3, CLK3_PERIOD, units="ns").start())
+    cocotb.start_soon(Clock(dut.clock3, CLK3_PERIOD, "ns").start())
     max_clock = max(CLK3_PERIOD, CLK2_PERIOD, CLK1_PERIOD, CLK0_PERIOD)
 
     await cocotb.start_soon(reset_dut(dut.reset, False, 0, 1))

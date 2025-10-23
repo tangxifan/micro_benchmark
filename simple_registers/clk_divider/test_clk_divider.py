@@ -4,7 +4,7 @@
 import random
 import numpy as np
 import cocotb
-from cocotb.binary import BinaryValue
+from cocotb.types import LogicArray
 from cocotb.clock import Clock
 from cocotb.triggers import Timer, ClockCycles
 from cocotb.triggers import RisingEdge
@@ -18,7 +18,7 @@ async def clk_divider(dut):
     # Clock Generation
     CLK0_PERIOD = 10  # [ns]
     # dut.clk_i.value <= 0
-    cocotb.start_soon(Clock(dut.clk_i, CLK0_PERIOD, units="ns").start())
+    cocotb.start_soon(Clock(dut.clk_i, CLK0_PERIOD, "ns").start())
 
     dut.rst.value = 1
     await RisingEdge(dut.clk_i)

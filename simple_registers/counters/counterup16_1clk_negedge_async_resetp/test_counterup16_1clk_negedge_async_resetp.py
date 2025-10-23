@@ -4,7 +4,7 @@
 import random
 import numpy as np
 import cocotb
-from cocotb.binary import BinaryValue
+from cocotb.types import LogicArray
 from cocotb.clock import Clock
 from cocotb.triggers import Timer, ClockCycles
 from cocotb.triggers import FallingEdge
@@ -17,7 +17,7 @@ async def test_counterup16_1clk_negedge_async_resetp(dut):
     ################################################################
     # Clock Generation
     CLK_PERIOD = 10  # [ns]
-    cocotb.start_soon(Clock(dut.clock0, CLK_PERIOD, units="ns").start())
+    cocotb.start_soon(Clock(dut.clock0, CLK_PERIOD, "ns").start())
 
     ################################################################
 
@@ -35,7 +35,7 @@ async def test_counterup16_1clk_negedge_async_resetp(dut):
     dut.reset.value = assert_rst
 
     await FallingEdge(dut.clock0)
-    await Timer(1, units="ns")
+    await Timer(1, "ns")
 
     dut._log.info("Reset Test0:: count is %d", dut.count.value)
     dut._log.info("Reset Test0:: expected_count is %d", expected_count)

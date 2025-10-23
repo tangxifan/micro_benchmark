@@ -4,7 +4,7 @@
 import random
 import numpy as np
 import cocotb
-from cocotb.binary import BinaryValue
+from cocotb.types import LogicArray
 from cocotb.clock import Clock
 from cocotb.triggers import Timer, ClockCycles
 from cocotb.triggers import RisingEdge
@@ -17,7 +17,7 @@ async def test_counterdown16_1clk_posedge_sync_resetn(dut):
     ################################################################
     # Clock Generation
     CLK_PERIOD = 10  # [ns]
-    cocotb.start_soon(Clock(dut.clock0, CLK_PERIOD, units="ns").start())
+    cocotb.start_soon(Clock(dut.clock0, CLK_PERIOD, "ns").start())
 
     ################################################################
 

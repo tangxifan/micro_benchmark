@@ -4,13 +4,12 @@
 import random
 import numpy as np
 import cocotb
-from cocotb.binary import BinaryValue
+from cocotb.types import LogicArray
 from cocotb.clock import Clock
 from cocotb.triggers import Timer, ClockCycles
 from cocotb.triggers import RisingEdge
 from cocotb.triggers import FallingEdge
 from cocotb.triggers import ReadOnly
-from cocotb.result import TestFailure
 
 
 async def monitor_pwm(dut):
@@ -25,14 +24,13 @@ async def monitor_pwm(dut):
 
     while i < 1000:
         await RisingEdge(dut.clk)
-        if dut.pwm.value.integer == 1:
+        dut._log.info(f"hc:{high_count},ht:{high_time},lc:{low_count},lt:{low_time}")
+        if int(dut.pwm.value) == 1:
             high_count += 1
-            if high_count > high_time:
-                raise TestFailure("PWM high time exceeded")
+            assert high_count <= high_time, "PWM high time exceeded"
         else:
             low_count += 1
-            if low_count > low_time:
-                raise TestFailure("PWM low time exceeded")
+            assert low_count <= low_time, "PWM low time exceeded"
         if high_count + low_count >= period:
             high_count = 0
             low_count = 0
@@ -44,7 +42,7 @@ async def pwm_test_generator(dut):
     # Create a clock and start it running
     CLK0_PERIOD = 10  # [ns]
     # dut.clk.value <= 0
-    cocotb.start_soon(Clock(dut.clk, CLK0_PERIOD, units="ns").start())
+    cocotb.start_soon(Clock(dut.clk, CLK0_PERIOD, "ns").start())
     await RisingEdge(dut.clk)
 
     # Reset the design
