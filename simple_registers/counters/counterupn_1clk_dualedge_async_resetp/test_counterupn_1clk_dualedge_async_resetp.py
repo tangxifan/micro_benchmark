@@ -4,7 +4,7 @@
 import random
 import numpy as np
 import cocotb
-from cocotb.binary import BinaryValue
+from cocotb.types import LogicArray
 from cocotb.clock import Clock
 from cocotb.triggers import Timer, ClockCycles
 from cocotb.triggers import RisingEdge
@@ -17,7 +17,7 @@ async def counterupn_1clk_dualedge_async_resetp(dut):
     ################################################################
     # Clock Generation
     CLK_PERIOD = 10  # [ns]
-    cocotb.start_soon(Clock(dut.clk, CLK_PERIOD, units="ns").start())
+    cocotb.start_soon(Clock(dut.clk, CLK_PERIOD, "ns").start())
 
     ################################################################
 
@@ -35,7 +35,7 @@ async def counterupn_1clk_dualedge_async_resetp(dut):
     await ClockCycles(dut.clk, 2)
 
     await RisingEdge(dut.clk)
-    await Timer(1, units="ns")
+    await Timer(1, "ns")
     dut.rst_counter.value = deassert_rst
 
     await FallingEdge(dut.clk)
@@ -53,7 +53,7 @@ async def counterupn_1clk_dualedge_async_resetp(dut):
     dut._log.info("rst_counter Test1:: expected_count is %d", expected_count)
     assert dut.q_counter.value == expected_count, "count does not match expected value!"
     await RisingEdge(dut.clk)
-    await Timer(1, units="ns")
+    await Timer(1, "ns")
     dut.rst_counter.value = deassert_rst
     await FallingEdge(dut.clk)
 
@@ -61,15 +61,15 @@ async def counterupn_1clk_dualedge_async_resetp(dut):
         int((num_cycles * test_cases) / COUNTER_SIZE)
     ):  # Divided by COUNTER_SIZE just to reduce runtime
         if cycle == rst_counter_rand:
-            await Timer(1, units="ns")
+            await Timer(1, "ns")
             dut.rst_counter.value = assert_rst  # Random Reset
             await RisingEdge(dut.clk)
             dut._log.info("rst_counter Test2:: Driving rst_counter randomly!")
         else:
-            await Timer(1, units="ns")
+            await Timer(1, "ns")
             dut.rst_counter.value = deassert_rst
 
-        await Timer(1, units="ns")
+        await Timer(1, "ns")
 
         if expected_count == COUNTER_MAX_VAL or dut.rst_counter.value == assert_rst:
             expected_count = 0

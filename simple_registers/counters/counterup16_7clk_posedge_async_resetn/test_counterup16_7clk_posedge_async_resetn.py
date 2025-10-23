@@ -4,7 +4,7 @@
 import random
 import numpy as np
 import cocotb
-from cocotb.binary import BinaryValue
+from cocotb.types import LogicArray
 from cocotb.clock import Clock
 from cocotb.triggers import Timer, ClockCycles
 from cocotb.triggers import RisingEdge
@@ -20,9 +20,9 @@ async def reset_dut(reset, active_high, delay_ns, duration_ns):
     # Wait sometime to start if required
     if delay_ns > 0:
         reset.value = DEASSERT_RST
-        await Timer(delay_ns, units="ns")
+        await Timer(delay_ns, "ns")
     reset.value = ASSERT_RST
-    await Timer(duration_ns, units="ns")
+    await Timer(duration_ns, "ns")
     reset.value = DEASSERT_RST
     reset._log.debug("Reset complete")
 
@@ -68,19 +68,19 @@ async def test_counterup16_7clk_posedge_async_resetn(dut):
     ################################################################
     # Clock Generation
     CLK0_PERIOD = 10  # [ns]
-    cocotb.start_soon(Clock(dut.clock0, CLK0_PERIOD, units="ns").start())
+    cocotb.start_soon(Clock(dut.clock0, CLK0_PERIOD, "ns").start())
     CLK1_PERIOD = 20  # [ns]
-    cocotb.start_soon(Clock(dut.clock1, CLK1_PERIOD, units="ns").start())
+    cocotb.start_soon(Clock(dut.clock1, CLK1_PERIOD, "ns").start())
     CLK2_PERIOD = 30  # [ns]
-    cocotb.start_soon(Clock(dut.clock2, CLK2_PERIOD, units="ns").start())
+    cocotb.start_soon(Clock(dut.clock2, CLK2_PERIOD, "ns").start())
     CLK3_PERIOD = 40  # [ns]
-    cocotb.start_soon(Clock(dut.clock3, CLK3_PERIOD, units="ns").start())
+    cocotb.start_soon(Clock(dut.clock3, CLK3_PERIOD, "ns").start())
     CLK4_PERIOD = 50  # [ns]
-    cocotb.start_soon(Clock(dut.clock4, CLK4_PERIOD, units="ns").start())
+    cocotb.start_soon(Clock(dut.clock4, CLK4_PERIOD, "ns").start())
     CLK5_PERIOD = 60  # [ns]
-    cocotb.start_soon(Clock(dut.clock5, CLK5_PERIOD, units="ns").start())
+    cocotb.start_soon(Clock(dut.clock5, CLK5_PERIOD, "ns").start())
     CLK6_PERIOD = 70  # [ns]
-    cocotb.start_soon(Clock(dut.clock6, CLK6_PERIOD, units="ns").start())
+    cocotb.start_soon(Clock(dut.clock6, CLK6_PERIOD, "ns").start())
 
     max_clock = max(
         CLK6_PERIOD, CLK5_PERIOD, CLK4_PERIOD, CLK3_PERIOD, CLK2_PERIOD, CLK1_PERIOD, CLK0_PERIOD

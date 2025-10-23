@@ -4,7 +4,7 @@
 import random
 import numpy as np
 import cocotb
-from cocotb.binary import BinaryValue
+from cocotb.types import LogicArray
 from cocotb.clock import Clock
 from cocotb.triggers import Timer, ClockCycles
 from cocotb.triggers import RisingEdge
@@ -17,7 +17,7 @@ async def test_counterup32_1clk_async_reset_n_instances(dut):
     ################################################################
     # Clock Generation
     CLK_PERIOD = 10  # [ns]
-    cocotb.start_soon(Clock(dut.clock0, CLK_PERIOD, units="ns").start())
+    cocotb.start_soon(Clock(dut.clock0, CLK_PERIOD, "ns").start())
 
     ################################################################
 
@@ -51,7 +51,7 @@ async def test_counterup32_1clk_async_reset_n_instances(dut):
     dut._log.info("reset Test1:: expected_count is %d", expected_count)
     assert dut.count.value == expected_count, "count does not match expected value!"
     await RisingEdge(dut.clock0)
-    await Timer(1, units="ns")
+    await Timer(1, "ns")
     dut.reset.value = deassert_rst
     await FallingEdge(dut.clock0)
 
@@ -59,13 +59,13 @@ async def test_counterup32_1clk_async_reset_n_instances(dut):
         int((num_cycles * test_cases) / 2000000)
     ):  # Divided by this number just to reduce runtime
         if cycle == reset_rand:
-            await Timer(1, units="ns")
+            await Timer(1, "ns")
             dut.reset.value = assert_rst  # Random Reset
-            await Timer(1, units="ns")
+            await Timer(1, "ns")
 
             dut._log.info("reset Test2:: Driving reset randomly!")
         else:
-            await Timer(1, units="ns")
+            await Timer(1, "ns")
             dut.reset.value = deassert_rst
 
         if expected_count == COUNTER_MAX_VAL or dut.reset.value == assert_rst:
@@ -75,7 +75,7 @@ async def test_counterup32_1clk_async_reset_n_instances(dut):
             dut._log.info("expected_count is %d", expected_count)
 
         else:
-            await Timer(5, units="ns")
+            await Timer(5, "ns")
             expected_count += 1
             await RisingEdge(dut.clock0)
             dut._log.info("count is %d", dut.count.value)

@@ -3,7 +3,7 @@
 #####################################################################
 import random
 import cocotb
-from cocotb.binary import BinaryValue
+from cocotb.types import LogicArray
 from cocotb.clock import Clock
 from cocotb.triggers import Timer, ClockCycles
 from cocotb.triggers import RisingEdge
@@ -16,10 +16,10 @@ async def test_fsm_seq_detector(dut):
     dut.seq_in.value = 0
     dut.reset.value = 0
     SEQ_STR = "10011001"
-    dut.expected_seq.value = BinaryValue(SEQ_STR, n_bits=8, bigEndian=False)
+    dut.expected_seq.value = LogicArray(SEQ_STR, 8)
     # Clock Generation
     CLK_PERIOD = 10  # [ns]
-    cocotb.start_soon(Clock(dut.clock0, CLK_PERIOD, units="ns").start())
+    cocotb.start_soon(Clock(dut.clock0, CLK_PERIOD, "ns").start())
 
     # apply reset
     await ClockCycles(dut.clock0, 1)
@@ -34,13 +34,13 @@ async def test_fsm_seq_detector(dut):
     for seq_item in range(8):
         dut._log.info("======== Sequence item# %d ========", seq_item)
         # sending each sequence item
-        dut.seq_in.value = BinaryValue(SEQ_STR[7 - seq_item]).integer
+        dut.seq_in.value = LogicArray(SEQ_STR[7 - seq_item]).to_unsigned()
         await FallingEdge(dut.clock0)
     assert dut.seq_detected.value == 1, "Sequence is not detected"
     dut._log.info("======== Sequence %s detected successfully ========", SEQ_STR)
 
     SEQ_STR = "10101101"
-    dut.expected_seq.value = BinaryValue(SEQ_STR, n_bits=8, bigEndian=False)
+    dut.expected_seq.value = LogicArray(SEQ_STR, 8)
 
     # apply reset
     await ClockCycles(dut.clock0, 1)
@@ -55,7 +55,7 @@ async def test_fsm_seq_detector(dut):
     for seq_item in range(8):
         dut._log.info("======== Sequence item# %d ========", seq_item)
         # sending each sequence item
-        dut.seq_in.value = BinaryValue(SEQ_STR[7 - seq_item]).integer
+        dut.seq_in.value = LogicArray(SEQ_STR[7 - seq_item]).to_unsigned()
         await FallingEdge(dut.clock0)
     assert dut.seq_detected.value == 1, "Sequence is not detected"
     dut._log.info("======== Sequence %s detected successfully ========", SEQ_STR)

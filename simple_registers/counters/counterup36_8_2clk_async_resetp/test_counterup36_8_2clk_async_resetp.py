@@ -5,7 +5,7 @@ import random
 import array
 import cocotb
 import numpy as np
-from cocotb.binary import BinaryValue
+from cocotb.types import LogicArray
 from cocotb.clock import Clock
 from cocotb.triggers import Timer, ClockCycles
 from cocotb.triggers import RisingEdge
@@ -16,8 +16,8 @@ from cocotb.triggers import FallingEdge
 async def test_counterup36_8_2clk_async_resetp(dut):
     ## Create clocks
     CLK_PERIOD = 10  # [ns]
-    cocotb.start_soon(Clock(dut.clock0, CLK_PERIOD, units="ns").start())
-    # cocotb.start_soon(Clock(dut.clock1, CLK_PERIOD, units="ns").start())
+    cocotb.start_soon(Clock(dut.clock0, CLK_PERIOD, "ns").start())
+    # cocotb.start_soon(Clock(dut.clock1, CLK_PERIOD, "ns").start())
 
     test_cases = 1
     COUNTER_SIZE = 8
@@ -52,7 +52,7 @@ async def test_counterup36_8_2clk_async_resetp(dut):
     await ClockCycles(dut.clock0, 50)
 
     assert dut.out2.value == 0, "10 bit counter in top module does not matched"
-    await Timer(1, units="ns")
+    await Timer(1, "ns")
     dut.reset.value = 0
     await FallingEdge(dut.clock0)
     ########################################################################################
@@ -63,13 +63,13 @@ async def test_counterup36_8_2clk_async_resetp(dut):
         if cycle == rst_counter_rand1:
             await RisingEdge(dut.clock0)
             dut.reset.value = 1
-            await Timer(5, units="ns")
+            await Timer(5, "ns")
             dut._log.info("Reset Test2:: Driving reset randomly!")
         else:
             dut.reset.value = 0
             # dut._log.info("Reset VALUE is", dut.reset.value)
 
-        await Timer(5, units="ns")
+        await Timer(5, "ns")
 
         ## for 10 bit
         if expected_count3 == COUNTER_MAX_VAL4 or dut.reset.value == 1:
@@ -77,7 +77,7 @@ async def test_counterup36_8_2clk_async_resetp(dut):
         else:
             expected_count3 += 1
 
-        await Timer(5, units="ns")
+        await Timer(5, "ns")
         dut._log.info("Testing counter10 %d", expected_count3)
         assert dut.out2.value == expected_count3, "counter 10 bit does not match expected value!"
     ###########################################################################################################
@@ -89,11 +89,11 @@ async def test_counterup36_8_2clk_async_resetp(dut):
         if cycle == rst_counter_rand:
             await RisingEdge(dut.clock0)
             dut.reset.value = 1
-            await Timer(5, units="ns")
+            await Timer(5, "ns")
             dut._log.info("Reset Test2:: Driving reset randomly!")
         else:
             dut.reset.value = 0
-        await Timer(5, units="ns")
+        await Timer(5, "ns")
 
         ## for 8 bit
         if expected_count == COUNTER_MAX_VAL1 or dut.reset.value == 1:
@@ -101,7 +101,7 @@ async def test_counterup36_8_2clk_async_resetp(dut):
         else:
             expected_count += 1
 
-        await Timer(5, units="ns")
+        await Timer(5, "ns")
 
         ###  for 12 bit
         if expected_count1 == COUNTER_MAX_VAL2 or dut.reset.value == 1:
@@ -117,15 +117,15 @@ async def test_counterup36_8_2clk_async_resetp(dut):
         else:
             expected_count2 += 1
 
-        expected_out_str0 = BinaryValue(expected_count, n_bits=8, bigEndian=False).binstr
-        expected_out_str1 = BinaryValue(expected_count1, n_bits=12, bigEndian=False).binstr
-        expected_out_str2 = BinaryValue(expected_count2, n_bits=16, bigEndian=False).binstr
+        expected_out_str0 = str(LogicArray(expected_count, 8))
+        expected_out_str1 = str(LogicArray(expected_count1, 12))
+        expected_out_str2 = str(LogicArray(expected_count2, 16))
 
         dut._log.info("expected value of counter 8 in binary %s", expected_out_str0)
         dut._log.info("expected value of counter12 in binary %s", expected_out_str1)
         dut._log.info("expected value of counter16 in binary %s", expected_out_str2)
 
-        counter16_str = BinaryValue(dut.out1.value.value, n_bits=2772, bigEndian=False).binstr
+        counter16_str = str(LogicArray(dut.out1.value, 2772))
 
     ins = 76
 

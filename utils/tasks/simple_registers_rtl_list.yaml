@@ -103,6 +103,13 @@ counterup16_8clk_posedge_async_resetn:
   top_module: counterup16_8clk_posedge_async_resetn
   cocotb_dir: simple_registers/counters/counterup16_8clk_posedge_async_resetn  
 
+counterup16_7clk_posedge_async_resetn:
+  source:
+    - simple_registers/counters/counterup16_7clk_posedge_async_resetn/counterup16.v
+    - simple_registers/counters/counterup16_7clk_posedge_async_resetn/counterup16_7clk_posedge_async_resetn.v
+  top_module: counterup16_7clk_posedge_async_resetn
+  cocotb_dir: simple_registers/counters/counterup16_7clk_posedge_async_resetn  
+
 counterdown16_1clk_negedge_async_resetn:
   source:
     - simple_registers/counters/counterdown16_1clk_negedge_async_resetn/counterdown16_1clk_negedge_async_resetn.v

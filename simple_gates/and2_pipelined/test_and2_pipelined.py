@@ -3,7 +3,7 @@
 #####################################################################
 import random
 import cocotb
-from cocotb.binary import BinaryValue
+from cocotb.types import LogicArray
 from cocotb.clock import Clock
 from cocotb.triggers import Timer
 from cocotb.triggers import RisingEdge
@@ -15,7 +15,7 @@ async def test_and2_pipelined(dut):
     ################################################################
     # Create clocks
     CLK_PERIOD = 10  # [ns]
-    cocotb.start_soon(Clock(dut.clk, CLK_PERIOD, units="ns").start())
+    cocotb.start_soon(Clock(dut.clk, CLK_PERIOD, "ns").start())
 
     ################################################################
     # Test all the cases

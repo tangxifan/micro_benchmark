@@ -3,7 +3,7 @@
 #####################################################################
 import random
 import cocotb
-from cocotb.binary import BinaryValue
+from cocotb.types import LogicArray
 from cocotb.clock import Clock
 from cocotb.triggers import Timer
 from cocotb.triggers import RisingEdge
@@ -21,7 +21,7 @@ async def test_or2(dut):
             dut._log.info("==== Begin Test case %d ====", test_id)
             dut.a.value = a
             dut.b.value = b
-            await Timer(clock_period, units="ns")
+            await Timer(clock_period, "ns")
             dut._log.info("a is %s", dut.a.value)
             dut._log.info("b is %s", dut.b.value)
             dut._log.info("c is %s", dut.c.value)
