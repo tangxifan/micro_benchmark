@@ -7,9 +7,19 @@ import cocotb
 from cocotb.types import LogicArray
 from cocotb.clock import Clock
 from cocotb.triggers import Timer, ClockCycles
-from cocotb.triggers import RisingEdge
-from cocotb.triggers import FallingEdge
-
+# from cocotb.triggers import RisingEdge
+# from cocotb.triggers import FallingEdge
+from cocotb.triggers import ValueChange
+async def RisingEdge(signal):
+    await ValueChange(signal)
+    # if not rising edge, keep waiting
+    while signal.value != 1:
+        await ValueChange(signal)
+async def FallingEdge(signal):
+    await ValueChange(signal)
+    # if not falling edge, keep waiting
+    while signal.value != 0:
+        await ValueChange(signal)
 
 @cocotb.test()
 async def counterupn_1clk_dualedge_async_resetp(dut):
@@ -32,7 +42,7 @@ async def counterupn_1clk_dualedge_async_resetp(dut):
     rst_counter_rand = random.randint(0, int((num_cycles * test_cases) / COUNTER_SIZE))
 
     dut.rst_counter.value = assert_rst
-    await ClockCycles(dut.clk, 2)
+    await ClockCycles(dut.clk, 2, ValueChange)
 
     await RisingEdge(dut.clk)
     await Timer(1, "ns")
@@ -43,7 +53,7 @@ async def counterupn_1clk_dualedge_async_resetp(dut):
     dut._log.info("rst_counter Test0:: expected_count is %d", expected_count)
     assert dut.q_counter.value == expected_count, "count does not match expected value!"
 
-    await ClockCycles(dut.clk, 20)
+    await ClockCycles(dut.clk, 20, ValueChange)
     await RisingEdge(dut.clk)
     dut.rst_counter.value = assert_rst
     await FallingEdge(dut.clk)

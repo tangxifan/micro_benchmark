@@ -7,9 +7,19 @@ import cocotb
 from cocotb.types import LogicArray
 from cocotb.clock import Clock
 from cocotb.triggers import Timer, ClockCycles
-from cocotb.triggers import RisingEdge
-from cocotb.triggers import FallingEdge
-
+# from cocotb.triggers import RisingEdge
+# from cocotb.triggers import FallingEdge
+from cocotb.triggers import ValueChange
+async def RisingEdge(signal):
+    await ValueChange(signal)
+    # if not rising edge, keep waiting
+    while signal.value != 1:
+        await ValueChange(signal)
+async def FallingEdge(signal):
+    await ValueChange(signal)
+    # if not falling edge, keep waiting
+    while signal.value != 0:
+        await ValueChange(signal)
 
 async def reset_dut(reset, active_high, delay_ns, duration_ns):
     ASSERT_RST = 0
