@@ -7,19 +7,25 @@ import cocotb
 from cocotb.types import LogicArray
 from cocotb.clock import Clock
 from cocotb.triggers import Timer, ClockCycles
+
 # from cocotb.triggers import RisingEdge
 # from cocotb.triggers import FallingEdge
 from cocotb.triggers import ValueChange
+
+
 async def RisingEdge(signal):
     await ValueChange(signal)
     # if not rising edge, keep waiting
     while signal.value != 1:
         await ValueChange(signal)
+
+
 async def FallingEdge(signal):
     await ValueChange(signal)
     # if not falling edge, keep waiting
     while signal.value != 0:
         await ValueChange(signal)
+
 
 @cocotb.test()
 async def test_counterdown16_1clk_posedge_async_resetn(dut):
@@ -53,7 +59,7 @@ async def test_counterdown16_1clk_posedge_async_resetn(dut):
     dut._log.info("Reset Test0:: expected_count is %d", expected_count)
     assert dut.count.value == expected_count, "count does not match expected value!"
 
-    await ClockCycles(dut.clock0, 20,ValueChange)
+    await ClockCycles(dut.clock0, 20, ValueChange)
     await RisingEdge(dut.clock0)
     dut.reset.value = assert_rst
     await FallingEdge(dut.clock0)
