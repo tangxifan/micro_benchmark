@@ -102,6 +102,16 @@ RS485_MISC_FLIST = "README.md"
 RS485_LDIR_RTL = ${RS485_LDIR_PREFIX}/rtl/
 RS485_LDIR_TB = ${RS485_LDIR_PREFIX}/testbench/
 
+# fpga-can
+TMP_FPGACAN = _tmp_fpga_can
+FPGACAN_GIT_URL = https://github.com/WangXuan95/FPGA-CAN.git
+FPGACAN_LDIR_PREFIX = ${PWD}/interface/fpga-can
+FPGACAN_RTL_FLIST = "can_level_bit.v" "can_level_packet.v" "can_top.v"
+FPGACAN_TB_FLIST = "tb_can_top.v"
+FPGACAN_MISC_FLIST = "README.md"
+FPGACAN_LDIR_RTL = ${FPGACAN_LDIR_PREFIX}/rtl/
+FPGACAN_LDIR_TB = ${FPGACAN_LDIR_PREFIX}/testbench/
+
 .SILENT:
 
 # Put it first so that "make" without argument is like "make help".
@@ -337,6 +347,34 @@ rs485:
 	cd $${currDir} && \
 	echo "==== Update git track list ====" && \
 	git add ${RS485_LDIR_PREFIX} && \
+	echo "==== Done ====" || exit 1;
+
+fpga_can:
+# This command will checkout the latest FPGA-CAN, then update RTL and testbenches
+	echo "==== Clone latest FPGA-CAN from github repo: ${FPGACAN_GIT_URL} ====" && \
+	currDir=$${PWD} && rm -rf ${TMP_FPGACAN} && \
+	git clone ${FPGACAN_GIT_URL} ${TMP_FPGACAN} && \
+    cd ${TMP_FPGACAN}/RTL && \
+	echo "==== Update RTL ====" && \
+	mkdir -p ${FPGACAN_LDIR_RTL} && \
+	for f in ${FPGACAN_RTL_FLIST} ; \
+	do cp $${f} ${FPGACAN_LDIR_RTL} || exit 1; \
+	done && cd $${currDir} && \
+	echo "==== Update Testbench ====" && \
+    cd ${TMP_FPGACAN}/SIM && \
+	mkdir -p ${FPGACAN_LDIR_TB} && \
+	for f in ${FPGACAN_TB_FLIST} ; \
+	do cp $${f} ${FPGACAN_LDIR_TB} || exit 1; \
+	done && cd $${currDir} && \
+	echo "==== Update Documentation ====" && \
+	mkdir -p ${FPGACAN_LDIR_PREFIX} && \
+	for f in ${FPGACAN_MISC_FLIST} ; \
+	do cp $${f} ${FPGACAN_LDIR_PREFIX} || exit 1; \
+	done && \
+	echo `git rev-parse HEAD` > ${FPGACAN_LDIR_PREFIX}/VERSION.md && \
+	cd $${currDir} && \
+	echo "==== Update git track list ====" && \
+	git add ${FPGACAN_LDIR_PREFIX} && \
 	echo "==== Done ====" || exit 1;
 
 
