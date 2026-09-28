@@ -31,6 +31,7 @@ The list of external benchmarks is as follows. Please double check before using.
 - interface/wbqspiflash
 - interface/tiny\_spi
 - interface/sockit\_owm
+- interface/fpga\_can
 - processors/VexRiscv\_full
 - processors/VexRiscv\_murax
 - processors/VexRiscv\_small
