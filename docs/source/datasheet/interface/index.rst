@@ -35,3 +35,5 @@ Interface
    rs485
 
    cf_ldpc
+
+   fpga_can
