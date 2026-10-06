@@ -186,4 +186,4 @@ rstn_sync:
   source:
     - simple_registers/rstn_sync/rstn_sync.v
   top_module: rstn_sync
-  cocotb_dir: simple_registers/rstn_syn
+  cocotb_dir: simple_registers/rstn_sync
