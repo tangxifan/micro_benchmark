@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 560" width="100%" height="100%" style="background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  
+  <defs>
+    <!-- Port Markers -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#1e293b"/>
+    </marker>
+    
+    <!-- Grid Pattern -->
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#f1f5f9" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Grid -->
+  <rect width="100%" height="100%" fill="url(#grid)" />
+
+  <!-- ============================================================ -->
+  <!-- MODULE CONTAINER & SCHEMATIC SCHEME                           -->
+  <!-- ============================================================ -->
+  
+  <!-- Outer Module Boundary -->
+  <rect x="40" y="30" width="770" height="260" rx="12" fill="#ffffff" stroke="#334155" stroke-width="2.5" />
+  <text x="60" y="60" font-size="20" font-weight="700" fill="#0f172a">module <tspan fill="#2563eb">reset_sync</tspan> <tspan font-size="14" fill="#64748b">(Active-High Reset)</tspan></text>
+
+  <!-- Input Ports -->
+  <!-- clk -->
+  <path d="M 15 110 L 140 110" stroke="#1e293b" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="20" y="92" width="45" height="22" rx="4" fill="#e2e8f0" stroke="#64748b" stroke-width="1"/>
+  <text x="42" y="107" font-size="12" font-weight="600" text-anchor="middle" fill="#334155">IN</text>
+  <text x="70" y="103" font-size="14" font-weight="600" fill="#0f172a">clk</text>
+  <text x="70" y="125" font-size="11" fill="#64748b">Clock Signal</text>
+
+  <!-- arst -->
+  <path d="M 15 220 L 140 220" stroke="#1e293b" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="20" y="202" width="45" height="22" rx="4" fill="#e2e8f0" stroke="#64748b" stroke-width="1"/>
+  <text x="42" y="217" font-size="12" font-weight="600" text-anchor="middle" fill="#334155">IN</text>
+  <text x="70" y="213" font-size="14" font-weight="600" fill="#0f172a">arst</text>
+  <text x="70" y="235" font-size="11" fill="#64748b">Async Reset (Active-High)</text>
+
+  <!-- Constant GND (1'b0) -->
+  <text x="210" y="120" font-size="13" font-weight="700" fill="#64748b">1'b0 (GND)</text>
+  <path d="M 280 115 L 320 115" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- FLIP-FLOP 0 (sync_ff[0]) -->
+  <rect x="320" y="90" width="110" height="150" rx="6" fill="#f8fafc" stroke="#2563eb" stroke-width="2"/>
+  <text x="375" y="115" font-size="13" font-weight="700" text-anchor="middle" fill="#1e3a8a">sync_ff[0]</text>
+  <!-- Pins -->
+  <text x="330" y="140" font-size="12" font-weight="600" fill="#334155">D</text>
+  <text x="410" y="140" font-size="12" font-weight="600" fill="#334155">Q</text>
+  <text x="375" y="228" font-size="11" font-weight="600" text-anchor="middle" fill="#dc2626">PRE</text>
+  <!-- Clock Triangle -->
+  <polyline points="320,180 330,185 320,190" fill="none" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- FLIP-FLOP 1 (sync_ff[1]) -->
+  <rect x="520" y="90" width="110" height="150" rx="6" fill="#f8fafc" stroke="#2563eb" stroke-width="2"/>
+  <text x="575" y="115" font-size="13" font-weight="700" text-anchor="middle" fill="#1e3a8a">sync_ff[1]</text>
+  <!-- Pins -->
+  <text x="530" y="140" font-size="12" font-weight="600" fill="#334155">D</text>
+  <text x="610" y="140" font-size="12" font-weight="600" fill="#334155">Q</text>
+  <text x="575" y="228" font-size="11" font-weight="600" text-anchor="middle" fill="#dc2626">PRE</text>
+  <!-- Clock Triangle -->
+  <polyline points="520,180 530,185 520,190" fill="none" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Connections inside Module -->
+  <!-- Q0 to D1 -->
+  <path d="M 430 135 L 520 135" stroke="#1e293b" stroke-width="2" marker-end="url(#arrow)"/>
+  <circle cx="475" cy="135" r="3" fill="#1e293b"/>
+
+  <!-- Clock Net Distribution -->
+  <path d="M 140 110 L 290 110 L 290 185 L 320 185" fill="none" stroke="#0284c7" stroke-width="2"/>
+  <path d="M 290 185 L 490 185 L 490 185 L 520 185" fill="none" stroke="#0284c7" stroke-width="2"/>
+  <circle cx="290" cy="185" r="3" fill="#0284c7"/>
+
+  <!-- Async Preset (Active-High Reset) Net Distribution -->
+  <path d="M 140 220 L 375 220 L 375 240" fill="none" stroke="#dc2626" stroke-width="2"/>
+  <path d="M 375 220 L 575 220 L 575 240" fill="none" stroke="#dc2626" stroke-width="2"/>
+  <circle cx="375" cy="220" r="3" fill="#dc2626"/>
+
+  <!-- Output Port -->
+  <!-- srst -->
+  <path d="M 630 135 L 785 135" stroke="#1e293b" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="740" y="117" width="55" height="22" rx="4" fill="#e2e8f0" stroke="#64748b" stroke-width="1"/>
+  <text x="767" y="132" font-size="12" font-weight="600" text-anchor="middle" fill="#334155">OUT</text>
+  <text x="660" y="125" font-size="14" font-weight="600" fill="#0f172a">srst</text>
+  <text x="660" y="155" font-size="11" fill="#64748b">Synchronized Reset</text>
+
+
+  <!-- ============================================================ -->
+  <!-- TIMING WAVEFORMS                                             -->
+  <!-- ============================================================ -->
+
+  <g transform="translate(40, 310)">
+    <text x="0" y="20" font-size="16" font-weight="700" fill="#0f172a">Timing Behavior Diagram</text>
+
+    <!-- Vertical dashed clock grid lines -->
+    <path d="M 160 35 L 160 210 M 240 35 L 240 210 M 320 35 L 320 210 M 400 35 L 400 210 M 480 35 L 480 210 M 560 35 L 560 210 M 640 35 L 640 210 M 720 35 L 720 210" stroke="#cbd5e1" stroke-dasharray="4,4" stroke-width="1"/>
+
+    <!-- Clock Waveform -->
+    <text x="0" y="55" font-size="13" font-weight="600" fill="#334155">clk</text>
+    <path d="M 100 60 L 120 60 L 120 40 L 160 40 L 160 60 L 200 60 L 200 40 L 240 40 L 240 60 L 280 60 L 280 40 L 320 40 L 320 60 L 360 60 L 360 40 L 400 40 L 400 60 L 440 60 L 440 40 L 480 40 L 480 60 L 520 60 L 520 40 L 560 40 L 560 60 L 600 60 L 600 40 L 640 40 L 640 60 L 680 60 L 680 40 L 720 40 L 720 60 L 750 60" fill="none" stroke="#0284c7" stroke-width="2"/>
+
+    <!-- arst Waveform (Async Assert High, Sync Release Low) -->
+    <text x="0" y="95" font-size="13" font-weight="600" fill="#dc2626">arst</text>
+    <path d="M 100 100 L 180 100 L 182 80 L 420 80 L 422 100 L 750 100" fill="none" stroke="#dc2626" stroke-width="2"/>
+
+    <!-- sync_ff[0] Waveform -->
+    <text x="0" y="135" font-size="13" font-weight="600" fill="#2563eb">sync_ff[0]</text>
+    <path d="M 100 140 L 182 120 L 480 120 L 480 140 L 750 140" fill="none" stroke="#2563eb" stroke-width="2"/>
+
+    <!-- sync_ff[1] / srst Waveform -->
+    <text x="0" y="175" font-size="13" font-weight="700" fill="#16a34a">srst (ff[1])</text>
+    <path d="M 100 180 L 182 160 L 560 160 L 560 180 L 750 180" fill="none" stroke="#16a34a" stroke-width="2.5"/>
+
+    <!-- Waveform Annotations -->
+    <!-- Async assertion point -->
+    <circle cx="182" cy="80" r="4" fill="#dc2626"/>
+    <line x1="182" y1="80" x2="182" y2="200" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="2,2"/>
+    <text x="182" y="215" font-size="11" font-weight="700" text-anchor="middle" fill="#dc2626">Immediate Async Assertion (1)</text>
+
+    <!-- Synchronous de-assertion points -->
+    <line x1="480" y1="40" x2="480" y2="200" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="2,2"/>
+    <text x="480" y="215" font-size="11" font-weight="600" text-anchor="middle" fill="#2563eb">ff[0] = 1'b0</text>
+
+    <line x1="560" y1="40" x2="560" y2="200" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="2,2"/>
+    <text x="560" y="215" font-size="11" font-weight="700" text-anchor="middle" fill="#16a34a">2-Cycle Sync Release (0)</text>
+  </g>
+</svg>

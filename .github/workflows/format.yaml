@@ -1,7 +1,6 @@
 name: Code Format
 
 # Run CI on push, PR, and weekly.
-
 on:
   push:
     branches:
@@ -9,12 +8,11 @@ on:
   pull_request:
     branches:
       - main
+  schedule:
+    - cron: "0 0 * * 0 " # weekly
 
-# We want to cancel previous runs for a given PR or branch / ref if another CI
-# run is requested.
-# See: https://docs.github.com/en/actions/using-jobs/using-concurrency
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 # Multiple job to tests
@@ -34,13 +32,19 @@ jobs:
         with:
           submodules: false
 
+      - name: Checkout infra
+        uses: actions/checkout@v4
+        with:
+          repository: Re-FACT/refact_infra
+          path: utils/refact_infra
+
       - name: Install dependencies
         run: |
-          bash .github/workflows/install_dependencies.sh
-
+          sudo python3 -m pip install -r requirements.txt
+          
       - name: Dump tool versions
         run: |
           black --version
 
       - name: Check format
-        run: make check-format${{ matrix.config.code_type }}
+        run: make check-format${{ matrix.config.code_type }} INFRA_ROOT=utils/refact_infra

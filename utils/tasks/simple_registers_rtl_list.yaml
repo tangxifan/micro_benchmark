@@ -175,3 +175,15 @@ pwm_generator:
     - simple_registers/pwm_generator/pwm_generator.v
   top_module: pwm_generator
   cocotb_dir: simple_registers/pwm_generator    
+
+rst_sync:
+  source:
+    - simple_registers/rst_sync/rst_sync.v
+  top_module: rst_sync
+  cocotb_dir: simple_registers/rst_sync  
+
+rstn_sync:
+  source:
+    - simple_registers/rstn_sync/rstn_sync.v
+  top_module: rstn_sync
+  cocotb_dir: simple_registers/rstn_sync

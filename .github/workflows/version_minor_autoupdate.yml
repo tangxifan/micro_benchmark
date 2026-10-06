@@ -2,6 +2,10 @@ name: Minor Version AutoUpdate
 on:
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   # Update the commit id when a major/minor version update is required
   BRANCH_NAME: version_minor_autoupdate
@@ -12,21 +16,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # This fetches all history for all branches and tags, required by version updater
+
+      - name: Checkout infra
+        uses: actions/checkout@v4
+        with:
+          repository: Re-FACT/refact_infra
+          path: utils/refact_infra
 
       - name: Insert Patch Count
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          make release_version VERSION_BUMP_TYPE=minor
+          make release_version VERSION_BUMP_TYPE=minor INFRA_ROOT=utils/refact_infra
 
       - name: Push changes # push the output folder to your repo
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{env.BRANCH_NAME}}
+          force: true
 
       - name: Create Auto PR
         uses: repo-sync/pull-request@v2
@@ -35,8 +46,6 @@ jobs:
           destination_branch: "main"                      # name of branch on which PR go
           pr_title: "Minor version bump for ${{ github.ref }} into main" # Title of pull request
           pr_body: ":crown: *An automated PR* for minor version update"              # Full markdown support, requires pr_title
-          pr_reviewer: "tangxifan"                          # Comma-separated list (no spaces)
-          pr_assignee: "tangxifan"                    # Comma-separated list (no spaces)
-          pr_label: "auto-pr"                               # Comma-separated list (no spaces)
+          pr_label: "auto-pr,version"                               # Comma-separated list (no spaces)
           pr_allow_empty: true                              # Creates pull request even if there are no changes
           github_token: ${{ secrets.GITHUB_TOKEN }}

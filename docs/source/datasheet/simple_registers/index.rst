@@ -9,3 +9,5 @@ Simple Registers
    blinking
    clk_divider
    pwm_generator
+   rst_sync
+   rstn_sync
