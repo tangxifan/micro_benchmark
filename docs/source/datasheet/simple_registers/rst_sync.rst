@@ -20,7 +20,7 @@ See details in ``simple_registers/rst_sync``
 Block Diagram
 -------------
 
-.. figure:: figures/reset_sync_active_high.png
+.. figure:: figures/rst_sync.svg
    :alt: Asynchronous assert and synchronous de-assert reset synchronizer
    :align: center
 
