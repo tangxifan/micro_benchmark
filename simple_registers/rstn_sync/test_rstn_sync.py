@@ -7,9 +7,7 @@ from cocotb.triggers import Timer, RisingEdge
 async def test_rstn_sync(dut):
 
     # Start clock
-    cocotb.start_soon(
-        Clock(dut.clk, 10, units="ns").start()
-    )
+    cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
 
     # ---------------------------------------------------------
     # Initial conditions
@@ -19,9 +17,7 @@ async def test_rstn_sync(dut):
     # Allow async reset to propagate
     await Timer(1, units="ns")
 
-    assert dut.srst_n.value == 0, (
-        f"Async assertion failed: srst_n={dut.srst_n.value}"
-    )
+    assert dut.srst_n.value == 0, f"Async assertion failed: srst_n={dut.srst_n.value}"
 
     print("PASS: Asynchronous reset assertion")
 
@@ -33,9 +29,7 @@ async def test_rstn_sync(dut):
     # De-assertion should NOT immediately propagate
     await Timer(1, units="ns")
 
-    assert dut.srst_n.value == 0, (
-        "Reset de-asserted asynchronously!"
-    )
+    assert dut.srst_n.value == 0, "Reset de-asserted asynchronously!"
 
     print("PASS: Reset remains asserted after arst_n de-assertion")
 
@@ -48,8 +42,7 @@ async def test_rstn_sync(dut):
     await Timer(1, units="ns")
 
     assert dut.srst_n.value == 0, (
-        f"Reset released too early after first clock: "
-        f"srst_n={dut.srst_n.value}"
+        f"Reset released too early after first clock: " f"srst_n={dut.srst_n.value}"
     )
 
     print("PASS: Reset remains asserted after first clock")
@@ -61,8 +54,7 @@ async def test_rstn_sync(dut):
     await Timer(1, units="ns")
 
     assert dut.srst_n.value == 1, (
-        f"Reset did not release after second clock: "
-        f"srst_n={dut.srst_n.value}"
+        f"Reset did not release after second clock: " f"srst_n={dut.srst_n.value}"
     )
 
     print("PASS: Reset synchronously de-asserted")
@@ -77,9 +69,7 @@ async def test_rstn_sync(dut):
     # Don't wait for a clock!
     await Timer(1, units="ns")
 
-    assert dut.srst_n.value == 0, (
-        "Reset did not assert asynchronously"
-    )
+    assert dut.srst_n.value == 0, "Reset did not assert asynchronously"
 
     print("PASS: Reset asynchronously asserted between clocks")
 
@@ -90,25 +80,19 @@ async def test_rstn_sync(dut):
 
     await Timer(1, units="ns")
 
-    assert dut.srst_n.value == 0, (
-        "Reset released asynchronously on second attempt"
-    )
+    assert dut.srst_n.value == 0, "Reset released asynchronously on second attempt"
 
     # First clock
     await RisingEdge(dut.clk)
     await Timer(1, units="ns")
 
-    assert dut.srst_n.value == 0, (
-        "Reset released after only one clock"
-    )
+    assert dut.srst_n.value == 0, "Reset released after only one clock"
 
     # Second clock
     await RisingEdge(dut.clk)
     await Timer(1, units="ns")
 
-    assert dut.srst_n.value == 1, (
-        "Reset failed to release after two clocks"
-    )
+    assert dut.srst_n.value == 1, "Reset failed to release after two clocks"
 
     print("PASS: Second reset cycle")
 
