@@ -2,6 +2,7 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
 
+
 @cocotb.test()
 async def test_timer_n_clock(dut):
     """Universal verification for N-clock 8-bit countdown timers."""
@@ -27,7 +28,7 @@ async def test_timer_n_clock(dut):
     # Set load period of 5 cycles for all domains
     period_val = 0
     for i in range(num_clks):
-        period_val |= (5 << (i * 8))
+        period_val |= 5 << (i * 8)
     dut.period.value = period_val
     dut.en.value = (1 << num_clks) - 1  # Enable all timers
 
@@ -40,7 +41,7 @@ async def test_timer_n_clock(dut):
             await Timer(1, units="ns")
             curr_cnt = (int(dut.count.value) >> (i * 8)) & 0xFF
             done_bit = (int(dut.timer_done.value) >> i) & 0x1
-            
+
             if step == 0:
                 assert done_bit == 1, f"Domain {i} expected timer_done assertion"
             else:

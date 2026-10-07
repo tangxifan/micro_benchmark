@@ -2,6 +2,7 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
 
+
 @cocotb.test()
 async def test_counter_n_clock(dut):
     """Universal verification for N-clock async reset counters."""
@@ -28,7 +29,9 @@ async def test_counter_n_clock(dut):
             await Timer(1, units="ns")
             expected_val = (expected_val + 1) & 0xFF
             actual_val = (int(dut.result.value) >> (i * 8)) & 0xFF
-            assert actual_val == expected_val, f"Domain {i} mismatch: expected {expected_val}, got {actual_val}"
+            assert (
+                actual_val == expected_val
+            ), f"Domain {i} mismatch: expected {expected_val}, got {actual_val}"
 
     # Asynchronous reset test mid-run
     dut.reset.value = 1

@@ -21,9 +21,7 @@ async def test_counter8_4clk_async_reset(dut):
     # Verify all counters are held at 0 during reset
     for i in range(4):
         res = getattr(dut, f"result{i}").value
-        assert (
-            res == 0
-        ), f"result{i} should be 0 during reset, got {res}"
+        assert res == 0, f"result{i} should be 0 during reset, got {res}"
 
     # De-assert reset asynchronously
     dut._log.info("De-asserting reset...")
@@ -40,9 +38,7 @@ async def test_counter8_4clk_async_reset(dut):
 
         # Initial check after reset release
         expected_val = 0
-        assert (
-            result_handle.value == expected_val
-        ), f"Domain {i} failed initial value"
+        assert result_handle.value == expected_val, f"Domain {i} failed initial value"
 
         for step in range(1, 11):
             await RisingEdge(clk_handle)
@@ -51,8 +47,7 @@ async def test_counter8_4clk_async_reset(dut):
             actual_val = int(result_handle.value)
 
             assert actual_val == expected_val, (
-                f"Domain {i} mismatch at step {step}: "
-                f"expected {expected_val}, got {actual_val}"
+                f"Domain {i} mismatch at step {step}: " f"expected {expected_val}, got {actual_val}"
             )
 
     # --- Step 3: Mid-Run Asynchronous Reset Test ---
@@ -62,9 +57,7 @@ async def test_counter8_4clk_async_reset(dut):
 
     for i in range(4):
         res = int(getattr(dut, f"result{i}").value)
-        assert (
-            res == 0
-        ), f"result{i} failed to reset asynchronously, got {res}"
+        assert res == 0, f"result{i} failed to reset asynchronously, got {res}"
 
     dut.reset.value = 0
     dut._log.info("All tests passed successfully!")
