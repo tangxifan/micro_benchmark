@@ -187,3 +187,37 @@ rstn_sync:
     - simple_registers/rstn_sync/rstn_sync.v
   top_module: rstn_sync
   cocotb_dir: simple_registers/rstn_sync
+
+counter8_4clk_async_reset:
+  source:
+    - simple_registers/counter8_4clk_async_reset/counter8_4clk_async_reset.v
+  top_module: counter8_4clk_async_reset
+  cocotb_dir: simple_registers/counter8_4clk_async_reset
+
+counter8_8clk_async_reset:
+  source:
+    - simple_registers/counter8_8clk_async_reset/counter8_8clk_async_reset.v
+    - simple_registers/counter8_8clk_async_reset/counter8_Nclk_async_reset.v
+  top_module: counter8_8clk_async_reset
+  cocotb_dir: simple_registers/counter8_8clk_async_reset
+
+counter8_16clk_async_reset:
+  source:
+    - simple_registers/counter8_16clk_async_reset/counter8_16clk_async_reset.v
+    - simple_registers/counter8_16clk_async_reset/counter8_Nclk_async_reset.v
+  top_module: counter8_16clk_async_reset
+  cocotb_dir: simple_registers/counter8_16clk_async_reset
+
+counter8_24clk_async_reset:
+  source:
+    - simple_registers/counter8_24clk_async_reset/counter8_24clk_async_reset.v
+    - simple_registers/counter8_24clk_async_reset/counter8_Nclk_async_reset.v
+  top_module: counter8_24clk_async_reset
+  cocotb_dir: simple_registers/counter8_24clk_async_reset
+
+counter8_32clk_async_reset:
+  source:
+    - simple_registers/counter8_32clk_async_reset/counter8_32clk_async_reset.v
+    - simple_registers/counter8_32clk_async_reset/counter8_Nclk_async_reset.v
+  top_module: counter8_32clk_async_reset
+  cocotb_dir: simple_registers/counter8_32clk_async_reset
