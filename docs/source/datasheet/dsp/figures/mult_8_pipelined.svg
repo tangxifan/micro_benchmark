@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 280" width="100%" height="100%">
+  <defs>
+    <style>
+      .box { fill: #f8f9fa; stroke: #212529; stroke-width: 2; }
+      .subbox { fill: #ffffff; stroke: #495057; stroke-dasharray: 4; stroke-width: 1.5; }
+      .text-title { font-family: sans-serif; font-weight: bold; font-size: 16px; fill: #212529; }
+      .text-sub { font-family: sans-serif; font-weight: bold; font-size: 12px; fill: #343a40; }
+      .text-port { font-family: monospace; font-size: 12px; fill: #212529; }
+      .line { stroke: #212529; stroke-width: 1.5; fill: none; }
+      .bus { stroke: #212529; stroke-width: 3; fill: none; }
+      .arrow { fill: #212529; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" class="arrow"/>
+    </marker>
+  </defs>
+
+  <!-- Main Module Box -->
+  <rect x="180" y="20" width="360" height="240" rx="8" class="box"/>
+  <text x="360" y="45" text-anchor="middle" class="text-title">mult_8_pipelined</text>
+
+  <!-- Internal Stages -->
+  <rect x="220" y="70" width="120" height="160" rx="4" class="subbox"/>
+  <text x="280" y="95" text-anchor="middle" class="text-sub">Stage 1</text>
+  <text x="280" y="130" text-anchor="middle" class="text-sub">a_reg [7:0]</text>
+  <text x="280" y="180" text-anchor="middle" class="text-sub">b_reg [7:0]</text>
+
+  <rect x="390" y="70" width="120" height="160" rx="4" class="subbox"/>
+  <text x="450" y="95" text-anchor="middle" class="text-sub">Stage 2</text>
+  <text x="450" y="140" text-anchor="middle" class="text-sub">8x8 Multiplier</text>
+  <text x="450" y="165" text-anchor="middle" class="text-sub">&amp; p_reg [15:0]</text>
+
+  <!-- Inputs -->
+  <path d="M 80 125 L 220 125" class="bus" marker-end="url(#arrow)"/>
+  <text x="75" y="129" text-anchor="end" class="text-port">a [7:0]</text>
+
+  <path d="M 80 175 L 220 175" class="bus" marker-end="url(#arrow)"/>
+  <text x="75" y="179" text-anchor="end" class="text-port">b [7:0]</text>
+
+  <path d="M 80 220 L 150 220 L 150 50 L 280 50 L 280 70" class="line"/>
+  <path d="M 280 50 L 450 50 L 450 70" class="line"/>
+  <text x="75" y="224" text-anchor="end" class="text-port">clk</text>
+
+  <!-- Interconnect Stage 1 -> Stage 2 -->
+  <path d="M 340 125 L 390 125" class="bus" marker-end="url(#arrow)"/>
+  <path d="M 340 175 L 390 175" class="bus" marker-end="url(#arrow)"/>
+
+  <!-- Output -->
+  <path d="M 510 150 L 640 150" class="bus" marker-end="url(#arrow)"/>
+  <text x="645" y="154" text-anchor="start" class="text-port">p [15:0]</text>
+</svg>
