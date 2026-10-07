@@ -80,3 +80,43 @@ mult_4x4:
   top_module: mult_4x4
   cocotb_dir: dsp/mult/mult_4x4
 
+mult_8_pipelined:
+  source:
+    - dsp/mult_8_pipelined/mult_8_pipelined/mult_8_pipelined.v
+  top_module: mult_8_pipelined
+  cocotb_dir: dsp/mult_8_pipelined/mult_8_pipelined
+
+mult_8_pipelined_4clk:
+  source:
+    - dsp/mult_8_pipelined/mult_8_pipelined_4clk/mult_8_pipelined_4clk.v
+    - dsp/mult_8_pipelined/mult_8_pipelined_4clk/mult_8_pipelined_Nclk.v
+  top_module: mult_8_pipelined_4clk
+  cocotb_dir: dsp/mult_8_pipelined/mult_8_pipelined_4clk
+
+mult_8_pipelined_8clk:
+  source:
+    - dsp/mult_8_pipelined/mult_8_pipelined_8clk/mult_8_pipelined_8clk.v
+    - dsp/mult_8_pipelined/mult_8_pipelined_8clk/mult_8_pipelined_Nclk.v
+  top_module: mult_8_pipelined_8clk
+  cocotb_dir: dsp/mult_8_pipelined/mult_8_pipelined_8clk
+
+mult_8_pipelined_16clk:
+  source:
+    - dsp/mult_8_pipelined/mult_8_pipelined_16clk/mult_8_pipelined_16clk.v
+    - dsp/mult_8_pipelined/mult_8_pipelined_16clk/mult_8_pipelined_Nclk.v
+  top_module: mult_8_pipelined_16clk
+  cocotb_dir: dsp/mult_8_pipelined/mult_8_pipelined_16clk
+
+mult_8_pipelined_24clk:
+  source:
+    - dsp/mult_8_pipelined/mult_8_pipelined_24clk/mult_8_pipelined_24clk.v
+    - dsp/mult_8_pipelined/mult_8_pipelined_24clk/mult_8_pipelined_Nclk.v
+  top_module: mult_8_pipelined_24clk
+  cocotb_dir: dsp/mult_8_pipelined/mult_8_pipelined_24clk
+
+mult_8_pipelined_32clk:
+  source:
+    - dsp/mult_8_pipelined/mult_8_pipelined_32clk/mult_8_pipelined_32clk.v
+    - dsp/mult_8_pipelined/mult_8_pipelined_32clk/mult_8_pipelined_Nclk.v
+  top_module: mult_8_pipelined_32clk
+  cocotb_dir: dsp/mult_8_pipelined/mult_8_pipelined_32clk
