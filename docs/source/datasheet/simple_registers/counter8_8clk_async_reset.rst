@@ -16,7 +16,11 @@ See details in ``counters/counter8_8clk_async_reset``
 Block Diagram
 ~~~~~~~~~~~~~
 
-.. figure:: ./figures/counter8_8clk_async_reset.svg
+This design is a 8-clock version of the illustrative schematic in :numref:`fig_counter8_8clk_async_reset`
+
+.. _fig_counter8_8clk_async_reset
+
+.. figure:: ./figures/counter8_Nclk_async_reset.svg
   :width: 70%
   :alt: Counter 8-bit 8 Clock Asynchronous Reset schematic
 
