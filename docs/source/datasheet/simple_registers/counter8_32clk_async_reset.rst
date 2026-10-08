@@ -18,7 +18,7 @@ Block Diagram
 
 This design is a 32-clock version of the illustrative schematic in :numref:`fig_counter8_32clk_async_reset`
 
-.. _fig_counter8_32clk_async_reset
+.. _fig_counter8_32clk_async_reset:
 
 .. figure:: ./figures/counter8_Nclk_async_reset.svg
   :width: 70%

@@ -19,7 +19,7 @@ Block Diagram
 
 This design is a 4-clock version of the illustrative schematic in :numref:`fig_counter8_4clk_async_reset`
 
-.. _fig_counter8_4clk_async_reset
+.. _fig_counter8_4clk_async_reset:
 
 .. figure:: ./figures/counter8_Nclk_async_reset.svg
   :width: 60%

@@ -19,7 +19,7 @@ Block Diagram
 
 This design is a 8-clock version of the illustrative schematic in :numref:`fig_mult_8_pipelined_8clk`
 
-.. _fig_mult_8_pipelined_8clk
+.. _fig_mult_8_pipelined_8clk:
 
 .. figure:: ./figures/mult_8_pipelined_Nclk.svg
   :width: 70%
