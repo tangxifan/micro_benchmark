@@ -7,8 +7,8 @@ from cocotb.triggers import FallingEdge, RisingEdge, Timer
 async def test_timer8_16clk_async_reset(dut):
     """Test hierarchical 16-clock 8-bit countdown timer across 16 independent clock domains concurrently."""
 
-    # Define unique period offsets for all 16 independent clock domains
-    clock_periods = [10 + (i * 0.8) for i in range(16)]
+    # Define unique integer periods for all 16 independent clock domains to avoid float precision errors
+    clock_periods = [10 + i for i in range(16)]
     for i, period in enumerate(clock_periods):
         clk_handle = getattr(dut, f"clk{i}")
         cocotb.start_soon(Clock(clk_handle, period, unit="ns").start())
