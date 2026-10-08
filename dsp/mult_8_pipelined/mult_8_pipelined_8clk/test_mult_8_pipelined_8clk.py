@@ -1,47 +1,73 @@
+import random
 import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
 
+
 @cocotb.test()
-async def test_mult_8_pipelined_n_clk(dut):
-    """Universal verification for N-clock 8-bit pipelined multipliers."""
-    num_clks = int(dut.N.value) if hasattr(dut, "N") else len(dut.clk.value)
-    dut._log.info(f"Testing {num_clks}-clock domain pipelined multiplier...")
+async def test_mult_8_8clk_pipelined(dut):
+    """Verify 8-clock 8-bit pipelined multiplier functionality and 2-stage latency across concurrent domains."""
 
-    # Start clocks with varying periods across domains
-    for i in range(num_clks):
-        period = 10 + (i * 2)
-        cocotb.start_soon(Clock(dut.clk[i], period, units="ns").start())
+    num_clocks = 8
 
-    # Set test operands across all domains
-    a_val = 0
-    b_val = 0
-    expected_products = []
+    # Define unique integer clock periods for all 8 independent domains to avoid float precision errors
+    clock_periods = [10 + i for i in range(num_clocks)]
+    for i, period in enumerate(clock_periods):
+        clk_handle = getattr(dut, f"clk{i}")
+        cocotb.start_soon(Clock(clk_handle, period, unit="ns").start())
 
-    for i in range(num_clks):
-        op_a = 12 + i
-        op_b = 5 + i
-        expected_products.append(op_a * op_b)
-        a_val |= (op_a << (i * 8))
-        b_val |= (op_b << (i * 8))
+    # Initialize inputs for all 8 channels
+    for i in range(num_clocks):
+        getattr(dut, f"a{i}").value = 0
+        getattr(dut, f"b{i}").value = 0
+    
+    await Timer(20, unit="ns")
 
-    dut.a.value = a_val
-    dut.b.value = b_val
+    # Define test vectors
+    test_vectors = [(12, 5), (255, 255), (0, 100), (15, 15), (128, 2)]
 
-    # Verify 2-stage pipeline delay (2 clock cycles per domain)
-    for i in range(num_clks):
-        dut._log.info(f"Checking pipeline response for domain {i}...")
-        
-        # Cycle 1: Input registered
-        await RisingEdge(dut.clk[i])
-        await Timer(1, units="ns")
-        
-        # Cycle 2: Output registered
-        await RisingEdge(dut.clk[i])
-        await Timer(1, units="ns")
-        
-        actual_p = (int(dut.p.value) >> (i * 16)) & 0xFFFF
-        expected_p = expected_products[i]
-        assert actual_p == expected_p, f"Domain {i} mismatch: expected {expected_p}, got {actual_p}"
+    async def verify_channel(i, period):
+        clk_handle = getattr(dut, f"clk{i}")
+        a_handle = getattr(dut, f"a{i}")
+        b_handle = getattr(dut, f"b{i}")
+        p_handle = getattr(dut, f"p{i}")
 
-    dut._log.info("All pipelined multiplier domains verified successfully!")
+        pipeline_queue = []
+
+        for a_val, b_val in test_vectors:
+            # Drive inputs
+            a_handle.value = a_val
+            b_handle.value = b_val
+            expected_p = a_val * b_val
+            pipeline_queue.append(expected_p)
+
+            await RisingEdge(clk_handle)
+            await Timer(1, unit="ns")
+
+            # Check pipeline output after 2 clock cycles of latency[cite: 4]
+            if len(pipeline_queue) >= 2:
+                expected_output = pipeline_queue.pop(0)
+                actual_output = int(p_handle.value)
+                dut._log.info(
+                    f"Channel {i} - Checking output: Expected={expected_output}, Got={actual_output}"
+                )
+                assert (
+                    actual_output == expected_output
+                ), f"Channel {i} Mismatch: expected {expected_output}, got {actual_output}"
+
+        # Flush remaining pipeline stages
+        while len(pipeline_queue) > 0:
+            await RisingEdge(clk_handle)
+            await Timer(1, unit="ns")
+            expected_output = pipeline_queue.pop(0)
+            actual_output = int(p_handle.value)
+            assert (
+                actual_output == expected_output
+            ), f"Channel {i} Mismatch during pipeline flush: expected {expected_output}, got {actual_output}"
+
+    # Launch verification routines concurrently for all 8 channels[cite: 4]
+    tasks = [cocotb.start_soon(verify_channel(i, p)) for i, p in enumerate(clock_periods)]
+    for task in tasks:
+        await task
+
+    dut._log.info("8-clock pipelined multiplier test completed successfully!")
