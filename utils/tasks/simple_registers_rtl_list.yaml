@@ -228,6 +228,12 @@ counter8_32clk_async_reset:
   top_module: counter8_32clk_async_reset
   cocotb_dir: simple_registers/counters/counter8_32clk_async_reset
 
+timer8_async_reset:
+  source:
+    - simple_registers/timers/timer8_async_reset/timer8_async_reset.v
+  top_module: timer8_async_reset
+  cocotb_dir: simple_registers/timers/timer8_async_reset
+
 timer8_4clk_async_reset:
   source:
     - simple_registers/timers/timer8_4clk_async_reset/timer8_4clk_async_reset.v
