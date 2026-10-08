@@ -7,4 +7,5 @@ VERILOG_SOURCES += $(PWD)/timer8_8clk_async_reset.v
 TOPLEVEL = timer8_8clk_async_reset
 MODULE   = test_timer8_8clk_async_reset
 
-include $(shell cocotb-config --makefiles)/sim.makefile
+# include cocotb's make rules to take care of the simulator setup
+include $(shell cocotb-config --makefiles)/Makefile.sim

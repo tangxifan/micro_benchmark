@@ -10,4 +10,4 @@ TOPLEVEL = counter8_4clk_async_reset
 MODULE   = test_counter8_4clk_async_reset
 
 # Include cocotb build rules
-include $(shell cocotb-config --makefiles)/sim.makefile
+include $(shell cocotb-config --makefiles)/Makefile.sim
