@@ -3,17 +3,17 @@ from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
 
 @cocotb.test()
-async def test_dpram_n_clk(dut):
-    """Verification for N-instance Dual-Port RAM."""
-    num_clks = int(dut.N.value) if hasattr(dut, "N") else len(dut.clk_a.value)
-    dut._log.info(f"Testing {num_clks}-instance dual-port RAM...")
+async def test_dpram_4_clk_flattened(dut):
+    """Verification for 4-instance Dual-Port RAM with flattened scalar ports across concurrent clock domains."""
+    num_clks = 4
+    dut._log.info(f"Testing {num_clks}-instance dual-port RAM with flattened ports...")
 
-    # Start separate clocks for write (clk_a) and read (clk_b) ports
+    # Start separate clocks for write (clk_a) and read (clk_b) ports using scalar attribute handles
     for i in range(num_clks):
-        cocotb.start_soon(Clock(dut.clk_a[i], 10 + i * 2, units="ns").start())
-        cocotb.start_soon(Clock(dut.clk_b[i], 15 + i * 2, units="ns").start())
+        cocotb.start_soon(Clock(getattr(dut, f"clk_a{i}"), 10 + i * 2, units="ns").start())
+        cocotb.start_soon(Clock(getattr(dut, f"clk_b{i}"), 15 + i * 2, units="ns").start())
+        getattr(dut, f"we_a{i}").value = 0
 
-    dut.we_a.value = 0
     await Timer(50, units="ns")
 
     # Test Write -> Read sequence for each DPRAM instance
@@ -21,27 +21,22 @@ async def test_dpram_n_clk(dut):
         test_addr = 0x10 + i
         test_data = 0xA5A5 ^ (i * 0x1111)
 
-        # Write data on Port A
-        addr_a_val = test_addr << (i * 8)
-        din_a_val = test_data << (i * 16)
-        we_a_val = 1 << i
+        # Write data on Port A using scalar ports
+        getattr(dut, f"addr_a{i}").value = test_addr
+        getattr(dut, f"din_a{i}").value = test_data
+        getattr(dut, f"we_a{i}").value = 1
 
-        dut.addr_a.value = addr_a_val
-        dut.din_a.value = din_a_val
-        dut.we_a.value = we_a_val
-
-        await RisingEdge(dut.clk_a[i])
+        await RisingEdge(getattr(dut, f"clk_a{i}"))
         await Timer(1, units="ns")
-        dut.we_a.value = 0
+        getattr(dut, f"we_a{i}").value = 0
 
-        # Read data back on Port B
-        addr_b_val = test_addr << (i * 8)
-        dut.addr_b.value = addr_b_val
+        # Read data back on Port B using scalar ports
+        getattr(dut, f"addr_b{i}").value = test_addr
 
-        await RisingEdge(dut.clk_b[i])
+        await RisingEdge(getattr(dut, f"clk_b{i}"))
         await Timer(1, units="ns")
 
-        actual_dout = (int(dut.dout_b.value) >> (i * 16)) & 0xFFFF
+        actual_dout = int(getattr(dut, f"dout_b{i}").value) & 0xFFFF
         assert actual_dout == test_data, f"Instance {i} mismatch: expected {hex(test_data)}, got {hex(actual_dout)}"
 
-    dut._log.info("All dual-port RAM instances verified successfully!")
+    dut._log.info("All flattened 4-clock dual-port RAM instances verified successfully!")
