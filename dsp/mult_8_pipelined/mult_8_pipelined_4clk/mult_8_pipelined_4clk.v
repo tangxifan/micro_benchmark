@@ -2,7 +2,7 @@
 //  Functionality: 4-Clock 8-bit Pipelined Multiplier (Hierarchical)
 //  Author:        Xifan Tang
 ////////////////////////////////////////
-module mult_8_4clk_pipelined (
+module mult_8_pipelined_4clk (
     input clk0,
     input clk1,
     input clk2,
