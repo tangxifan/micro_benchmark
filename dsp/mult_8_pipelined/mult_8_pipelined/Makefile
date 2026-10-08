@@ -6,4 +6,4 @@ VERILOG_SOURCES += mult_8_pipelined.v
 TOPLEVEL = mult_8_pipelined
 MODULE   = test_mult_8_pipelined
 
-include $(shell cocotb-config --makefiles)/sim.makefile
+include $(shell cocotb-config --makefiles)/Makefile.sim
