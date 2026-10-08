@@ -17,7 +17,11 @@ See details in ``mult/mult_8_pipelined_16clk``
 Block Diagram
 ~~~~~~~~~~~~~
 
-.. figure:: ./figures/mult_8_pipelined_16clk.svg
+This design is a 16-clock version of the illustrative schematic in :numref:`fig_mult_8_pipelined_16clk`
+
+.. _fig_mult_8_pipelined_16clk
+
+.. figure:: ./figures/mult_8_pipelined_Nclk.svg
   :width: 70%
   :alt: 8-bit Pipelined Multiplier 16 Clock schematic
 
