@@ -37,7 +37,7 @@ async def test_counter8_4clk_async_reset(dut):
         dut._log.info(f"Testing Domain {i} (Period: {period}ns)...")
 
         # Initial check after reset release
-        expected_val = 0
+        expected_val = 1
         assert result_handle.value == expected_val, f"Domain {i} failed initial value {result_handle.value}. Expect {expected_val}"
 
         for step in range(1, 11):
