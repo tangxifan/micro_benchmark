@@ -8,7 +8,7 @@ async def test_dual_port_ram_8x16_mif_24clk(dut):
     num_clks = 24
     dut._log.info(f"Testing {num_clks}-instance dual-port RAM with flattened ports...")
 
-    # Start separate clocks for write (clk_a) and read (clk_b) ports using scalar attribute handles[cite: 4]
+    # Start separate clocks for write (clk_a) and read (clk_b) ports using scalar attribute handles
     for i in range(num_clks):
         cocotb.start_soon(Clock(getattr(dut, f"clk_a{i}"), 10 + i, unit="ns").start())
         cocotb.start_soon(Clock(getattr(dut, f"clk_b{i}"), 15 + i, unit="ns").start())
@@ -16,12 +16,13 @@ async def test_dual_port_ram_8x16_mif_24clk(dut):
 
     await Timer(50, unit="ns")
 
-    # Test Write -> Read sequence for each DPRAM instance[cite: 4]
+    # Test Write -> Read sequence for each DPRAM instance
     for i in range(num_clks):
         test_addr = 0x10 + i
-        test_data = 0xA5A5 ^ (i * 0x1111)
+        # Mask with 0xFFFF to ensure the value fits within the 16-bit width
+        test_data = (0xA5A5 ^ (i * 0x1111)) & 0xFFFF
 
-        # Write data on Port A using scalar ports[cite: 4]
+        # Write data on Port A using scalar ports
         getattr(dut, f"addr_a{i}").value = test_addr
         getattr(dut, f"din_a{i}").value = test_data
         getattr(dut, f"we_a{i}").value = 1
@@ -30,7 +31,7 @@ async def test_dual_port_ram_8x16_mif_24clk(dut):
         await Timer(1, unit="ns")
         getattr(dut, f"we_a{i}").value = 0
 
-        # Read data back on Port B using scalar ports[cite: 4]
+        # Read data back on Port B using scalar ports
         getattr(dut, f"addr_b{i}").value = test_addr
 
         await RisingEdge(getattr(dut, f"clk_b{i}"))
