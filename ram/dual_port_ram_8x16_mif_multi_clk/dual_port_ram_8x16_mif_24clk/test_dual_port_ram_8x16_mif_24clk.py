@@ -3,7 +3,7 @@ from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
 
 @cocotb.test()
-async def test_dpram_24_clk_flattened(dut):
+async def test_dual_port_ram_8x16_mif_24clk(dut):
     """Verification for 24-instance Dual-Port RAM with flattened scalar ports across concurrent clock domains."""
     num_clks = 24
     dut._log.info(f"Testing {num_clks}-instance dual-port RAM with flattened ports...")
