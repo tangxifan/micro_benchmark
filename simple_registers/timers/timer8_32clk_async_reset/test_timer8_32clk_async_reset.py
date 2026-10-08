@@ -1,55 +1,89 @@
 import cocotb
 from cocotb.clock import Clock
-from cocotb.triggers import RisingEdge, Timer
+from cocotb.triggers import FallingEdge, RisingEdge, Timer
 
 
 @cocotb.test()
-async def test_timer_n_clock(dut):
-    """Universal verification for N-clock 8-bit countdown timers."""
-    num_clks = int(dut.N.value) if hasattr(dut, "N") else len(dut.clk.value)
-    dut._log.info(f"Testing {num_clks}-clock domain timer configuration...")
+async def test_timer8_32clk_async_reset(dut):
+    """Test hierarchical 32-clock 8-bit countdown timer across 32 independent clock domains concurrently."""
 
-    for i in range(num_clks):
-        period = 10 + (i * 2)
-        cocotb.start_soon(Clock(dut.clk[i], period, units="ns").start())
+    num_clocks = 32
 
-    # 1. Assert Reset
+    # Define unique integer periods for all 32 independent clock domains
+    clock_periods = [10 + i for i in range(num_clocks)]
+    for i, period in enumerate(clock_periods):
+        clk_handle = getattr(dut, f"clk{i}")
+        cocotb.start_soon(Clock(clk_handle, period, unit="ns").start())
+
+    # --- Step 1: Apply Asynchronous Reset ---
+    dut._log.info("Asserting asynchronous reset across all 32 domains...")
     dut.reset.value = 1
-    dut.en.value = 0
-    dut.period.value = 0
-    await Timer(50, units="ns")
-    assert int(dut.count.value) == 0, "Reset count check failed"
-    assert int(dut.timer_done.value) == 0, "Reset done check failed"
+    for i in range(num_clocks):
+        getattr(dut, f"en{i}").value = 0
+        getattr(dut, f"period{i}").value = 3
+    
+    await Timer(40, unit="ns")
 
-    # 2. De-assert Reset & Configure Timers
+    for i in range(num_clocks):
+        assert int(getattr(dut, f"count{i}").value) == 0, f"count{i} should be 0 during reset"
+        assert int(getattr(dut, f"timer_done{i}").value) == 0, f"timer_done{i} should be 0 during reset"
+
+    # De-assert reset cleanly on the falling edge of clk0
+    dut._log.info("De-asserting reset on falling edge of clk0...")
+    await FallingEdge(dut.clk0)
     dut.reset.value = 0
-    await Timer(1, units="ns")
+    await Timer(1, unit="ns")
 
-    # Set load period of 5 cycles for all domains
-    period_val = 0
-    for i in range(num_clks):
-        period_val |= 5 << (i * 8)
-    dut.period.value = period_val
-    dut.en.value = (1 << num_clks) - 1  # Enable all timers
+    # --- Step 2: Define Concurrent Verification Routine ---
+    async def verify_domain(i, period):
+        clk_handle = getattr(dut, f"clk{i}")
+        en_handle = getattr(dut, f"en{i}")
+        period_handle = getattr(dut, f"period{i}")
+        count_handle = getattr(dut, f"count{i}")
+        done_handle = getattr(dut, f"timer_done{i}")
+        
+        en_handle.value = 1
+        period_handle.value = 3
 
-    # 3. Test Countdown and Done Pulse Execution
-    for i in range(num_clks):
-        dut._log.info(f"Checking countdown for timer domain {i}...")
-        # Clock down from 5 to 0
-        for step in range(5, -1, -1):
-            await RisingEdge(dut.clk[i])
-            await Timer(1, units="ns")
-            curr_cnt = (int(dut.count.value) >> (i * 8)) & 0xFF
-            done_bit = (int(dut.timer_done.value) >> i) & 0x1
-
-            if step == 0:
-                assert done_bit == 1, f"Domain {i} expected timer_done assertion"
+        # State tracking for individual domain countdown behavior
+        current_val = 0
+        for step in range(1, 10):
+            await RisingEdge(clk_handle)
+            
+            # Predict next state: if zero, reload period (3) and set done=1; otherwise decrement
+            if current_val == 0:
+                current_val = 3
+                expected_done = 1
             else:
-                assert done_bit == 0, f"Domain {i} unexpected timer_done high"
+                current_val = (current_val - 1) & 0xFF
+                expected_done = 0
 
-    # 4. Mid-run Async Reset Test
+            await Timer(1, unit="ns")  # Small delay for logic settling
+            actual_count = int(count_handle.value)
+            actual_done = int(done_handle.value)
+
+            assert actual_count == current_val, (
+                f"Domain {i} count mismatch at step {step}: "
+                f"expected {current_val}, got {actual_count}"
+            )
+            assert actual_done == expected_done, (
+                f"Domain {i} timer_done mismatch at step {step}: "
+                f"expected {expected_done}, got {actual_done}"
+            )
+
+    # Launch verification tasks concurrently across all 32 clock domains
+    tasks = [cocotb.start_soon(verify_domain(i, p)) for i, p in enumerate(clock_periods)]
+    for task in tasks:
+        await task
+
+    # --- Step 3: Mid-Run Asynchronous Reset Test ---
+    dut._log.info("Testing mid-run asynchronous reset on 32-clock hierarchy...")
     dut.reset.value = 1
-    await Timer(5, units="ns")
-    assert int(dut.count.value) == 0, "Mid-run async reset count failed"
-    assert int(dut.timer_done.value) == 0, "Mid-run async reset done failed"
+    await Timer(5, unit="ns")
+
+    for i in range(num_clocks):
+        assert int(getattr(dut, f"count{i}").value) == 0, f"count{i} failed mid-run reset"
+        assert int(getattr(dut, f"timer_done{i}").value) == 0, f"timer_done{i} failed mid-run reset"
+
     dut.reset.value = 0
+    dut._log.info("All 32-clock hierarchical timer tests passed successfully!")
