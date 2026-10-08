@@ -2,10 +2,11 @@
 SIM ?= icarus
 TOPLEVEL_LANG ?= verilog
 #WAVES=1
-COMPILE_ARGS += -DCOCOTB_SIM=1
+#COMPILE_ARGS += -DCOCOTB_SIM=1
 
 
 # Design file location
+VERILOG_SOURCES += counter8_async_reset.v
 VERILOG_SOURCES += counter8_4clk_async_reset.v
 
 # Top module and Python test script names
