@@ -11,12 +11,12 @@ async def test_counter8_4clk_async_reset(dut):
     clock_periods = [10, 15, 20, 25]
     for i, period in enumerate(clock_periods):
         clk_handle = getattr(dut, f"clk{i}")
-        cocotb.start_soon(Clock(clk_handle, period, units="ns").start())
+        cocotb.start_soon(Clock(clk_handle, period, unit="ns").start())
 
     # --- Step 1: Apply Asynchronous Reset ---
     dut._log.info("Asserting reset...")
     dut.reset.value = 1
-    await Timer(50, units="ns")
+    await Timer(50, unit="ns")
 
     # Verify all counters are held at 0 during reset
     for i in range(4):
@@ -26,7 +26,7 @@ async def test_counter8_4clk_async_reset(dut):
     # De-assert reset asynchronously
     dut._log.info("De-asserting reset...")
     dut.reset.value = 0
-    await Timer(1, units="ns")
+    await Timer(1, unit="ns")
 
     # --- Step 2: Verify Independent Increments ---
     # Monitor each clock domain for 10 cycles
@@ -38,12 +38,12 @@ async def test_counter8_4clk_async_reset(dut):
 
         # Initial check after reset release
         expected_val = 0
-        assert result_handle.value == expected_val, f"Domain {i} failed initial value"
+        assert result_handle.value == expected_val, f"Domain {i} failed initial value {result_handle.value}. Expect {expected_val}"
 
         for step in range(1, 11):
             await RisingEdge(clk_handle)
             expected_val = (expected_val + 1) & 0xFF
-            await Timer(1, units="ns")  # Small delay to settle output logic
+            await Timer(1, unit="ns")  # Small delay to settle output logic
             actual_val = int(result_handle.value)
 
             assert actual_val == expected_val, (
@@ -53,7 +53,7 @@ async def test_counter8_4clk_async_reset(dut):
     # --- Step 3: Mid-Run Asynchronous Reset Test ---
     dut._log.info("Testing mid-run asynchronous reset...")
     dut.reset.value = 1
-    await Timer(5, units="ns")  # Assert mid-cycle
+    await Timer(5, unit="ns")  # Assert mid-cycle
 
     for i in range(4):
         res = int(getattr(dut, f"result{i}").value)

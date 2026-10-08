@@ -60,5 +60,13 @@ module counter8_4clk_async_reset (
 		else 
 			result3 <= result3 + 1'b1;
 	end
+    // Add this block at the bottom of your top-level module:
+    `ifdef COCOTB_SIM
+    initial begin
+        $dumpfile("extension_waves.vcd"); // Name of the VCD file
+        $dumpvars(0, counter8_4clk_async_reset);          // 0 means dump all signals in this module and below
+        #1;
+    end
+    `endif
 
 endmodule

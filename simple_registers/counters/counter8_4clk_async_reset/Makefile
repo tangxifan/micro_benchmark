@@ -1,6 +1,9 @@
 # Simulator setup
 SIM ?= icarus
 TOPLEVEL_LANG ?= verilog
+#WAVES=1
+COMPILE_ARGS += -DCOCOTB_SIM=1
+
 
 # Design file location
 VERILOG_SOURCES += counter8_4clk_async_reset.v
