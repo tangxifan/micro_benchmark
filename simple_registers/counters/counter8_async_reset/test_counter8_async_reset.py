@@ -33,9 +33,9 @@ async def test_counter8_async_reset(dut):
         await Timer(1, unit="ns")  # Small delay to settle output logic
         actual_val = int(dut.result.value)
 
-        assert actual_val == expected_val, (
-            f"Mismatch at step {step}: expected {expected_val}, got {actual_val}"
-        )
+        assert (
+            actual_val == expected_val
+        ), f"Mismatch at step {step}: expected {expected_val}, got {actual_val}"
 
     # --- Step 3: Mid-Run Asynchronous Reset Test ---
     dut._log.info("Testing mid-run asynchronous reset...")

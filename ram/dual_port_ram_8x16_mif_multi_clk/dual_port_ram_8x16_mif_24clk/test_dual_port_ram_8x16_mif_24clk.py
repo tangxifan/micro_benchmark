@@ -2,6 +2,7 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
 
+
 @cocotb.test()
 async def test_dual_port_ram_8x16_mif_24clk(dut):
     """Verification for 24-instance Dual-Port RAM with flattened scalar ports across concurrent clock domains."""
@@ -38,6 +39,8 @@ async def test_dual_port_ram_8x16_mif_24clk(dut):
         await Timer(1, unit="ns")
 
         actual_dout = int(getattr(dut, f"dout_b{i}").value) & 0xFFFF
-        assert actual_dout == test_data, f"Instance {i} mismatch: expected {hex(test_data)}, got {hex(actual_dout)}"
+        assert (
+            actual_dout == test_data
+        ), f"Instance {i} mismatch: expected {hex(test_data)}, got {hex(actual_dout)}"
 
     dut._log.info("All flattened 24-clock dual-port RAM instances verified successfully!")

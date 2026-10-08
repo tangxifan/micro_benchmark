@@ -21,12 +21,14 @@ async def test_timer8_32clk_async_reset(dut):
     for i in range(num_clocks):
         getattr(dut, f"en{i}").value = 0
         getattr(dut, f"period{i}").value = 3
-    
+
     await Timer(40, unit="ns")
 
     for i in range(num_clocks):
         assert int(getattr(dut, f"count{i}").value) == 0, f"count{i} should be 0 during reset"
-        assert int(getattr(dut, f"timer_done{i}").value) == 0, f"timer_done{i} should be 0 during reset"
+        assert (
+            int(getattr(dut, f"timer_done{i}").value) == 0
+        ), f"timer_done{i} should be 0 during reset"
 
     # De-assert reset cleanly on the falling edge of clk0
     dut._log.info("De-asserting reset on falling edge of clk0...")
@@ -41,7 +43,7 @@ async def test_timer8_32clk_async_reset(dut):
         period_handle = getattr(dut, f"period{i}")
         count_handle = getattr(dut, f"count{i}")
         done_handle = getattr(dut, f"timer_done{i}")
-        
+
         en_handle.value = 1
         period_handle.value = 3
 
@@ -49,7 +51,7 @@ async def test_timer8_32clk_async_reset(dut):
         current_val = 0
         for step in range(1, 10):
             await RisingEdge(clk_handle)
-            
+
             # Predict next state: if zero, reload period (3) and set done=1; otherwise decrement
             if current_val == 0:
                 current_val = 3

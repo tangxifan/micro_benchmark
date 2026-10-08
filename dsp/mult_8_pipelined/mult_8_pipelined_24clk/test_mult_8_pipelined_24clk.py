@@ -20,7 +20,7 @@ async def test_mult_8_24clk_pipelined(dut):
     for i in range(num_clocks):
         getattr(dut, f"a{i}").value = 0
         getattr(dut, f"b{i}").value = 0
-    
+
     await Timer(20, unit="ns")
 
     # Define test vectors

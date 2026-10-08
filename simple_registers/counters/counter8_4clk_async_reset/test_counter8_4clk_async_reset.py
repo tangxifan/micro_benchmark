@@ -33,7 +33,7 @@ async def test_counter8_4clk_async_reset(dut):
     async def verify_domain(i, period):
         clk_handle = getattr(dut, f"clk{i}")
         result_handle = getattr(dut, f"result{i}")
-        
+
         dut._log.info(f"Monitoring Domain {i} (Period: {period}ns)...")
         expected_val = 0
         for step in range(1, 11):
@@ -43,13 +43,12 @@ async def test_counter8_4clk_async_reset(dut):
             actual_val = int(result_handle.value)
 
             assert actual_val == expected_val, (
-                f"Domain {i} mismatch at step {step}: "
-                f"expected {expected_val}, got {actual_val}"
+                f"Domain {i} mismatch at step {step}: " f"expected {expected_val}, got {actual_val}"
             )
 
     # Launch verification for all 4 clock domains in parallel
     tasks = [cocotb.start_soon(verify_domain(i, period)) for i, period in enumerate(clock_periods)]
-    
+
     # Wait for all domains to complete their 10 cycles
     for task in tasks:
         await task

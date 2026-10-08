@@ -36,9 +36,7 @@ async def test_mult_8_pipelined(dut):
         if len(pipeline_queue) >= 2:
             expected_output = pipeline_queue.pop(0)
             actual_output = int(dut.p.value)
-            dut._log.info(
-                f"Checking output: Expected={expected_output}, Got={actual_output}"
-            )
+            dut._log.info(f"Checking output: Expected={expected_output}, Got={actual_output}")
             assert (
                 actual_output == expected_output
             ), f"Mismatch: expected {expected_output}, got {actual_output}"

@@ -2,6 +2,7 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
 
+
 @cocotb.test()
 async def test_dpram_single_clk(dut):
     """Verification for single-instance Dual-Port RAM."""
