@@ -17,7 +17,11 @@ See details in ``ram/dual_port_ram_8x16_mif_24clk``
 Block Diagram
 ~~~~~~~~~~~~~
 
-.. figure:: ./figures/dual_port_ram_8x16_mif_24clk.svg
+This design is a 24-clock version of the illustrative schematic in :numref:`fig_dual_port_ram_8x16_mif_24clk`
+
+.. _fig_dual_port_ram_8x16_mif_24clk:
+
+.. figure:: ./figures/dual_port_ram_8x16_mif_Nclk.svg
   :width: 70%
   :alt: Dual-Port RAM 8x16 MIF 24 Clock schematic
 

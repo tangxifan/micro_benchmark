@@ -19,7 +19,7 @@ Block Diagram
 
 This design is a 4-clock version of the illustrative schematic in :numref:`fig_mult_8_pipelined_4clk`
 
-.. _fig_mult_8_pipelined_4clk
+.. _fig_mult_8_pipelined_4clk:
 
 .. figure:: ./figures/mult_8_pipelined_Nclk.svg
   :width: 70%

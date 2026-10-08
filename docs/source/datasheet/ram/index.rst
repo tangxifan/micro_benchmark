@@ -6,6 +6,8 @@ Memory
 .. toctree::
    :maxdepth: 2
 
+  dual_port_ram_8x16_mif
+
   dual_port_ram_8x16_mif_4clk
 
   dual_port_ram_8x16_mif_8clk
