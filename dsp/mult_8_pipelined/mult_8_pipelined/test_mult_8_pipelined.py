@@ -9,12 +9,12 @@ async def test_mult_8_pipelined(dut):
     """Verify 8-bit pipelined multiplier functionality and 2-stage latency."""
 
     # Start a 10ns clock (100 MHz)
-    cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
+    cocotb.start_soon(Clock(dut.clk, 10, unit="ns").start())
 
     # Initialize inputs
     dut.a.value = 0
     dut.b.value = 0
-    await Timer(20, units="ns")
+    await Timer(20, unit="ns")
 
     # Define test vectors
     test_vectors = [(12, 5), (255, 255), (0, 100), (15, 15), (128, 2)]
@@ -30,7 +30,7 @@ async def test_mult_8_pipelined(dut):
         pipeline_queue.append(expected_p)
 
         await RisingEdge(dut.clk)
-        await Timer(1, units="ns")
+        await Timer(1, unit="ns")
 
         # Check pipeline output after 2 clock cycles of latency
         if len(pipeline_queue) >= 2:
@@ -46,7 +46,7 @@ async def test_mult_8_pipelined(dut):
     # Flush remaining pipeline stages
     while len(pipeline_queue) > 0:
         await RisingEdge(dut.clk)
-        await Timer(1, units="ns")
+        await Timer(1, unit="ns")
         expected_output = pipeline_queue.pop(0)
         actual_output = int(dut.p.value)
         assert (
