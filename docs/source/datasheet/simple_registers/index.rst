@@ -11,6 +11,7 @@ Simple Registers
    pwm_generator
    rst_sync
    rstn_sync
+   counter8_async_reset
    counter8_4clk_async_reset
    counter8_8clk_async_reset
    counter8_16clk_async_reset
