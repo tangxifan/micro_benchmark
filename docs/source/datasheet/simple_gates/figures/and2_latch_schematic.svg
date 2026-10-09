@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 360" width="100%" height="100%">
+  <defs>
+    <!-- Grid pattern for background -->
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+    </pattern>
+    
+    <!-- Markers for arrows -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#475569"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb"/>
+    </marker>
+
+    <!-- Shadow filter for main block -->
+    <filter id="drop-shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="2" dy="4" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="700" height="360" fill="#f8fafc" rx="8"/>
+  <rect width="700" height="360" fill="url(#grid)" rx="8"/>
+
+  <!-- Main Module Box -->
+  <rect x="200" y="50" width="300" height="260" rx="12" fill="#ffffff" stroke="#2563eb" stroke-width="2.5" filter="url(#drop-shadow)"/>
+  <rect x="200" y="50" width="300" height="36" rx="12" fill="#dbeafe"/>
+  <rect x="200" y="74" width="300" height="12" fill="#dbeafe"/>
+
+  <!-- Module Header Label -->
+  <text x="350" y="74" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="bold" fill="#1e40af" text-anchor="middle">and2_latch</text>
+
+  <!-- INPUT: a -->
+  <path d="M 80 120 L 198 120" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="85" y="112" font-family="monospace" font-size="13" font-weight="600" fill="#0f172a">a</text>
+  <text x="208" y="116" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">a</text>
+
+  <!-- INPUT: b -->
+  <path d="M 80 170 L 198 170" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="85" y="162" font-family="monospace" font-size="13" font-weight="600" fill="#0f172a">b</text>
+  <text x="208" y="166" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">b</text>
+
+  <!-- INPUT: en (Enable) -->
+  <path d="M 80 250 L 198 250" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="85" y="244" font-family="monospace" font-size="13" font-weight="600" fill="#0f172a">en</text>
+  <text x="208" y="254" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">en</text>
+
+  <!-- OUTPUT: out -->
+  <path d="M 500 180 L 618 180" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
+  <text x="492" y="184" font-family="monospace" font-size="11" fill="#64748b" text-anchor="end">out</text>
+  <text x="613" y="172" font-family="monospace" font-size="13" font-weight="600" fill="#1d4ed8" text-anchor="end">out</text>
+
+  <!-- INTERNAL WIRES TO AND GATE -->
+  <!-- Wire from Port 'a' (200, 120) to AND Gate Pin 1 (260, 126) -->
+  <path d="M 200 120 L 230 120 L 230 126 L 260 126" stroke="#475569" stroke-width="2" fill="none"/>
+  
+  <!-- Wire from Port 'b' (200, 170) to AND Gate Pin 2 (260, 148) -->
+  <path d="M 200 170 L 230 170 L 230 148 L 260 148" stroke="#475569" stroke-width="2" fill="none"/>
+
+  <!-- 1. AND Gate -->
+  <g transform="translate(260, 115)">
+    <path d="M 0 0 L 20 0 C 35 0, 45 8, 45 22 C 45 36, 35 44, 20 44 L 0 44 Z" fill="#f1f5f9" stroke="#0284c7" stroke-width="2"/>
+    <text x="18" y="27" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="bold" fill="#0369a1" text-anchor="middle">&amp;</text>
+  </g>
+
+  <!-- Connection from AND Gate output to Latch D input -->
+  <path d="M 305 137 L 378 137" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Connection from Enable port to Latch EN input -->
+  <path d="M 200 250 L 340 250 L 340 210 L 378 210" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- 2. Transparent Latch Block -->
+  <rect x="380" y="115" width="70" height="120" rx="4" fill="#f8fafc" stroke="#475569" stroke-width="2"/>
+  <text x="415" y="140" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="bold" fill="#334155" text-anchor="middle">LATCH</text>
+  
+  <!-- Latch Pin Labels inside box -->
+  <text x="390" y="142" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">D</text>
+  <text x="390" y="214" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">EN</text>
+  <text x="440" y="184" font-family="monospace" font-size="11" fill="#64748b" text-anchor="end">Q</text>
+
+  <!-- Internal Connection from Latch output to Module Output -->
+  <path d="M 450 180 L 500 180" stroke="#475569" stroke-width="2"/>
+
+  <!-- Decorative Port Pin Circles -->
+  <circle cx="200" cy="120" r="3" fill="#2563eb"/>
+  <circle cx="200" cy="170" r="3" fill="#2563eb"/>
+  <circle cx="200" cy="250" r="3" fill="#2563eb"/>
+  <circle cx="500" cy="180" r="3" fill="#2563eb"/>
+</svg>

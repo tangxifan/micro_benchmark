@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 360" width="100%" height="100%">
+  <defs>
+    <!-- Grid pattern for background -->
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+    </pattern>
+    
+    <!-- Marker for bus arrows -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#475569"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669"/>
+    </marker>
+
+    <!-- Shadow filter for main block -->
+    <filter id="drop-shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="2" dy="4" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="700" height="360" fill="#f8fafc" rx="8"/>
+  <rect width="700" height="360" fill="url(#grid)" rx="8"/>
+
+  <!-- Main Module Box -->
+  <rect x="220" y="60" width="260" height="240" rx="12" fill="#ffffff" stroke="#2563eb" stroke-width="2.5" filter="url(#drop-shadow)"/>
+  <rect x="220" y="60" width="260" height="36" rx="12" fill="#dbeafe"/>
+  <!-- Non-rounded bottom corners for header fill -->
+  <rect x="220" y="84" width="260" height="12" fill="#dbeafe"/>
+
+  <!-- Module Header Label -->
+  <text x="350" y="84" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="bold" fill="#1e40af" text-anchor="middle">adder_N</text>
+  <text x="350" y="104" font-family="monospace" font-size="11" fill="#64748b" text-anchor="middle">(N = 4, 6, 8, 16)</text>
+
+  <!-- BUS INPUT: A[N-1:0] -->
+  <path d="M 80 140 L 218 140" stroke="#475569" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <!-- Slash for Bus -->
+  <line x1="140" y1="133" x2="150" y2="147" stroke="#475569" stroke-width="2"/>
+  <text x="145" y="126" font-family="monospace" font-size="11" fill="#475569" text-anchor="middle">N</text>
+  <text x="85" y="132" font-family="monospace" font-size="13" font-weight="600" fill="#0f172a">a[N-1:0]</text>
+  <text x="228" y="144" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">a</text>
+
+  <!-- BUS INPUT: B[N-1:0] -->
+  <path d="M 80 200 L 218 200" stroke="#475569" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <!-- Slash for Bus -->
+  <line x1="140" y1="193" x2="150" y2="207" stroke="#475569" stroke-width="2"/>
+  <text x="145" y="186" font-family="monospace" font-size="11" fill="#475569" text-anchor="middle">N</text>
+  <text x="85" y="192" font-family="monospace" font-size="13" font-weight="600" fill="#0f172a">b[N-1:0]</text>
+  <text x="228" y="204" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">b</text>
+
+  <!-- CARRY INPUT: ci -->
+  <path d="M 80 250 L 218 250" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="85" y="244" font-family="monospace" font-size="13" font-weight="600" fill="#0f172a">ci</text>
+  <text x="228" y="254" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">ci</text>
+
+  <!-- BUS OUTPUT: S[N-1:0] -->
+  <path d="M 480 160 L 618 160" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
+  <!-- Slash for Bus -->
+  <line x1="545" y1="153" x2="555" y2="167" stroke="#2563eb" stroke-width="2"/>
+  <text x="550" y="146" font-family="monospace" font-size="11" fill="#2563eb" text-anchor="middle">N</text>
+  <text x="472" y="164" font-family="monospace" font-size="11" fill="#64748b" text-anchor="end">s</text>
+  <text x="613" y="152" font-family="monospace" font-size="13" font-weight="600" fill="#1d4ed8" text-anchor="end">s[N-1:0]</text>
+
+  <!-- CARRY OUTPUT: co -->
+  <path d="M 480 230 L 618 230" stroke="#059669" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <text x="472" y="234" font-family="monospace" font-size="11" fill="#64748b" text-anchor="end">co</text>
+  <text x="613" y="222" font-family="monospace" font-size="13" font-weight="600" fill="#047857" text-anchor="end">co</text>
+
+  <!-- Internal Logic Symbol / Functional Core Representation -->
+  <rect x="280" y="130" width="140" height="130" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-dasharray="4,4"/>
+  <text x="350" y="190" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="bold" fill="#94a3b8" text-anchor="middle">+</text>
+  <text x="350" y="220" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">Carry-Lookahead /</text>
+  <text x="350" y="234" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">Ripple Logic</text>
+
+  <!-- Decorative Port Pins Circles -->
+  <circle cx="220" cy="140" r="3" fill="#2563eb"/>
+  <circle cx="220" cy="200" r="3" fill="#2563eb"/>
+  <circle cx="220" cy="250" r="3" fill="#2563eb"/>
+  <circle cx="480" cy="160" r="3" fill="#2563eb"/>
+  <circle cx="480" cy="230" r="3" fill="#2563eb"/>
+</svg>
