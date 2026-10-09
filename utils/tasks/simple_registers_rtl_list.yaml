@@ -18,12 +18,6 @@ blinking:
   top_module: blinking
   cocotb_dir: simple_registers/blinking
 
-clk_divider:
-  source:
-    - simple_registers/clk_divider/clk_divider.v
-  top_module: clk_divider
-  cocotb_dir: simple_registers/clk_divier
-
 counterdown16_1clk_negedge_async_resetp:
   source:
     - simple_registers/counters/counterdown16_1clk_negedge_async_resetp/counterdown16_1clk_negedge_async_resetp.v
