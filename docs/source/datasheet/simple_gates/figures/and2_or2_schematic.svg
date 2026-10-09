@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340" width="100%" height="100%">
+  <defs>
+    <!-- Grid pattern for background -->
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+    </pattern>
+    
+    <!-- Markers for arrows -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#475569"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb"/>
+    </marker>
+
+    <!-- Shadow filter for main block -->
+    <filter id="drop-shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="2" dy="4" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="720" height="340" fill="#f8fafc" rx="8"/>
+  <rect width="720" height="340" fill="url(#grid)" rx="8"/>
+
+  <!-- Main Module Box -->
+  <rect x="180" y="40" width="360" height="260" rx="12" fill="#ffffff" stroke="#2563eb" stroke-width="2.5" filter="url(#drop-shadow)"/>
+  <rect x="180" y="40" width="360" height="36" rx="12" fill="#dbeafe"/>
+  <rect x="180" y="64" width="360" height="12" fill="#dbeafe"/>
+
+  <!-- Module Header Label -->
+  <text x="360" y="64" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="bold" fill="#1e40af" text-anchor="middle">and2_or2</text>
+
+  <!-- INPUT: a -->
+  <path d="M 60 120 L 178 120" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="65" y="112" font-family="monospace" font-size="13" font-weight="600" fill="#0f172a">a</text>
+  <text x="188" y="124" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">a</text>
+
+  <!-- INPUT: b -->
+  <path d="M 60 220 L 178 220" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="65" y="212" font-family="monospace" font-size="13" font-weight="600" fill="#0f172a">b</text>
+  <text x="188" y="224" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">b</text>
+
+  <!-- OUTPUT: c -->
+  <path d="M 540 122 L 658 122" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
+  <text x="532" y="126" font-family="monospace" font-size="11" fill="#64748b" text-anchor="end">c</text>
+  <text x="653" y="114" font-family="monospace" font-size="13" font-weight="600" fill="#1d4ed8" text-anchor="end">c</text>
+
+  <!-- OUTPUT: d -->
+  <path d="M 540 222 L 658 222" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
+  <text x="532" y="226" font-family="monospace" font-size="11" fill="#64748b" text-anchor="end">d</text>
+  <text x="653" y="214" font-family="monospace" font-size="13" font-weight="600" fill="#1d4ed8" text-anchor="end">d</text>
+
+  <!-- INTERNAL SCHEMATIC LOGIC -->
+  <!-- Wire splits & routing for 'a' input -->
+  <path d="M 180 120 L 230 120" stroke="#475569" stroke-width="2"/>
+  <circle cx="230" cy="120" r="3.5" fill="#0f172a"/>
+  <!-- Branch to AND gate upper pin -->
+  <path d="M 230 120 L 330 120 L 330 111 L 350 111" stroke="#475569" stroke-width="2" fill="none"/>
+  <!-- Branch to OR gate upper pin -->
+  <path d="M 230 120 L 230 201 L 350 201" stroke="#475569" stroke-width="2" fill="none"/>
+
+  <!-- Wire splits & routing for 'b' input -->
+  <path d="M 180 220 L 260 220" stroke="#475569" stroke-width="2"/>
+  <circle cx="260" cy="220" r="3.5" fill="#0f172a"/>
+  <!-- Branch to AND gate lower pin -->
+  <path d="M 260 220 L 260 133 L 350 133" stroke="#475569" stroke-width="2" fill="none"/>
+  <!-- Branch to OR gate lower pin -->
+  <path d="M 260 220 L 330 220 L 330 223 L 350 223" stroke="#475569" stroke-width="2" fill="none"/>
+
+  <!-- 1. AND Gate (c = a & b) -->
+  <g transform="translate(350, 100)">
+    <path d="M 0 0 L 20 0 C 35 0, 45 8, 45 22 C 45 36, 35 44, 20 44 L 0 44 Z" fill="#f1f5f9" stroke="#0284c7" stroke-width="2"/>
+    <text x="18" y="27" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="bold" fill="#0369a1" text-anchor="middle">&amp;</text>
+  </g>
+  <path d="M 395 122 L 540 122" stroke="#475569" stroke-width="2"/>
+
+  <!-- 2. OR Gate (d = a | b) -->
+  <g transform="translate(350, 200)">
+    <path d="M 0 0 C 12 0, 22 8, 28 12 C 38 12, 48 22, 48 22 C 48 22, 38 32, 28 32 C 22 36, 12 44, 0 44 C 10 30, 10 14, 0 0 Z" fill="#f1f5f9" stroke="#0284c7" stroke-width="2"/>
+    <text x="20" y="27" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="middle">≥1</text>
+  </g>
+  <path d="M 398 222 L 540 222" stroke="#475569" stroke-width="2"/>
+
+  <!-- External Port Pin Indicators -->
+  <circle cx="180" cy="120" r="3" fill="#2563eb"/>
+  <circle cx="180" cy="220" r="3" fill="#2563eb"/>
+  <circle cx="540" cy="122" r="3" fill="#2563eb"/>
+  <circle cx="540" cy="222" r="3" fill="#2563eb"/>
+</svg>
