@@ -8,12 +8,4 @@ Memory
 
   dual_port_ram_8x16_mif
 
-  dual_port_ram_8x16_mif_4clk
-
-  dual_port_ram_8x16_mif_8clk
-
-  dual_port_ram_8x16_mif_16clk
-
-  dual_port_ram_8x16_mif_24clk
-
-  dual_port_ram_8x16_mif_32clk
+  dual_port_ram_8x16_mif_Nclk
