@@ -1,4 +1,4 @@
-.. _datasheet_fsm:
+.. _datasheet_simple_registers:
    
 Simple Registers
 ================

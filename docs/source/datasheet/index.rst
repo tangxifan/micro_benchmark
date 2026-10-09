@@ -1,5 +1,10 @@
 .. _datasheet:
    Datasheet
+
+.. toctree::
+   :maxdepth: 2
+
+   simple_gates/index
  
 .. toctree::
    :maxdepth: 2
