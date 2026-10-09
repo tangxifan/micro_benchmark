@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 540" width="100%" height="100%">
+  <defs>
+    <!-- Grid pattern for background -->
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+    </pattern>
+    
+    <!-- Markers for arrows -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#475569"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb"/>
+    </marker>
+
+    <!-- Shadow filter for main block -->
+    <filter id="drop-shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="2" dy="4" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="980" height="540" fill="#f8fafc" rx="8"/>
+  <rect width="980" height="540" fill="url(#grid)" rx="8"/>
+
+  <!-- Main Module Box (FSM_top) -->
+  <rect x="140" y="30" width="700" height="480" rx="12" fill="#ffffff" stroke="#2563eb" stroke-width="2.5" filter="url(#drop-shadow)"/>
+  <rect x="140" y="30" width="700" height="36" rx="12" fill="#dbeafe"/>
+  <rect x="140" y="54" width="700" height="12" fill="#dbeafe"/>
+
+  <!-- Module Header Label -->
+  <text x="490" y="54" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="bold" fill="#1e40af" text-anchor="middle">FSM_top</text>
+
+  <!-- ==================== TOP-LEVEL INPUTS (LEFT) ==================== -->
+  <!-- clk -->
+  <path d="M 40 90 L 138 90" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="45" y="82" font-family="monospace" font-size="12" font-weight="600" fill="#0f172a">clk</text>
+  <text x="148" y="94" font-family="monospace" font-size="10" fill="#64748b">clk</text>
+
+  <!-- rst -->
+  <path d="M 40 130 L 138 130" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="45" y="122" font-family="monospace" font-size="12" font-weight="600" fill="#0f172a">rst</text>
+  <text x="148" y="134" font-family="monospace" font-size="10" fill="#64748b">rst</text>
+
+  <!-- load_in -->
+  <path d="M 40 170 L 138 170" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="45" y="162" font-family="monospace" font-size="12" font-weight="600" fill="#0f172a">load_in</text>
+  <text x="148" y="174" font-family="monospace" font-size="10" fill="#64748b">load_in</text>
+
+  <!-- sec_in[5:0] -->
+  <path d="M 40 230 L 138 230" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="45" y="222" font-family="monospace" font-size="12" font-weight="600" fill="#0f172a">sec_in[5:0]</text>
+  <text x="148" y="234" font-family="monospace" font-size="10" fill="#64748b">sec_in</text>
+
+  <!-- min_in[5:0] -->
+  <path d="M 40 310 L 138 310" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="45" y="302" font-family="monospace" font-size="12" font-weight="600" fill="#0f172a">min_in[5:0]</text>
+  <text x="148" y="314" font-family="monospace" font-size="10" fill="#64748b">min_in</text>
+
+  <!-- hour_in[5:0] -->
+  <path d="M 40 390 L 138 390" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="45" y="382" font-family="monospace" font-size="12" font-weight="600" fill="#0f172a">hour_in[5:0]</text>
+  <text x="148" y="394" font-family="monospace" font-size="10" fill="#64748b">hour_in</text>
+
+  <!-- ==================== TOP-LEVEL OUTPUTS (RIGHT) ==================== -->
+  <!-- sec_out[5:0] -->
+  <path d="M 840 190 L 938 190" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
+  <text x="832" y="194" font-family="monospace" font-size="10" fill="#64748b" text-anchor="end">sec_out</text>
+  <text x="943" y="182" font-family="monospace" font-size="12" font-weight="600" fill="#1d4ed8">sec_out[5:0]</text>
+
+  <!-- min_out[5:0] -->
+  <path d="M 840 300 L 938 300" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
+  <text x="832" y="304" font-family="monospace" font-size="10" fill="#64748b" text-anchor="end">min_out</text>
+  <text x="943" y="292" font-family="monospace" font-size="12" font-weight="600" fill="#1d4ed8">min_out[5:0]</text>
+
+  <!-- hour_out[5:0] -->
+  <path d="M 840 410 L 938 410" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
+  <text x="832" y="414" font-family="monospace" font-size="10" fill="#64748b" text-anchor="end">hour_out</text>
+  <text x="943" y="402" font-family="monospace" font-size="12" font-weight="600" fill="#1d4ed8">hour_out[5:0]</text>
+
+
+  <!-- ==================== SUBMODULES ==================== -->
+
+  <!-- 1. FSM_second -->
+  <g transform="translate(360, 150)">
+    <rect x="0" y="0" width="220" height="80" rx="6" fill="#f1f5f9" stroke="#0284c7" stroke-width="2"/>
+    <text x="110" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="bold" fill="#0369a1" text-anchor="middle">FSM_second</text>
+    <text x="10" y="22" font-family="monospace" font-size="9" fill="#475569">clk, rst</text>
+    <text x="10" y="46" font-family="monospace" font-size="9" fill="#475569">sec_in, load</text>
+    <text x="210" y="46" font-family="monospace" font-size="9" fill="#475569" text-anchor="end">sec_out</text>
+  </g>
+
+  <!-- 2. FSM_minute -->
+  <g transform="translate(360, 260)">
+    <rect x="0" y="0" width="220" height="80" rx="6" fill="#f1f5f9" stroke="#0284c7" stroke-width="2"/>
+    <text x="110" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="bold" fill="#0369a1" text-anchor="middle">FSM_minute</text>
+    <text x="10" y="22" font-family="monospace" font-size="9" fill="#475569">clk, rst, load</text>
+    <text x="10" y="46" font-family="monospace" font-size="9" fill="#475569">min_in, sec_count</text>
+    <text x="210" y="46" font-family="monospace" font-size="9" fill="#475569" text-anchor="end">min_out</text>
+  </g>
+
+  <!-- 3. FSM_hour -->
+  <g transform="translate(360, 370)">
+    <rect x="0" y="0" width="220" height="80" rx="6" fill="#f1f5f9" stroke="#0284c7" stroke-width="2"/>
+    <text x="110" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="bold" fill="#0369a1" text-anchor="middle">FSM_hour</text>
+    <text x="10" y="22" font-family="monospace" font-size="9" fill="#475569">clk, rst, load</text>
+    <text x="10" y="46" font-family="monospace" font-size="9" fill="#475569">hour_in, sec/min_count</text>
+    <text x="210" y="46" font-family="monospace" font-size="9" fill="#475569" text-anchor="end">hour_out</text>
+  </g>
+
+
+  <!-- ==================== INTERNAL WIRING ==================== -->
+
+  <!-- Global Clocks & Resets & Loads (simplified bus lines) -->
+  <!-- clk bus -->
+  <path d="M 140 90 L 320 90 L 320 162 L 358 162" stroke="#475569" stroke-width="1.5" fill="none"/>
+  <path d="M 320 272 L 358 272" stroke="#475569" stroke-width="1.5" fill="none"/>
+  <path d="M 320 382 L 358 382" stroke="#475569" stroke-width="1.5" fill="none"/>
+
+  <!-- rst bus -->
+  <path d="M 140 130 L 300 130 L 300 178 L 358 178" stroke="#475569" stroke-width="1.5" fill="none"/>
+  <path d="M 300 288 L 358 288" stroke="#475569" stroke-width="1.5" fill="none"/>
+  <path d="M 300 398 L 358 398" stroke="#475569" stroke-width="1.5" fill="none"/>
+
+  <!-- load_in bus -->
+  <path d="M 140 170 L 280 170 L 280 194 L 358 194" stroke="#475569" stroke-width="1.5" fill="none"/>
+  <path d="M 280 304 L 358 304" stroke="#475569" stroke-width="1.5" fill="none"/>
+  <path d="M 280 414 L 358 414" stroke="#475569" stroke-width="1.5" fill="none"/>
+
+  <!-- sec_in -->
+  <path d="M 140 230 L 358 230" stroke="#475569" stroke-width="2"/>
+
+  <!-- min_in -->
+  <path d="M 140 310 L 358 310" stroke="#475569" stroke-width="2"/>
+
+  <!-- hour_in -->
+  <path d="M 140 390 L 358 390" stroke="#475569" stroke-width="2"/>
+
+  <!-- sec_out (FSM_sec -> output & cascades) -->
+  <path d="M 580 190 L 840 190" stroke="#475569" stroke-width="2"/>
+  <!-- Branch to FSM_min (.sec_count) and FSM_hr (.sec_count) -->
+  <path d="M 680 190 L 680 326 L 580 326" stroke="#475569" stroke-width="1.5" fill="none"/>
+  <path d="M 680 326 L 680 436 L 580 436" stroke="#475569" stroke-width="1.5" fill="none"/>
+  <circle cx="680" cy="190" r="3.5" fill="#0f172a"/>
+
+  <!-- min_out (FSM_min -> output & cascade to FSM_hr) -->
+  <path d="M 580 300 L 840 300" stroke="#475569" stroke-width="2"/>
+  <!-- Branch to FSM_hr (.min_count) -->
+  <path d="M 720 300 L 720 420 L 580 420" stroke="#475569" stroke-width="1.5" fill="none"/>
+  <circle cx="720" cy="300" r="3.5" fill="#0f172a"/>
+
+  <!-- hour_out (FSM_hr -> output) -->
+  <path d="M 580 410 L 840 410" stroke="#475569" stroke-width="2"/>
+
+  <!-- Port Pin Indicators -->
+  <circle cx="140" cy="90" r="3" fill="#2563eb"/>
+  <circle cx="140" cy="130" r="3" fill="#2563eb"/>
+  <circle cx="140" cy="170" r="3" fill="#2563eb"/>
+  <circle cx="140" cy="230" r="3" fill="#2563eb"/>
+  <circle cx="140" cy="310" r="3" fill="#2563eb"/>
+  <circle cx="140" cy="390" r="3" fill="#2563eb"/>
+  <circle cx="840" cy="190" r="3" fill="#2563eb"/>
+  <circle cx="840" cy="300" r="3" fill="#2563eb"/>
+  <circle cx="840" cy="410" r="3" fill="#2563eb"/>
+</svg>
