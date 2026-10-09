@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 400" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 480" width="100%" height="100%">
   <defs>
     <!-- Grid pattern for background -->
     <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
@@ -20,85 +20,149 @@
   </defs>
 
   <!-- Background -->
-  <rect width="780" height="400" fill="#f8fafc" rx="8"/>
-  <rect width="780" height="400" fill="url(#grid)" rx="8"/>
+  <rect width="920" height="480" fill="#f8fafc" rx="8"/>
+  <rect width="920" height="480" fill="url(#grid)" rx="8"/>
 
   <!-- Main Module Box -->
-  <rect x="180" y="40" width="420" height="320" rx="12" fill="#ffffff" stroke="#2563eb" stroke-width="2.5" filter="url(#drop-shadow)"/>
-  <rect x="180" y="40" width="420" height="36" rx="12" fill="#dbeafe"/>
-  <rect x="180" y="64" width="420" height="12" fill="#dbeafe"/>
+  <rect x="180" y="40" width="560" height="400" rx="12" fill="#ffffff" stroke="#2563eb" stroke-width="2.5" filter="url(#drop-shadow)"/>
+  <rect x="180" y="40" width="560" height="36" rx="12" fill="#dbeafe"/>
+  <rect x="180" y="64" width="560" height="12" fill="#dbeafe"/>
 
   <!-- Module Header Label -->
-  <text x="390" y="64" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="bold" fill="#1e40af" text-anchor="middle">and2_latch_2clock</text>
+  <text x="460" y="64" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="bold" fill="#1e40af" text-anchor="middle">and2_latch_2clock</text>
 
-  <!-- INPUT: a -->
-  <path d="M 60 110 L 178 110" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
-  <text x="65" y="102" font-family="monospace" font-size="13" font-weight="600" fill="#0f172a">a</text>
-  <text x="188" y="106" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">a</text>
+  <!-- CHANNEL 0 INPUTS -->
+  <!-- a0 -->
+  <path d="M 60 100 L 178 100" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="65" y="92" font-family="monospace" font-size="13" font-weight="600" fill="#0f172a">a0</text>
+  <text x="188" y="96" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">a0</text>
 
-  <!-- INPUT: b -->
-  <path d="M 60 160 L 178 160" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
-  <text x="65" y="152" font-family="monospace" font-size="13" font-weight="600" fill="#0f172a">b</text>
-  <text x="188" y="156" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">b</text>
+  <!-- b0 -->
+  <path d="M 60 140 L 178 140" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="65" y="132" font-family="monospace" font-size="13" font-weight="600" fill="#0f172a">b0</text>
+  <text x="188" y="136" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">b0</text>
 
-  <!-- INPUT: clk1 -->
-  <path d="M 60 270 L 178 270" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
-  <text x="65" y="264" font-family="monospace" font-size="13" font-weight="600" fill="#0f172a">clk1</text>
-  <text x="188" y="274" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">clk1</text>
+  <!-- clk0 -->
+  <path d="M 60 180 L 178 180" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="65" y="172" font-family="monospace" font-size="13" font-weight="600" fill="#0f172a">clk0</text>
+  <text x="188" y="184" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">clk0</text>
 
-  <!-- INPUT: clk2 -->
+  <!-- CHANNEL 0 OUTPUTS -->
+  <!-- c0 -->
+  <path d="M 740 120 L 858 120" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
+  <text x="732" y="124" font-family="monospace" font-size="11" fill="#64748b" text-anchor="end">c0</text>
+  <text x="853" y="112" font-family="monospace" font-size="13" font-weight="600" fill="#1d4ed8" text-anchor="end">c0</text>
+
+  <!-- d0 -->
+  <path d="M 740 160 L 858 160" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
+  <text x="732" y="164" font-family="monospace" font-size="11" fill="#64748b" text-anchor="end">d0</text>
+  <text x="853" y="152" font-family="monospace" font-size="13" font-weight="600" fill="#1d4ed8" text-anchor="end">d0</text>
+
+
+  <!-- CHANNEL 1 INPUTS -->
+  <!-- a1 -->
+  <path d="M 60 280 L 178 280" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="65" y="272" font-family="monospace" font-size="13" font-weight="600" fill="#0f172a">a1</text>
+  <text x="188" y="276" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">a1</text>
+
+  <!-- b1 -->
   <path d="M 60 320 L 178 320" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
-  <text x="65" y="314" font-family="monospace" font-size="13" font-weight="600" fill="#0f172a">clk2</text>
-  <text x="188" y="324" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">clk2</text>
+  <text x="65" y="312" font-family="monospace" font-size="13" font-weight="600" fill="#0f172a">b1</text>
+  <text x="188" y="316" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">b1</text>
 
-  <!-- OUTPUT: out -->
-  <path d="M 600 170 L 718 170" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
-  <text x="592" y="174" font-family="monospace" font-size="11" fill="#64748b" text-anchor="end">out</text>
-  <text x="713" y="162" font-family="monospace" font-size="13" font-weight="600" fill="#1d4ed8" text-anchor="end">out</text>
+  <!-- clk1 -->
+  <path d="M 60 360 L 178 360" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="65" y="352" font-family="monospace" font-size="13" font-weight="600" fill="#0f172a">clk1</text>
+  <text x="188" y="364" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">clk1</text>
 
-  <!-- INTERNAL WIRES TO AND GATE -->
-  <path d="M 180 110 L 210 110 L 210 116 L 230 116" stroke="#475569" stroke-width="2" fill="none"/>
-  <path d="M 180 160 L 210 160 L 210 138 L 230 138" stroke="#475569" stroke-width="2" fill="none"/>
+  <!-- CHANNEL 1 OUTPUTS -->
+  <!-- c1 -->
+  <path d="M 740 300 L 858 300" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
+  <text x="732" y="304" font-family="monospace" font-size="11" fill="#64748b" text-anchor="end">c1</text>
+  <text x="853" y="292" font-family="monospace" font-size="13" font-weight="600" fill="#1d4ed8" text-anchor="end">c1</text>
 
-  <!-- 1. AND Gate -->
-  <g transform="translate(230, 105)">
+  <!-- d1 -->
+  <path d="M 740 340 L 858 340" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
+  <text x="732" y="344" font-family="monospace" font-size="11" fill="#64748b" text-anchor="end">d1</text>
+  <text x="853" y="332" font-family="monospace" font-size="13" font-weight="600" fill="#1d4ed8" text-anchor="end">d1</text>
+
+
+  <!-- CHANNEL 0 LOGIC -->
+  <!-- AND Gate 0 (a0 & b0) -->
+  <path d="M 180 100 L 220 100 L 220 109 L 245 109" stroke="#475569" stroke-width="2" fill="none"/>
+  <path d="M 180 140 L 220 140 L 220 131 L 245 131" stroke="#475569" stroke-width="2" fill="none"/>
+
+  <g transform="translate(245, 98)">
     <path d="M 0 0 L 20 0 C 35 0, 45 8, 45 22 C 45 36, 35 44, 20 44 L 0 44 Z" fill="#f1f5f9" stroke="#0284c7" stroke-width="2"/>
     <text x="18" y="27" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="bold" fill="#0369a1" text-anchor="middle">&amp;</text>
   </g>
 
-  <!-- Wire: AND Gate Output -> Latch 1 D Input -->
-  <path d="M 275 127 L 328 127" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- Wire: c0 output branch to FF0 D input & module output port c0 -->
+  <path d="M 290 120 L 360 120" stroke="#475569" stroke-width="2"/>
+  <circle cx="360" cy="120" r="3" fill="#0284c7"/>
+  
+  <path d="M 360 120 L 528 120" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M 360 120 L 360 80 L 740 80 L 740 120" stroke="#2563eb" stroke-width="2" fill="none"/>
 
-  <!-- 2. Latch 1 (Controlled by clk1) -->
-  <rect x="330" y="105" width="70" height="110" rx="4" fill="#f8fafc" stroke="#475569" stroke-width="2"/>
-  <text x="365" y="128" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="bold" fill="#334155" text-anchor="middle">LATCH 1</text>
-  <text x="340" y="131" font-family="monospace" font-size="10" fill="#64748b" text-anchor="start">D</text>
-  <text x="340" y="199" font-family="monospace" font-size="10" fill="#64748b" text-anchor="start">EN</text>
-  <text x="390" y="174" font-family="monospace" font-size="10" fill="#64748b" text-anchor="end">Q</text>
+  <!-- Flip-Flop 0 (clk0) -->
+  <rect x="530" y="98" width="70" height="90" rx="4" fill="#f8fafc" stroke="#475569" stroke-width="2"/>
+  <text x="565" y="118" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="bold" fill="#334155" text-anchor="middle">REG 0</text>
+  <text x="538" y="124" font-family="monospace" font-size="10" fill="#64748b" text-anchor="start">D</text>
+  <text x="538" y="174" font-family="monospace" font-size="10" fill="#64748b" text-anchor="start">CLK</text>
+  <text x="592" y="164" font-family="monospace" font-size="10" fill="#64748b" text-anchor="end">Q</text>
+  <!-- Clock triangle symbol -->
+  <path d="M 530 165 L 538 170 L 530 175" fill="none" stroke="#475569" stroke-width="1.5"/>
 
-  <!-- Wire: clk1 Port -> Latch 1 EN Input -->
-  <path d="M 180 270 L 300 270 L 300 195 L 328 195" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <!-- clk0 Wire -->
+  <path d="M 180 180 L 510 180 L 510 170 L 528 170" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
 
-  <!-- Wire: Latch 1 Q Output -> Latch 2 D Input -->
-  <path d="M 400 170 L 468 170" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- Wire: REG 0 Output -> d0 Port -->
+  <path d="M 600 160 L 740 160" stroke="#475569" stroke-width="2"/>
 
-  <!-- 3. Latch 2 (Controlled by clk2) -->
-  <rect x="470" y="105" width="70" height="110" rx="4" fill="#f8fafc" stroke="#475569" stroke-width="2"/>
-  <text x="505" y="128" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="bold" fill="#334155" text-anchor="middle">LATCH 2</text>
-  <text x="480" y="174" font-family="monospace" font-size="10" fill="#64748b" text-anchor="start">D</text>
-  <text x="480" y="199" font-family="monospace" font-size="10" fill="#64748b" text-anchor="start">EN</text>
-  <text x="530" y="174" font-family="monospace" font-size="10" fill="#64748b" text-anchor="end">Q</text>
 
-  <!-- Wire: clk2 Port -> Latch 2 EN Input -->
-  <path d="M 180 320 L 440 320 L 440 195 L 468 195" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <!-- CHANNEL 1 LOGIC -->
+  <!-- AND Gate 1 (a1 & b1) -->
+  <path d="M 180 280 L 220 280 L 220 289 L 245 289" stroke="#475569" stroke-width="2" fill="none"/>
+  <path d="M 180 320 L 220 320 L 220 311 L 245 311" stroke="#475569" stroke-width="2" fill="none"/>
 
-  <!-- Wire: Latch 2 Q Output -> Module Output -->
-  <path d="M 540 170 L 600 170" stroke="#475569" stroke-width="2"/>
+  <g transform="translate(245, 278)">
+    <path d="M 0 0 L 20 0 C 35 0, 45 8, 45 22 C 45 36, 35 44, 20 44 L 0 44 Z" fill="#f1f5f9" stroke="#0284c7" stroke-width="2"/>
+    <text x="18" y="27" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="bold" fill="#0369a1" text-anchor="middle">&amp;</text>
+  </g>
 
-  <!-- Decorative Port Pin Circles -->
-  <circle cx="180" cy="110" r="3" fill="#2563eb"/>
-  <circle cx="180" cy="160" r="3" fill="#2563eb"/>
-  <circle cx="180" cy="270" r="3" fill="#2563eb"/>
+  <!-- Wire: c1 output branch to FF1 D input & module output port c1 -->
+  <path d="M 290 300 L 360 300" stroke="#475569" stroke-width="2"/>
+  <circle cx="360" cy="300" r="3" fill="#0284c7"/>
+  
+  <path d="M 360 300 L 528 300" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M 360 300 L 360 260 L 740 260 L 740 300" stroke="#2563eb" stroke-width="2" fill="none"/>
+
+  <!-- Flip-Flop 1 (clk1) -->
+  <rect x="530" y="278" width="70" height="90" rx="4" fill="#f8fafc" stroke="#475569" stroke-width="2"/>
+  <text x="565" y="298" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="bold" fill="#334155" text-anchor="middle">REG 1</text>
+  <text x="538" y="304" font-family="monospace" font-size="10" fill="#64748b" text-anchor="start">D</text>
+  <text x="538" y="354" font-family="monospace" font-size="10" fill="#64748b" text-anchor="start">CLK</text>
+  <text x="592" y="344" font-family="monospace" font-size="10" fill="#64748b" text-anchor="end">Q</text>
+  <!-- Clock triangle symbol -->
+  <path d="M 530 345 L 538 350 L 530 355" fill="none" stroke="#475569" stroke-width="1.5"/>
+
+  <!-- clk1 Wire -->
+  <path d="M 180 360 L 510 360 L 510 350 L 528 350" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- Wire: REG 1 Output -> d1 Port -->
+  <path d="M 600 340 L 740 340" stroke="#475569" stroke-width="2"/>
+
+
+  <!-- Port Pins -->
+  <circle cx="180" cy="100" r="3" fill="#2563eb"/>
+  <circle cx="180" cy="140" r="3" fill="#2563eb"/>
+  <circle cx="180" cy="180" r="3" fill="#2563eb"/>
+  <circle cx="180" cy="280" r="3" fill="#2563eb"/>
   <circle cx="180" cy="320" r="3" fill="#2563eb"/>
-  <circle cx="600" cy="170" r="3" fill="#2563eb"/>
+  <circle cx="180" cy="360" r="3" fill="#2563eb"/>
+
+  <circle cx="740" cy="120" r="3" fill="#2563eb"/>
+  <circle cx="740" cy="160" r="3" fill="#2563eb"/>
+  <circle cx="740" cy="300" r="3" fill="#2563eb"/>
+  <circle cx="740" cy="340" r="3" fill="#2563eb"/>
 </svg>
