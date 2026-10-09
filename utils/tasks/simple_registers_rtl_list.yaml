@@ -1,4 +1,5 @@
 # Counters
+# TODO:
 #./counters/counter8_async_reset/counter8_async_reset.v:
 #./counters/counter8_async_resetb/counter8_async_resetb.v:
 #./counters/counter8_sync_reset/counter8_sync_reset.v:
@@ -10,7 +11,18 @@
 #./signal_gen/reset_generator.v:
 #./signal_gen/pulse_generator.v:
 #./signal_gen/clock_divider.v:
-#./blinking/blinking.v:
+
+blinking:
+  source:
+    - simple_registers/blinking/blinking.v
+  top_module: blinking
+  cocotb_dir: simple_registers/blinking
+
+clk_divider:
+  source:
+    - simple_registers/clk_divider/clk_divider.v
+  top_module: clk_divider
+  cocotb_dir: simple_registers/clk_divier
 
 counterdown16_1clk_negedge_async_resetp:
   source:
