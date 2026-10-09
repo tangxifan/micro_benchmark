@@ -20,3 +20,8 @@
    :maxdepth: 2
 
    dsp/index
+
+.. toctree::
+   :maxdepth: 2
+
+   ram/index

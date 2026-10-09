@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 250" width="100%" height="100%">
+  <style>
+    .box { fill: #f8f9fa; stroke: #333; stroke-width: 2px; }
+    .pin { stroke: #333; stroke-width: 1.5px; }
+    .label { font-family: monospace; font-size: 12px; fill: #333; }
+    .title { font-family: sans-serif; font-size: 14px; font-weight: bold; fill: #111; text-anchor: middle; }
+  </style>
+  
+  <!-- Component Box -->
+  <rect x="140" y="30" width="220" height="180" rx="4" class="box" />
+  <text x="250" y="60" class="title">timer8_async_reset</text>
+  
+  <!-- Inputs (Left Side) -->
+  <!-- clk -->
+  <line x1="90" y1="90" x2="140" y2="90" class="pin" />
+  <!-- Clock symbol indicator -->
+  <polygon points="140,85 150,90 140,95" fill="none" stroke="#333" stroke-width="1.5" />
+  <text x="100" y="83" class="label">clk</text>
+  
+  <!-- reset -->
+  <line x1="90" y1="120" x2="140" y2="120" class="pin" />
+  <text x="100" y="113" class="label">reset</text>
+  
+  <!-- en -->
+  <line x1="90" y1="150" x2="140" y2="150" class="pin" />
+  <text x="100" y="143" class="label">en</text>
+  
+  <!-- period[7:0] -->
+  <line x1="90" y1="180" x2="140" y2="180" class="pin" />
+  <text x="95" y="173" class="label">period[7:0]</text>
+  
+  <!-- Outputs (Right Side) -->
+  <!-- count[7:0] -->
+  <line x1="360" y1="110" x2="410" y2="110" class="pin" />
+  <text x="365" y="103" class="label">count[7:0]</text>
+  
+  <!-- timer_done -->
+  <line x1="360" y1="155" x2="410" y2="155" class="pin" />
+  <text x="365" y="148" class="label">timer_done</text>
+</svg>

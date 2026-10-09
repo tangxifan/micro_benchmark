@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 580" width="100%" height="100%">
+  <style>
+    .module-box { fill: #f1f3f5; stroke: #adb5bd; stroke-width: 2; rx: 8; ry: 8; }
+    .sub-box { fill: #e7f5ff; stroke: #1971c2; stroke-width: 1.5; rx: 6; ry: 6; }
+    .text-title { font-family: sans-serif; font-size: 16px; font-weight: bold; fill: #343a40; text-anchor: middle; }
+    .text-sub { font-family: sans-serif; font-size: 12px; font-weight: bold; fill: #1864ab; text-anchor: middle; }
+    .text-label { font-family: sans-serif; font-size: 11px; fill: #495057; }
+    .text-ellipsis { font-family: sans-serif; font-size: 18px; font-weight: bold; fill: #868e96; text-anchor: middle; }
+    .wire { stroke: #495057; stroke-width: 2; fill: none; }
+    .wire-clk0 { stroke: #0ca678; stroke-width: 2; fill: none; }
+    .wire-clk1 { stroke: #2b8a3e; stroke-width: 2; fill: none; }
+    .wire-clkN { stroke: #0b7285; stroke-width: 2; fill: none; }
+    .wire-reset { stroke: #f03e3e; stroke-width: 2; fill: none; }
+    .arrow { fill: #495057; }
+    .arrow-reset { fill: #f03e3e; }
+  </style>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff" />
+
+  <!-- Outer Top-Level Module Box -->
+  <rect x="100" y="40" width="600" height="450" class="module-box" />
+  <text x="400" y="70" class="text-title">counter8_Nclk_async_reset (Top, Parameterized)</text>
+
+  <!-- Submodule 0 -->
+  <rect x="280" y="100" width="240" height="65" class="sub-box" />
+  <text x="400" y="137" class="text-sub">u_counter0 : counter8_async_reset</text>
+
+  <!-- Submodule 1 -->
+  <rect x="280" y="185" width="240" height="65" class="sub-box" />
+  <text x="400" y="222" class="text-sub">u_counter1 : counter8_async_reset</text>
+
+  <!-- Ellipsis Center Indicator -->
+  <text x="400" y="295" class="text-ellipsis">. . .</text>
+
+  <!-- Submodule N -->
+  <rect x="280" y="340" width="240" height="65" class="sub-box" />
+  <text x="400" y="377" class="text-sub">u_counterN : counter8_async_reset</text>
+
+  <!-- Clocks Input (Left Side) -->
+  <!-- clk0 -->
+  <line x1="40" y1="132" x2="280" y2="132" class="wire-clk0" />
+  <text x="60" y="122" class="text-label" fill="#0ca678">clk0</text>
+  <polygon points="272,128 280,132 272,136" fill="#0ca678" />
+
+  <!-- clk1 -->
+  <line x1="40" y1="217" x2="280" y2="217" class="wire-clk1" />
+  <text x="60" y="207" class="text-label" fill="#2b8a3e">clk1</text>
+  <polygon points="272,213 280,217 272,221" fill="#2b8a3e" />
+
+  <!-- clkN -->
+  <line x1="40" y1="372" x2="280" y2="372" class="wire-clkN" />
+  <text x="60" y="362" class="text-label" fill="#0b7285">clkN</text>
+  <polygon points="272,368 280,372 272,376" fill="#0b7285" />
+
+  <!-- Outputs (Right Side) -->
+  <!-- result0 -->
+  <line x1="520" y1="132" x2="740" y2="132" class="wire" />
+  <text x="540" y="122" class="text-label">result0[7:0]</text>
+  <polygon points="732,128 740,132 732,136" class="arrow" />
+
+  <!-- result1 -->
+  <line x1="520" y1="217" x2="740" y2="217" class="wire" />
+  <text x="540" y="207" class="text-label">result1[7:0]</text>
+  <polygon points="732,213 740,217 732,221" class="arrow" />
+
+  <!-- resultN -->
+  <line x1="520" y1="372" x2="740" y2="372" class="wire" />
+  <text x="540" y="362" class="text-label">resultN[7:0]</text>
+  <polygon points="732,368 740,372 732,376" class="arrow" />
+
+  <!-- Shared Reset Tree (Entering from Bottom Side and routing into the bottom edge of each submodule) -->
+  <!-- External pin entry at bottom boundary -->
+  <line x1="220" y1="540" x2="220" y2="490" class="wire-reset" />
+  <text x="235" y="525" class="text-label" fill="#f03e3e">reset (shared async)</text>
+  <polygon points="216,498 220,490 224,498" class="arrow-reset" />
+
+  <!-- Vertical trunk on the left side inside top-level module -->
+  <line x1="220" y1="490" x2="220" y2="180" class="wire-reset" />
+
+  <!-- Branch to Submodule 0 bottom -->
+  <path d="M 220 180 L 320 180 L 320 165" class="wire-reset" />
+  <polygon points="316,173 320,165 324,173" class="arrow-reset" />
+
+  <!-- Branch to Submodule 1 bottom -->
+  <path d="M 220 270 L 320 270 L 320 250" class="wire-reset" />
+  <polygon points="316,258 320,250 324,258" class="arrow-reset" />
+
+  <!-- Branch to Submodule N bottom -->
+  <path d="M 220 425 L 320 425 L 320 405" class="wire-reset" />
+  <polygon points="316,413 320,405 324,413" class="arrow-reset" />
+  <line x1="220" y1="425" x2="220" y2="490" class="wire-reset" />
+</svg>

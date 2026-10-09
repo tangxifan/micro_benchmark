@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="100%" height="100%">
+  <style>
+    .module-box { fill: #f1f3f5; stroke: #adb5bd; stroke-width: 2; rx: 8; ry: 8; }
+    .inner-adder { fill: #e3fafc; stroke: #0b5ed7; stroke-width: 2; rx: 6; ry: 6; }
+    .inner-reg { fill: #fff3bf; stroke: #d97706; stroke-width: 2; rx: 6; ry: 6; }
+    .text-title { font-family: sans-serif; font-size: 16px; font-weight: bold; fill: #343a40; text-anchor: middle; }
+    .text-sub { font-family: sans-serif; font-size: 13px; font-weight: bold; fill: #212529; text-anchor: middle; }
+    .text-label { font-family: sans-serif; font-size: 11px; fill: #495057; }
+    .wire { stroke: #495057; stroke-width: 2; fill: none; }
+    .wire-clk { stroke: #0ca678; stroke-width: 2; fill: none; }
+    .wire-reset { stroke: #f03e3e; stroke-width: 2; fill: none; }
+    .arrow { fill: #495057; }
+    .arrow-clk { fill: #0ca678; }
+    .arrow-reset { fill: #f03e3e; }
+  </style>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff" />
+
+  <!-- Outer Module Box -->
+  <rect x="120" y="50" width="380" height="270" class="module-box" />
+  <text x="310" y="80" class="text-title">counter8_async_reset</text>
+
+  <!-- Internal Adder Box -->
+  <rect x="180" y="110" width="80" height="90" class="inner-adder" />
+  <text x="220" y="150" class="text-sub" fill="#0b5ed7">Adder</text>
+  <text x="220" y="170" class="text-label" text-anchor="middle" fill="#0b5ed7">+ 1</text>
+
+  <!-- Internal Register Box -->
+  <rect x="340" y="110" width="90" height="90" class="inner-reg" />
+  <text x="385" y="150" class="text-sub" fill="#b45309">Register</text>
+  <text x="385" y="170" class="text-label" text-anchor="middle" fill="#b45309">8-bit FF</text>
+
+  <!-- Internal Datapath Wires -->
+  <line x1="260" y1="155" x2="340" y2="155" class="wire" />
+  <polygon points="332,151 340,155 332,159" class="arrow" />
+
+  <line x1="430" y1="155" x2="530" y2="155" class="wire" />
+  <text x="450" y="147" class="text-label">result[7:0]</text>
+  <polygon points="522,151 530,155 522,159" class="arrow" />
+
+  <!-- Feedback path -->
+  <path d="M 480 155 L 480 250 L 220 250 L 220 200" class="wire" />
+  <polygon points="216,208 220,200 224,208" class="arrow" />
+
+  <!-- External Input Wires (Bottom) -->
+  <!-- clk external (Green) -->
+  <line x1="200" y1="360" x2="200" y2="320" class="wire-clk" />
+  <text x="190" y="345" class="text-label" fill="#0ca678" text-anchor="end">clk</text>
+  <polygon points="196,328 200,320 204,328" class="arrow-clk" />
+
+  <!-- reset external (Red) -->
+  <line x1="280" y1="360" x2="280" y2="320" class="wire-reset" />
+  <text x="270" y="345" class="text-label" fill="#f03e3e" text-anchor="end">reset (async)</text>
+  <polygon points="276,328 280,320 284,328" class="arrow-reset" />
+
+  <!-- Internal Routing to Register -->
+  <!-- clk route -->
+  <path d="M 200 320 L 200 270 L 370 270 L 370 200" class="wire-clk" />
+  <polygon points="366,208 370,200 374,208" class="arrow-clk" />
+
+  <!-- reset route -->
+  <path d="M 280 320 L 280 290 L 400 290 L 400 200" class="wire-reset" />
+  <polygon points="396,208 400,200 404,208" class="arrow-reset" />
+</svg>

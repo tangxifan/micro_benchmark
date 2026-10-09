@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 450" width="100%" height="100%">
+  <style>
+    .outer-box { fill: #f8fafc; stroke: #b0bec5; stroke-width: 2px; rx: 6px; }
+    .block { fill: #e3f2fd; stroke: #1976d2; stroke-width: 2px; rx: 4px; }
+    .line-clk { stroke: #2e7d32; stroke-width: 1.5px; fill: none; marker-end: url(#arrow-clk); }
+    .line-data { stroke: #0288d1; stroke-width: 1.5px; fill: none; marker-end: url(#arrow-data); }
+    .line-out { stroke: #37474f; stroke-width: 1.5px; fill: none; marker-end: url(#arrow-out); }
+    .dot { fill: #607d8b; }
+    .label { font-family: monospace; font-size: 10px; fill: #333; }
+  </style>
+
+  <defs>
+    <marker id="arrow-clk" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 0 2 L 10 5 L 0 8 z" fill="#2e7d32"/>
+    </marker>
+    <marker id="arrow-data" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 0 2 L 10 5 L 0 8 z" fill="#0288d1"/>
+    </marker>
+    <marker id="arrow-out" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 0 2 L 10 5 L 0 8 z" fill="#37474f"/>
+    </marker>
+  </defs>
+
+  <!-- Outer Module Wrapper Boundary -->
+  <rect x="90" y="30" width="450" height="390" class="outer-box" />
+
+  <!-- Instance 0 -->
+  <rect x="210" y="60" width="200" height="60" class="block" />
+  <text x="310" y="95" font-family="sans-serif" font-size="12" fill="#1565c0" text-anchor="middle" font-weight="bold">RAM Instance 0</text>
+  
+  <path d="M 30 68 L 210 68" class="line-clk" />
+  <text x="35" y="62" class="label" fill="#2e7d32">clk_a[0], clk_b[0]</text>
+
+  <path d="M 30 88 L 210 88" class="line-data" />
+  <text x="35" y="82" class="label" fill="#0288d1">addr_a[7:0], din_a[15:0]</text>
+
+  <path d="M 30 108 L 210 108" class="line-data" />
+  <text x="35" y="102" class="label" fill="#0288d1">we_a[0], addr_b[7:0]</text>
+
+  <path d="M 410 95 L 560 95" class="line-out" />
+  <text x="420" y="88" class="label">dout_b[15:0]</text>
+
+  <!-- Instance 1 -->
+  <rect x="210" y="150" width="200" height="60" class="block" />
+  <text x="310" y="185" font-family="sans-serif" font-size="12" fill="#1565c0" text-anchor="middle" font-weight="bold">RAM Instance 1</text>
+  
+  <path d="M 30 158 L 210 158" class="line-clk" />
+  <text x="35" y="152" class="label" fill="#2e7d32">clk_a[1], clk_b[1]</text>
+
+  <path d="M 30 178 L 210 178" class="line-data" />
+  <text x="35" y="172" class="label" fill="#0288d1">addr_a[15:8], din_a[31:16]</text>
+
+  <path d="M 30 198 L 210 198" class="line-data" />
+  <text x="35" y="192" class="label" fill="#0288d1">we_a[1], addr_b[15:8]</text>
+
+  <path d="M 410 185 L 560 185" class="line-out" />
+  <text x="420" y="178" class="label">dout_b[31:16]</text>
+
+  <!-- Vertical Ellipsis -->
+  <circle cx="310" cy="245" r="3" class="dot" />
+  <circle cx="310" cy="260" r="3" class="dot" />
+  <circle cx="310" cy="275" r="3" class="dot" />
+
+  <!-- Instance N-1 -->
+  <rect x="210" y="300" width="200" height="60" class="block" />
+  <text x="310" y="335" font-family="sans-serif" font-size="12" fill="#1565c0" text-anchor="middle" font-weight="bold">RAM Instance N-1</text>
+  
+  <path d="M 30 308 L 210 308" class="line-clk" />
+  <text x="35" y="302" class="label" fill="#2e7d32">clk_a[N-1], clk_b[N-1]</text>
+
+  <path d="M 30 328 L 210 328" class="line-data" />
+  <text x="35" y="322" class="label" fill="#0288d1">addr_a[8N-1:8N-8], din_a[16N-1:16N-16]</text>
+
+  <path d="M 30 348 L 210 348" class="line-data" />
+  <text x="35" y="342" class="label" fill="#0288d1">we_a[N-1], addr_b[...]</text>
+
+  <path d="M 410 335 L 560 335" class="line-out" />
+  <text x="420" y="328" class="label">dout_b[16N-1:16N-16]</text>
+
+</svg>

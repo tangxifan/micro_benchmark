@@ -28,3 +28,44 @@ syn_spram_4x1:
   source:
     - ram/syn_spram_4x1/syn_spram_4x1.v
   top_module: syn_spram_4x1
+
+dual_port_ram_8x16_mif:
+  source:
+    - ram/dual_port_ram_8x16_mif_multi_clk/dual_port_ram_8x16_mif/dual_port_ram_8x16_mif.v
+  top_module: dual_port_ram_8x16_mif
+  cocotb_dir: ram/dual_port_ram_8x16_mif_multi_clk/dual_port_ram_8x16_mif
+
+dual_port_ram_8x16_mif_4clk:
+  source:
+    - ram/dual_port_ram_8x16_mif_multi_clk/dual_port_ram_8x16_mif_4clk/dual_port_ram_8x16_mif_4clk.v
+    - ram/dual_port_ram_8x16_mif_multi_clk/dual_port_ram_8x16_mif_4clk/dual_port_ram_8x16_mif.v
+  top_module: dual_port_ram_8x16_mif_4clk
+  cocotb_dir: ram/dual_port_ram_8x16_mif_multi_clk/dual_port_ram_8x16_mif_4clk
+
+dual_port_ram_8x16_mif_8clk:
+  source:
+    - ram/dual_port_ram_8x16_mif_multi_clk/dual_port_ram_8x16_mif_8clk/dual_port_ram_8x16_mif_8clk.v
+    - ram/dual_port_ram_8x16_mif_multi_clk/dual_port_ram_8x16_mif_8clk/dual_port_ram_8x16_mif.v
+  top_module: dual_port_ram_8x16_mif_8clk
+  cocotb_dir: ram/dual_port_ram_8x16_mif_multi_clk/dual_port_ram_8x16_mif_8clk
+
+dual_port_ram_8x16_mif_16clk:
+  source:
+    - ram/dual_port_ram_8x16_mif_multi_clk/dual_port_ram_8x16_mif_16clk/dual_port_ram_8x16_mif_16clk.v
+    - ram/dual_port_ram_8x16_mif_multi_clk/dual_port_ram_8x16_mif_16clk/dual_port_ram_8x16_mif.v
+  top_module: dual_port_ram_8x16_mif_16clk
+  cocotb_dir: ram/dual_port_ram_8x16_mif_multi_clk/dual_port_ram_8x16_mif_16clk
+
+dual_port_ram_8x16_mif_24clk:
+  source:
+    - ram/dual_port_ram_8x16_mif_multi_clk/dual_port_ram_8x16_mif_24clk/dual_port_ram_8x16_mif_24clk.v
+    - ram/dual_port_ram_8x16_mif_multi_clk/dual_port_ram_8x16_mif_24clk/dual_port_ram_8x16_mif.v
+  top_module: dual_port_ram_8x16_mif_24clk
+  cocotb_dir: ram/dual_port_ram_8x16_mif_multi_clk/dual_port_ram_8x16_mif_24clk
+
+dual_port_ram_8x16_mif_32clk:
+  source:
+    - ram/dual_port_ram_8x16_mif_multi_clk/dual_port_ram_8x16_mif_32clk/dual_port_ram_8x16_mif_32clk.v
+    - ram/dual_port_ram_8x16_mif_multi_clk/dual_port_ram_8x16_mif_32clk/dual_port_ram_8x16_mif.v
+  top_module: dual_port_ram_8x16_mif_32clk
+  cocotb_dir: ram/dual_port_ram_8x16_mif_multi_clk/dual_port_ram_8x16_mif_32clk

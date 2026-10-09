@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="100%" height="100%">
+  <style>
+    .outer-box { fill: #f4f6f8; stroke: #b0bec5; stroke-width: 2px; rx: 4px; }
+    .block { fill: #e3f2fd; stroke: #1976d2; stroke-width: 2px; rx: 3px; }
+    .line-clk { stroke: #2e7d32; stroke-width: 2px; fill: none; }
+    .line-data { stroke: #0288d1; stroke-width: 2px; fill: none; }
+    .line-out { stroke: #37474f; stroke-width: 2px; fill: none; marker-end: url(#arrow); }
+    .label { font-family: monospace; font-size: 11px; fill: #333; }
+  </style>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 10 5 L 0 8 z" fill="#37474f"/>
+    </marker>
+    <marker id="arrow-clk" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 10 5 L 0 8 z" fill="#2e7d32"/>
+    </marker>
+    <marker id="arrow-data" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 10 5 L 0 8 z" fill="#0288d1"/>
+    </marker>
+  </defs>
+
+  <!-- Outer Module Boundary -->
+  <rect x="80" y="40" width="440" height="320" class="outer-box" />
+  <text x="300" y="65" font-family="sans-serif" font-size="13" font-weight="bold" fill="#333" text-anchor="middle">dual_port_ram_8x16_mif</text>
+
+  <!-- Internal RAM Array Block -->
+  <rect x="200" y="100" width="200" height="200" class="block" />
+  <text x="300" y="195" font-family="sans-serif" font-size="12" fill="#1565c0" text-anchor="middle" font-weight="bold">256x16 RAM Array</text>
+  <text x="300" y="215" font-family="sans-serif" font-size="10" fill="#555" text-anchor="middle">($readmemh)</text>
+
+  <!-- Inputs (Left -> Block) -->
+  <!-- Port A Inputs -->
+  <path d="M 30 110 L 200 110" class="line-clk" marker-end="url(#arrow-clk)" />
+  <text x="35" y="102" class="label" fill="#2e7d32">clk_a</text>
+
+  <path d="M 30 140 L 200 140" class="line-data" marker-end="url(#arrow-data)" />
+  <text x="35" y="132" class="label" fill="#0288d1">we_a</text>
+
+  <path d="M 30 170 L 200 170" class="line-data" marker-end="url(#arrow-data)" />
+  <text x="35" y="162" class="label" fill="#0288d1">addr_a[7:0]</text>
+
+  <path d="M 30 200 L 200 200" class="line-data" marker-end="url(#arrow-data)" />
+  <text x="35" y="192" class="label" fill="#0288d1">din_a[15:0]</text>
+
+  <!-- Port B Inputs -->
+  <path d="M 30 250 L 200 250" class="line-clk" marker-end="url(#arrow-clk)" />
+  <text x="35" y="242" class="label" fill="#2e7d32">clk_b</text>
+
+  <path d="M 30 280 L 200 280" class="line-data" marker-end="url(#arrow-data)" />
+  <text x="35" y="272" class="label" fill="#0288d1">addr_b[7:0]</text>
+
+  <!-- Outputs (Block -> Right) -->
+  <path d="M 400 200 L 520 200" class="line-out" />
+  <text x="410" y="192" class="label">dout_b[15:0]</text>
+
+</svg>

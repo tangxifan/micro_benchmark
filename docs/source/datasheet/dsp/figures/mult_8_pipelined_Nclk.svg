@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 500" width="100%" height="100%">
+  <style>
+    .outer-box { fill: #f4f6f8; stroke: #b0bec5; stroke-width: 2px; rx: 4px; }
+    .block { fill: #e3f2fd; stroke: #1976d2; stroke-width: 2px; rx: 3px; }
+    .line-clk { stroke: #2e7d32; stroke-width: 2px; fill: none; }
+    .line-data { stroke: #0288d1; stroke-width: 2px; fill: none; }
+    .line-out { stroke: #37474f; stroke-width: 2px; fill: none; marker-end: url(#arrow); }
+    .label { font-family: monospace; font-size: 10px; fill: #333; }
+  </style>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 10 5 L 0 8 z" fill="#37474f"/>
+    </marker>
+    <marker id="arrow-clk" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 10 5 L 0 8 z" fill="#2e7d32"/>
+    </marker>
+    <marker id="arrow-data" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 10 5 L 0 8 z" fill="#0288d1"/>
+    </marker>
+  </defs>
+
+  <!-- Outer Module Boundary -->
+  <rect x="110" y="40" width="560" height="420" class="outer-box" />
+  <text x="390" y="65" font-family="sans-serif" font-size="13" font-weight="bold" fill="#333" text-anchor="middle">mult_8_Nclk_pipelined #(parameter N = 4)</text>
+
+  <!-- Internal Multiplier Blocks -->
+  <rect x="280" y="80" width="300" height="60" class="block" />
+  <text x="430" y="115" font-family="sans-serif" font-size="12" fill="#1565c0" text-anchor="middle" font-weight="bold">Multiplier Channel 0</text>
+
+  <rect x="280" y="180" width="300" height="60" class="block" />
+  <text x="430" y="215" font-family="sans-serif" font-size="12" fill="#1565c0" text-anchor="middle" font-weight="bold">Multiplier Channel 1</text>
+
+  <rect x="280" y="320" width="300" height="60" class="block" />
+  <text x="430" y="355" font-family="sans-serif" font-size="12" fill="#1565c0" text-anchor="middle" font-weight="bold">Multiplier Channel N-1</text>
+
+  <!-- Ellipsis for N instances -->
+  <circle cx="430" cy="270" r="3" fill="#78909c"/>
+  <circle cx="430" cy="285" r="3" fill="#78909c"/>
+  <circle cx="430" cy="300" r="3" fill="#78909c"/>
+
+  <!-- Clock & Data Inputs (Left -> Blocks) -->
+  <path d="M 40 90 L 280 90" class="line-clk" marker-end="url(#arrow-clk)" />
+  <text x="45" y="82" class="label" fill="#2e7d32">clk[0]</text>
+
+  <path d="M 40 110 L 280 110" class="line-data" marker-end="url(#arrow-data)" />
+  <text x="45" y="123" class="label" fill="#0288d1">a[7:0], b[7:0]</text>
+
+  <path d="M 40 190 L 280 190" class="line-clk" marker-end="url(#arrow-clk)" />
+  <text x="45" y="182" class="label" fill="#2e7d32">clk[1]</text>
+
+  <path d="M 40 210 L 280 210" class="line-data" marker-end="url(#arrow-data)" />
+  <text x="45" y="223" class="label" fill="#0288d1">a[15:8], b[15:8]</text>
+
+  <path d="M 40 330 L 280 330" class="line-clk" marker-end="url(#arrow-clk)" />
+  <text x="45" y="322" class="label" fill="#2e7d32">clk[N-1]</text>
+
+  <path d="M 40 350 L 280 350" class="line-data" marker-end="url(#arrow-data)" />
+  <text x="45" y="363" class="label" fill="#0288d1">a[N*8-1:...], b[N*8-1:...]</text>
+
+  <!-- Outputs (Blocks -> Right) -->
+  <path d="M 580 110 L 700 110" class="line-out" />
+  <text x="590" y="102" class="label">p[15:0]</text>
+
+  <path d="M 580 210 L 700 210" class="line-out" />
+  <text x="590" y="202" class="label">p[31:16]</text>
+
+  <path d="M 580 350 L 700 350" class="line-out" />
+  <text x="590" y="342" class="label">p[N*16-1:(N-1)*16]</text>
+
+</svg>
