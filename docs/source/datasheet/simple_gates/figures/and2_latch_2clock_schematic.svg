@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 400" width="100%" height="100%">
+  <defs>
+    <!-- Grid pattern for background -->
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+    </pattern>
+    
+    <!-- Markers for arrows -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#475569"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb"/>
+    </marker>
+
+    <!-- Shadow filter for main block -->
+    <filter id="drop-shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="2" dy="4" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="780" height="400" fill="#f8fafc" rx="8"/>
+  <rect width="780" height="400" fill="url(#grid)" rx="8"/>
+
+  <!-- Main Module Box -->
+  <rect x="180" y="40" width="420" height="320" rx="12" fill="#ffffff" stroke="#2563eb" stroke-width="2.5" filter="url(#drop-shadow)"/>
+  <rect x="180" y="40" width="420" height="36" rx="12" fill="#dbeafe"/>
+  <rect x="180" y="64" width="420" height="12" fill="#dbeafe"/>
+
+  <!-- Module Header Label -->
+  <text x="390" y="64" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="bold" fill="#1e40af" text-anchor="middle">and2_latch_2clock</text>
+
+  <!-- INPUT: a -->
+  <path d="M 60 110 L 178 110" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="65" y="102" font-family="monospace" font-size="13" font-weight="600" fill="#0f172a">a</text>
+  <text x="188" y="106" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">a</text>
+
+  <!-- INPUT: b -->
+  <path d="M 60 160 L 178 160" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="65" y="152" font-family="monospace" font-size="13" font-weight="600" fill="#0f172a">b</text>
+  <text x="188" y="156" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">b</text>
+
+  <!-- INPUT: clk1 -->
+  <path d="M 60 270 L 178 270" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="65" y="264" font-family="monospace" font-size="13" font-weight="600" fill="#0f172a">clk1</text>
+  <text x="188" y="274" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">clk1</text>
+
+  <!-- INPUT: clk2 -->
+  <path d="M 60 320 L 178 320" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="65" y="314" font-family="monospace" font-size="13" font-weight="600" fill="#0f172a">clk2</text>
+  <text x="188" y="324" font-family="monospace" font-size="11" fill="#64748b" text-anchor="start">clk2</text>
+
+  <!-- OUTPUT: out -->
+  <path d="M 600 170 L 718 170" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
+  <text x="592" y="174" font-family="monospace" font-size="11" fill="#64748b" text-anchor="end">out</text>
+  <text x="713" y="162" font-family="monospace" font-size="13" font-weight="600" fill="#1d4ed8" text-anchor="end">out</text>
+
+  <!-- INTERNAL WIRES TO AND GATE -->
+  <path d="M 180 110 L 210 110 L 210 116 L 230 116" stroke="#475569" stroke-width="2" fill="none"/>
+  <path d="M 180 160 L 210 160 L 210 138 L 230 138" stroke="#475569" stroke-width="2" fill="none"/>
+
+  <!-- 1. AND Gate -->
+  <g transform="translate(230, 105)">
+    <path d="M 0 0 L 20 0 C 35 0, 45 8, 45 22 C 45 36, 35 44, 20 44 L 0 44 Z" fill="#f1f5f9" stroke="#0284c7" stroke-width="2"/>
+    <text x="18" y="27" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="bold" fill="#0369a1" text-anchor="middle">&amp;</text>
+  </g>
+
+  <!-- Wire: AND Gate Output -> Latch 1 D Input -->
+  <path d="M 275 127 L 328 127" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 2. Latch 1 (Controlled by clk1) -->
+  <rect x="330" y="105" width="70" height="110" rx="4" fill="#f8fafc" stroke="#475569" stroke-width="2"/>
+  <text x="365" y="128" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="bold" fill="#334155" text-anchor="middle">LATCH 1</text>
+  <text x="340" y="131" font-family="monospace" font-size="10" fill="#64748b" text-anchor="start">D</text>
+  <text x="340" y="199" font-family="monospace" font-size="10" fill="#64748b" text-anchor="start">EN</text>
+  <text x="390" y="174" font-family="monospace" font-size="10" fill="#64748b" text-anchor="end">Q</text>
+
+  <!-- Wire: clk1 Port -> Latch 1 EN Input -->
+  <path d="M 180 270 L 300 270 L 300 195 L 328 195" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- Wire: Latch 1 Q Output -> Latch 2 D Input -->
+  <path d="M 400 170 L 468 170" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 3. Latch 2 (Controlled by clk2) -->
+  <rect x="470" y="105" width="70" height="110" rx="4" fill="#f8fafc" stroke="#475569" stroke-width="2"/>
+  <text x="505" y="128" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="bold" fill="#334155" text-anchor="middle">LATCH 2</text>
+  <text x="480" y="174" font-family="monospace" font-size="10" fill="#64748b" text-anchor="start">D</text>
+  <text x="480" y="199" font-family="monospace" font-size="10" fill="#64748b" text-anchor="start">EN</text>
+  <text x="530" y="174" font-family="monospace" font-size="10" fill="#64748b" text-anchor="end">Q</text>
+
+  <!-- Wire: clk2 Port -> Latch 2 EN Input -->
+  <path d="M 180 320 L 440 320 L 440 195 L 468 195" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- Wire: Latch 2 Q Output -> Module Output -->
+  <path d="M 540 170 L 600 170" stroke="#475569" stroke-width="2"/>
+
+  <!-- Decorative Port Pin Circles -->
+  <circle cx="180" cy="110" r="3" fill="#2563eb"/>
+  <circle cx="180" cy="160" r="3" fill="#2563eb"/>
+  <circle cx="180" cy="270" r="3" fill="#2563eb"/>
+  <circle cx="180" cy="320" r="3" fill="#2563eb"/>
+  <circle cx="600" cy="170" r="3" fill="#2563eb"/>
+</svg>
