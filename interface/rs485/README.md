@@ -1,57 +1,10 @@
-# Micro Benchmarks for FPGA design verification
+#RS-485通信接口的实现
+> 实现485通信接口，由于485协议只是规范了硬件层是如何实现的，而传输层并没有做以规定，因此在实现接口时，必须借助于其他的传输层协议完成，这里选用的是HDLC协议
 
-[![RTL Compatibility](https://github.com/tangxifan/micro_benchmark/actions/workflows/rtl_compatibility.yml/badge.svg)](https://github.com/tangxifan/micro_benchmark/actions/workflows/rtl_compatibility.yml)
-[![RTL Verification](https://github.com/tangxifan/micro_benchmark/actions/workflows/rtl_verification.yml/badge.svg)](https://github.com/tangxifan/micro_benchmark/actions/workflows/rtl_verification.yml)
-[![Documentation Status](https://readthedocs.org/projects/micro-benchmark/badge/?version=latest)](https://micro-benchmark.readthedocs.io/en/latest/?badge=latest)
-
-Version: see [`VERSION.md`](VERSION.md)
-
-## Licenses
-
-Most of the benchmarks are in MIT license. 
-
-> [!NOTE]
-> Please note that external benchmarks which may not be in compatible licenses. For each external benchmarks, LICENSE file can be found under its location
-
-
-The list of external benchmarks is as follows. Please double check before using.
-
-- interface/opencores\_can
-- interface/opencores\_gpio
-- interface/opencores\_i2c
-- interface/opencores\_ptc
-- interface/opencores\_spi
-- interface/opencores\_simple\_spi
-- interface/opencores\_uart16550
-- interface/verilog\_spi
-- interface/wb\_lcd
-- interface/wb\_lcd\_ramless
-- interface/wb\_rs232\_syscon
-- interface/wbscope
-- interface/wbqspiflash
-- interface/tiny\_spi
-- interface/sockit\_owm
-- processors/VexRiscv\_full
-- processors/VexRiscv\_murax
-- processors/VexRiscv\_small
-- dsp/dspfilters
-- dsp/cordic
-- dsp/cordic\_core
-- dsp/pid\_controller
-- dsp/cr\_div
-- dsp/signed\_integer\_divider
-
-## Documentation
-
-Full documentation can be found at [here](https://micro-benchmark.readthedocs.io/)
-## Benchmarks
-
-Benchmarks are categorized in the following directories, depending their logic functions:
-
-- dsp: Digital Signal Processing (DSP) -related applications
-- fsm: Finite State Machine (FSM) - related applications
-- interface: system bus and protocols, such as SPI, UART etc.
-- processor: CPU cores
-- ram: Memory blocks, including random access memories, FIFOs, etc.
-- simple_gates: combinational circuits in small sizes
-- simple_registers: sequential circuits in small sizes
+## 实现功能：
+1. 串口接收数据（9600Hz）
+2. 插入、删除“0”码
+3. CRC校验
+4. hdlc数据帧串行发送
+5. 接收串行发送的hdlc数据帧
+6. 串口发送数据

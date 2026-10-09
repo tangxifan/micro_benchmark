@@ -10,7 +10,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (C) 2023-2024  Angelo Jacobo
+// Copyright (C) 2023-2025  Angelo Jacobo
 // 
 //     This program is free software: you can redistribute it and/or modify
 //     it under the terms of the GNU General Public License as published by
@@ -40,22 +40,33 @@ module ddr3_top #(
                    AUX_WIDTH = 4, //width of aux line (must be >= 4) 
                    WB2_ADDR_BITS = 7, //width of 2nd wishbone address bus 
                    WB2_DATA_BITS = 32, //width of 2nd wishbone data bus 
+                   DUAL_RANK_DIMM = 0, // enable dual rank DIMM (1 =  enable, 0 = disable)
+    // DDR3 timing parameter values
+    parameter      SPEED_BIN = 3, // 0 = Use top-level parameters , 1 = DDR3-1066 (7-7-7) , 2 = DR3-1333 (9-9-9) , 3 = DDR3-1600 (11-11-11)
+                   SDRAM_CAPACITY = 5, // 0 = 256Mb, 1 = 512Mb, 2 = 1Gb, 3 = 2Gb, 4 = 4Gb, 5 = 8Gb, 6 = 16Gb
+                   TRCD = 13_750, // ps Active to Read/Write command time (only used if SPEED_BIN = 0)
+                   TRP = 13_750, // ps Precharge command period (only used if SPEED_BIN = 0)
+                   TRAS = 35_000, // ps ACT to PRE command period (only used if SPEED_BIN = 0)
     parameter[0:0] MICRON_SIM = 0, //enable faster simulation for micron ddr3 model (shorten POWER_ON_RESET_HIGH and INITIAL_CKE_LOW)
                    ODELAY_SUPPORTED = 0, //set to 1 when ODELAYE2 is supported
                    SECOND_WISHBONE = 0, //set to 1 if 2nd wishbone for debugging is needed 
+                   DLL_OFF = 0, // 1 = DLL off for low frequency ddr3 clock (< 125MHz)
                    WB_ERROR = 0, // set to 1 to support Wishbone error (asserts at ECC double bit error)
+    parameter[1:0] BIST_MODE = 1, // 0 = No BIST, 1 = run through all address space ONCE , 2 = run through all address space for every test (burst w/r, random w/r, alternating r/w)
+    parameter[0:0] BIST_TEST_DATAMASK = 1, // 1 = include per-byte DM writes in BIST, 0 = all-byte writes only
     parameter[1:0] ECC_ENABLE = 0, // set to 1 or 2 to add ECC (1 = Side-band ECC per burst, 2 = Side-band ECC per 8 bursts , 3 = Inline ECC ) 
     parameter[1:0] DIC = 2'b00, //Output Driver Impedance Control (2'b00 = RZQ/6, 2'b01 = RZQ/7, RZQ = 240ohms) (only change when you know what you are doing)
     parameter[2:0] RTT_NOM = 3'b011, //RTT Nominal (3'b000 = disabled, 3'b001 = RZQ/4, 3'b010 = RZQ/2 , 3'b011 = RZQ/6, RZQ = 240ohms)  (only change when you know what you are doing)
+    parameter[1:0] SELF_REFRESH = 2'b00, // 0 = use i_user_self_refresh input, 1 = Self-refresh mode is enabled after 64 controller clock cycles of no requests, 2 = 128 cycles, 3 = 256 cycles
     parameter // The next parameters act more like a localparam (since user does not have to set this manually) but was added here to simplify port declaration
                 DQ_BITS = 8,  //device width (fixed to 8, if DDR3 is x16 then BYTE_LANES will be 2 while )
                 serdes_ratio = 4, // this controller is fixed as a 4:1 memory controller (CONTROLLER_CLK_PERIOD/DDR3_CLK_PERIOD = 4)
-                wb_addr_bits = ROW_BITS + COL_BITS + BA_BITS - $clog2(serdes_ratio*2),
+                wb_addr_bits = ROW_BITS + COL_BITS + BA_BITS - $clog2(serdes_ratio*2) + DUAL_RANK_DIMM,
                 wb_data_bits = DQ_BITS*BYTE_LANES*serdes_ratio*2,
                 wb_sel_bits = wb_data_bits / 8,
                 wb2_sel_bits = WB2_DATA_BITS / 8,
                 //4 is the width of a single ddr3 command {cs_n, ras_n, cas_n, we_n} plus 3 (ck_en, odt, reset_n) plus bank bits plus row bits
-                cmd_len = 4 + 3 + BA_BITS + ROW_BITS
+                cmd_len = 4 + 3 + BA_BITS + ROW_BITS + 2*DUAL_RANK_DIMM
     ) 
     (
         input wire i_controller_clk, i_ddr3_clk, i_ref_clk, //i_controller_clk = CONTROLLER_CLK_PERIOD, i_ddr3_clk = DDR3_CLK_PERIOD, i_ref_clk = 200MHz
@@ -90,10 +101,10 @@ module ddr3_top #(
         output wire[WB2_DATA_BITS - 1:0] o_wb2_data, //read data
         //
         // DDR3 I/O Interface
-        output wire o_ddr3_clk_p, o_ddr3_clk_n,
+        output wire[DUAL_RANK_DIMM:0] o_ddr3_clk_p, o_ddr3_clk_n,
         output wire o_ddr3_reset_n,
-        output wire o_ddr3_cke, // CKE
-        output wire o_ddr3_cs_n, // chip select signal
+        output wire[DUAL_RANK_DIMM:0] o_ddr3_cke, // CKE
+        output wire[DUAL_RANK_DIMM:0] o_ddr3_cs_n, // chip select signal
         output wire o_ddr3_ras_n, // RAS#
         output wire o_ddr3_cas_n, // CAS#
         output wire o_ddr3_we_n, // WE#
@@ -102,14 +113,20 @@ module ddr3_top #(
         inout wire[(DQ_BITS*BYTE_LANES)-1:0] io_ddr3_dq,
         inout wire[BYTE_LANES-1:0] io_ddr3_dqs, io_ddr3_dqs_n,
         output wire[BYTE_LANES-1:0] o_ddr3_dm,
-        output wire o_ddr3_odt, // on-die termination
+        output wire[DUAL_RANK_DIMM:0] o_ddr3_odt, // on-die termination
         //
+        // Done Calibration pin
+        output wire o_calib_complete,
         // Debug outputs
         output wire[31:0] o_debug1,
-        output wire[31:0] o_debug2,
-        output wire[31:0] o_debug3,
-        output wire[(DQ_BITS*BYTE_LANES)/8-1:0] o_ddr3_debug_read_dqs_p,
-        output wire[(DQ_BITS*BYTE_LANES)/8-1:0] o_ddr3_debug_read_dqs_n
+//        output wire[31:0] o_debug2,
+//        output wire[31:0] o_debug3,
+//        output wire[(DQ_BITS*BYTE_LANES)/8-1:0] o_ddr3_debug_read_dqs_p,
+//        output wire[(DQ_BITS*BYTE_LANES)/8-1:0] o_ddr3_debug_read_dqs_n
+        // 
+        // User enabled self-refresh
+        input wire i_user_self_refresh,
+        output wire uart_tx
     );
     
 // Instantiation Template (DEFAULT VALUE IS FOR ARTY S7)
@@ -182,10 +199,6 @@ ddr3_top #(
         .o_ddr3_odt(ddr3_odt),
         // Debug outputs
         .o_debug1(),
-        .o_debug2(),
-        .o_debug3(),
-        .o_ddr3_debug_read_dqs_p(),
-        .o_ddr3_debug_read_dqs_n()
         ////////////////////////////////////
     );
 */
@@ -208,6 +221,30 @@ ddr3_top #(
     wire write_leveling_calib;
     wire reset;
     
+    // logic for self-refresh
+    reg[8:0] refresh_counter = 0;
+    reg user_self_refresh;
+    // refresh counter 
+    always @(posedge i_controller_clk) begin
+        if(i_wb_stb && i_wb_cyc) begin // if there is Wishbone request, then reset counter
+            refresh_counter <= 0;
+        end
+        else if(!o_wb_stall || user_self_refresh) begin // if no request (but not stalled) OR already on self-refresh, then increment counter
+            refresh_counter <= refresh_counter + 1;
+        end
+    end
+    // choose self-refresh options
+    always @* begin
+        case(SELF_REFRESH) 
+            2'b00: user_self_refresh = i_user_self_refresh; // use input i_user_self_refresh (high = enter self-refresh, low = exit self-refresh)
+            2'b01: user_self_refresh = refresh_counter[6];  // Self-refresh mode is enabled after 64 controller clock cycles of no requests, then exit Self-refresh after another 64 controller clk cycles
+            2'b10: user_self_refresh = refresh_counter[7];  // Self-refresh mode is enabled after 128 controller clock cycles of no requests, then exit Self-refresh after another 128 controller clk cycles
+            2'b11: user_self_refresh = refresh_counter[8];  // Self-refresh mode is enabled after 256 controller clock cycles of no requests, then exit Self-refresh after another 256 controller clk cycles
+        endcase
+    end
+    
+
+    
     //module instantiations
     ddr3_controller #(
             .CONTROLLER_CLK_PERIOD(CONTROLLER_CLK_PERIOD), //ps, clock period of the controller interface
@@ -224,9 +261,18 @@ ddr3_top #(
             .ODELAY_SUPPORTED(ODELAY_SUPPORTED),  //set to 1 when ODELAYE2 is supported
             .SECOND_WISHBONE(SECOND_WISHBONE), //set to 1 if 2nd wishbone is needed 
             .ECC_ENABLE(ECC_ENABLE), // set to 1 or 2 to add ECC (1 = Side-band ECC per burst, 2 = Side-band ECC per 8 bursts , 3 = Inline ECC ) 
+            .DLL_OFF(DLL_OFF), // 1 = DLL off for low frequency ddr3 clock (< 125MHz)
             .WB_ERROR(WB_ERROR), // set to 1 to support Wishbone error (asserts at ECC double bit error)
+            .BIST_MODE(BIST_MODE), // 0 = No BIST, 1 = run through all address space ONCE , 2 = run through all address space for every test (burst w/r, random w/r, alternating r/w)
+            .BIST_TEST_DATAMASK(BIST_TEST_DATAMASK), // 1 = include per-byte DM writes in BIST, 0 = all-byte writes only
             .DIC(DIC), //Output Driver Impedance Control (2'b00 = RZQ/6, 2'b01 = RZQ/7, RZQ = 240ohms)
-            .RTT_NOM(RTT_NOM) //RTT Nominal (3'b000 = disabled, 3'b001 = RZQ/4, 3'b010 = RZQ/2 , 3'b011 = RZQ/6, RZQ = 240ohms)
+            .RTT_NOM(RTT_NOM), //RTT Nominal (3'b000 = disabled, 3'b001 = RZQ/4, 3'b010 = RZQ/2 , 3'b011 = RZQ/6, RZQ = 240ohms)
+            .DUAL_RANK_DIMM(DUAL_RANK_DIMM), // enable dual rank DIMM (1 =  enable, 0 = disable)
+            .SPEED_BIN(SPEED_BIN), // 0 = Use top-level parameters , 1 = DDR3-1066 (7-7-7) , 2 = DR3-1333 (9-9-9) , 3 = DDR3-1600 (11-11-11)
+            .SDRAM_CAPACITY(SDRAM_CAPACITY), // 0 = 256Mb, 1 = 512Mb, 2 = 1Gb, 3 = 2Gb, 4 = 4Gb, 5 = 8Gb, 6 = 16Gb
+            .TRCD(TRCD), // ps Active to Read/Write command time (only used if SPEED_BIN = 0)
+            .TRP(TRP), // ps Precharge command period (only used if SPEED_BIN = 0)
+            .TRAS(TRAS) // ps ACT to PRE command period (only used if SPEED_BIN = 0)
         ) ddr3_controller_inst (
             .i_controller_clk(i_controller_clk), //i_controller_clk has period of CONTROLLER_CLK_PERIOD 
             .i_rst_n(i_rst_n), //200MHz input clock
@@ -278,67 +324,152 @@ ddr3_top #(
             .o_phy_bitslip(bitslip),
             .o_phy_write_leveling_calib(write_leveling_calib),
             .o_phy_reset(reset),
+            // Done Calibration pin
+            .o_calib_complete(o_calib_complete),
             // Debug outputs
             .o_debug1(o_debug1),
-            .o_debug2(o_debug2),
-            .o_debug3(o_debug3)
+//            .o_debug2(o_debug2),
+//            .o_debug3(o_debug3)
+            // User enabled self-refresh
+            .i_user_self_refresh(user_self_refresh),
+            .uart_tx(uart_tx)
         );
-        
-    ddr3_phy #(
-            .ROW_BITS(ROW_BITS), //width of row address
-            .BA_BITS(BA_BITS), //width of bank address
-            .DQ_BITS(DQ_BITS),  //width of DQ
-            .LANES(BYTE_LANES), //8 lanes of DQ
-            .CONTROLLER_CLK_PERIOD(CONTROLLER_CLK_PERIOD), //ps, period of clock input to this DDR3 controller module
-            .DDR3_CLK_PERIOD(DDR3_CLK_PERIOD), //ps, period of clock input to DDR3 RAM device 
-            .ODELAY_SUPPORTED(ODELAY_SUPPORTED)
-        ) ddr3_phy_inst (
-            .i_controller_clk(i_controller_clk), 
-            .i_ddr3_clk(i_ddr3_clk),
-            .i_ref_clk(i_ref_clk),
-            .i_ddr3_clk_90(i_ddr3_clk_90), 
-            .i_rst_n(i_rst_n),
-            // Controller Interface
-            .i_controller_reset(reset),
-            .i_controller_cmd(cmd),
-            .i_controller_dqs_tri_control(dqs_tri_control), 
-            .i_controller_dq_tri_control(dq_tri_control),
-            .i_controller_toggle_dqs(toggle_dqs),
-            .i_controller_data(data),
-            .i_controller_dm(dm),
-            .i_controller_odelay_data_cntvaluein(odelay_data_cntvaluein),
-            .i_controller_odelay_dqs_cntvaluein(odelay_dqs_cntvaluein),
-            .i_controller_idelay_data_cntvaluein(idelay_data_cntvaluein),
-            .i_controller_idelay_dqs_cntvaluein(idelay_dqs_cntvaluein),
-            .i_controller_odelay_data_ld(odelay_data_ld), 
-            .i_controller_odelay_dqs_ld(odelay_dqs_ld),
-            .i_controller_idelay_data_ld(idelay_data_ld), 
-            .i_controller_idelay_dqs_ld(idelay_dqs_ld),
-            .i_controller_bitslip(bitslip),
-            .i_controller_write_leveling_calib(write_leveling_calib),
-            .o_controller_iserdes_data(iserdes_data),
-            .o_controller_iserdes_dqs(iserdes_dqs),
-            .o_controller_iserdes_bitslip_reference(iserdes_bitslip_reference),
-            .o_controller_idelayctrl_rdy(idelayctrl_rdy),
-            // DDR3 I/O Interface
-            .o_ddr3_clk_p(o_ddr3_clk_p),
-            .o_ddr3_clk_n(o_ddr3_clk_n),
-            .o_ddr3_reset_n(o_ddr3_reset_n),
-            .o_ddr3_cke(o_ddr3_cke), // CKE
-            .o_ddr3_cs_n(o_ddr3_cs_n), // chip select signal
-            .o_ddr3_ras_n(o_ddr3_ras_n), // RAS#
-            .o_ddr3_cas_n(o_ddr3_cas_n), // CAS#
-            .o_ddr3_we_n(o_ddr3_we_n), // WE#
-            .o_ddr3_addr(o_ddr3_addr),
-            .o_ddr3_ba_addr(o_ddr3_ba_addr),
-            .io_ddr3_dq(io_ddr3_dq),
-            .io_ddr3_dqs(io_ddr3_dqs),
-            .io_ddr3_dqs_n(io_ddr3_dqs_n),
-            .o_ddr3_dm(o_ddr3_dm),
-            .o_ddr3_odt(o_ddr3_odt), // on-die termination
-            .o_ddr3_debug_read_dqs_p(o_ddr3_debug_read_dqs_p),
-            .o_ddr3_debug_read_dqs_n(o_ddr3_debug_read_dqs_n)
-        );
-        
-endmodule
+    `ifndef LATTICE_ECP5_PHY // XILINX PHY
+        ddr3_phy #(
+                .ROW_BITS(ROW_BITS), //width of row address
+                .BA_BITS(BA_BITS), //width of bank address
+                .DQ_BITS(DQ_BITS),  //width of DQ
+                .LANES(BYTE_LANES), //8 lanes of DQ
+                .CONTROLLER_CLK_PERIOD(CONTROLLER_CLK_PERIOD), //ps, period of clock input to this DDR3 controller module
+                .DDR3_CLK_PERIOD(DDR3_CLK_PERIOD), //ps, period of clock input to DDR3 RAM device 
+                .ODELAY_SUPPORTED(ODELAY_SUPPORTED), //set to 1 when ODELAYE2 is supported
+                .DUAL_RANK_DIMM(DUAL_RANK_DIMM) // enable dual rank DIMM (1 =  enable, 0 = disable)
+            ) ddr3_phy_inst (
+                .i_controller_clk(i_controller_clk), 
+                .i_ddr3_clk(i_ddr3_clk),
+                .i_ref_clk(i_ref_clk),
+                .i_ddr3_clk_90(i_ddr3_clk_90), 
+                .i_rst_n(i_rst_n),
+                // Controller Interface
+                .i_controller_reset(reset),
+                .i_controller_cmd(cmd),
+                .i_controller_dqs_tri_control(dqs_tri_control), 
+                .i_controller_dq_tri_control(dq_tri_control),
+                .i_controller_toggle_dqs(toggle_dqs),
+                .i_controller_data(data),
+                .i_controller_dm(dm),
+                .i_controller_odelay_data_cntvaluein(odelay_data_cntvaluein),
+                .i_controller_odelay_dqs_cntvaluein(odelay_dqs_cntvaluein),
+                .i_controller_idelay_data_cntvaluein(idelay_data_cntvaluein),
+                .i_controller_idelay_dqs_cntvaluein(idelay_dqs_cntvaluein),
+                .i_controller_odelay_data_ld(odelay_data_ld), 
+                .i_controller_odelay_dqs_ld(odelay_dqs_ld),
+                .i_controller_idelay_data_ld(idelay_data_ld), 
+                .i_controller_idelay_dqs_ld(idelay_dqs_ld),
+                .i_controller_bitslip(bitslip),
+                .i_controller_write_leveling_calib(write_leveling_calib),
+                .o_controller_iserdes_data(iserdes_data),
+                .o_controller_iserdes_dqs(iserdes_dqs),
+                .o_controller_iserdes_bitslip_reference(iserdes_bitslip_reference),
+                .o_controller_idelayctrl_rdy(idelayctrl_rdy),
+                // DDR3 I/O Interface
+                .o_ddr3_clk_p(o_ddr3_clk_p),
+                .o_ddr3_clk_n(o_ddr3_clk_n),
+                .o_ddr3_reset_n(o_ddr3_reset_n),
+                .o_ddr3_cke(o_ddr3_cke), // CKE
+                .o_ddr3_cs_n(o_ddr3_cs_n), // chip select signal
+                .o_ddr3_ras_n(o_ddr3_ras_n), // RAS#
+                .o_ddr3_cas_n(o_ddr3_cas_n), // CAS#
+                .o_ddr3_we_n(o_ddr3_we_n), // WE#
+                .o_ddr3_addr(o_ddr3_addr),
+                .o_ddr3_ba_addr(o_ddr3_ba_addr),
+                .io_ddr3_dq(io_ddr3_dq),
+                .io_ddr3_dqs(io_ddr3_dqs),
+                .io_ddr3_dqs_n(io_ddr3_dqs_n),
+                .o_ddr3_dm(o_ddr3_dm),
+                .o_ddr3_odt(o_ddr3_odt), // on-die termination
+                .o_ddr3_debug_read_dqs_p(/*o_ddr3_debug_read_dqs_p*/),
+                .o_ddr3_debug_read_dqs_n(/*o_ddr3_debug_read_dqs_n*/)
+            );
+    `else // LATTICE ECP5 PHY
+        ddr3_phy_ecp5 #(
+                .ROW_BITS(ROW_BITS), //width of row address
+                .BA_BITS(BA_BITS), //width of bank address
+                .DQ_BITS(DQ_BITS),  //width of DQ
+                .LANES(BYTE_LANES), //8 lanes of DQ
+                .CONTROLLER_CLK_PERIOD(CONTROLLER_CLK_PERIOD) //ps, period of clock input to this DDR3 controller module
+            ) ddr3_phy_inst (
+                .i_controller_clk(i_controller_clk), 
+                .i_ddr3_clk(i_ddr3_clk),
+                .i_ref_clk(i_ref_clk),
+                .i_ddr3_clk_90(i_ddr3_clk_90), 
+                .i_rst_n(i_rst_n),
+                // Controller Interface
+                .i_controller_reset(reset),
+                .i_controller_cmd(cmd),
+                .i_controller_dqs_tri_control(dqs_tri_control), 
+                .i_controller_dq_tri_control(dq_tri_control),
+                .i_controller_toggle_dqs(toggle_dqs),
+                .i_controller_data(data),
+                .i_controller_dm(dm),
+                .i_controller_odelay_data_cntvaluein(odelay_data_cntvaluein),
+                .i_controller_odelay_dqs_cntvaluein(odelay_dqs_cntvaluein),
+                .i_controller_idelay_data_cntvaluein(idelay_data_cntvaluein),
+                .i_controller_idelay_dqs_cntvaluein(idelay_dqs_cntvaluein),
+                .i_controller_odelay_data_ld(odelay_data_ld), 
+                .i_controller_odelay_dqs_ld(odelay_dqs_ld),
+                .i_controller_idelay_data_ld(idelay_data_ld), 
+                .i_controller_idelay_dqs_ld(idelay_dqs_ld),
+                .i_controller_bitslip(bitslip),
+                .i_controller_write_leveling_calib(write_leveling_calib),
+                .o_controller_iserdes_data(iserdes_data),
+                .o_controller_iserdes_dqs(iserdes_dqs),
+                .o_controller_iserdes_bitslip_reference(iserdes_bitslip_reference),
+                .o_controller_idelayctrl_rdy(idelayctrl_rdy),
+                // DDR3 I/O Interface
+                .o_ddr3_clk_p(o_ddr3_clk_p),
+                .o_ddr3_clk_n(o_ddr3_clk_n),
+                .o_ddr3_reset_n(o_ddr3_reset_n),
+                .o_ddr3_cke(o_ddr3_cke), // CKE
+                .o_ddr3_cs_n(o_ddr3_cs_n), // chip select signal
+                .o_ddr3_ras_n(o_ddr3_ras_n), // RAS#
+                .o_ddr3_cas_n(o_ddr3_cas_n), // CAS#
+                .o_ddr3_we_n(o_ddr3_we_n), // WE#
+                .o_ddr3_addr(o_ddr3_addr),
+                .o_ddr3_ba_addr(o_ddr3_ba_addr),
+                .io_ddr3_dq(io_ddr3_dq),
+                .io_ddr3_dqs(io_ddr3_dqs),
+                .io_ddr3_dqs_n(io_ddr3_dqs_n),
+                .o_ddr3_dm(o_ddr3_dm),
+                .o_ddr3_odt(o_ddr3_odt), // on-die termination
+                .o_ddr3_debug_read_dqs_p(/*o_ddr3_debug_read_dqs_p*/),
+                .o_ddr3_debug_read_dqs_n(/*o_ddr3_debug_read_dqs_n*/)
+            );
+    `endif 
 
+        // // display value of parameters for easy debugging
+        // initial begin
+        //     $display("\nDDR3 TOP PARAMETERS:\n-----------------------------");
+        //     $display("CONTROLLER_CLK_PERIOD = %0d", CONTROLLER_CLK_PERIOD);
+        //     $display("DDR3_CLK_PERIOD = %0d", DDR3_CLK_PERIOD);
+        //     $display("ROW_BITS = %0d", ROW_BITS);
+        //     $display("COL_BITS = %0d", COL_BITS);
+        //     $display("BA_BITS = %0d", BA_BITS);
+        //     $display("BYTE_LANES = %0d", BYTE_LANES);
+        //     $display("AUX_WIDTH = %0d", AUX_WIDTH);
+        //     $display("WB2_ADDR_BITS = %0d", WB2_ADDR_BITS);
+        //     $display("WB2_DATA_BITS = %0d", WB2_DATA_BITS);
+        //     $display("MICRON_SIM = %0d", MICRON_SIM);
+        //     $display("ODELAY_SUPPORTED = %0d", ODELAY_SUPPORTED);
+        //     $display("SECOND_WISHBONE = %0d", SECOND_WISHBONE);
+        //     $display("WB_ERROR = %0d", WB_ERROR);
+        //     $display("BIST_MODE = %0d", BIST_MODE);
+        //     $display("ECC_ENABLE = %0d", ECC_ENABLE);
+        //     $display("DIC = %0d", DIC);
+        //     $display("RTT_NOM = %0d", RTT_NOM);
+        //     $display("SELF_REFRESH = %0d", SELF_REFRESH);
+        //     $display("DUAL_RANK_DIMM = %0d", DUAL_RANK_DIMM);
+        //     $display("End of DDR3 TOP PARAMETERS\n-----------------------------");
+        // end
+
+endmodule

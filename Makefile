@@ -108,7 +108,7 @@ FPGACAN_GIT_URL = https://github.com/WangXuan95/FPGA-CAN.git
 FPGACAN_LDIR_PREFIX = ${PWD}/interface/fpga-can
 FPGACAN_RTL_FLIST = "can_level_bit.v" "can_level_packet.v" "can_top.v"
 FPGACAN_TB_FLIST = "tb_can_top.v"
-FPGACAN_MISC_FLIST = "README.md"
+FPGACAN_MISC_FLIST = "README.md" "LICENSE"
 FPGACAN_LDIR_RTL = ${FPGACAN_LDIR_PREFIX}/rtl/
 FPGACAN_LDIR_TB = ${FPGACAN_LDIR_PREFIX}/testbench/
 
@@ -178,9 +178,8 @@ verilog-spi:
 	do cp $${f} ${VSPI_LDIR_TB} || exit 1; \
 	done && \
 	echo "==== Update Documentation ====" && \
-	mkdir -p ${VSPI_LDIR_PREFIX} && \
 	for f in ${VSPI_MISC_FLIST} ; \
-	do cp $${f} ${VSPI_LDIR_PREFIX} || exit 1; \
+	do cp ${TMP_VSPI}/$${f} ${VSPI_LDIR_PREFIX} || exit 1; \
 	done && \
 	echo `git rev-parse HEAD` > ${VSPI_LDIR_PREFIX}/VERSION.md && \
 	cd $${currDir} && \
@@ -200,10 +199,9 @@ dspfilters:
 	do cp $${f} ${DSPFLT_LDIR_RTL} || exit 1; \
 	done && cd $${currDir} && \
 	echo "==== Update Documentation ====" && \
-    cd ${TMP_DSPFLT} && \
 	mkdir -p ${DSPFLT_LDIR_PREFIX} && \
 	for f in ${DSPFLT_MISC_FLIST} ; \
-	do cp $${f} ${DSPFLT_LDIR_PREFIX} || exit 1; \
+	do cp ${TMP_DSPFLT}/$${f} ${DSPFLT_LDIR_PREFIX} || exit 1; \
 	done && \
 	echo `git rev-parse HEAD` > ${DSPFLT_LDIR_PREFIX}/VERSION.md && \
 	cd $${currDir} && \
@@ -223,9 +221,8 @@ cordic:
 	do cp $${f} ${CORDIC_LDIR_RTL} || exit 1; \
 	done && cd $${currDir} && \
 	echo "==== Update Documentation ====" && \
-	mkdir -p ${CORDIC_LDIR_PREFIX} && \
 	for f in ${CORDIC_MISC_FLIST} ; \
-	do cp $${f} ${CORDIC_LDIR_PREFIX} || exit 1; \
+	do cp ${TMP_CORDIC}/$${f} ${CORDIC_LDIR_PREFIX} || exit 1; \
 	done && \
 	echo `git rev-parse HEAD` > ${CORDIC_LDIR_PREFIX}/VERSION.md && \
 	cd $${currDir} && \
@@ -245,9 +242,8 @@ wbi2c:
 	do cp $${f} ${WBI2C_LDIR_RTL} || exit 1; \
 	done && \
 	echo "==== Update Documentation ====" && \
-	mkdir -p ${WBI2C_LDIR_PREFIX} && \
 	for f in ${WBI2C_MISC_FLIST} ; \
-	do cp $${f} ${WBI2C_LDIR_PREFIX} || exit 1; \
+	do cp ${TMP_WBI2C}/$${f} ${WBI2C_LDIR_PREFIX} || exit 1; \
 	done && \
 	echo `git rev-parse HEAD` > ${WBI2C_LDIR_PREFIX}/VERSION.md && \
 	cd $${currDir} && \
@@ -267,9 +263,8 @@ wbuart32:
 	do cp $${f} ${WBURT32_LDIR_RTL} || exit 1; \
 	done && cd $${currDir} && \
 	echo "==== Update Documentation ====" && \
-	mkdir -p ${WBURT32_LDIR_PREFIX} && \
 	for f in ${WBURT32_MISC_FLIST} ; \
-	do cp $${f} ${WBURT32_LDIR_PREFIX} || exit 1; \
+	do cp ${TMP_WBURT32}/$${f} ${WBURT32_LDIR_PREFIX} || exit 1; \
 	done && \
 	echo `git rev-parse HEAD` > ${WBURT32_LDIR_PREFIX}/VERSION.md && \
 	cd $${currDir} && \
@@ -289,9 +284,8 @@ wbspi_master:
 	do cp $${f} ${WBSPIM_LDIR_RTL} || exit 1; \
 	done && \
 	echo "==== Update Documentation ====" && \
-	mkdir -p ${WBSPIM_LDIR_PREFIX} && \
 	for f in ${WBSPIM_MISC_FLIST} ; \
-	do cp $${f} ${WBSPIM_LDIR_PREFIX} || exit 1; \
+	do cp ${TMP_WBSPIM}/$${f} ${WBSPIM_LDIR_PREFIX} || exit 1; \
 	done && \
 	echo `git rev-parse HEAD` > ${WBSPIM_LDIR_PREFIX}/VERSION.md && \
 	cd $${currDir} && \
@@ -311,9 +305,8 @@ uberddr3:
 	do cp $${f} ${UBERDDR3_LDIR_RTL} || exit 1; \
 	done && cd $${currDir} && \
 	echo "==== Update Documentation ====" && \
-	mkdir -p ${UBERDDR3_LDIR_PREFIX} && \
 	for f in ${UBERDDR3_MISC_FLIST} ; \
-	do cp $${f} ${UBERDDR3_LDIR_PREFIX} || exit 1; \
+	do cp ${TMP_UBERDDR3}/$${f} ${UBERDDR3_LDIR_PREFIX} || exit 1; \
 	done && \
 	echo `git rev-parse HEAD` > ${UBERDDR3_LDIR_PREFIX}/VERSION.md && \
 	cd $${currDir} && \
@@ -339,9 +332,8 @@ rs485:
 	do cp $${f} ${RS485_LDIR_TB} || exit 1; \
 	done && cd $${currDir} && \
 	echo "==== Update Documentation ====" && \
-	mkdir -p ${RS485_LDIR_PREFIX} && \
 	for f in ${RS485_MISC_FLIST} ; \
-	do cp $${f} ${RS485_LDIR_PREFIX} || exit 1; \
+	do cp ${TMP_RS485}/$${f} ${RS485_LDIR_PREFIX} || exit 1; \
 	done && \
 	echo `git rev-parse HEAD` > ${RS485_LDIR_PREFIX}/VERSION.md && \
 	cd $${currDir} && \
@@ -369,7 +361,7 @@ fpga_can:
 	echo "==== Update Documentation ====" && \
 	mkdir -p ${FPGACAN_LDIR_PREFIX} && \
 	for f in ${FPGACAN_MISC_FLIST} ; \
-	do cp $${f} ${FPGACAN_LDIR_PREFIX} || exit 1; \
+	do cp ${TMP_FPGACAN}/$${f} ${FPGACAN_LDIR_PREFIX} || exit 1; \
 	done && \
 	echo `git rev-parse HEAD` > ${FPGACAN_LDIR_PREFIX}/VERSION.md && \
 	cd $${currDir} && \
