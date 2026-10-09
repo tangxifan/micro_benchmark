@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Filename:	axisi2c.v
+// Filename:	rtl/axisi2c.v
 // {{{
-// Project:	WBI2C ... a set of (Wishbone controlled) I2C controller(s)
+// Project:	WBI2C ... a set of I2C controller(s)
 //
 // Purpose:	This is a lower level I2C driver for a master I2C byte-wise
 //		interface.  It accepts commands via AXI-Stream, and reports
@@ -31,10 +31,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 // }}}
-// Copyright (C) 2021-2024, Gisselquist Technology, LLC
+// Copyright (C) 2015-2026, Gisselquist Technology, LLC
 // {{{
 // This program is free software (firmware): you can redistribute it and/or
-// modify it under the terms of  the GNU General Public License as published
+// modify it under the terms of the GNU General Public License as published
 // by the Free Software Foundation, either version 3 of the License, or (at
 // your option) any later version.
 //
@@ -455,6 +455,9 @@ module axisi2c #(
 		//
 		DATA: begin
 			// {{{
+			// o_scl = 0 on entry, ck_scl might not yet be 0
+			// => One CKEDGE in this state
+			// => Two CKEDGE's if the data changes
 			o_scl <= 1'b0;
 			o_sda <= sreg[7] || (dir == D_RD);
 			if (o_sda == (sreg[7] || (dir == D_RD)))
@@ -466,6 +469,8 @@ module axisi2c #(
 			// }}}
 		CLOCK: begin
 			// {{{
+			// o_scl = ck_scl = 0 on entry
+			// => Two CKEDGE's in this state
 			if (ck_scl)
 			begin
 				o_scl <= 1'b0;
@@ -511,6 +516,7 @@ module axisi2c #(
 			// }}}
 		CKACKHI: begin
 			// {{{
+			// o_scl on entry
 			o_scl <= 1'b1;
 			if (ck_scl) // Check for clock stretching
 			begin
@@ -594,9 +600,9 @@ module axisi2c #(
 			o_abort <= 1;
 
 		// COLLISION ABORT ON REQUEST!!
-		if (state == REPEAT_START && (o_sda != ck_sda))
+		if (state == REPEAT_START && !o_stretch && (o_sda != ck_sda))
 			o_abort <= 1;
-		if (state == REPEAT_START2 && (!ck_scl || !ck_sda))
+		if (state == REPEAT_START2 && !o_stretch &&(!ck_scl || !ck_sda))
 			o_abort <= 1;
 
 		if (OPT_ABORT_REQUEST && state == IDLE_STOPPED

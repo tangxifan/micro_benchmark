@@ -1,10 +1,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Filename:	wbi2ccpu.v
+// Filename:	rtl/wbi2ccpu.v
 // {{{
-// Project:	WBI2C ... a set of Wishbone controlled I2C controller(s)
+// Project:	WBI2C ... a set of I2C controller(s)
 //
-// Purpose:	
+// Purpose:	A programmable/scriptable I2C controller.
 //
 // Registers
 // {{{
@@ -90,10 +90,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 // }}}
-// Copyright (C) 2021-2024, Gisselquist Technology, LLC
+// Copyright (C) 2015-2026, Gisselquist Technology, LLC
 // {{{
 // This program is free software (firmware): you can redistribute it and/or
-// modify it under the terms of  the GNU General Public License as published
+// modify it under the terms of the GNU General Public License as published
 // by the Free Software Foundation, either version 3 of the License, or (at
 // your option) any later version.
 //
@@ -133,6 +133,11 @@ module	wbi2ccpu #(
 		// so to directly control the wires without any logic in the
 		// way.
 		parameter [0:0]	OPT_MANUAL = 1'b1,
+		// If OPT_LITTLE_ENDIAN is set, instructions will be read
+		// in a little endian fashion, from the least significant byte
+		// in a bus word to the most significant.  Otherwise the most
+		// significant byte will be termed "first".
+		parameter [0:0]	OPT_LITTLE_ENDIAN = 1'b0,
 		parameter		OPT_WATCHDOG = 0,
 `ifdef	FORMAL
 		parameter [11:0]	DEF_CKCOUNT = 2,
@@ -181,6 +186,7 @@ module	wbi2ccpu #(
 		// OPT output wire		M_AXIS_TABORT,
 		// }}}
 		input	wire		i_sync_signal,
+		output	wire		o_interrupt,
 		output	wire	[31:0]	o_debug
 		// }}}
 	);
@@ -236,12 +242,13 @@ module	wbi2ccpu #(
 	wire	[BAW-1:0]	pf_insn_addr;
 	wire			pf_illegal;
 
-	reg			half_valid, imm_cycle;
+	reg			half_valid, imm_cycle, arg_cycle, rx_cycle;
+	reg	[8:0]		imm_count;
 
 	reg			next_valid;
 	reg	[7:0]		next_insn;
 
-	wire			insn_ready, half_ready, i2c_abort;
+	wire			s_tready, half_ready, i2c_abort;
 	reg			insn_valid;
 	reg	[11:0]		insn;
 	reg	[3:0]		half_insn;
@@ -250,7 +257,8 @@ module	wbi2ccpu #(
 	reg	[11:0]		i2c_ckcount, ckcount;
 	reg	[BAW-1:0]	abort_address, jump_target;
 	reg			r_wait, soft_halt_request, r_halted, r_err,
-				r_aborted;
+				r_aborted, abort_set;
+	wire			halt_request;
 	wire			r_manual, r_sda, r_scl;
 	wire			w_stopped, w_sda, w_scl;
 
@@ -261,7 +269,7 @@ module	wbi2ccpu #(
 	wire	[3:0]	bus_write_strb;
 	reg	[31:0]	bus_read_data;
 
-	wire		s_tvalid, s_tready;
+	wire		s_tvalid, insn_ready;
 	reg	[9:0]	ovw_data;
 	wire	[31:0]	w_control;
 
@@ -279,7 +287,7 @@ module	wbi2ccpu #(
 	assign	bus_write_data = i_wb_data;
 	assign	bus_write_strb = i_wb_sel;
 
-	assign	bus_read       = i_wb_stb && !i_wb_we && !o_wb_stall;
+	assign	bus_read       = i_wb_stb && !i_wb_we && !o_wb_stall && i_wb_sel != 0;
 	assign	bus_read_addr  = i_wb_addr;
 
 	assign	o_wb_stall = 1'b0; // (i_wb_we && i_wb_addr == BUS_OVERRIDE && !ovw_ready)
@@ -294,14 +302,16 @@ module	wbi2ccpu #(
 	// Read handling
 	// {{{
 	assign	w_control = {
-			half_insn, 3'h0, r_manual,
+			half_insn, 3'h0, r_manual,		// 8b
 			//
 			r_wait, soft_halt_request,
 				r_aborted, r_err, r_halted,
 			insn_valid, half_valid, imm_cycle,
-			//
-			o_i2c_scl, o_i2c_sda,
-				i_i2c_scl, i_i2c_sda,
+			////////
+			// 16b boundary
+			////////
+			o_i2c_scl, o_i2c_sda,			// 2b
+				i_i2c_scl, i_i2c_sda,		// 2b
 			//
 			insn	// 12 bits
 		};
@@ -357,7 +367,7 @@ module	wbi2ccpu #(
 		.ADDRESS_WIDTH(BAW),
 		.DATA_WIDTH(DW),
 		.INSN_WIDTH(8),
-		.OPT_LITTLE_ENDIAN(1'b0)
+		.OPT_LITTLE_ENDIAN(OPT_LITTLE_ENDIAN)
 		// }}}
 	) u_fetch (
 		// {{{
@@ -385,6 +395,73 @@ module	wbi2ccpu #(
 	//
 	//
 
+	//
+	// next_valid -> half_valid && insn_valid
+	//	next_valid -> (half_valid && arg_cycle && !insn_valid)
+	//			-> imm_count > 0
+	//
+`ifdef	FORMAL
+	always @(*)
+	if (!i_reset)
+	begin
+		// if (r_halted) assert(!half_valid);
+		if (arg_cycle || imm_count > 0)
+		begin
+			assert(imm_cycle);
+			// assert(!r_halted);
+		end else if (imm_cycle)
+		begin
+			assert(insn[11:8] == CMD_CHANNEL);
+			assert(!half_valid);
+			// assert(!insn_valid);
+			// The last instruction will be valid with imm_count==0
+		end
+
+		if (rx_cycle)
+		begin
+			assert(insn[11:8] == CMD_RXK);
+			assert(half_insn == CMD_RXK
+				|| half_insn == CMD_RXN
+				|| half_insn == CMD_RXLK
+				|| half_insn == CMD_RXLN);
+			assert(insn_valid || arg_cycle);
+			assert(imm_cycle);
+		end
+
+		// if (insn_valid && (insn[11:8] == CMD_RXN
+		//		|| insn[11:8] == CMD_RXLK
+		//		|| insn[11:8] == CMD_RXLN))
+		//	assert(rx_cycle);
+
+		if (insn_valid && imm_count > 0 && !arg_cycle
+				&& insn[11:8] == CMD_RXK)
+			assert(rx_cycle);
+
+		if (imm_count > 0 && insn[11:10] == 2'b01 && !arg_cycle)
+			assert(insn_valid);
+
+		if (imm_count > 0)
+		begin
+			assert(!half_valid);
+		end
+
+		if (imm_count > 0)
+		begin
+			assert(!arg_cycle);
+			assert(insn[11:8] == CMD_SEND || insn[11:8] == CMD_RXK);
+			if (insn[11:8] == CMD_SEND)
+			begin
+				// assert(half_insn == CMD_NOOP);
+			end else begin
+				assert(half_insn == CMD_RXK
+					|| half_insn == CMD_RXN
+					|| half_insn == CMD_RXLK
+					|| half_insn == CMD_RXLN);
+			end
+		end
+	end
+`endif
+
 	// next_valid, next_insn
 	// {{{
 	always @(*)
@@ -402,15 +479,15 @@ module	wbi2ccpu #(
 			next_insn  = pf_insn;
 		end
 
-		if (!imm_cycle && next_insn[7:4] == CMD_NOOP)
-			next_insn = { next_insn[3:0], CMD_NOOP };
+		// if (!imm_cycle && next_insn[7:4] == CMD_NOOP)
+		//	next_insn = { next_insn[3:0], CMD_NOOP };
 
 		if (bus_jump)
 			next_valid = 1'b0;
 	end
 `ifdef	FORMAL
 	always @(*)
-	if (insn_valid && !s_tready)
+	if (insn_valid && !insn_ready)
 	begin
 		assert(!next_valid);
 		assert(!pf_ready);
@@ -420,8 +497,9 @@ module	wbi2ccpu #(
 	always @(*)
 	if (!i_reset && !insn_valid && !r_manual)
 	begin
-		assert(pf_ready  == (!r_halted && !r_wait && !cpu_new_pc && !r_manual));
-		assert(ovw_ready);
+		assert(pf_ready  == (!r_halted && !r_wait && !cpu_new_pc
+						&& !r_manual && !half_valid));
+		assert(ovw_ready || (rx_cycle && !arg_cycle) || half_valid);
 	end
 `endif
 	// }}}
@@ -430,16 +508,27 @@ module	wbi2ccpu #(
 	// {{{
 	initial	half_valid = 1'b0;
 	always @(posedge i_clk)
-	if (i_reset || i2c_abort || r_manual || bus_manual)
+	if (i_reset || i2c_abort || r_manual || bus_manual || bus_jump)
+		half_valid <= 1'b0;
+	else if (halt_request || cpu_new_pc)
 		half_valid <= 1'b0;
 	else if (!imm_cycle && next_valid)
 	begin
 		half_valid <= 1'b0;
 
-		if (next_insn[7:4] != CMD_SEND
-				&& next_insn[7:4] != CMD_CHANNEL
-				&& next_insn[3:0] != CMD_NOOP
-				&& next_insn[7:4] != CMD_HALT)
+		// We need half_valid, to know where to grab the
+		//	argument/count from on our new instructions
+		if (next_insn[7:4] == CMD_SEND
+				|| next_insn[7:4] == CMD_RXK
+				|| next_insn[7:4] == CMD_RXN
+				|| next_insn[7:4] == CMD_RXLK
+				|| next_insn[7:4] == CMD_RXLN)
+		begin
+			half_valid <= 0;
+		end else if (next_insn[7:4] != CMD_CHANNEL
+				&& next_insn[7:4] != CMD_HALT
+				//
+				&& next_insn[3:0] != CMD_NOOP)
 			half_valid <= 1'b1;
 	end else if (half_ready)
 		half_valid <= 1'b0;
@@ -457,24 +546,192 @@ module	wbi2ccpu #(
 	// {{{
 	initial	imm_cycle = 1'b0;
 	always @(posedge i_clk)
-	if (i_reset || cpu_new_pc || cpu_clear_cache || i2c_abort)
+	if (i_reset || cpu_new_pc || cpu_clear_cache || i2c_abort || bus_jump
+				|| (OPT_MANUAL && (r_manual || bus_manual)))
+		imm_cycle <= 1'b0;
+	else if (halt_request || cpu_new_pc)
 		imm_cycle <= 1'b0;
 	else if (!imm_cycle && (
 		(next_valid && (next_insn[7:4]== CMD_SEND
-				|| next_insn[7:4]== CMD_CHANNEL))
+				|| (next_insn[3:0] != 4'h0
+				&& (next_insn[7:4]== CMD_RXK
+				|| next_insn[7:4]== CMD_RXN
+				|| next_insn[7:4] == CMD_RXLK
+				|| next_insn[7:4] == CMD_RXLN))))
 		||(half_valid && half_ready && (half_insn[3:0] == CMD_SEND
-					||half_insn[3:0] == CMD_CHANNEL))))
+				|| half_insn[3:0]== CMD_RXK
+				|| half_insn[3:0]== CMD_RXN
+				|| half_insn[3:0] == CMD_RXLK
+				|| half_insn[3:0] == CMD_RXLN
+				||half_insn[3:0] == CMD_CHANNEL))))
 		imm_cycle <= 1'b1;
-	else begin
+	else if (imm_cycle)
+	begin
+		if (arg_cycle)
+			imm_cycle <= !next_valid || !rx_cycle || next_insn != 0;
+		else if (rx_cycle)
+		begin
+			imm_cycle <= (imm_count > 1 || !insn_ready);
+		end else if (!rx_cycle && next_valid)
+		begin
+			imm_cycle <= (imm_count > 1);
+		end
+
 		if (bus_jump)
 			imm_cycle <= 1'b0;
-		if ((pf_valid && pf_ready) || (bus_override && ovw_ready))
-			imm_cycle <= 1'b0;
+		// if ((pf_valid && pf_ready) || (bus_override && ovw_ready))
+		//	imm_cycle <= (!arg_cycle) && (imm_count <= 1);
 	end
 `ifdef	FORMAL
 	always @(*)
 	if (!i_reset && imm_cycle)
-		assert(insn[11:8] == CMD_SEND || insn[11:8] == CMD_CHANNEL);
+		assert(insn[11:8] == CMD_SEND
+			|| insn[11:8] == CMD_RXK
+			|| insn[11:8] == CMD_RXN
+			|| insn[11:8] == CMD_RXLK
+			|| insn[11:8] == CMD_RXLN
+			|| insn[11:8] == CMD_CHANNEL);
+	always @(*)
+	if (!i_reset && imm_count != 0)
+		assert(imm_count <= 9'h100);
+	always @(*)
+	if (!i_reset && (arg_cycle || imm_count != 0))
+		assert(imm_cycle);
+`endif
+	// }}}
+
+	// rx_cycle
+	// {{{
+	initial	rx_cycle = 1'b0;
+	always @(posedge i_clk)
+	if (i_reset || cpu_new_pc || cpu_clear_cache || i2c_abort || bus_jump
+				|| (OPT_MANUAL && (r_manual || bus_manual)))
+		rx_cycle <= 1'b0;
+	else if (halt_request || cpu_new_pc)
+		rx_cycle <= 1'b0;
+	else if (!imm_cycle)
+	begin
+		rx_cycle <= 1'b0;
+		if (next_valid)
+		begin
+			rx_cycle <= (next_insn[7:4] == CMD_RXK
+				|| next_insn[7:4]== CMD_RXN
+				|| next_insn[7:4] == CMD_RXLK
+				|| next_insn[7:4] == CMD_RXLN);
+			if (next_insn[3:0] == 4'h0)
+				rx_cycle <= 0;
+		end else if (half_valid && half_ready)
+		begin
+			rx_cycle <= (half_insn[3:0]== CMD_RXK
+				|| half_insn[3:0]== CMD_RXN
+				|| half_insn[3:0] == CMD_RXLK
+				|| half_insn[3:0] == CMD_RXLN);
+		end
+	end else begin
+		if (bus_jump)
+			rx_cycle <= 1'b0;
+		if (rx_cycle && arg_cycle && next_valid)
+			rx_cycle <= (next_insn != 8'h00);
+		if (insn_valid && insn_ready && !arg_cycle && imm_count <= 1)
+			rx_cycle <= 1'b0;
+	end
+`ifdef	FORMAL
+	always @(*)
+	if (!i_reset && imm_cycle)
+		assert(insn[11:8] == CMD_SEND
+			|| insn[11:8] == CMD_RXK
+			|| insn[11:8] == CMD_RXN
+			|| insn[11:8] == CMD_RXLK
+			|| insn[11:8] == CMD_RXLN
+			|| insn[11:8] == CMD_CHANNEL);
+	always @(*)
+	if (!i_reset && (arg_cycle || imm_count != 0))
+		assert(imm_cycle);
+`endif
+	// }}}
+
+	// arg_cycle
+	// {{{
+	initial	arg_cycle = 1'b0;
+	always @(posedge i_clk)
+	if (i_reset || cpu_new_pc || cpu_clear_cache || i2c_abort
+				|| (OPT_MANUAL && (r_manual || bus_manual)))
+		arg_cycle <= 1'b0;
+	else if (halt_request || bus_jump || cpu_new_pc)
+		arg_cycle <= 1'b0;
+	else if (!imm_cycle && next_valid)
+		arg_cycle <= 1'b0;
+	else if (half_valid && !arg_cycle)
+	begin
+		arg_cycle <= 1'b0;
+		if (half_ready &&(half_insn[3:0] == CMD_SEND
+				|| half_insn[3:0] == CMD_RXK
+				|| half_insn[3:0] == CMD_RXN
+				|| half_insn[3:0] == CMD_RXLK
+				|| half_insn[3:0] == CMD_RXLN))
+			arg_cycle <= 1'b1;
+	end else begin
+		if (bus_jump)
+			arg_cycle <= 1'b0;
+		if ((pf_valid && pf_ready) || (bus_override && ovw_ready))
+			arg_cycle <= 1'b0;
+	end
+`ifdef	FORMAL
+	always @(*)
+	if (!i_reset && arg_cycle)
+	begin
+		assert(insn[11:8] == CMD_SEND
+			|| insn[11:8] == CMD_RXK
+			|| insn[11:8] == CMD_RXN
+			|| insn[11:8] == CMD_RXLK
+			|| insn[11:8] == CMD_RXLN);
+	end
+`endif
+	// }}}
+
+	// imm_count
+	// {{{
+	initial	imm_count = 0;
+	always @(posedge i_clk)
+	if (i_reset || cpu_new_pc || cpu_clear_cache || i2c_abort || bus_jump
+				|| (OPT_MANUAL && (r_manual || bus_manual)))
+		imm_count <= 0;
+	else if (halt_request || cpu_new_pc)
+		imm_count <= 0;
+	// else if (!next_valid && !half_valid)
+	// begin
+	// end else if (!imm_cycle)
+	//	imm_count <= 0;
+	else if (!imm_cycle && next_valid)
+	begin
+		if (next_insn[7:4] == CMD_SEND)
+			imm_count <= { 5'h0, next_insn[3:0]} + 9'h1;
+		else if (next_insn[7:4] == CMD_RXK
+				|| next_insn[7:4] == CMD_RXN
+				|| next_insn[7:4] == CMD_RXLK
+				|| next_insn[7:4] == CMD_RXLN)
+		begin
+			imm_count <= { 5'h0, next_insn[3:0]};
+		end else
+			imm_count <= 0;
+	end else if (arg_cycle && next_valid)
+	begin
+		imm_count <= next_insn[7:0] + (rx_cycle ? 0:1);
+	end else if (imm_count > 0)
+	begin
+		if (insn_ready && rx_cycle)
+			imm_count <= imm_count - 1;
+		else if (next_valid)
+			imm_count <= imm_count - 1;
+	end
+`ifdef	FORMAL
+	always @(*)
+	if (!i_reset && imm_count > 0)
+		assert(insn[11:8] == CMD_SEND
+			|| insn[11:8] == CMD_RXK
+			|| insn[11:8] == CMD_RXN
+			|| insn[11:8] == CMD_RXLK
+			|| insn[11:8] == CMD_RXLN);
 `endif
 	// }}}
 
@@ -494,7 +751,8 @@ module	wbi2ccpu #(
 		// Jump instruction
 		// {{{
 		if ((pf_valid && pf_ready && !imm_cycle
-						&& pf_insn[7:4] == CMD_JUMP)
+				&&((pf_insn[7:4] == CMD_JUMP
+				  || pf_insn[7:0]== { CMD_NOOP, CMD_JUMP})))
 			||(half_valid && half_ready
 						&& half_insn[3:0] == CMD_JUMP))
 		begin
@@ -505,7 +763,7 @@ module	wbi2ccpu #(
 
 		// Abort an I2C command
 		// {{{
-		if (i2c_abort)
+		if (i2c_abort && abort_set)
 		begin
 			cpu_new_pc   <= 1'b1;
 			pf_jump_addr <= abort_address;
@@ -524,10 +782,12 @@ module	wbi2ccpu #(
 	// }}}
 
 	assign	pf_ready = !w_stopped && !half_valid
-			&& (!insn_valid || s_tready) && !cpu_new_pc;
-	assign	half_ready = s_tready;
+			&& (!insn_valid || insn_ready) && !cpu_new_pc
+			&& (!rx_cycle || arg_cycle);
+	assign	half_ready = insn_ready;
 
-	assign	ovw_ready = !half_valid && (!insn_valid || s_tready);
+	assign	ovw_ready = !half_valid && (!insn_valid || insn_ready)
+				&& (!rx_cycle || arg_cycle);
 
 	// insn_valid
 	// {{{
@@ -537,20 +797,72 @@ module	wbi2ccpu #(
 		insn_valid <= 1'b0;
 	else if (OPT_MANUAL && (r_manual || bus_manual))
 		insn_valid <= 1'b0;
-	else if (next_valid)
-		insn_valid <= imm_cycle || (next_insn[7:4] != CMD_SEND
-					&& next_insn[7:4] != CMD_CHANNEL);
-	else if ((!half_valid || half_insn == CMD_SEND || half_insn == CMD_CHANNEL) && s_tready)
+	else if (insn_valid && insn_ready && insn[11:8] == CMD_HALT)
 		insn_valid <= 1'b0;
+	else if ((insn_valid && !insn_ready) || (arg_cycle && !next_valid))
+	begin
+		// No change allowed
+	end else if (bus_jump || cpu_new_pc)
+	begin
+		insn_valid <= 1'b0;
+	end else if (arg_cycle)
+	begin
+		insn_valid <= rx_cycle;
+	end else if (imm_count > 1)
+	begin
+		insn_valid <= (insn[11:8] != CMD_SEND || next_valid);
+	end else if (imm_count == 1 && insn[11:8] == CMD_SEND)
+	begin
+		insn_valid <= next_valid;
+	end else if (next_valid)
+	begin
+		// {{{
+		insn_valid <= 1'b1;
+		if (arg_cycle)
+		begin
+			insn_valid <= rx_cycle;
+		end else if (next_insn[7:4] == CMD_NOOP)
+		begin
+			// We can always skip NOOP instructions
+			insn_valid <= 0;
+		end else if (next_insn[7:4] == CMD_SEND)
+		begin
+			// We need to read our count
+			insn_valid <= 0;
+		end // else if (next_insn[7:4] == CMD_RXK
+		//		|| next_insn[7:4] == CMD_RXN
+		//		|| next_insn[7:4] == CMD_RXLK
+		//		|| next_insn[7:4] == CMD_RXLN)
+		//	insn_valid <= 1;
+		// }}}
+	end else if (half_valid && (!insn_valid || insn_ready))
+	begin
+		insn_valid <= (half_insn != CMD_SEND
+				&& half_insn != CMD_RXK
+				&& half_insn != CMD_RXN
+				&& half_insn != CMD_RXLK
+				&& half_insn != CMD_RXLN
+				&& half_insn != CMD_CHANNEL);
+	end
 
 `ifdef	FORMAL
 	always @(posedge i_clk)
+	if (!i_reset && arg_cycle)
+	begin
+		assert(!insn_valid);
+		assert(rx_cycle == (insn[11:8] == CMD_RXK));
+		assert(insn[11:8] != CMD_RXN);
+		assert(insn[11:8] != CMD_RXLN);
+		assert(insn[11:8] != CMD_RXLK);
+	end
+
+	always @(posedge i_clk)
 	if (!i_reset && half_valid)
 	begin
-		assert(insn_valid);
-		assert(insn[11:8] != CMD_HALT && insn[11:8] != CMD_SEND
-				&& insn[11:8] != CMD_CHANNEL);
-		assert(!imm_cycle);
+		// assert(insn_valid);
+		// assert(insn[11:8] != CMD_HALT && insn[11:8] != CMD_SEND
+		//		&& insn[11:8] != CMD_CHANNEL);
+		assert(imm_count == 0);
 	end
 `endif
 	// }}}
@@ -564,22 +876,55 @@ module	wbi2ccpu #(
 		half_insn <= CMD_NOOP;
 		insn <= 0;
 		// }}}
+	end else if (insn_valid && rx_cycle && insn_ready && imm_count == 1)
+	begin
+		insn[11:8] <= half_insn;
 	end else if (next_valid)
 	begin
 		// {{{
-		if (imm_cycle)
+		if (arg_cycle)
+		begin
+		end else if (imm_cycle)
 		begin
 			insn[7:0] <= next_insn;
 			half_insn <= CMD_NOOP;
-		end else
+		end else if ((next_insn[7:4] == CMD_RXK)
+				|| (next_insn[7:4] == CMD_RXN)
+				|| (next_insn[7:4] == CMD_RXLK)
+				|| (next_insn[7:4] == CMD_RXLN))
+		begin
+			{ insn[11:8], half_insn } <= { CMD_RXK,next_insn[7:4]};
+		end else // if (insn[11:8] == CMD_SEND)
+		begin
 			{ insn[11:8], half_insn } <= next_insn;
+			insn[3:0] <= next_insn[3:0];
+		end
 		// }}}
-	end else if (!imm_cycle && s_tready)
-		{ insn[11:8], half_insn } <= { half_insn, CMD_NOOP };
+	end else if (half_valid && (!insn_valid || insn_ready) && !arg_cycle)
+	begin
+		// {{{
+		if (!imm_cycle)
+		begin
+			if (half_insn == CMD_RXK
+				|| half_insn == CMD_RXN
+				|| half_insn == CMD_RXLK
+				|| half_insn == CMD_RXLN)
+			begin
+				insn[11:8] <= CMD_RXK;
+			end else
+				{ insn[11:8], half_insn } <= { half_insn, CMD_NOOP };
+		end else if (imm_count <= 1 && insn[11:8] != CMD_SEND)
+		begin
+			// Grab the final Rx INSN
+			insn[11:8] <= half_insn;
+			half_insn  <= CMD_NOOP;
+		end
+		// }}}
+	end
 
 `ifdef	FORMAL
 	always @(*)
-	if (!i_reset && imm_cycle)
+	if (!i_reset && arg_cycle)
 		assert(!half_valid);
 `endif
 	// }}}
@@ -637,16 +982,27 @@ module	wbi2ccpu #(
 `endif
 	// }}}
 
+	// abort_set
+	// {{{
+	always @(posedge i_clk)
+	if (i_reset || bus_jump || r_halted)
+		abort_set <= 1'b0;
+	else if (imm_cycle)
+	begin end
+	else if ((pf_valid && pf_ready && pf_insn[7:4]== CMD_ABORT)
+				||(half_valid && half_insn == CMD_ABORT))
+		abort_set <= 1'b1;
+	// }}}
+
 	// abort_address
 	// {{{
 	always @(posedge i_clk)
-	if (i_reset)
-		abort_address <= RESET_ADDRESS;
-	else if (bus_jump)
-		abort_address <= bus_write_data[BAW-1:0];
-	else if (pf_valid && pf_ready && !imm_cycle && pf_insn[7:4]== CMD_ABORT)
-			// || pf_insn == { CMD_START, CMD_SEND })
+	if (imm_cycle || r_halted)	// imm_cycle includes arg_cycle too
+	begin
+	end else if (pf_valid && pf_ready && pf_insn[7:4]== CMD_ABORT)
 		abort_address <= pf_insn_addr + 1;
+	else if (half_valid && half_insn == CMD_ABORT)
+		abort_address <= pf_insn_addr;
 	// }}}
 
 	// jump_target
@@ -669,7 +1025,7 @@ module	wbi2ccpu #(
 	else if (r_halted || i_sync_signal)
 		r_wait <= 1'b0;
 	else begin
-		if (insn_valid && insn[11:8] == CMD_WAIT)
+		if (insn_valid && insn_ready && insn[11:8] == CMD_WAIT)
 			r_wait <= 1'b1;
 		if (bus_jump)
 			r_wait <= 1'b0;
@@ -687,20 +1043,30 @@ module	wbi2ccpu #(
 		soft_halt_request <= 1'b1;
 	// }}}
 
+	assign	halt_request = (insn_valid && insn_ready
+						&& insn[11:8] == CMD_HALT)
+				||(insn_valid && insn_ready && soft_halt_request
+					&& insn[11:8] == CMD_STOP)
+				|| (bus_write && bus_write_addr == ADR_CONTROL
+					&& bus_write_data[HALT_BIT]
+					&& bus_write_strb[HALT_BIT/8])
+				|| bus_manual
+				|| (pf_valid && pf_ready && pf_illegal);
+
 	// r_halted
 	// {{{
 	always @(posedge i_clk)
 	if (i_reset)
 		r_halted <= OPT_START_HALTED;
 	else begin
-		if (insn_valid && s_tready && insn[11:8] == CMD_STOP
+		if (insn_valid && insn_ready && insn[11:8] == CMD_STOP
 				&& soft_halt_request)
 			r_halted <= 1'b1;
-		if (soft_halt_request && i2c_abort)
+		if ((soft_halt_request || !abort_set) && i2c_abort)
 			r_halted <= 1'b1;
 		if (pf_valid && pf_ready && pf_illegal)
 			r_halted <= 1'b1;
-		if (insn_valid && s_tready && insn[11:8] == CMD_HALT)
+		if (insn_valid && insn_ready && insn[11:8] == CMD_HALT)
 			r_halted <= 1'b1;
 
 		if (bus_write)
@@ -716,6 +1082,8 @@ module	wbi2ccpu #(
 		end
 	end
 	// }}}
+
+	assign	o_interrupt = r_halted;
 
 	// r_aborted
 	// {{{
@@ -835,8 +1203,9 @@ module	wbi2ccpu #(
 	//
 	//
 
-	assign	s_tvalid =  insn_valid && !insn[11]  && !r_wait;
-	assign	s_tready =((insn_ready ||  insn[11]) && !r_wait) || r_manual;
+	// assign	s_pause = insn[11] || r_wait
+	assign	s_tvalid =  insn_valid && !insn[11]  && !r_wait; // & !s_pausee
+	assign	insn_ready =((s_tready ||  insn[11]) && !r_wait) || r_manual;
 
 `ifndef	FORMAL
 	axisi2c #(
@@ -850,7 +1219,7 @@ module	wbi2ccpu #(
 		//
 		// Incoming instruction stream
 		// {{{
-		.S_AXIS_TVALID(s_tvalid), .S_AXIS_TREADY(insn_ready),
+		.S_AXIS_TVALID(s_tvalid), .S_AXIS_TREADY(s_tready),
 			.S_AXIS_TDATA(insn[10:0]),
 		// }}}
 		// Outgoing received data stream
@@ -882,7 +1251,7 @@ module	wbi2ccpu #(
 		always @(posedge i_clk)
 		if (i_reset || r_halted)
 			mid_axis_pkt <= 0;
-		else if (s_tvalid && insn_ready
+		else if (s_tvalid && s_tready
 				&& (insn[10:8] == CMD_RXK[2:0]
 					||insn[10:8] == CMD_RXN[2:0]
 					||insn[10:8] == CMD_RXLK[2:0]
@@ -894,7 +1263,7 @@ module	wbi2ccpu #(
 		always @(posedge i_clk)
 		if (i_reset || r_halted)
 			r_channel <= DEF_CHANNEL;
-		else if (insn_valid && insn[11:8] == CMD_CHANNEL && s_tready)
+		else if (insn_valid && insn[11:8] == CMD_CHANNEL && insn_ready)
 			r_channel <= insn[AXIS_ID_WIDTH-1:0];
 
 		initial	axis_tid = 0;
@@ -904,7 +1273,7 @@ module	wbi2ccpu #(
 		else if (!M_AXIS_TVALID || M_AXIS_TREADY)
 		begin
 			if (insn_valid && insn[11:8] == CMD_CHANNEL
-					&& s_tready && !mid_axis_pkt)
+					&& insn_ready && !mid_axis_pkt)
 				axis_tid <= insn[AXIS_ID_WIDTH-1:0];
 			else if (M_AXIS_TVALID && M_AXIS_TREADY && M_AXIS_TLAST)
 				axis_tid <= r_channel;
@@ -1026,8 +1395,8 @@ module	wbi2ccpu #(
 	// First, the prefetch and decoding
 
 	always @(*)
-	if (f_past_valid)
-		assert(!imm_cycle || !half_valid);
+	if (f_past_valid && imm_cycle && !arg_cycle)
+		assert(!half_valid);
 
 	////////////////////////////////////////////////////////////////////////
 	//
@@ -1049,7 +1418,7 @@ module	wbi2ccpu #(
 	begin
 		assert(!insn_valid);
 		assert(!half_valid);
-	end else if ($past(s_tvalid && !insn_ready))
+	end else if ($past(s_tvalid && !s_tready))
 	begin
 		assert(s_tvalid);
 		assert($stable(insn[10:0]));
@@ -1079,6 +1448,74 @@ module	wbi2ccpu #(
 	assign	M_AXIS_TDATA  = m_tdata;
 	assign	M_AXIS_TLAST  = m_tlast;
 	// }}}
+	////////////////////////////////////////////////////////////////////////
+	//
+	// Cover properties
+	// {{{
+	(* anyconst *)	reg	fnvr_err;
+	reg	[3:0]	cvr_send;
+	reg	[3:0]	cvr_rxlk;
+
+	always @(*)
+	if (fnvr_err)
+	begin
+		assume(!pf_valid || !pf_illegal);
+		assume(!i2c_abort);
+		assume(r_halted || !bus_jump);
+		assume(!bus_manual);
+		assume(!soft_halt_request);
+		assume(!halt_request);
+	end
+
+	initial	cvr_send = 0;
+	always @(posedge i_clk)
+	if (i_reset || !fnvr_err)
+		cvr_send <= 0;
+	else if (!imm_cycle && !half_valid && pf_valid && pf_ready && pf_insn == 8'h3f)
+		cvr_send <= 1;
+	else if (!imm_cycle && !half_valid && pf_valid && pf_ready && pf_insn == 8'h03)
+		cvr_send <= 8;
+	else if (arg_cycle && cvr_send == 8 && pf_valid && pf_ready && pf_insn == 8'h11)
+		cvr_send <= 9;
+	else if (((cvr_send > 0 && cvr_send < 8)||(cvr_send>8)) && !imm_cycle && pf_valid && pf_ready)
+	begin
+		if (!cvr_send[2])
+			cvr_send <= cvr_send + 1;
+	end
+
+	initial	cvr_rxlk = 0;
+	always @(posedge i_clk)
+	if (i_reset || !fnvr_err)
+		cvr_rxlk <= 0;
+	else if (!imm_cycle && !half_valid && pf_valid && pf_ready && pf_insn == 8'h6f)
+		cvr_rxlk <= 1;
+	else if (!imm_cycle && !half_valid && pf_valid && pf_ready && pf_insn == 8'h07)
+		cvr_rxlk  <= 8;
+	else if (arg_cycle && cvr_rxlk == 8 && pf_valid && pf_ready && pf_insn == 8'h11)
+		cvr_rxlk <= 9;
+	else if (((cvr_rxlk != 0 && cvr_rxlk < 8) || cvr_rxlk > 8)
+					&& !imm_cycle && pf_valid && pf_ready)
+	begin
+		if (!cvr_rxlk[2])
+			cvr_rxlk <= cvr_rxlk + 1;
+	end
+
+	always @(posedge i_clk)
+	if (!i_reset)
+	begin
+		cover(cvr_send > 2);
+		cover(cvr_send == 8);
+		cover(cvr_send == 9);
+		cover(cvr_send == 10);
+		cover(cvr_rxlk > 2);
+		cover(cvr_rxlk == 8);
+		cover(cvr_rxlk == 9);
+		cover(cvr_rxlk > 10);
+	end
+	// }}}
+
+	// always @(*)
+	//	assume(!bus_override);	// ovw_ready ... ??
 `endif
 // }}}
 endmodule
