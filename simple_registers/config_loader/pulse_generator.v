@@ -1,27 +1,3 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 05/03/2021 03:37:44 PM
-// Design Name: 
-// Module Name: pulse_generator
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: A simple pulse generator with configurable initial values and waiting cycles
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
-// Uncomment if using Vivado to synthesize the design. This will enable the initial block
-// If using Yosys, initial blocks are not supported, and cannot be included.
-// `define VIVADO_SYNTHESIS
 
 module pulse_generator(
   input clk_in,
@@ -40,7 +16,6 @@ module pulse_generator(
   reg pulse_start;
   reg pulse_end;
 
-`ifdef VIVADO_SYNTHESIS
   initial begin
     pulse <= INITIAL_VALUE;
     pulse_start <= 1'b0;
@@ -48,7 +23,6 @@ module pulse_generator(
     wait_cycle_counter <= 0;
     pulse_width_counter <= 0;
   end
-`endif
   
   // Wait a number of clock cycles, hold the initial value
   always @(posedge clk_in) begin

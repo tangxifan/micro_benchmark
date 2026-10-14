@@ -1,27 +1,8 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 05/03/2021 03:25:29 PM
-// Design Name: 
-// Module Name: clk_divider
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-module clock_divider (
-    input clk_in,
-    output reg clk_out
-    );
+
+module clock_divider (clk_in, clk_out);
+  input clk_in;
+  output reg clk_out;
     
     parameter CLK_DIVIDER_SIZE=8;
     
