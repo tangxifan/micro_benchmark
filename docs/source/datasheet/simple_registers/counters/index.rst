@@ -10,3 +10,4 @@ Counters
    counter4_2clock
    counter8_async_reset
    counter8_Nclk_async_reset
+   counter16_Nclk_pnedge_async_resetpn
