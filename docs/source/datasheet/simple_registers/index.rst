@@ -8,6 +8,7 @@ Simple Registers
 
    blinking
    clk_divider
+   config_loader
    pwm_generator
    rst_sync
    rstn_sync
