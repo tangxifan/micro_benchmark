@@ -5,7 +5,6 @@
 #./counters/counter8_sync_reset/counter8_sync_reset.v:
 #./counters/counter4_2clock/counter4_2clock.v:
 #./counters/counter128_async_resetb/counter128_async_resetb.v:
-#./counters/counter128_async_reset/counter128_async_reset.v:
 #./config_loader/bitstream_loader.v:
 #./config_loader/configuration_manager.v:
 
@@ -14,6 +13,13 @@ blinking:
     - simple_registers/blinking/blinking.v
   top_module: blinking
   cocotb_dir: simple_registers/blinking
+
+counter128_async_reset:
+  source:
+    - simple_registers/counters/counter128_async_reset/counter128_async_reset.v
+  top_module: counter128_async_reset
+  cocotb_dir: simple_registers/counters/counter128_async_reset
+
 
 config_loader:
   source:
