@@ -219,6 +219,18 @@ counter8_async_reset:
   top_module: counter8_async_reset
   cocotb_dir: simple_registers/counters/counter8_async_reset
 
+counter8_async_resetb:
+  source:
+    - simple_registers/counters/counter8_async_resetb/counter8_async_resetb.v
+  top_module: counter8_async_resetb
+  cocotb_dir: simple_registers/counters/counter8_async_resetb
+
+counter8_sync_reset:
+  source:
+    - simple_registers/counters/counter8_sync_reset/counter8_sync_reset.v
+  top_module: counter8_sync_reset
+  cocotb_dir: simple_registers/counters/counter8_sync_reset
+
 counter8_4clk_async_reset:
   source:
     - simple_registers/counters/counter8_4clk_async_reset/counter8_4clk_async_reset.v
