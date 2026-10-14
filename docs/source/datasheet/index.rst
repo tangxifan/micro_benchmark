@@ -19,6 +19,11 @@
 .. toctree::
    :maxdepth: 2
 
+   processors/index
+
+.. toctree::
+   :maxdepth: 2
+
    interface/index
 
 .. toctree::
