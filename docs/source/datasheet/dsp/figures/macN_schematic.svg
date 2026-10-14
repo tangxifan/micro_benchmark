@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <!-- Arrowhead markers -->
+    <marker id="arrow-dark" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#333"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#28a745"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#d9534f"/>
+    </marker>
+    <style>
+      .boundary { fill: #f8f9fa; stroke: #ced4da; stroke-width: 2; rx: 8; ry: 8; }
+      .subbox { fill: #e8f4fd; stroke: #007bff; stroke-width: 1.5; rx: 4; ry: 4; }
+      .title { font-family: sans-serif; font-size: 14px; font-weight: bold; fill: #212529; text-anchor: middle; }
+      .subtitle { font-family: sans-serif; font-size: 10px; font-style: italic; fill: #6c757d; text-anchor: middle; }
+      .label { font-family: sans-serif; font-size: 12px; fill: #333; }
+      .wire-green { fill: none; stroke: #28a745; stroke-width: 1.5; marker-end: url(#arrow-green); }
+      .wire-red { fill: none; stroke: #d9534f; stroke-width: 1.5; marker-end: url(#arrow-red); }
+      .wire-dark { fill: none; stroke: #333333; stroke-width: 1.5; marker-end: url(#arrow-dark); }
+      .wire-no-arrow { fill: none; stroke: #d9534f; stroke-width: 1.5; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff"/>
+
+  <!-- Outer System Boundary -->
+  <rect x="40" y="30" width="720" height="440" class="boundary"/>
+  <text x="400" y="55" class="title">macN (Parameterized Multiply-Accumulate)</text>
+
+  <!-- ==================== STACKED SUB-BLOCKS ==================== -->
+  
+  <!-- Multiplier Sub-Block (a * b) -->
+  <rect x="280" y="90" width="260" height="100" class="subbox"/>
+  <text x="410" y="125" class="title" font-size="12px">Multiplier Unit</text>
+  <text x="410" y="145" class="subtitle">Product = a * b</text>
+
+  <!-- Accumulator / Adder Sub-Block (+ c) -->
+  <rect x="280" y="250" width="260" height="100" class="subbox"/>
+  <text x="410" y="285" class="title" font-size="12px">Adder / Accumulator</text>
+  <text x="410" y="305" class="subtitle">out = Product + c</text>
+
+
+  <!-- ==================== INPUT WIRES (LEFT) ==================== -->
+
+  <!-- Input A -->
+  <text x="65" y="115" class="label" font-weight="bold">a [DATA_WIDTH-1:0]</text>
+  <path d="M 190 110 L 280 110" class="wire-green"/>
+
+  <!-- Input B -->
+  <text x="65" y="165" class="label" font-weight="bold">b [DATA_WIDTH-1:0]</text>
+  <path d="M 190 160 L 280 160" class="wire-green"/>
+
+  <!-- Input C (routed via bottom trunk branch) -->
+  <text x="65" y="415" class="label" font-weight="bold" fill="#d9534f">c [DATA_WIDTH-1:0]</text>
+  <path d="M 180 400 L 180 300" class="wire-no-arrow"/>
+  <path d="M 180 300 L 280 300" class="wire-red"/>
+
+
+  <!-- ==================== INTERNAL & OUTPUT WIRES (RIGHT) ==================== -->
+
+  <!-- Internal Product Wire -->
+  <path d="M 540 145 L 590 145 L 590 275 L 540 275" class="wire-dark"/>
+  <text x="595" y="215" class="label">Product</text>
+
+  <!-- Final Output Wire -->
+  <text x="575" y="285" class="label" font-weight="bold">out [DATA_WIDTH-1:0]</text>
+  <path d="M 540 290 L 635 290" class="wire-dark"/>
+
+</svg>

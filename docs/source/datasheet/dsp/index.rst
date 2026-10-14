@@ -14,8 +14,12 @@ DSP
 
    dspfilters
 
+   macN
+   
+   multN
+
    pid_controller
 
-   mult_8_pipelined
+   mult_N_pipelined
 
    mult_8_pipelined_Nclk
