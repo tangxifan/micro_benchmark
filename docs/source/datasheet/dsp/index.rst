@@ -12,6 +12,8 @@ DSP
 
    signed_integer_divider
 
+   dspfilters
+
    pid_controller
 
    mult_8_pipelined
