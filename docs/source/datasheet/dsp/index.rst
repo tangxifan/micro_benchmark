@@ -16,7 +16,7 @@ DSP
 
    macN
    
-   multN
+   mult_NxN
 
    pid_controller
 

@@ -1,0 +1,9 @@
+# Makefile for cocotb verification
+SIM ?= icarus
+TOPLEVEL_LANG ?= verilog
+
+VERILOG_SOURCES += mult_2_pipelined.v
+TOPLEVEL = mult_2_pipelined
+MODULE = test_mult_2_pipelined
+
+include $(shell cocotb-config --makefiles)/Makefile.sim
