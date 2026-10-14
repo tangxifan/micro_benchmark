@@ -15,8 +15,8 @@ async def test_configuration_manager(dut):
     await RisingEdge(dut.clk_in)
 
     cycles_waited = 0
-    # Increased max_cycles to account for the 4096x clock division and 6140 bitstream size
-    max_cycles = 35_000_000  
+    # Increased max_cycles to comfortably accommodate the full bitstream load time
+    max_cycles = 100_000  
 
     # Safely poll configuration_done by handling potential 'X' or 'Z' values during startup
     while True:

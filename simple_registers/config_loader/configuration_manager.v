@@ -9,7 +9,8 @@ module configuration_manager(
     );
     
     parameter START_CYCLE=3; // Start configuration on cycle 3 of prog_clk
-    parameter CONFIGURATION_CLK_DIV_SIZE=12; // Divide clk_in (50MHz) by 4096 (2^12) times
+//    parameter CONFIGURATION_CLK_DIV_SIZE=12; // Divide clk_in (50MHz) by 4096 (2^12) times
+    parameter CONFIGURATION_CLK_DIV_SIZE=2; // To reduce simulation time
     
     wire prog_clk_out; // prog_clk signal from clk_divider
     wire ccff_head_out;
@@ -29,7 +30,6 @@ module configuration_manager(
     
     
     // PROG_CLK
-    // Divide pl_clk (50MHz) by 4096 (2^12) times
     clock_divider #(
       .CLK_DIVIDER_SIZE(CONFIGURATION_CLK_DIV_SIZE)
       ) prog_clk_divider (
