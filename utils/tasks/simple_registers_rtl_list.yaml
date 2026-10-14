@@ -8,15 +8,23 @@
 #./counters/counter128_async_reset/counter128_async_reset.v:
 #./config_loader/bitstream_loader.v:
 #./config_loader/configuration_manager.v:
-#./signal_gen/reset_generator.v:
-#./signal_gen/pulse_generator.v:
-#./signal_gen/clock_divider.v:
 
 blinking:
   source:
     - simple_registers/blinking/blinking.v
   top_module: blinking
   cocotb_dir: simple_registers/blinking
+
+config_loader:
+  source:
+    - simple_registers/config_loader/configuration_manager.v
+    - simple_registers/config_loader/bitstream_loader.v
+    - simple_registers/config_loader/clock_divider.v
+    - simple_registers/config_loader/pulse_generator.v
+    - simple_registers/config_loader/reset_generator.v
+    - simple_registers/config_loader/EFX_RAM_5K.v
+  top_module: configuration_manager
+  cocotb_dir: simple_registers/config_loader
 
 counterdown16_1clk_negedge_async_resetp:
   source:
