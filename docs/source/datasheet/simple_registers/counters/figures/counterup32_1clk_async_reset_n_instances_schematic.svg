@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 500" width="100%" height="100%">
+  <defs>
+    <!-- Arrowhead markers -->
+    <marker id="arrow-dark" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#333"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#28a745"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#d9534f"/>
+    </marker>
+    <style>
+      .boundary { fill: #f8f9fa; stroke: #ced4da; stroke-width: 2; rx: 8; ry: 8; }
+      .subbox { fill: #e8f4fd; stroke: #007bff; stroke-width: 1.5; rx: 4; ry: 4; }
+      .title { font-family: sans-serif; font-size: 14px; font-weight: bold; fill: #212529; text-anchor: middle; }
+      .subtitle { font-family: sans-serif; font-size: 10px; font-style: italic; fill: #6c757d; text-anchor: middle; }
+      .label { font-family: sans-serif; font-size: 12px; fill: #333; }
+      .wire-green { fill: none; stroke: #28a745; stroke-width: 1.5; marker-end: url(#arrow-green); }
+      .wire-red { fill: none; stroke: #d9534f; stroke-width: 1.5; marker-end: url(#arrow-red); }
+      .wire-dark { fill: none; stroke: #333333; stroke-width: 1.5; marker-end: url(#arrow-dark); }
+      .wire-no-arrow { fill: none; stroke: #d9534f; stroke-width: 1.5; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff"/>
+
+  <!-- Outer System Boundary -->
+  <rect x="40" y="30" width="700" height="440" class="boundary"/>
+  <text x="390" y="55" class="title">counterup32_1clk_async_reset_n_instances</text>
+
+  <!-- ==================== STACKED SUB-BLOCKS ==================== -->
+  
+  <!-- Block 0 (Top) -->
+  <rect x="280" y="80" width="240" height="75" class="subbox"/>
+  <text x="400" y="110" class="title" font-size="12px">test_up_counter32 [0]</text>
+  <text x="400" y="125" class="subtitle">32-bit Up-Counter Unit</text>
+
+  <!-- Block 1 (Middle) -->
+  <rect x="280" y="175" width="240" height="75" class="subbox"/>
+  <text x="400" y="205" class="title" font-size="12px">test_up_counter32 [1]</text>
+  <text x="400" y="220" class="subtitle">32-bit Up-Counter Unit</text>
+
+  <!-- Block N-1 (Bottom) -->
+  <rect x="280" y="315" width="240" height="75" class="subbox"/>
+  <text x="400" y="345" class="title" font-size="12px">test_up_counter32 [88]</text>
+  <text x="400" y="360" class="subtitle">32-bit Up-Counter Unit</text>
+
+  <!-- Ellipsis / Stack Indicator -->
+  <text x="400" y="288" class="title" font-size="18px" fill="#6c757d">. . .</text>
+
+
+  <!-- ==================== INPUT WIRES (LEFT) ==================== -->
+
+  <!-- Shared Clock Input & Branching to all blocks -->
+  <text x="65" y="100" class="label" font-weight="bold">clock0</text>
+  <path d="M 120 95 L 180 95" class="wire-no-arrow"/>
+  <path d="M 180 75 L 180 350" class="wire-no-arrow"/>
+  
+  <!-- Branches to clock inputs -->
+  <path d="M 180 115 L 280 115" class="wire-green"/>
+  <path d="M 180 210 L 280 210" class="wire-green"/>
+  <path d="M 180 350 L 280 350" class="wire-green"/>
+
+  <!-- Enable / ID control input -->
+  <text x="65" y="420" class="label" font-weight="bold">id / en[...]</text>
+  <path d="M 130 415 L 280 415" class="wire-green"/>
+
+
+  <!-- ==================== SHARED RESET / TRUNK (BOTTOM-UP) ==================== -->
+
+  <text x="145" y="455" class="label" font-weight="bold" fill="#d9534f">reset</text>
+  <!-- Main vertical trunk coming from bottom boundary -->
+  <path d="M 210 440 L 210 140" class="wire-no-arrow"/>
+
+  <!-- Horizontal branches into each sub-block -->
+  <path d="M 210 140 L 280 140" class="wire-red"/>
+  <path d="M 210 235 L 280 235" class="wire-red"/>
+  <path d="M 210 375 L 280 375" class="wire-red"/>
+
+
+  <!-- ==================== OUTPUT WIRES (RIGHT) ==================== -->
+
+  <!-- Top Output -->
+  <text x="590" y="110" class="label" font-weight="bold">count_w[0] [31:0]</text>
+  <path d="M 520 115 L 610 115" class="wire-dark"/>
+
+  <!-- Middle Output -->
+  <text x="590" y="205" class="label" font-weight="bold">count_w[1] [31:0]</text>
+  <path d="M 520 210 L 610 210" class="wire-dark"/>
+
+  <!-- Bottom Output -->
+  <text x="590" y="345" class="label" font-weight="bold">count_w[88] [31:0]</text>
+  <path d="M 520 350 L 610 350" class="wire-dark"/>
+
+  <!-- Final Muxed Output / Assignment note -->
+  <text x="665" y="240" class="title" font-size="11px" fill="#495057">assign count =</text>
+  <text x="665" y="255" class="title" font-size="11px" fill="#495057">count_w[id]</text>
+
+</svg>
