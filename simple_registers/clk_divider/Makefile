@@ -5,7 +5,6 @@ SIM ?= icarus
 TOPLEVEL_LANG ?= verilog
 
 VERILOG_SOURCES += clk_divider.v
-#VERILOG_SOURCES += counterup16_4clk_posedge_async_resetn.v
 
 # TOPLEVEL is the name of the toplevel module in your Verilog or VHDL file
 TOPLEVEL = clk_divider
