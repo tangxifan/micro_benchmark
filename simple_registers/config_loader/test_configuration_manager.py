@@ -5,7 +5,7 @@ from cocotb.triggers import RisingEdge
 @cocotb.test()
 async def test_configuration_manager(dut):
     # Create a 50MHz clock (20ns period) on clk_in
-    clock = Clock(dut.clk_in, 20, units="ns")
+    clock = Clock(dut.clk_in, 20, unit="ns")
     cocotb.start_soon(clock.start())
 
     dut._log.info("Starting Configuration Manager Testbench...")
@@ -15,7 +15,8 @@ async def test_configuration_manager(dut):
     await RisingEdge(dut.clk_in)
 
     cycles_waited = 0
-    max_cycles = 500000  # Adjust based on BITSTREAM_SIZE and divider
+    # Increased max_cycles to account for the 4096x clock division and 6140 bitstream size
+    max_cycles = 35_000_000  
 
     # Safely poll configuration_done by handling potential 'X' or 'Z' values during startup
     while True:
