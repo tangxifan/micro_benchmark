@@ -1,7 +1,3 @@
-# TODO:
-#./counters/counter8_async_resetb/counter8_async_resetb.v:
-#./counters/counter8_sync_reset/counter8_sync_reset.v:
-
 blinking:
   source:
     - simple_registers/blinking/blinking.v
