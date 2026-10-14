@@ -6,14 +6,15 @@ counter16
 Introduction
 ~~~~~~~~~~~~
 
-There are a number of variations in the 16-bit counters
+There are a number of variations of the 16-bit counters. 
 
-This module implements a 16-bit up/down-counter triggered on the positive/negative edge of the clock (`clock0`) with an active-low/high asynchronous/synchronous reset (`reset`). Upon reset, the counter value is initialized to `16'hffff`, and decrements by 1 on each falling clock edge during normal operation.
+These modules implement 16-bit up/down-counters triggered on the positive/negative edge of the clock (`clock0`) with an active-low/high asynchronous/synchronous reset (`reset`). Upon reset, the counter value is initialized to `16'hffff`, and decrements by 1 on each rising/falling clock edge during normal operation.
 
 Source codes
 ~~~~~~~~~~~~
 
-All the counter designs are under ``simple_registers/counters``, in the naming convention of ``counter[up|down]16_Nclk_[pos|neg]edge_[a]sync_reset[p|n]``
+All the counter designs are under ``simple_registers/counters``, in the naming convention of ``counter[up|down]16_Nclk_[pos|neg]edge_[a]sync_reset[p|n]``.
+See details in the :ref:`developer_naming_convention`` on the counter names.
 
 A list of all the designs available:
   
