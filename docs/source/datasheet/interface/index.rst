@@ -53,3 +53,5 @@ Interface
    verilog_spi
    
    wbspi_master
+
+   wbuart32
