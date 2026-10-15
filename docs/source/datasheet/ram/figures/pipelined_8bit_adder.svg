@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 460" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .module-box { fill: #ffffff; stroke: #3b82f6; stroke-width: 2.5; rx: 8px; ry: 8px; }
+      .header-bg { fill: #eff6ff; }
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #1e3a8a; }
+      .port-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 12px; fill: #1e293b; }
+      .port-type { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 10px; fill: #64748b; }
+      .wire { fill: none; stroke: #64748b; stroke-width: 2; }
+      .wire-bus { fill: none; stroke: #0284c7; stroke-width: 2.5; }
+      .arrow { fill: #64748b; }
+      .arrow-bus { fill: #0284c7; }
+      .internal-box { fill: #f1f5f9; stroke: #cbd5e1; stroke-width: 1.5; rx: 4px; ry: 4px; }
+      .internal-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; fill: #334155; text-anchor: middle; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 8 5 L 0 8 z" class="arrow"/>
+    </marker>
+    <marker id="arrow-bus" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 8 5 L 0 8 z" class="arrow-bus"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" class="bg"/>
+
+  <!-- Module Box -->
+  <rect x="220" y="30" width="310" height="400" class="module-box"/>
+  <rect x="220" y="30" width="310" height="40" class="header-bg"/>
+  <text x="375" y="55" class="title" text-anchor="middle">pipelined_8bit_adder</text>
+
+  <!-- Internal Representation -->
+  <rect x="260" y="100" width="230" height="120" class="internal-box"/>
+  <text x="375" y="130" class="internal-text">Pipeline Stages (st0, st1)</text>
+  <text x="375" y="150" class="internal-text">AplusB = a_st1 + b_st1</text>
+
+  <rect x="260" y="240" width="230" height="130" class="internal-box"/>
+  <text x="375" y="270" class="internal-text">RAM Array [63:0]</text>
+  <text x="375" y="290" class="internal-text">&amp; Read Output Registers</text>
+
+  <!-- Input Ports (Left Side) -->
+  <!-- clk -->
+  <line x1="130" y1="80" x2="220" y2="80" class="wire" marker-end="url(#arrow)"/>
+  <text x="140" y="73" class="port-text">clk</text>
+  <text x="140" y="93" class="port-type">input</text>
+
+  <!-- ren / wen -->
+  <line x1="130" y1="130" x2="220" y2="130" class="wire" marker-end="url(#arrow)"/>
+  <text x="140" y="123" class="port-text">ren, wen</text>
+  <text x="140" y="143" class="port-type">inputs</text>
+
+  <!-- raddr / waddr -->
+  <line x1="130" y1="180" x2="220" y2="180" class="wire-bus" marker-end="url(#arrow-bus)"/>
+  <text x="140" y="173" class="port-text">raddr_[5:0], waddr_[5:0]</text>
+  <text x="140" y="193" class="port-type">flattened buses</text>
+
+  <!-- operands a and b -->
+  <line x1="130" y1="260" x2="220" y2="260" class="wire-bus" marker-end="url(#arrow-bus)"/>
+  <text x="140" y="253" class="port-text">a_[6:0], b_[6:0]</text>
+  <text x="140" y="273" class="port-type">flattened operands</text>
+
+  <!-- Output Ports (Right Side) -->
+  <!-- q output bus -->
+  <line x1="530" y1="290" x2="620" y2="290" class="wire-bus" marker-end="url(#arrow-bus)"/>
+  <text x="555" y="283" class="port-text">q_[7:0]</text>
+  <text x="555" y="303" class="port-type">flattened output</text>
+
+</svg>

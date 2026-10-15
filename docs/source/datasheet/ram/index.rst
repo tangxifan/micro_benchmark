@@ -6,6 +6,18 @@ Memory
 .. toctree::
    :maxdepth: 2
 
+  syn_spram_4x1
+
+  asyn_spram_4x1
+
+  dual_port_ram_1k
+
+  dual_port_ram_16k
+
   dual_port_ram_8x16_mif
 
   dual_port_ram_8x16_mif_Nclk
+
+  fifo
+
+  pipelined_8bit_adder

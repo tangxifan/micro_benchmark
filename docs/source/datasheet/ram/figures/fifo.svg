@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 440" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .module-box { fill: #ffffff; stroke: #3b82f6; stroke-width: 2.5; rx: 8px; ry: 8px; }
+      .header-bg { fill: #eff6ff; }
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #1e3a8a; }
+      .port-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 12px; fill: #1e293b; }
+      .port-type { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 10px; fill: #64748b; }
+      .wire { fill: none; stroke: #64748b; stroke-width: 2; }
+      .wire-bus { fill: none; stroke: #0284c7; stroke-width: 2.5; }
+      .arrow { fill: #64748b; }
+      .arrow-bus { fill: #0284c7; }
+      .internal-box { fill: #f1f5f9; stroke: #cbd5e1; stroke-width: 1.5; rx: 4px; ry: 4px; }
+      .internal-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; fill: #334155; text-anchor: middle; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 8 5 L 0 8 z" class="arrow"/>
+    </marker>
+    <marker id="arrow-bus" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 8 5 L 0 8 z" class="arrow-bus"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" class="bg"/>
+
+  <!-- Module Box -->
+  <rect x="220" y="30" width="310" height="380" class="module-box"/>
+  <rect x="220" y="30" width="310" height="40" class="header-bg"/>
+  <text x="375" y="55" class="title" text-anchor="middle">fifo</text>
+
+  <!-- Internal Primitive Representation -->
+  <rect x="260" y="110" width="230" height="130" class="internal-box"/>
+  <text x="375" y="140" class="internal-text">Pointer &amp; Control Logic</text>
+  <text x="375" y="160" class="internal-text">(empty, full status)</text>
+
+  <rect x="260" y="260" width="230" height="120" class="internal-box"/>
+  <text x="375" y="290" class="internal-text">sync_dual_port_ram</text>
+  <text x="375" y="310" class="internal-text">Block RAM Primitive</text>
+
+  <!-- Input Ports (Left Side) -->
+  <!-- clk -->
+  <line x1="130" y1="80" x2="220" y2="80" class="wire" marker-end="url(#arrow)"/>
+  <text x="140" y="73" class="port-text">clk</text>
+  <text x="140" y="93" class="port-type">input</text>
+
+  <!-- reset -->
+  <line x1="130" y1="130" x2="220" y2="130" class="wire" marker-end="url(#arrow)"/>
+  <text x="140" y="123" class="port-text">reset</text>
+  <text x="140" y="143" class="port-type">input</text>
+
+  <!-- read -->
+  <line x1="130" y1="180" x2="220" y2="180" class="wire" marker-end="url(#arrow)"/>
+  <text x="140" y="173" class="port-text">read</text>
+  <text x="140" y="193" class="port-type">input</text>
+
+  <!-- write -->
+  <line x1="130" y1="230" x2="220" y2="230" class="wire" marker-end="url(#arrow)"/>
+  <text x="140" y="223" class="port-text">write</text>
+  <text x="140" y="243" class="port-type">input</text>
+
+  <!-- write_data -->
+  <line x1="130" y1="310" x2="220" y2="310" class="wire-bus" marker-end="url(#arrow-bus)"/>
+  <text x="140" y="303" class="port-text">write_data[...]</text>
+  <text x="140" y="323" class="port-type">input bus</text>
+
+  <!-- Output Ports (Right Side) -->
+  <!-- empty -->
+  <line x1="530" y1="130" x2="620" y2="130" class="wire" marker-end="url(#arrow)"/>
+  <text x="555" y="123" class="port-text">empty</text>
+  <text x="555" y="143" class="port-type">output</text>
+
+  <!-- full -->
+  <line x1="530" y1="190" x2="620" y2="190" class="wire" marker-end="url(#arrow)"/>
+  <text x="555" y="183" class="port-text">full</text>
+  <text x="555" y="203" class="port-type">output</text>
+
+  <!-- read_data -->
+  <line x1="530" y1="310" x2="620" y2="310" class="wire-bus" marker-end="url(#arrow-bus)"/>
+  <text x="555" y="303" class="port-text">read_data[...]</text>
+  <text x="555" y="323" class="port-type">output bus</text>
+
+</svg>

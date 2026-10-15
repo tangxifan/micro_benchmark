@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 420" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .module-box { fill: #ffffff; stroke: #3b82f6; stroke-width: 2.5; rx: 8px; ry: 8px; }
+      .header-bg { fill: #eff6ff; }
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #1e3a8a; }
+      .port-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 12px; fill: #1e293b; }
+      .port-type { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 10px; fill: #64748b; }
+      .wire { fill: none; stroke: #64748b; stroke-width: 2; }
+      .wire-bus { fill: none; stroke: #0284c7; stroke-width: 2.5; }
+      .arrow { fill: #64748b; }
+      .arrow-bus { fill: #0284c7; }
+      .internal-box { fill: #f1f5f9; stroke: #cbd5e1; stroke-width: 1.5; rx: 4px; ry: 4px; }
+      .internal-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; fill: #334155; text-anchor: middle; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 8 5 L 0 8 z" class="arrow"/>
+    </marker>
+    <marker id="arrow-bus" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 8 5 L 0 8 z" class="arrow-bus"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" class="bg"/>
+
+  <!-- Module Box -->
+  <rect x="220" y="40" width="310" height="340" class="module-box"/>
+  <rect x="220" y="40" width="310" height="40" class="header-bg"/>
+  <text x="375" y="65" class="title" text-anchor="middle">dual_port_ram_1k</text>
+
+  <!-- Internal Primitive Representation -->
+  <rect x="260" y="120" width="230" height="210" class="internal-box"/>
+  <text x="375" y="150" class="internal-text">dual_port_sram_1kb</text>
+  <text x="375" y="170" class="internal-text">128 x 8 bit RAM</text>
+
+  <!-- Input Ports (Left Side) -->
+  <!-- clk -->
+  <line x1="130" y1="90" x2="220" y2="90" class="wire" marker-end="url(#arrow)"/>
+  <text x="140" y="83" class="port-text">clk</text>
+  <text x="140" y="103" class="port-type">input</text>
+
+  <!-- wen -->
+  <line x1="130" y1="140" x2="220" y2="140" class="wire" marker-end="url(#arrow)"/>
+  <text x="140" y="133" class="port-text">wen</text>
+  <text x="140" y="153" class="port-type">input</text>
+
+  <!-- ren -->
+  <line x1="130" y1="190" x2="220" y2="190" class="wire" marker-end="url(#arrow)"/>
+  <text x="140" y="183" class="port-text">ren</text>
+  <text x="140" y="203" class="port-type">input</text>
+
+  <!-- waddr [6:0] -->
+  <line x1="130" y1="240" x2="220" y2="240" class="wire-bus" marker-end="url(#arrow-bus)"/>
+  <text x="140" y="233" class="port-text">waddr[6:0]</text>
+  <text x="140" y="253" class="port-type">input bus</text>
+
+  <!-- raddr [6:0] -->
+  <line x1="130" y1="290" x2="220" y2="290" class="wire-bus" marker-end="url(#arrow-bus)"/>
+  <text x="140" y="283" class="port-text">raddr[6:0]</text>
+  <text x="140" y="303" class="port-type">input bus</text>
+
+  <!-- din [7:0] -->
+  <line x1="130" y1="340" x2="220" y2="340" class="wire-bus" marker-end="url(#arrow-bus)"/>
+  <text x="140" y="333" class="port-text">din[7:0]</text>
+  <text x="140" y="353" class="port-type">input bus</text>
+
+  <!-- Output Ports (Right Side) -->
+  <!-- dout [7:0] -->
+  <line x1="530" y1="215" x2="620" y2="215" class="wire-bus" marker-end="url(#arrow-bus)"/>
+  <text x="555" y="208" class="port-text">dout[7:0]</text>
+  <text x="555" y="228" class="port-type">output bus</text>
+
+</svg>
