@@ -43,3 +43,5 @@ Interface
    routing_test
 
    sapone
+
+   test_mode_low
