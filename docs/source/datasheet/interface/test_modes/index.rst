@@ -8,6 +8,6 @@ Test CLB Modes
 
    test_mode_low
 
-   k4_N4_test_mode
+   k4n4_test_modes
 
-   k6_N10_test_mode
+   k6n10_test_modes

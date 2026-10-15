@@ -17,7 +17,7 @@ See details in ``interface/K4N4_test_modes.v``
 Block Diagram
 ~~~~~~~~~~~~~
 
-.. figure:: ./figures/K4n4_test_schematic.svg
+.. figure:: ./figures/k4n4_test_modes_schematic.svg
   :width: 70%
   :alt: K4n4_test schematic
 
