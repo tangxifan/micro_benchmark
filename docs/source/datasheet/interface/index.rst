@@ -41,3 +41,5 @@ Interface
    fpga_can
 
    routing_test
+
+   sapone
