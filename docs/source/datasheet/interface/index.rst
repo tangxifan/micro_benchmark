@@ -28,6 +28,8 @@ Interface
 
    wb_rs232_syscon
 
+   wbi2c
+
    sockit_owm
 
    spimaster
