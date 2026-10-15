@@ -18,8 +18,8 @@ dual_port_ram_1k:
 
 fifo_dual_port_ram:
   source:
-    - ram/fifo/rtl/fifo.v
-    - ram/fifo/rtl/sync_dual_port_ram.v
+    - ram/fifo/fifo.v
+    - ram/fifo/sync_dual_port_ram.v
   top_module: fifo
   cocotb_dir: ram/fifo
 

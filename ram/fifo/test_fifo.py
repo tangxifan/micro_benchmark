@@ -4,10 +4,10 @@ from cocotb.triggers import RisingEdge, Timer
 
 @cocotb.test()
 async def test_fifo_functional(dut):
-    """Testbench for synchronous FIFO module."""
+    """Testbench for synchronous FIFO module with correct single-cycle read pulsing[cite: 5]."""
     
     # Start a 10ns period clock (100 MHz)
-    clock = Clock(dut.clk, 10, units="ns")
+    clock = Clock(dut.clk, 10, unit="ns")
     cocotb.start_soon(clock.start())
 
     # Initialize control and input signals
@@ -36,28 +36,32 @@ async def test_fifo_functional(dut):
         dut.write.value = 1
         dut.write_data.value = val
 
-    # Disable write enable
+    # Deassert write control
     await RisingEdge(dut.clk)
     dut.write.value = 0
+    dut.write_data.value = 0
+
+    # Wait a cycle for stability
+    await RisingEdge(dut.clk)
 
     cocotb.log.info("Starting sequential read and verification operations...")
     for expected_val in test_data:
+        # Assert read for one clock cycle
         await RisingEdge(dut.clk)
         dut.read.value = 1
         
-        # Wait for the read data to register and update output
+        # Deassert read on the next cycle so it doesn't auto-increment continuously
         await RisingEdge(dut.clk)
+        dut.read.value = 0
         
-        # Check value
+        # Wait a tiny delta after the edge to let combinatorial outputs settle
+        await Timer(1, unit="ns")
+        
         actual_val = int(dut.read_data.value)
         assert actual_val == expected_val, \
             f"Data mismatch: expected {hex(expected_val)}, got {hex(actual_val)}"
         
         cocotb.log.info(f"Verified data: {hex(actual_val)}")
-
-    # Stop reading
-    await RisingEdge(dut.clk)
-    dut.read.value = 0
 
     # Verify FIFO is empty again
     await RisingEdge(dut.clk)
