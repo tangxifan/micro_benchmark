@@ -17,6 +17,7 @@ SAPone:
     - interface/SAPone/rtl/ROM.v
     - interface/SAPone/rtl/SAPone.v
   top_module: SAPone
+  cocotb_dir: interface/SAPone
 
 k4n4_test_modes:
   source:
