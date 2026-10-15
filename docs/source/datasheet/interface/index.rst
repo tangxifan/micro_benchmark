@@ -51,3 +51,5 @@ Interface
    uberddr3
 
    verilog_spi
+   
+   wbspi_master
