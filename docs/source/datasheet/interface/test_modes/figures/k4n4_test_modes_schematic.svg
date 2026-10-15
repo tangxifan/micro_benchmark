@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .module-box { fill: #ffffff; stroke: #3b82f6; stroke-width: 2.5; rx: 8px; ry: 8px; }
+      .header-bg { fill: #eff6ff; }
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #1e3a8a; }
+      .port-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 11px; fill: #1e293b; }
+      .wire { fill: none; stroke: #64748b; stroke-width: 2; }
+      .wire-clk { fill: none; stroke: #ef4444; stroke-width: 2; }
+      .wire-bus { fill: none; stroke: #0284c7; stroke-width: 2.5; }
+      .arrow { fill: #64748b; }
+      .arrow-clk { fill: #ef4444; }
+      .arrow-bus { fill: #0284c7; }
+      .label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; fill: #334155; text-anchor: middle; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 8 5 L 0 8 z" class="arrow" />
+    </marker>
+    <marker id="arrow-clk" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 8 5 L 0 8 z" class="arrow-clk" />
+    </marker>
+    <marker id="arrow-bus" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 8 5 L 0 8 z" class="arrow-bus" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" class="bg" />
+
+  <!-- Module Boundary Box -->
+  <rect x="50" y="30" width="800" height="460" rx="10" ry="10" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 5" />
+  <text x="70" y="55" class="title">K4n4_test Architecture</text>
+
+  <!-- Input Ports -->
+  <!-- a, b, c -->
+  <line x1="30" y1="140" x2="160" y2="140" class="wire" marker-end="url(#arrow)" />
+  <text x="40" y="132" class="port-text">a, b, c</text>
+
+  <!-- clk (wired explicitly to the synchronous register block) -->
+  <line x1="30" y1="360" x2="530" y2="360" class="wire-clk" marker-end="url(#arrow-clk)" />
+  <text x="40" y="352" fill="#ef4444" font-family="-apple-system, sans-serif" font-size="11px">clk (posedge trigger)</text>
+
+  <!-- Combinational Logic Block -->
+  <rect x="160" y="90" width="220" height="200" class="module-box" />
+  <rect x="160" y="90" width="220" height="25" class="header-bg" />
+  <text x="270" y="107" class="label">Combinational Logic</text>
+  <text x="175" y="135" class="port-text">XOR = a ^ b ^ c</text>
+  <text x="175" y="160" class="port-text">XNOR = !XOR</text>
+  <text x="175" y="185" class="port-text">OR / NOR (a, b, c)</text>
+  <text x="210" y="210" class="port-text">AND / NAND (a, b, c)</text>
+
+  <!-- Synchronous Registers Block -->
+  <rect x="530" y="90" width="220" height="200" class="module-box" />
+  <rect x="530" y="90" width="220" height="25" class="header-bg" />
+  <text x="640" y="107" class="label">Synchronous Registers</text>
+  <text x="545" y="135" class="port-text">XOR_sync <= XOR</text>
+  <text x="545" y="160" class="port-text">XNOR_sync <= XNOR</text>
+  <text x="545" y="185" class="port-text">OR_sync / NOR_sync</text>
+  <text x="545" y="210" class="port-text">AND_sync / NAND_sync</text>
+  <text x="545" y="265" fill="#ef4444" font-size="10px">Clocked by @(posedge clk)</text>
+
+  <!-- Interconnects: Combinational to Outputs & Registers -->
+  <line x1="380" y1="140" x2="480" y2="140" class="wire" marker-end="url(#arrow)" />
+  <text x="395" y="132" class="port-text">XOR, XNOR, OR...</text>
+
+  <line x1="380" y1="210" x2="530" y2="210" class="wire" marker-end="url(#arrow)" />
+  <text x="420" y="202" class="port-text">To Registers</text>
+
+  <!-- Final Output Paths -->
+  <!-- Combinational Bus Out -->
+  <line x1="480" y1="140" x2="810" y2="140" class="wire-bus" marker-end="url(#arrow-bus)" />
+  <text x="700" y="132" class="port-text">Comb Outputs (6)</text>
+
+  <!-- Registered Bus Out -->
+  <line x1="750" y1="210" x2="810" y2="210" class="wire-bus" marker-end="url(#arrow-bus)" />
+  <text x="700" y="202" class="port-text">Sync Outputs (6)</text>
+
+</svg>
