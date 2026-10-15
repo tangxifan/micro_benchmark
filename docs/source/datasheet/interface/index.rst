@@ -6,6 +6,8 @@ Interface
 .. toctree::
    :maxdepth: 2
 
+   opencores_can
+
    opencores_uart16550
 
    opencores_simple_spi
