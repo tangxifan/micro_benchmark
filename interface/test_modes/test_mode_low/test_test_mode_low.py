@@ -2,10 +2,11 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
 
+
 @cocotb.test()
 async def test_test_mode_low_functional(dut):
     """Testbench for test_mode_low verifying pipelined shift and sum behavior."""
-    
+
     # Start a 10ns period clock (100 MHz)
     clock = Clock(dut.clk, 10, unit="ns")
     cocotb.start_soon(clock.start())
@@ -25,14 +26,7 @@ async def test_test_mode_low_functional(dut):
     cocotb.log.info("Reset released, starting test vectors...")
 
     # Define test patterns for a and b inputs
-    test_vectors = [
-        (1, 0),
-        (0, 1),
-        (1, 1),
-        (0, 0),
-        (1, 1),
-        (0, 1)
-    ]
+    test_vectors = [(1, 0), (0, 1), (1, 1), (0, 0), (1, 1), (0, 1)]
 
     for a_val, b_val in test_vectors:
         dut.a.value = a_val

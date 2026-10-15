@@ -2,10 +2,11 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
 
+
 @cocotb.test()
 async def test_k4n4_functional(dut):
     """Testbench for K4n4_test module verifying combinatorial logic gates and their synchronous register counterparts."""
-    
+
     # Start a 10ns period clock (100 MHz)
     clock = Clock(dut.clk, 10, unit="ns")
     cocotb.start_soon(clock.start())
@@ -27,7 +28,7 @@ async def test_k4n4_functional(dut):
         (1, 1, 0),
         (1, 0, 1),
         (0, 1, 1),
-        (1, 1, 1)
+        (1, 1, 1),
     ]
 
     cocotb.log.info("Starting K4n4_test logic verification...")
@@ -69,6 +70,8 @@ async def test_k4n4_functional(dut):
         assert int(dut.AND_sync.value) == exp_and, f"AND_sync mismatch"
         assert int(dut.NAND_sync.value) == exp_nand, f"NAND_sync mismatch"
 
-        cocotb.log.info(f"Verified vector a={a}, b={b}, c={c} -> Comb & Sync outputs matched successfully.")
+        cocotb.log.info(
+            f"Verified vector a={a}, b={b}, c={c} -> Comb & Sync outputs matched successfully."
+        )
 
     cocotb.log.info("All K4n4_test test cases passed successfully!")
