@@ -2,10 +2,11 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
 
+
 @cocotb.test()
 async def test_fifo_functional(dut):
     """Testbench for synchronous FIFO module with correct single-cycle read pulsing[cite: 5]."""
-    
+
     # Start a 10ns period clock (100 MHz)
     clock = Clock(dut.clk, 10, unit="ns")
     cocotb.start_soon(clock.start())
@@ -49,22 +50,23 @@ async def test_fifo_functional(dut):
         # Assert read for one clock cycle
         await RisingEdge(dut.clk)
         dut.read.value = 1
-        
+
         # Deassert read on the next cycle so it doesn't auto-increment continuously
         await RisingEdge(dut.clk)
         dut.read.value = 0
-        
+
         # Wait a tiny delta after the edge to let combinatorial outputs settle
         await Timer(1, unit="ns")
-        
+
         actual_val = int(dut.read_data.value)
-        assert actual_val == expected_val, \
-            f"Data mismatch: expected {hex(expected_val)}, got {hex(actual_val)}"
-        
+        assert (
+            actual_val == expected_val
+        ), f"Data mismatch: expected {hex(expected_val)}, got {hex(actual_val)}"
+
         cocotb.log.info(f"Verified data: {hex(actual_val)}")
 
     # Verify FIFO is empty again
     await RisingEdge(dut.clk)
     assert dut.empty.value == 1, "FIFO should be empty after reading all items"
-    
+
     cocotb.log.info("All FIFO tests passed successfully!")

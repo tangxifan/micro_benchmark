@@ -2,10 +2,11 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
 
+
 @cocotb.test()
 async def test_dual_port_ram_1k_functional(dut):
     """Testbench for dual_port_ram_1k (128x8-bit dual-port RAM)."""
-    
+
     # Start a 10ns period clock (100 MHz)
     clock = Clock(dut.clk, 10, units="ns")
     cocotb.start_soon(clock.start())
@@ -32,7 +33,7 @@ async def test_dual_port_ram_1k_functional(dut):
         dut.wen.value = 1
         dut.waddr.value = addr
         dut.din.value = data
-        
+
     # Disable write enable
     await RisingEdge(dut.clk)
     dut.wen.value = 0
@@ -45,22 +46,23 @@ async def test_dual_port_ram_1k_functional(dut):
         await RisingEdge(dut.clk)
         dut.ren.value = 1
         dut.raddr.value = addr
-        
+
         # 2. Wait for the next rising edge where the RAM captures raddr and updates 'internal'
         await RisingEdge(dut.clk)
-        
+
         # 3. Wait a tiny delta after the edge to let combinatorial outputs settle
         await Timer(1, units="ns")
-        
+
         # Check for undefined (X/Z) values using standard str() conversion
         val_str = str(dut.dout.value)
-        if 'x' in val_str.lower() or 'z' in val_str.lower():
+        if "x" in val_str.lower() or "z" in val_str.lower():
             raise ValueError(f"Output dout contains undefined values: {val_str}")
-            
+
         actual_val = int(dut.dout.value)
-        assert actual_val == expected_val, \
-            f"Mismatch at address {hex(addr)}: expected {hex(expected_val)}, got {hex(actual_val)}"
-        
+        assert (
+            actual_val == expected_val
+        ), f"Mismatch at address {hex(addr)}: expected {hex(expected_val)}, got {hex(actual_val)}"
+
         cocotb.log.info(f"Address {hex(addr)}: Data verified correctly as {hex(actual_val)}")
 
     # Disable read enable after checks

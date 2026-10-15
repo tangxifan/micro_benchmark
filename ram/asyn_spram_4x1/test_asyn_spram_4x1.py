@@ -2,10 +2,11 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
 
+
 @cocotb.test()
 async def test_asyn_spram_functional(dut):
     """Test bench for 4x1 asynchronous read single-port RAM."""
-    
+
     # Start a 10ns period clock (100 MHz)
     clock = Clock(dut.clk, 10, units="ns")
     cocotb.start_soon(clock.start())
@@ -29,7 +30,7 @@ async def test_asyn_spram_functional(dut):
         dut.addr_0.value = addr & 1
         dut.addr_1.value = (addr >> 1) & 1
         dut.d_in.value = test_data[addr]
-        
+
     # Disable write enable after writing all values
     await RisingEdge(dut.clk)
     dut.wr_en.value = 0
@@ -39,17 +40,18 @@ async def test_asyn_spram_functional(dut):
         # Change address asynchronously (without waiting for clock edge)
         dut.addr_0.value = addr & 1
         dut.addr_1.value = (addr >> 1) & 1
-        
+
         # Wait a short combinatorial propagation delay
         await Timer(1, units="ns")
-        
+
         # Check if output matches expected value
         actual_val = int(dut.d_out.value)
         expected_val = test_data[addr]
-        
-        assert actual_val == expected_val, \
-            f"Mismatch at address {addr}: expected {expected_val}, got {actual_val}"
-        
+
+        assert (
+            actual_val == expected_val
+        ), f"Mismatch at address {addr}: expected {expected_val}, got {actual_val}"
+
         cocotb.log.info(f"Address {addr}: Data verified correctly as {actual_val}")
 
     cocotb.log.info("All SPRAM tests passed successfully!")
