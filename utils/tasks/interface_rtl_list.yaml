@@ -23,13 +23,16 @@ k4n4_test_modes:
   source:
     - interface/test_modes/k4_N4/K4N4_test_modes.v
   top_module: K4N4_test_modes
+  cocotb_dir: interface/test_modes/k4_N4
 
 k6n10_test_modes:
   source:
     - interface/test_modes/k6_N10/K6N10_test_modes.v
   top_module: K6N10_test_modes
+  cocotb_dir: interface/test_modes/k6_N10
   
 test_mode_low:
   source:
     - interface/test_mode_low/test_mode_low.v
   top_module: test_mode_low
+  cocotb_dir: interface/test_mode_low
