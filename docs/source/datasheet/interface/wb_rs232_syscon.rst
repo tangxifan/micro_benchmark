@@ -7,4 +7,12 @@ Wishbone RS232 Controller
 
 .. only:: builder_html
 
+Source Code
+~~~~~~~~~~~
+
+You can find source files under ``interface/wb_rs232_syscon``
+
+Technical Notes
+~~~~~~~~~~~~~~~
+
 Detailed manual can be found :download:`here <../../_static/wb_rs232_syscon_manual.doc>`

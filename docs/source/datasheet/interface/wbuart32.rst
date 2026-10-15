@@ -15,4 +15,4 @@ You can find source files under ``interface/wbuart32``
 Technical Notes
 ~~~~~~~~~~~~~~~
 
-Detailed manual can be found :download:`here <../../_static/wbuart32_readme.md>`
+.. mdinclude:: ../../_static/wbuart32_readme.md

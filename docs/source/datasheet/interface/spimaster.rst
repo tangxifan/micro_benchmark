@@ -7,4 +7,12 @@ Wishbone SPI Master
 
 .. only:: builder_html
 
+Source Code
+~~~~~~~~~~~
+
+You can find source files under ``interface/spimaster``
+
+Technical Notes
+~~~~~~~~~~~~~~~
+
 Detailed manual can be found :download:`here <../../_static/spimaster_manual.pdf>`

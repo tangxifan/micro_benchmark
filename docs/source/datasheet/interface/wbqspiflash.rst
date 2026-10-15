@@ -7,4 +7,13 @@ Wishbone QSPI
 
 .. only:: builder_html
 
+
+Source Code
+~~~~~~~~~~~
+
+You can find source files under ``interface/wbqspiflash``
+
+Technical Notes
+~~~~~~~~~~~~~~~
+
 Detailed manual can be found :download:`here <../../_static/wbqspiflash_manual.pdf>`

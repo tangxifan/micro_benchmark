@@ -5,7 +5,13 @@ UART IP Core
 
 .. figure:: ./figures/OpenCores.png
 
-Specification
+.. note:: This project comes from `opencores <https://opencores.org/projects/uart>`_
+
+Source Code
+~~~~~~~~~~~
+
+You can find source files under ``interface/opencores_uart16550``
+
 
 Authors
 -------

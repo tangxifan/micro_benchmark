@@ -3,7 +3,12 @@
 PWM/Timer/Counter IP Core
 =========================
 
-Specification
+.. note:: This project comes from `opencores <https://opencores.org/projects/ptc>`_
+
+Source Code
+~~~~~~~~~~~
+
+You can find source files under ``interface/opencores_ptc``
 
 Authors
 -------

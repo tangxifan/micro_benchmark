@@ -7,6 +7,12 @@ UberDDR3
 
 .. only:: builder_html
 
+Source Code
+~~~~~~~~~~~
+
 You can find source files under ``interface/uberddr3``
 
-Detailed manual can be found :download:`here <../../_static/uberddr3_readme.md>`
+Technical Notes
+~~~~~~~~~~~~~~~
+
+.. mdinclude:: ../../_static/uberddr3_readme.md

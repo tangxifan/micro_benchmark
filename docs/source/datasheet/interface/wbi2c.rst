@@ -7,6 +7,12 @@ wbi2c
 
 .. only:: builder_html
 
+Source Code
+~~~~~~~~~~~
+
 You can find source files under ``interface/wbi2c``
 
-Detailed manual can be found :download:`here <../../_static/wbi2c_readme.md>`
+Technical Notes
+~~~~~~~~~~~~~~~
+
+.. mdinclude:: ../../_static/wbi2c_readme.md
