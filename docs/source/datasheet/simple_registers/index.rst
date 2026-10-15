@@ -8,10 +8,10 @@ Simple Registers
 
    blinking
    clk_divider
+   config_loader
    pwm_generator
    rst_sync
    rstn_sync
-   counter8_async_reset
-   counter8_Nclk_async_reset
-   timer8_async_reset
-   timer8_Nclk_async_reset
+   ff/index
+   counters/index
+   timers/index

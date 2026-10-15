@@ -12,8 +12,14 @@ DSP
 
    signed_integer_divider
 
+   dspfilters
+
+   macN
+   
+   mult_NxN
+
    pid_controller
 
-   mult_8_pipelined
+   mult_N_pipelined
 
    mult_8_pipelined_Nclk

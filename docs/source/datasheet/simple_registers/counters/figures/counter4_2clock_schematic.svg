@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" width="100%" height="100%">
+  <defs>
+    <!-- Arrowhead marker -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#333"/>
+    </marker>
+    <style>
+      .box { fill: #f8f9fa; stroke: #343a40; stroke-width: 2; rx: 6; ry: 6; }
+      .title { font-family: sans-serif; font-size: 15px; font-weight: bold; fill: #212529; text-anchor: middle; }
+      .subtitle { font-family: sans-serif; font-size: 11px; font-style: italic; fill: #6c757d; text-anchor: middle; }
+      .label { font-family: sans-serif; font-size: 12px; fill: #333; }
+      .pin-label { font-family: sans-serif; font-size: 10px; fill: #333; }
+      .wire { fill: none; stroke: #333; stroke-width: 1.5; marker-end: url(#arrow); }
+      .wire-no-arrow { fill: none; stroke: #333; stroke-width: 1.5; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff"/>
+
+  <!-- Top-Level Boundary (counter4_2clock) -->
+  <rect x="40" y="40" width="640" height="280" fill="none" stroke="#6c757d" stroke-width="2" stroke-dasharray="6,6" rx="8"/>
+  <text x="360" y="65" class="title">counter4_2clock[cite: 15]</text>
+
+  <!-- Submodule / Logic Block 0 (q0) -->
+  <rect x="220" y="90" width="230" height="100" class="box"/>
+  <text x="335" y="115" class="title">Counter 0 (q0)</text>
+  <text x="335" y="130" class="subtitle">4-bit Synchronous Up-Counter[cite: 15]</text>
+
+  <!-- Submodule / Logic Block 1 (q1) -->
+  <rect x="220" y="205" width="230" height="100" class="box"/>
+  <text x="335" y="230" class="title">Counter 1 (q1)</text>
+  <text x="335" y="245" class="subtitle">4-bit Synchronous Up-Counter[cite: 15]</text>
+
+  <!-- Input Ports & Wires (Left) -->
+  <!-- clk0 -->
+  <text x="65" y="135" class="label" font-weight="bold">clk0[cite: 15]</text>
+  <path d="M 120 130 L 220 130" class="wire"/>
+  <polygon points="220,125 228,130 220,135" fill="#333"/>
+
+  <!-- rst (Shared Reset) -->
+  <text x="65" y="175" class="label" font-weight="bold">rst[cite: 15]</text>
+  <path d="M 110 170 L 170 170" class="wire-no-arrow"/>
+  <path d="M 170 150 L 170 260" class="wire-no-arrow"/>
+  <!-- Branch to Counter 0 rst -->
+  <path d="M 170 150 L 220 150" class="wire"/>
+  <text x="180" y="145" class="pin-label">RST</text>
+  <!-- Branch to Counter 1 rst -->
+  <path d="M 170 260 L 220 260" class="wire"/>
+  <text x="180" y="255" class="pin-label">RST</text>
+
+  <!-- clk1 -->
+  <text x="65" y="250" class="label" font-weight="bold">clk1[cite: 15]</text>
+  <path d="M 120 245 L 220 245" class="wire"/>
+  <polygon points="220,240 228,245 220,250" fill="#333"/>
+
+  <!-- Output Ports & Wires (Right) -->
+  <!-- q0 [3:0] -->
+  <text x="520" y="145" class="label" font-weight="bold">q0 [3:0][cite: 15]</text>
+  <path d="M 450 140 L 530 140" class="wire"/>
+
+  <!-- q1 [3:0] -->
+  <text x="520" y="260" class="label" font-weight="bold">q1 [3:0][cite: 15]</text>
+  <path d="M 450 255 L 530 255" class="wire"/>
+
+</svg>

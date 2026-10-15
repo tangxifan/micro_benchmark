@@ -1,26 +1,4 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 05/05/2021 10:29:55 AM
-// Design Name: 
-// Module Name: configuration_manager
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
-`include "clock_divider.v"
-`include "pulse_generator.v"
 
 module configuration_manager(
     input clk_in,
@@ -31,7 +9,8 @@ module configuration_manager(
     );
     
     parameter START_CYCLE=3; // Start configuration on cycle 3 of prog_clk
-    parameter CONFIGURATION_CLK_DIV_SIZE=12; // Divide clk_in (50MHz) by 4096 (2^12) times
+//    parameter CONFIGURATION_CLK_DIV_SIZE=12; // Divide clk_in (50MHz) by 4096 (2^12) times
+    parameter CONFIGURATION_CLK_DIV_SIZE=2; // To reduce simulation time
     
     wire prog_clk_out; // prog_clk signal from clk_divider
     wire ccff_head_out;
@@ -51,7 +30,6 @@ module configuration_manager(
     
     
     // PROG_CLK
-    // Divide pl_clk (50MHz) by 4096 (2^12) times
     clock_divider #(
       .CLK_DIVIDER_SIZE(CONFIGURATION_CLK_DIV_SIZE)
       ) prog_clk_divider (

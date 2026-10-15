@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 320" width="100%" height="100%">
+  <defs>
+    <!-- Arrowhead marker -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#333"/>
+    </marker>
+    <style>
+      .box { fill: #f8f9fa; stroke: #343a40; stroke-width: 2; rx: 4; ry: 4; }
+      .title { font-family: sans-serif; font-size: 16px; font-weight: bold; fill: #212529; text-anchor: middle; }
+      .subtitle { font-family: sans-serif; font-size: 12px; font-style: italic; fill: #6c757d; text-anchor: middle; }
+      .label { font-family: sans-serif; font-size: 12px; fill: #333; }
+      .pin-label { font-family: sans-serif; font-size: 11px; fill: #333; }
+      .wire { fill: none; stroke: #333; stroke-width: 1.5; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff"/>
+
+  <!-- Top-Level Boundary (dffnr) -->
+  <rect x="40" y="40" width="570" height="240" fill="none" stroke="#6c757d" stroke-width="2" stroke-dasharray="6,6" rx="8"/>
+  <text x="325" y="65" class="title">dffnr</text>
+
+  <!-- Core Flip-Flop Component Box -->
+  <rect x="220" y="90" width="210" height="150" class="box"/>
+  <text x="325" y="120" class="title">DFFNR</text>
+  <text x="325" y="137" class="subtitle">(negedge D-FF)</text>
+
+  <!-- Input Ports (Left) -->
+  <!-- d_i -->
+  <text x="70" y="145" class="label" font-weight="bold">d_i[cite: 14]</text>
+  <path d="M 140 140 L 220 140" class="wire"/>
+
+  <!-- clk_i -->
+  <text x="70" y="185" class="label" font-weight="bold">clk_i[cite: 14]</text>
+  <path d="M 140 180 L 220 180" class="wire"/>
+  <!-- Clock inversion/negedge indicator symbol (small falling edge triangle/notch) -->
+  <polygon points="220,175 230,180 220,185" fill="#333"/>
+
+  <!-- clr_i -->
+  <text x="70" y="225" class="label" font-weight="bold">clr_i[cite: 14]</text>
+  <path d="M 140 220 L 220 220" class="wire"/>
+  <text x="230" y="213" class="pin-label">CLR (Async)</text>
+
+  <!-- Output Ports (Right) -->
+  <!-- q_o -->
+  <text x="500" y="165" class="label" font-weight="bold">q_o[cite: 14]</text>
+  <path d="M 430 160 L 510 160" class="wire"/>
+
+  <!-- Descriptive notes inside symbol/box -->
+  <text x="325" y="210" class="subtitle" font-size="10px">q &lt;= clr ? 0 : d[cite: 14]</text>
+
+</svg>

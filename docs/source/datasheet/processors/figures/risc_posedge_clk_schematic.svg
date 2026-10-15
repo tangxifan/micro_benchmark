@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 620" width="100%" height="100%">
+  <defs>
+    <!-- Arrowhead marker -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#333"/>
+    </marker>
+    <style>
+      .boundary { fill: none; stroke: #6c757d; stroke-width: 2; stroke-dasharray: 6,6; rx: 8; }
+      .subbox { fill: #fdfdfe; stroke: #495057; stroke-width: 1.5; rx: 4; ry: 4; }
+      .title { font-family: sans-serif; font-size: 15px; font-weight: bold; fill: #212529; text-anchor: middle; }
+      .subtitle { font-family: sans-serif; font-size: 11px; font-style: italic; fill: #6c757d; text-anchor: middle; }
+      .label { font-family: sans-serif; font-size: 10px; fill: #333; }
+      .bus-label { font-family: sans-serif; font-size: 11px; font-weight: bold; fill: #0056b3; }
+      .wire { fill: none; stroke: #333; stroke-width: 1.5; marker-end: url(#arrow); }
+      .bus-wire { fill: none; stroke: #0056b3; stroke-width: 2; marker-end: url(#arrow); }
+      .control-wire { fill: none; stroke: #d9534f; stroke-width: 1; stroke-dasharray: 3,3; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff"/>
+
+  <!-- Top-Level Boundary (RISC_core_top) -->
+  <rect x="30" y="30" width="880" height="560" class="boundary"/>
+  <text x="470" y="55" class="title">RISC_core_top - Interconnect &amp; Wires</text>
+
+  <!-- ==================== SUBMODULE BLOCKS ==================== -->
+  
+  <!-- Controller -->
+  <rect x="70" y="80" width="180" height="100" class="subbox"/>
+  <text x="160" y="105" class="title" font-size="13px">Controller (CON)</text>
+  <text x="160" y="120" class="subtitle">FSM &amp; Decoders</text>
+
+  <!-- PC -->
+  <rect x="70" y="215" width="180" height="80" class="subbox"/>
+  <text x="160" y="240" class="title" font-size="13px">Program Counter (PC)</text>
+
+  <!-- IR -->
+  <rect x="70" y="325" width="180" height="80" class="subbox"/>
+  <text x="160" y="350" class="title" font-size="13px">Instruction Reg (IR)</text>
+
+  <!-- ALU -->
+  <rect x="320" y="80" width="180" height="100" class="subbox"/>
+  <text x="410" y="105" class="title" font-size="13px">ALU</text>
+
+  <!-- Mux_51 -->
+  <rect x="320" y="215" width="180" height="90" class="subbox"/>
+  <text x="410" y="240" class="title" font-size="13px">Mux_51</text>
+  <text x="410" y="255" class="subtitle">Drives BUS_1</text>
+
+  <!-- Mux_31 -->
+  <rect x="320" y="335" width="180" height="90" class="subbox"/>
+  <text x="410" y="360" class="title" font-size="13px">Mux_31</text>
+  <text x="410" y="375" class="subtitle">Drives BUS_2</text>
+
+  <!-- Register File -->
+  <rect x="570" y="80" width="180" height="200" class="subbox"/>
+  <text x="660" y="105" class="title" font-size="13px">Register File</text>
+  <text x="660" y="122" class="subtitle">Reg_R0 - R3, Reg_Y</text>
+
+  <!-- Add_R -->
+  <rect x="570" y="315" width="180" height="90" class="subbox"/>
+  <text x="660" y="340" class="title" font-size="13px">Add_R</text>
+  <text x="660" y="357" class="subtitle">MEMAddress Register</text>
+
+
+  <!-- ==================== INTERNAL WIRES & BUSES ==================== -->
+
+  <!-- BUS_2 Routing (Blue lines) -->
+  <!-- Mux31 output -> BUS_2 distribution -->
+  <path d="M 500 380 L 535 380 L 535 450 L 120 450 L 120 295" class="bus-wire"/>
+  <text x="260" y="442" class="bus-label">BUS_2 (8-bit data)</text>
+  
+  <!-- Branch to IR, PC, Regs, Add_R from BUS_2 trunk -->
+  <path d="M 120 365 L 70 365" class="bus-wire"/> <!-- to IR -->
+  <path d="M 120 270 L 70 270" class="bus-wire"/> <!-- to PC -->
+  <path d="M 535 200 L 570 200" class="bus-wire"/> <!-- to Reg File -->
+  <path d="M 535 355 L 570 355" class="bus-wire"/> <!-- to Add_R -->
+
+
+  <!-- BUS_1 Routing (Dark Blue lines) -->
+  <!-- Mux51 output (BUS_1) -> ALU & External -->
+  <path d="M 500 260 L 530 260 L 530 40 L 410 40 L 410 80" class="bus-wire"/>
+  <text x="440" y="35" class="bus-label">BUS_1</text>
+  <!-- Tap to external bus_1_out -->
+  <path d="M 530 140 L 800 140" class="bus-wire"/>
+
+
+  <!-- Register File Outputs to Mux_51 -->
+  <path d="M 570 150 L 520 150 L 520 230 L 500 230" class="wire"/>
+  <text x="510" y="142" class="label">R0-R3 out</text>
+
+  <!-- PC Output to Mux_51 -->
+  <path d="M 250 255 L 320 255" class="wire"/>
+
+  <!-- ALU Output to Mux_31 -->
+  <path d="M 410 180 L 410 335" class="wire"/>
+  <text x="415" y="260" class="label">alu_out</text>
+
+  <!-- IR Output to Controller -->
+  <path d="M 160 325 L 160 180" class="control-wire"/>
+  <text x="165" y="260" class="label" fill="#d9534f">IR_out</text>
+
+
+  <!-- ==================== EXTERNAL PORTS ==================== -->
+  
+  <text x="45" y="525" class="label" font-weight="bold">clk, rst</text>
+  <path d="M 15 520 L 70 520" class="wire"/>
+
+  <text x="810" y="132" class="label" font-weight="bold">bus_1_out</text>
+
+  <text x="810" y="350" class="label" font-weight="bold">MEMAddress</text>
+  <path d="M 750 345 L 805 345" class="wire"/>
+
+  <text x="810" y="390" class="label" font-weight="bold">MEMdataout</text>
+  <path d="M 805 385 L 500 385" class="bus-wire"/>
+
+</svg>

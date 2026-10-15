@@ -1,6 +1,6 @@
-.. _datasheet_mult_8_pipelined:
+.. _datasheet_mult_N_pipelined:
 
-8-bit Pipelined Multiplier
+N-bit Pipelined Multiplier
 --------------------------
 
 Introduction
@@ -12,10 +12,15 @@ The code performs 8-bit unsigned multiplication using two pipeline stages. In th
 Source codes
 ~~~~~~~~~~~~
 
-See details in ``mult/mult_8_pipelined``
+See details in 
+
+- ``mult_8_pipelined/mult_8_pipelined``
+- ``mult/mult_2_pipelined``
 
 Block Diagram
 ~~~~~~~~~~~~~
+
+The following is an example of the 8-bit version
 
 .. figure:: ./figures/mult_8_pipelined.svg
   :width: 60%
@@ -27,7 +32,7 @@ Block Diagram
 Performance
 ~~~~~~~~~~~
 
-Expect to consume 1 DSP block (or equivalent LUT multiplier logic) and 32 flip-flops of an FPGA.
+Expect to consume 1 DSP block (or equivalent LUT multiplier logic) and a number of flip-flops of an FPGA.
 
 .. warning:: The following resource utilization is just an estimation! Different tools in different versions may result differently.
 
@@ -43,7 +48,15 @@ Expect to consume 1 DSP block (or equivalent LUT multiplier logic) and 32 flip-f
     - Carry
     - DSP
     - BRAM
-  * - General
+  * - mult_2_pipelined
+    - 5
+    - 2
+    - 6
+    - 6
+    - 2
+    - 1
+    - 0
+  * - mult_8_pipelined
     - 16
     - 16
     - 40
