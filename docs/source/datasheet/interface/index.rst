@@ -47,3 +47,5 @@ Interface
    test_modes/index
 
    uberddr3
+
+   verilog_spi
