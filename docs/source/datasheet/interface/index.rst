@@ -28,6 +28,8 @@ Interface
 
    wb_rs232_syscon
 
+   wbi2c
+
    sockit_owm
 
    spimaster
@@ -45,3 +47,11 @@ Interface
    sapone
 
    test_modes/index
+
+   uberddr3
+
+   verilog_spi
+   
+   wbspi_master
+
+   wbuart32
