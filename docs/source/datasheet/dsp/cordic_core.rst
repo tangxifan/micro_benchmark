@@ -6,4 +6,11 @@ Cordic Core
 
 .. only:: builder_html
 
+Source codes
+~~~~~~~~~~~~
+
+See details in
+
+- ``dsp/cordic_core``
+
 Detailed manual can be found :download:`here <../../_static/cordic_core_manual.pdf>`

@@ -6,6 +6,8 @@ DSP
 .. toctree::
    :maxdepth: 2
 
+   cordic
+
    cordic_core
 
    cr_div

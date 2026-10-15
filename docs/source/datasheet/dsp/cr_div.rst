@@ -6,4 +6,12 @@ CR Div
 
 .. only:: builder_html
 
+Source codes
+~~~~~~~~~~~~
+
+See details in
+
+- ``dsp/cr_div``
+
+
 Detailed manual can be found :download:`here <../../_static/cr_div_manual.ppt>`

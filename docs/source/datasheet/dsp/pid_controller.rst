@@ -7,4 +7,11 @@ PID controller
 
 .. only:: builder_html
 
+Source codes
+~~~~~~~~~~~~
+
+See details in
+
+- ``dsp/pid_controller``
+
 Detailed manual can be found :download:`here <../../_static/pid_controller_manual.pdf>`
