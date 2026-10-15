@@ -45,3 +45,5 @@ Interface
    sapone
 
    test_modes/index
+
+   uberddr3
