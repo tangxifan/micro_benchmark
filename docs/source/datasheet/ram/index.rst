@@ -15,3 +15,5 @@ Memory
   dual_port_ram_8x16_mif
 
   dual_port_ram_8x16_mif_Nclk
+
+  fifo
