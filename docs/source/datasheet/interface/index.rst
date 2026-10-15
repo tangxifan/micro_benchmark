@@ -39,3 +39,5 @@ Interface
    cf_ldpc
 
    fpga_can
+
+   routing_test
