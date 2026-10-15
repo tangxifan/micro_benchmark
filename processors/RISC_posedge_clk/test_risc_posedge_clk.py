@@ -2,6 +2,7 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import Timer, RisingEdge, FallingEdge
 
+
 @cocotb.test()
 async def test_risc_posedge_clk(dut):
     # Create a clock with a 40ns period (matching the 20ns half-period toggle in original testbench)
@@ -16,7 +17,7 @@ async def test_risc_posedge_clk(dut):
 
     # Wait 30ns under reset
     await Timer(30, unit="ns")
-    
+
     # Deassert reset
     dut.rst.value = 0
     dut._log.info("Reset deasserted. Running simulation...")

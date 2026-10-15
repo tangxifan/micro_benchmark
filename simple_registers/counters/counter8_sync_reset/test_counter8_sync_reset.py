@@ -14,11 +14,11 @@ async def test_counter8_sync_reset(dut):
     # --- Step 1: Apply Synchronous Reset ---
     dut._log.info("Asserting synchronous reset (rst_counter = 1)...")
     dut.rst_counter.value = 1
-    
+
     # Run for 2 full clock cycles to ensure reset is sampled on a rising edge
     for _ in range(2):
         await RisingEdge(dut.clk_counter)
-    
+
     # Verify counter is held at 0 after the clock edges during active reset
     res = int(dut.q_counter.value)
     assert res == 0, f"q_counter should be 0 during reset, got {res}"
@@ -41,23 +41,26 @@ async def test_counter8_sync_reset(dut):
 
     # --- Step 3: Mid-Run Synchronous Reset Test ---
     dut._log.info("Testing mid-run synchronous reset...")
-    
+
     # Assert reset mid-cycle (it shouldn't affect the output immediately because it's synchronous)
     dut.rst_counter.value = 1
     await Timer(5, unit="ns")
-    
+
     # Check that output has NOT reset yet (synchronous reset waits for the edge)
     actual_val_mid = int(dut.q_counter.value)
-    assert actual_val_mid == expected_val, f"Counter reset prematurely before the clock edge, got {actual_val_mid}"
-    
+    assert (
+        actual_val_mid == expected_val
+    ), f"Counter reset prematurely before the clock edge, got {actual_val_mid}"
+
     # Wait for the next clock edge where the reset should actually be sampled
     await RisingEdge(dut.clk_counter)
     await Timer(1, unit="ns")  # Let the simulator propagate the sequential assignment
-    
+
     res_after_edge = int(dut.q_counter.value)
-    assert res_after_edge == 0, f"q_counter failed to reset synchronously on clock edge, got {res_after_edge}"
+    assert (
+        res_after_edge == 0
+    ), f"q_counter failed to reset synchronously on clock edge, got {res_after_edge}"
 
     # Release reset to leave the testbench in a clean state
     dut.rst_counter.value = 0
     dut._log.info("All synchronous test phases passed successfully!")
-

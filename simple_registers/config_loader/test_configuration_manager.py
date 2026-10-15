@@ -2,6 +2,7 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge
 
+
 @cocotb.test()
 async def test_configuration_manager(dut):
     # Create a 50MHz clock (20ns period) on clk_in
@@ -16,17 +17,17 @@ async def test_configuration_manager(dut):
 
     cycles_waited = 0
     # Increased max_cycles to comfortably accommodate the full bitstream load time
-    max_cycles = 100_000  
+    max_cycles = 100_000
 
     # Safely poll configuration_done by handling potential 'X' or 'Z' values during startup
     while True:
         val = dut.configuration_done.value
         if val.is_resolvable and int(val) == 1:
             break
-        
+
         await RisingEdge(dut.clk_in)
         cycles_waited += 1
-        
+
         if cycles_waited > max_cycles:
             raise AssertionError("Timeout waiting for configuration_done to assert!")
 
@@ -34,7 +35,7 @@ async def test_configuration_manager(dut):
 
     # Observe state after completion
     assert int(dut.configuration_done.value) == 1, "Configuration done signal should be high"
-    
+
     # Wait a few more cycles to ensure stability
     for _ in range(10):
         await RisingEdge(dut.clk_in)

@@ -2,6 +2,7 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, FallingEdge, Timer
 
+
 @cocotb.test()
 async def test_counter4_2clock(dut):
     # Create two independent clocks:
@@ -9,7 +10,7 @@ async def test_counter4_2clock(dut):
     # clk1: 20ns period (50 MHz)
     clock0 = Clock(dut.clk0, 10, unit="ns")
     clock1 = Clock(dut.clk1, 20, unit="ns")
-    
+
     cocotb.start_soon(clock0.start())
     cocotb.start_soon(clock1.start())
 
@@ -18,7 +19,7 @@ async def test_counter4_2clock(dut):
     # 1. Apply synchronous/asynchronous reset on both counters
     dut.rst.value = 1
     await Timer(15, unit="ns")
-    
+
     # Verify outputs are zeroed under reset
     assert int(dut.q0.value) == 0, f"Expected q0 to be 0 under reset, got {dut.q0.value}"
     assert int(dut.q1.value) == 0, f"Expected q1 to be 0 under reset, got {dut.q1.value}"
@@ -36,10 +37,12 @@ async def test_counter4_2clock(dut):
     # Step through several cycles of clk0
     for i in range(8):
         await RisingEdge(dut.clk0)
-        await Timer(1, unit="ns") # Small settle delay
+        await Timer(1, unit="ns")  # Small settle delay
         expected_q0 = (expected_q0 + 1) % 16
-        
-        assert int(dut.q0.value) == expected_q0, f"Cycle {i+1}: Expected q0={expected_q0}, got {dut.q0.value}"
+
+        assert (
+            int(dut.q0.value) == expected_q0
+        ), f"Cycle {i+1}: Expected q0={expected_q0}, got {dut.q0.value}"
         dut._log.info(f"clk0 edge {i+1}: q0 = {dut.q0.value}")
 
     # Check that q1 has incremented at its own slower pace (half the frequency)

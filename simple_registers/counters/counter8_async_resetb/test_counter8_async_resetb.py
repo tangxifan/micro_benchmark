@@ -41,14 +41,15 @@ async def test_counter8_async_resetb(dut):
     dut._log.info("Testing mid-run asynchronous reset...")
     await RisingEdge(dut.clk)
     await Timer(5, unit="ns")  # Move 5ns past the rising edge (mid-cycle)
-    
+
     dut.resetb.value = 0  # Assert reset active-low immediately
-    await Timer(1, unit="ns")  # Tiny delta delay to allow simulator to propagate the internal reg update
-    
+    await Timer(
+        1, unit="ns"
+    )  # Tiny delta delay to allow simulator to propagate the internal reg update
+
     res = int(dut.result.value)
     assert res == 0, f"result failed to reset asynchronously, got {res}"
 
     # Release reset to clean up the test state
     dut.resetb.value = 1
     dut._log.info("All tests passed successfully!")
-
