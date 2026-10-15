@@ -8,6 +8,8 @@ Memory
 
   asyn_spram_4x1
 
+  dual_port_ram_16k
+
   dual_port_ram_8x16_mif
 
   dual_port_ram_8x16_mif_Nclk
