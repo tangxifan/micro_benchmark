@@ -44,4 +44,4 @@ Interface
 
    sapone
 
-   test_mode_low
+   test_modes/index
