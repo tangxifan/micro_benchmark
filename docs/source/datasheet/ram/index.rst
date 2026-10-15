@@ -6,6 +6,8 @@ Memory
 .. toctree::
    :maxdepth: 2
 
+  syn_spram_4x1
+
   asyn_spram_4x1
 
   dual_port_ram_1k
