@@ -5,8 +5,6 @@ FPGA-liteCAN
 
 .. note:: This project comes from `github <https://github.com/WangXuan95/FPGA-CAN>`_
 
-.. only:: builder_html
-
 Source Code
 ~~~~~~~~~~~
 
@@ -16,5 +14,7 @@ Technical Notes
 ~~~~~~~~~~~~~~~
 
 .. note:: Detailed manual can be found on github
+
+.. only:: html
 
   .. mdinclude:: ../../_static/fpga-can_readme.md
