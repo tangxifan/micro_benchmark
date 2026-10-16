@@ -34,8 +34,8 @@ import sphinxcontrib.bibtex
 
 # -- Project information -----------------------------------------------------
 
-project = u'Micro Benchmark for FPGA'
-copyright = u'2022 Xifan Tang'
+project = u'MicroBenchmark for FPGA'
+copyright = u'2026 Xifan Tang'
 author = u'Xifan Tang'
 
 # The short X.Y version
@@ -178,7 +178,7 @@ def setup(app):
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'micro_benchmark_doc'
+htmlhelp_basename = 'ubm_doc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -205,7 +205,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'micro_benchmark.tex', u'Micro Benchmark Documentation',
+    (master_doc, 'ubm.tex', u'MicroBenchmark Documentation',
      u'Xifan Tang', 'manual'),
 ]
 
@@ -215,7 +215,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'micro_benchmark', u'Micro Benchmark Documentation',
+    (master_doc, 'ubm', u'MicroBenchmark Documentation',
      [author], 1)
 ]
 
@@ -226,8 +226,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'micro_benchmark', u'Micro Benchmark Documentation',
-     author, 'micro_benchmark', 'One line description of project.',
+    (master_doc, 'ubm', u'MicroBenchmark Documentation',
+     author, 'ubm', 'One line description of project.',
      'Miscellaneous'),
 ]
 
