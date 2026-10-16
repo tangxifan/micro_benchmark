@@ -7,6 +7,12 @@ wbspi_master
 
 .. only:: builder_html
 
+Source Code
+~~~~~~~~~~~
+
 You can find source files under ``interface/wbspi_master``
 
-Detailed manual can be found :download:`here <../../_static/wbspi_master_readme.md>`
+Technical Notes
+~~~~~~~~~~~~~~~
+
+  .. mdinclude:: ../../_static/wbspi_master_readme.md

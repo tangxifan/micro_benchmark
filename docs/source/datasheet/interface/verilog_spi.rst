@@ -7,7 +7,12 @@ verilog_spi
 
 .. only:: builder_html
 
+Source Code
+~~~~~~~~~~~
 
 You can find source files under ``interface/verilog_spi``
 
-Detailed manual can be found :download:`here <../../_static/verilog_spi_readme.md>`
+Technical Notes
+~~~~~~~~~~~~~~~
+
+  .. mdinclude:: ../../_static/verilog_spi_readme.md

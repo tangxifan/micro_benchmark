@@ -7,6 +7,12 @@ wbuart32
 
 .. only:: builder_html
 
+Source Code
+~~~~~~~~~~~
+
 You can find source files under ``interface/wbuart32``
 
-Detailed manual can be found :download:`here <../../_static/wbuart32_readme.md>`
+Technical Notes
+~~~~~~~~~~~~~~~
+
+.. mdinclude:: ../../_static/wbuart32_readme.md

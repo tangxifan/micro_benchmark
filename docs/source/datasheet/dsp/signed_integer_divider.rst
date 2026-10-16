@@ -7,4 +7,11 @@ Signed Integer Divider
 
 .. only:: builder_html
 
-Under construction
+
+Source codes
+~~~~~~~~~~~~
+
+See details in
+
+- ``dsp/signed_integer_divider``
+

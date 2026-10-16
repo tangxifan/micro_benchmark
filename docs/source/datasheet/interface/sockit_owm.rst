@@ -7,4 +7,12 @@ Wishbone 1-Wire Master
 
 .. only:: builder_html
 
+Source Code
+~~~~~~~~~~~
+
+You can find source files under ``interface/sockit_owm``
+
+Technical Notes
+~~~~~~~~~~~~~~~
+
 Detailed manual can be found :download:`here <../../_static/sockit_owm_manual.pdf>`

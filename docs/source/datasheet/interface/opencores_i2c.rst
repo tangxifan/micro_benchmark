@@ -3,6 +3,15 @@
 I2C-Master Core
 ===============
 
+.. note:: This project comes from `opencores <https://opencores.org/projects/i2c>`_
+
+
+Source Code
+-----------
+
+You can find source files under ``interface/opencores_i2c``
+
+
 Author
 ------
 

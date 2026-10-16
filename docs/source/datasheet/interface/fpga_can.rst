@@ -7,4 +7,14 @@ FPGA-liteCAN
 
 .. only:: builder_html
 
-Detailed manual can be found on github
+Source Code
+~~~~~~~~~~~
+
+You can find source files under ``interface/fpga-can``
+
+Technical Notes
+~~~~~~~~~~~~~~~
+
+.. note:: Detailed manual can be found on github
+
+  .. mdinclude:: ../../_static/fpga-can_readme.md
