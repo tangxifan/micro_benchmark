@@ -15,4 +15,4 @@ You can find source files under ``interface/wbspi_master``
 Technical Notes
 ~~~~~~~~~~~~~~~
 
-.. mdinclude:: ../../_static/wbspi_master_readme.md
+  .. mdinclude:: ../../_static/wbspi_master_readme.md
