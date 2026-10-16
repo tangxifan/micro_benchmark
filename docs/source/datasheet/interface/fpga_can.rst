@@ -17,4 +17,4 @@ Technical Notes
 
 .. note:: Detailed manual can be found on github
 
-.. mdinclude:: ../../_static/fpga-can_readme.md
+  .. mdinclude:: ../../_static/fpga-can_readme.md

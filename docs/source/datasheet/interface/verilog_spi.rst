@@ -15,4 +15,4 @@ You can find source files under ``interface/verilog_spi``
 Technical Notes
 ~~~~~~~~~~~~~~~
 
-.. mdinclude:: ../../_static/verilog_spi_readme.md
+  .. mdinclude:: ../../_static/verilog_spi_readme.md
