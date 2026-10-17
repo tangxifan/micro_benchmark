@@ -10,6 +10,12 @@ clk_cond:
   top_module: clk_cond
   cocotb_dir: simple_registers/clk_cond
 
+clk_on_lut:
+  source:
+    - simple_registers/clk_on_lut/clk_on_lut.v
+  top_module: clk_on_lut
+  cocotb_dir: simple_registers/clk_on_lut
+
 counter128_async_reset:
   source:
     - simple_registers/counters/counter128_async_reset/counter128_async_reset.v
