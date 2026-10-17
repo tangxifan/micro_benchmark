@@ -1,72 +1,150 @@
-<svg xmlns="http://w3.org" viewBox="0 0 950 550" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="900" viewBox="0 0 1500 900">
   <defs>
     <style>
-      .bg { fill: #f8fafc; }
-      .module-box { fill: #ffffff; stroke: #3b82f6; stroke-width: 2.5; rx: 8px; ry: 8px; }
-      .header-bg { fill: #eff6ff; }
-      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #1e3a8a; }
-      .port-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 11px; fill: #1e293b; }
-      .wire { fill: none; stroke: #64748b; stroke-width: 2; }
-      .wire-clk { fill: none; stroke: #ef4444; stroke-width: 2; }
-      .wire-bus { fill: none; stroke: #0284c7; stroke-width: 2.5; }
-      .arrow { fill: #64748b; }
-      .arrow-clk { fill: #ef4444; }
-      .arrow-bus { fill: #0284c7; }
-      .label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; fill: #334155; text-anchor: middle; }
+      .bg{fill:#fff}
+      .panel{fill:#f8fafc;stroke:#cbd5e1;stroke-width:1.5}
+      .block{fill:#eef2ff;stroke:#4f46e5;stroke-width:1.8}
+      .reg{fill:#ecfeff;stroke:#0e7490;stroke-width:1.6}
+      .logic{fill:#fff7ed;stroke:#c2410c;stroke-width:1.8}
+      .wire{fill:none;stroke:#334155;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+      .outwire{fill:none;stroke:#047857;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
+      .title{font:700 25px Arial,sans-serif;fill:#0f172a}
+      .subtitle{font:14px Arial,sans-serif;fill:#475569}
+      .label{font:600 14px Arial,sans-serif;fill:#0f172a}
+      .small{font:12px Arial,sans-serif;fill:#334155}
+      .tiny{font:11px Arial,sans-serif;fill:#475569}
+      .port{fill:#fff;stroke:#64748b;stroke-width:1.4}
+      .section{font:700 17px Arial,sans-serif;fill:#1e293b}
     </style>
-    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 2 L 8 5 L 0 8 z" class="arrow" />
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#334155"/>
     </marker>
-    <marker id="arrow-clk" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 2 L 8 5 L 0 8 z" class="arrow-clk" />
-    </marker>
-    <marker id="arrow-bus" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 2 L 8 5 L 0 8 z" class="arrow-bus" />
+    <marker id="greenArrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#047857"/>
     </marker>
   </defs>
+  <rect class="bg" width="1500" height="900"/>
+  <text x="55" y="48" class="title">test_modes — RTL schematic</text>
+  <text x="55" y="73" class="subtitle">Derived from K6N10_test_modes.v · positive-edge-triggered registers · not a technology-mapped netlist</text>
 
-  <!-- Background -->
-  <rect width="100%" height="100%" class="bg" />
+  <!-- Control path -->
+  <rect x="40" y="100" width="1420" height="235" rx="12" class="panel"/>
+  <text x="65" y="130" class="section">Control / mode path</text>
+  <text x="70" y="168" class="label">Inputs</text>
+  <rect x="70" y="180" width="58" height="34" rx="5" class="port"/><text x="99" y="202" text-anchor="middle" class="label">e</text>
+  <rect x="70" y="229" width="58" height="34" rx="5" class="port"/><text x="99" y="251" text-anchor="middle" class="label">f</text>
+  <rect x="70" y="278" width="58" height="34" rx="5" class="port"/><text x="99" y="300" text-anchor="middle" class="label">g</text>
+  <path class="wire" d="M128 197 H190 V216 H235" marker-end="url(#arrow)"/>
+  <path class="wire" d="M128 246 H170 V256 H235" marker-end="url(#arrow)"/>
+  <path class="wire" d="M128 295 H190 V216"/>
+  <rect x="235" y="185" width="195" height="95" rx="8" class="logic"/>
+  <text x="332" y="210" text-anchor="middle" class="label">Combinational logic</text>
+  <text x="332" y="237" text-anchor="middle" class="small">d0 = (e AND g) OR</text>
+  <text x="332" y="256" text-anchor="middle" class="small">(NOT f)</text>
+  <path class="wire" d="M430 232 H465" marker-end="url(#arrow)"/>
+  <text x="448" y="220" class="tiny" text-anchor="middle">d0</text>
+  <rect x="465" y="188" width="80" height="88" rx="7" class="reg"/>
+  <text x="505" y="218" text-anchor="middle" class="label">reg0</text><text x="505" y="240" text-anchor="middle" class="tiny">D flip-flop</text><text x="505" y="260" text-anchor="middle" class="tiny">posedge clk</text>
+  <path class="wire" d="M545 232 H570" marker-end="url(#arrow)"/>
+  <g id="shift">
+    <rect x="570" y="188" width="64" height="88" rx="7" class="reg"/><text x="602" y="220" text-anchor="middle" class="label">reg1</text><text x="602" y="242" text-anchor="middle" class="tiny">DFF</text>
+    <path class="wire" d="M634 232 H652" marker-end="url(#arrow)"/>
+    <rect x="652" y="188" width="64" height="88" rx="7" class="reg"/><text x="684" y="220" text-anchor="middle" class="label">reg2</text><text x="684" y="242" text-anchor="middle" class="tiny">DFF</text>
+    <path class="wire" d="M716 232 H734" marker-end="url(#arrow)"/>
+    <rect x="734" y="188" width="64" height="88" rx="7" class="reg"/><text x="766" y="220" text-anchor="middle" class="label">reg3</text><text x="766" y="242" text-anchor="middle" class="tiny">DFF</text>
+    <path class="wire" d="M798 232 H816" marker-end="url(#arrow)"/>
+    <rect x="816" y="188" width="64" height="88" rx="7" class="reg"/><text x="848" y="220" text-anchor="middle" class="label">reg4</text><text x="848" y="242" text-anchor="middle" class="tiny">DFF</text>
+    <path class="wire" d="M880 232 H898" marker-end="url(#arrow)"/>
+    <rect x="898" y="188" width="64" height="88" rx="7" class="reg"/><text x="930" y="220" text-anchor="middle" class="label">reg5</text><text x="930" y="242" text-anchor="middle" class="tiny">DFF</text>
+    <path class="wire" d="M962 232 H980" marker-end="url(#arrow)"/>
+    <rect x="980" y="188" width="64" height="88" rx="7" class="reg"/><text x="1012" y="220" text-anchor="middle" class="label">reg6</text><text x="1012" y="242" text-anchor="middle" class="tiny">DFF</text>
+    <path class="wire" d="M1044 232 H1062" marker-end="url(#arrow)"/>
+    <rect x="1062" y="188" width="64" height="88" rx="7" class="reg"/><text x="1094" y="220" text-anchor="middle" class="label">reg7</text><text x="1094" y="242" text-anchor="middle" class="tiny">DFF</text>
+    <path class="wire" d="M1126 232 H1144" marker-end="url(#arrow)"/>
+    <rect x="1144" y="188" width="64" height="88" rx="7" class="reg"/><text x="1176" y="220" text-anchor="middle" class="label">reg8</text><text x="1176" y="242" text-anchor="middle" class="tiny">DFF</text>
+    <path class="wire" d="M1208 232 H1226" marker-end="url(#arrow)"/>
+    <rect x="1226" y="188" width="64" height="88" rx="7" class="reg"/><text x="1258" y="220" text-anchor="middle" class="label">reg9</text><text x="1258" y="242" text-anchor="middle" class="tiny">DFF</text>
+    <path class="wire" d="M1290 232 H1308" marker-end="url(#arrow)"/>
+    <rect x="1308" y="188" width="64" height="88" rx="7" class="reg"/><text x="1340" y="220" text-anchor="middle" class="label">reg10</text><text x="1340" y="242" text-anchor="middle" class="tiny">DFF</text>
+    <path class="wire" d="M1372 232 H1390" marker-end="url(#arrow)"/>
+    <rect x="1390" y="188" width="52" height="88" rx="7" class="reg"/><text x="1416" y="220" text-anchor="middle" class="label">reg11</text><text x="1416" y="242" text-anchor="middle" class="tiny">DFF</text>
+  </g>
+  <text x="766" y="299" text-anchor="middle" class="small">x = reg3</text>
+  <text x="1094" y="299" text-anchor="middle" class="small">y = reg7</text>
+  <text x="1416" y="299" text-anchor="middle" class="small">z = reg11</text>
+  <path class="outwire" d="M766 276 V310 H735" marker-end="url(#greenArrow)"/>
+  <path class="outwire" d="M1094 276 V310 H1060" marker-end="url(#greenArrow)"/>
+  <path class="outwire" d="M1416 276 V310 H1382" marker-end="url(#greenArrow)"/>
 
-  <!-- Module Boundary Box -->
-  <rect x="40" y="30" width="870" height="490" rx="10" ry="10" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 5" />
-  <text x="60" y="55" class="title">test_modes (K6N10 Benchmark) Architecture</text>
+  <!-- Arithmetic path -->
+  <rect x="40" y="360" width="1420" height="485" rx="12" class="panel"/>
+  <text x="65" y="392" class="section">Registered 4-bit adder datapath</text>
+  <text x="70" y="430" class="label">Input ports</text>
+  <g class="small">
+    <text x="75" y="463">a_0</text><text x="75" y="491">a_1</text><text x="75" y="519">a_2</text><text x="75" y="547">a_3</text>
+    <text x="75" y="600">b_0</text><text x="75" y="628">b_1</text><text x="75" y="656">b_2</text><text x="75" y="684">b_3</text>
+    <text x="75" y="736">cin</text>
+  </g>
+  <g class="port">
+    <rect x="115" y="446" width="38" height="22" rx="3"/><rect x="115" y="474" width="38" height="22" rx="3"/><rect x="115" y="502" width="38" height="22" rx="3"/><rect x="115" y="530" width="38" height="22" rx="3"/>
+    <rect x="115" y="583" width="38" height="22" rx="3"/><rect x="115" y="611" width="38" height="22" rx="3"/><rect x="115" y="639" width="38" height="22" rx="3"/><rect x="115" y="667" width="38" height="22" rx="3"/>
+    <rect x="115" y="719" width="38" height="22" rx="3"/>
+  </g>
+  <text x="134" y="461" text-anchor="middle" class="tiny">in</text><text x="134" y="489" text-anchor="middle" class="tiny">in</text><text x="134" y="517" text-anchor="middle" class="tiny">in</text><text x="134" y="545" text-anchor="middle" class="tiny">in</text>
+  <text x="134" y="598" text-anchor="middle" class="tiny">in</text><text x="134" y="626" text-anchor="middle" class="tiny">in</text><text x="134" y="654" text-anchor="middle" class="tiny">in</text><text x="134" y="682" text-anchor="middle" class="tiny">in</text><text x="134" y="734" text-anchor="middle" class="tiny">in</text>
+  <text x="210" y="430" class="label">Input registers (posedge clk)</text>
+  <g>
+    <rect x="210" y="446" width="90" height="106" rx="7" class="reg"/><text x="255" y="474" text-anchor="middle" class="label">reg_a[3:0]</text><text x="255" y="497" text-anchor="middle" class="tiny">4 DFFs</text><text x="255" y="518" text-anchor="middle" class="tiny">a_0…a_3</text>
+    <rect x="210" y="583" width="90" height="106" rx="7" class="reg"/><text x="255" y="611" text-anchor="middle" class="label">reg_b[3:0]</text><text x="255" y="634" text-anchor="middle" class="tiny">4 DFFs</text><text x="255" y="655" text-anchor="middle" class="tiny">b_0…b_3</text>
+    <rect x="210" y="719" width="90" height="48" rx="7" class="reg"/><text x="255" y="748" text-anchor="middle" class="label">reg_cin</text>
+  </g>
+  <path class="wire" d="M153 457 H180 V499 H210" marker-end="url(#arrow)"/>
+  <path class="wire" d="M153 485 H180 M153 513 H180 M153 541 H180"/>
+  <path class="wire" d="M153 594 H180 V636 H210" marker-end="url(#arrow)"/>
+  <path class="wire" d="M153 622 H180 M153 650 H180 M153 678 H180"/>
+  <path class="wire" d="M153 730 H210" marker-end="url(#arrow)"/>
 
-  <!-- Clock Input -->
-  <line x1="20" y1="460" x2="880" y2="460" class="wire-clk" marker-end="url(#arrow-clk)" />
-  <text x="30" y="450" fill="#ef4444" font-family="-apple-system, sans-serif" font-size="11px">clk (posedge trigger)</text>
+  <path class="wire" d="M300 499 H360 V535 H405" marker-end="url(#arrow)"/>
+  <path class="wire" d="M300 636 H360 V570 H405" marker-end="url(#arrow)"/>
+  <path class="wire" d="M300 743 H350 V605 H405" marker-end="url(#arrow)"/>
+  <text x="352" y="520" class="tiny">a[3:0]</text><text x="352" y="590" class="tiny">b[3:0]</text><text x="352" y="625" class="tiny">cin</text>
 
-  <!-- Control Term Block (d0) -->
-  <rect x="70" y="90" width="220" height="100" class="module-box" />
-  <rect x="70" y="90" width="220" height="25" class="header-bg" />
-  <text x="180" y="107" class="label">Control Logic (d0)</text>
-  <text x="80" y="135" class="port-text">Inputs: e, f, g</text>
-  <text x="80" y="155" class="port-text">d0 = (e &amp; g) | ~f</text>
+  <rect x="405" y="482" width="205" height="158" rx="10" class="block"/>
+  <text x="507" y="512" text-anchor="middle" class="label">4-bit adder</text>
+  <text x="507" y="540" text-anchor="middle" class="small">n0 = a + b + reg_cin</text>
+  <text x="507" y="565" text-anchor="middle" class="small">n0[3:0] = sum bits</text>
+  <text x="507" y="590" text-anchor="middle" class="small">n0[4] = carry out</text>
+  <text x="507" y="617" text-anchor="middle" class="tiny">combinational</text>
 
-  <!-- 12-Stage Shift Register Chain -->
-  <rect x="340" y="90" width="240" height="100" class="module-box" />
-  <rect x="340" y="90" width="240" height="25" class="header-bg" />
-  <text x="460" y="107" class="label">12-Stage Shift Register Chain</text>
-  <text x="350" y="135" class="port-text">reg0 -> reg11</text>
-  <text x="350" y="155" class="port-text">Taps: x (reg3), y (reg7), z (reg11)</text>
+  <path class="wire" d="M610 561 H660" marker-end="url(#arrow)"/>
+  <text x="635" y="548" text-anchor="middle" class="tiny">n0[4:0]</text>
+  <rect x="660" y="438" width="140" height="236" rx="9" class="reg"/>
+  <text x="730" y="465" text-anchor="middle" class="label">Output registers</text>
+  <text x="730" y="487" text-anchor="middle" class="tiny">posedge clk</text>
+  <line x1="675" y1="500" x2="785" y2="500" stroke="#0e7490" stroke-width="1"/>
+  <text x="680" y="525" class="small">sum_0 &lt;= n0[0]</text>
+  <text x="680" y="553" class="small">sum_1 &lt;= n0[1]</text>
+  <text x="680" y="581" class="small">sum_2 &lt;= n0[2]</text>
+  <text x="680" y="609" class="small">sum_3 &lt;= n0[3]</text>
+  <text x="680" y="637" class="small">cout   &lt;= n0[4]</text>
 
-  <!-- Parallel 4-bit Adder Block (n0) -->
-  <rect x="70" y="250" width="510" height="160" class="module-box" />
-  <rect x="70" y="250" width="510" height="25" class="header-bg" />
-  <text x="325" y="267" class="label">Parallel 4-Bit Adder (n0)</text>
-  <text x="85" y="295" class="port-text">Inputs: a_3..a_0, b_3..b_0, cin (registered via reg_a, reg_b, reg_cin)</text>
-  <text x="85" y="325" class="port-text">n0 = a + b + reg_cin</text>
-  <text x="85" y="355" class="port-text">Outputs: sum_3..sum_0, cout</text>
+  <path class="outwire" d="M800 525 H865" marker-end="url(#greenArrow)"/>
+  <path class="outwire" d="M800 553 H865" marker-end="url(#greenArrow)"/>
+  <path class="outwire" d="M800 581 H865" marker-end="url(#greenArrow)"/>
+  <path class="outwire" d="M800 609 H865" marker-end="url(#greenArrow)"/>
+  <path class="outwire" d="M800 637 H865" marker-end="url(#greenArrow)"/>
+  <rect x="865" y="498" width="125" height="164" rx="8" class="port"/>
+  <text x="927" y="523" text-anchor="middle" class="label">Outputs</text>
+  <text x="883" y="548" class="small">sum_0</text><text x="883" y="576" class="small">sum_1</text><text x="883" y="604" class="small">sum_2</text><text x="883" y="632" class="small">sum_3</text><text x="883" y="650" class="small">cout</text>
 
-  <!-- Interconnects & Taps -->
-  <line x1="290" y1="140" x2="340" y2="140" class="wire" marker-end="url(#arrow)" />
-  
-  <!-- Tap outputs x, y, z -->
-  <line x1="580" y1="130" x2="840" y2="130" class="wire-bus" marker-end="url(#arrow-bus)" />
-  <text x="730" y="120" class="port-text">x, y, z (Tapped Pipeline Outputs)</text>
+  <rect x="1040" y="438" width="380" height="236" rx="10" class="panel"/>
+  <text x="1065" y="470" class="label">Timing notes</text>
+  <text x="1065" y="501" class="small">• All register updates occur on posedge clk.</text>
+  <text x="1065" y="528" class="small">• a, b, and cin are registered before the adder.</text>
+  <text x="1065" y="555" class="small">• Sum/carry are registered from the adder result.</text>
+  <text x="1065" y="582" class="small">• Control path is a 12-stage shift register.</text>
+  <text x="1065" y="609" class="small">• x, y, z tap reg3, reg7, and reg11.</text>
+  <text x="1065" y="642" class="tiny">clk omitted from individual DFF symbols for clarity.</text>
 
-  <!-- Adder outputs -->
-  <line x1="580" y1="330" x2="840" y2="330" class="wire-bus" marker-end="url(#arrow-bus)" />
-  <text x="700" y="320" class="port-text">sum_3..0, cout (Registered Sum)</text>
-
+  <text x="55" y="875" class="tiny">Legend: cyan = registers · orange = control logic · indigo = arithmetic logic · green wires = module outputs</text>
 </svg>
