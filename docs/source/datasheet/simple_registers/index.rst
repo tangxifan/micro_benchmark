@@ -20,3 +20,4 @@ Simple Registers
    rst_and_clk_on_lut
    rst_cond
    rst_on_lut
+   rst_on_lut_Nbit

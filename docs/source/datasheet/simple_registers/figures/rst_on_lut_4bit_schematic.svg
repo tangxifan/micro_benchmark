@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 620" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .module-box { fill: #ffffff; stroke: #3b82f6; stroke-width: 2.5; rx: 8px; ry: 8px; }
+      .header-bg { fill: #eff6ff; }
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #1e3a8a; }
+      .port-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 11px; fill: #1e293b; }
+      .wire { fill: none; stroke: #64748b; stroke-width: 2; }
+      .wire-clk { fill: none; stroke: #ef4444; stroke-width: 2; }
+      .wire-rst { fill: none; stroke: #eab308; stroke-width: 2; }
+      .arrow { fill: #64748b; }
+      .arrow-clk { fill: #ef4444; }
+      .arrow-rst { fill: #eab308; }
+      .label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; fill: #334155; text-anchor: middle; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 8 5 L 0 8 z" class="arrow" />
+    </marker>
+    <marker id="arrow-clk" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 8 5 L 0 8 z" class="arrow-clk" />
+    </marker>
+    <marker id="arrow-rst" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 8 5 L 0 8 z" class="arrow-rst" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" class="bg" />
+
+  <!-- Module Boundary Box -->
+  <rect x="50" y="20" width="850" height="580" rx="10" ry="10" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 5" />
+  <text x="70" y="45" class="title">rst_on_lut_4bit Architecture</text>
+
+  <!-- ==================== INPUTS ==================== -->
+  <!-- rst (Top control wire) -->
+  <line x1="30" y1="80" x2="280" y2="80" class="wire-rst" />
+  <!-- Branch to Register rst -->
+  <line x1="280" y1="80" x2="580" y2="80" class="wire-rst" marker-end="url(#arrow-rst)" />
+  <!-- Branch down to LUT array -->
+  <line x1="280" y1="80" x2="280" y2="520" class="wire-rst" />
+  <line x1="280" y1="220" x2="580" y2="220" class="wire-rst" marker-end="url(#arrow-rst)" />
+  <line x1="280" y1="320" x2="580" y2="320" class="wire-rst" marker-end="url(#arrow-rst)" />
+  <line x1="280" y1="420" x2="580" y2="420" class="wire-rst" marker-end="url(#arrow-rst)" />
+  <line x1="280" y1="520" x2="580" y2="520" class="wire-rst" marker-end="url(#arrow-rst)" />
+  <text x="40" y="70" fill="#d97706" font-family="-apple-system, sans-serif" font-size="11px">rst</text>
+
+  <!-- clk -->
+  <line x1="30" y1="150" x2="580" y2="150" class="wire-clk" marker-end="url(#arrow-clk)" />
+  <text x="40" y="142" fill="#ef4444" font-family="-apple-system, sans-serif" font-size="11px">clk</text>
+
+  <!-- Data a -->
+  <line x1="30" y1="110" x2="580" y2="110" class="wire" marker-end="url(#arrow)" />
+  <text x="40" y="102" class="port-text">a</text>
+
+  <!-- Data b0-b3 -->
+  <line x1="30" y1="250" x2="580" y2="250" class="wire" marker-end="url(#arrow)" />
+  <text x="40" y="242" class="port-text">b0</text>
+
+  <line x1="30" y1="350" x2="580" y2="350" class="wire" marker-end="url(#arrow)" />
+  <text x="40" y="342" class="port-text">b1</text>
+
+  <line x1="30" y1="450" x2="580" y2="450" class="wire" marker-end="url(#arrow)" />
+  <text x="40" y="442" class="port-text">b2</text>
+
+  <line x1="30" y1="550" x2="580" y2="550" class="wire" marker-end="url(#arrow)" />
+  <text x="40" y="542" class="port-text">b3</text>
+
+  <!-- ==================== LOGIC BLOCKS ==================== -->
+  <!-- Register Block (q) -->
+  <rect x="580" y="60" width="180" height="110" class="module-box" />
+  <rect x="580" y="60" width="180" height="25" class="header-bg" />
+  <text x="670" y="77" class="label">Register (q)</text>
+  <text x="595" y="105" class="port-text">if (rst) q <= 0</text>
+  <text x="595" y="125" class="port-text">else q <= a</text>
+
+  <!-- LUT out0 Block -->
+  <rect x="580" y="190" width="180" height="80" class="module-box" />
+  <rect x="580" y="190" width="180" height="25" class="header-bg" />
+  <text x="670" y="207" class="label">LUT (out0)</text>
+  <text x="595" y="242" class="port-text">out0 = b0 & ~rst</text>
+
+  <!-- LUT out1 Block -->
+  <rect x="580" y="290" width="180" height="80" class="module-box" />
+  <rect x="580" y="290" width="180" height="25" class="header-bg" />
+  <text x="670" y="307" class="label">LUT (out1)</text>
+  <text x="595" y="342" class="port-text">out1 = b1 & ~rst</text>
+
+  <!-- LUT out2 Block -->
+  <rect x="580" y="390" width="180" height="80" class="module-box" />
+  <rect x="580" y="390" width="180" height="25" class="header-bg" />
+  <text x="670" y="407" class="label">LUT (out2)</text>
+  <text x="595" y="442" class="port-text">out2 = b2 & ~rst</text>
+
+  <!-- LUT out3 Block -->
+  <rect x="580" y="490" width="180" height="80" class="module-box" />
+  <rect x="580" y="490" width="180" height="25" class="header-bg" />
+  <text x="670" y="507" class="label">LUT (out3)</text>
+  <text x="595" y="542" class="port-text">out3 = b3 & ~rst</text>
+
+  <!-- ==================== OUTPUTS ==================== -->
+  <!-- q -->
+  <line x1="760" y1="110" x2="880" y2="110" class="wire" marker-end="url(#arrow)" />
+  <text x="800" y="100" class="port-text">q</text>
+
+  <!-- out0 - out3 -->
+  <line x1="760" y1="230" x2="880" y2="230" class="wire" marker-end="url(#arrow)" />
+  <text x="800" y="220" class="port-text">out0</text>
+
+  <line x1="760" y1="330" x2="880" y2="330" class="wire" marker-end="url(#arrow)" />
+  <text x="800" y="320" class="port-text">out1</text>
+
+  <line x1="760" y1="430" x2="880" y2="430" class="wire" marker-end="url(#arrow)" />
+  <text x="800" y="420" class="port-text">out2</text>
+
+  <line x1="760" y1="530" x2="880" y2="530" class="wire" marker-end="url(#arrow)" />
+  <text x="800" y="520" class="port-text">out3</text>
+
+</svg>

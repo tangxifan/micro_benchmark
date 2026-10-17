@@ -11,7 +11,7 @@ The ``rst_on_lut`` module implements a register driven by combinational logic ti
 Source codes
 ~~~~~~~~~~~~
 
-See details in ``simple_registers/rst_on_lut/rst_on_lut.v``
+See details in ``simple_registers/rst_on_lut_Nbit/rst_on_lut.v``
 
 Block Diagram
 ~~~~~~~~~~~~~
