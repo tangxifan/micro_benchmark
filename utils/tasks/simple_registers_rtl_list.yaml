@@ -46,6 +46,24 @@ rst_on_lut_8bit:
   top_module: rst_on_lut_8bit
   cocotb_dir: simple_registers/rst_on_lut_Nbit/rst_on_lut_8bit
 
+signal_gen_clock_divider:
+  source:
+    - simple_registers/signal_gen/clock_divider/clock_divider.v
+  top_module: clock_divider
+  cocotb_dir: simple_registers/signal_gen/clock_divider
+
+signal_gen_pulse_generator:
+  source:
+    - simple_registers/signal_gen/pulse_generator/pulse_generator.v
+  top_module: pulse_generator
+  cocotb_dir: simple_registers/signal_gen/pulse_generator
+
+signal_gen_reset_generator:
+  source:
+    - simple_registers/signal_gen/reset_generator/reset_generator.v
+  top_module: reset_generator
+  cocotb_dir: simple_registers/signal_gen/reset_generator
+
 counter128_async_reset:
   source:
     - simple_registers/counters/counter128_async_reset/counter128_async_reset.v
