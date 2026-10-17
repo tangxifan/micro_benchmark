@@ -16,14 +16,10 @@ MODULE = test_dual_port_ram_8x16_8x32_mif
 all: preprocess_hex
 
 preprocess_hex:
-	@grep -v '^[[:space:]]*//' $(PWD)/init_8x16_2.hex | \
-		sed 's/^[[:space:]]*\([0-9a-fA-F]\+\)[[:space:]]\+\(0x[0-9a-fA-F]*\)/@\1 \2/g' > $(PWD)/init_8x16.hex
-	@grep -v '^[[:space:]]*//' $(PWD)/init_8x32_2.hex | \
-		sed 's/^[[:space:]]*\([0-9a-fA-F]\+\)[[:space:]]\+\(0x[0-9a-fA-F]*\)/@\1 \2/g' > $(PWD)/init_8x32.hex
-
-# Clean up generated temporary files on make clean
-clean::
-	@rm -f $(PWD)/init_8x16.hex $(PWD)/init_8x32.hex
+	@grep -v '^[[:space:]]*//' $(PWD)/init_8x16.hex | \
+		sed 's/^[[:space:]]*\([0-9a-fA-F]\+\)[[:space:]]\+\(0x[0-9a-fA-F]*\)/@\1 \2/g' > sim_build/init_8x16.hex
+	@grep -v '^[[:space:]]*//' $(PWD)/init_8x32.hex | \
+		sed 's/^[[:space:]]*\([0-9a-fA-F]\+\)[[:space:]]\+\(0x[0-9a-fA-F]*\)/@\1 \2/g' > sim_build/init_8x32.hex
 
 # Include cocotb's standard Makefile rules
 include $(shell cocotb-config --makefiles)/Makefile.sim
