@@ -16,3 +16,4 @@ Simple Registers
    counters/index
    timers/index
    clk_cond
+   clk_on_lut

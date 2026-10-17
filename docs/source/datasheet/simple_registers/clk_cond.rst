@@ -12,7 +12,7 @@ It combines an external reference clock (``clk_i``) with a gating condition inpu
 Source codes
 ~~~~~~~~~~~~
 
-See details in ``clk_cond.v``
+See details in ``simple_registers/clk_cond.v``
 
 Block Diagram
 ~~~~~~~~~~~~~
