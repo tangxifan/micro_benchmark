@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 580" width="100%" height="100%">
+  <defs>
+    <!-- Grid Pattern -->
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e2e8f0" stroke-width="0.5" />
+    </pattern>
+
+    <!-- Drop Shadow Filter -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="3" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.1" />
+    </filter>
+
+    <!-- Gradients -->
+    <linearGradient id="ramGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="100%" stop-color="#f1f5f9" />
+    </linearGradient>
+
+    <linearGradient id="coreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f8fafc" />
+    </linearGradient>
+
+    <!-- Arrowheads -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7" />
+    </marker>
+    
+    <marker id="arrow-bus" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb" />
+    </marker>
+
+    <marker id="arrow-clk" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ea580c" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff" />
+  <rect width="100%" height="100%" fill="url(#grid)" />
+
+  <!-- Title Block -->
+  <text x="450" y="38" font-family="monospace, &#39;Courier New&#39;" font-size="18" font-weight="bold" fill="#0f172a" text-anchor="middle" letter-spacing="1">
+    dual_port_ram_8x16_8x32 Architecture
+  </text>
+  <text x="450" y="58" font-family="sans-serif" font-size="12" fill="#64748b" text-anchor="middle">
+    Single Clock Dual-Width Dual-Port RAM with MIF Preloading (8x16 & 8x32)[cite: 4]
+  </text>
+
+  <!-- Main Module Container: dual_port_ram_8x16_8x32 -->
+  <rect x="150" y="80" width="600" height="450" rx="10" fill="url(#ramGrad)" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)" />
+  <text x="170" y="105" font-family="monospace, &#39;Courier New&#39;" font-size="14" font-weight="bold" fill="#1d4ed8">
+    dual_port_ram_8x16_8x32
+  </text>
+  <text x="730" y="105" font-family="monospace, &#39;Courier New&#39;" font-size="10" fill="#475569" text-anchor="end">
+    MEM8x16_FILE / MEM8x32_FILE[cite: 4]
+  </text>
+
+  <!-- Inner Sub-Core 0: dual_port_sram_8x16_core -->
+  <rect x="230" y="125" width="480" height="185" rx="6" fill="url(#coreGrad)" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="6,4" />
+  <text x="470" y="147" font-family="monospace, &#39;Courier New&#39;" font-size="12" font-weight="bold" fill="#4f46e5" text-anchor="middle">
+    memory_0 : dual_port_sram_8x16_core (8 x 16-bit)[cite: 4]
+  </text>
+
+  <!-- Inner Sub-Core 1: dual_port_sram_8x32_core -->
+  <rect x="230" y="325" width="480" height="185" rx="6" fill="url(#coreGrad)" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="6,4" />
+  <text x="470" y="347" font-family="monospace, &#39;Courier New&#39;" font-size="12" font-weight="bold" fill="#4f46e5" text-anchor="middle">
+    memory_1 : dual_port_sram_8x32_core (8 x 32-bit)[cite: 4]
+  </text>
+
+  <!-- Core 0 RAM Array & Reg -->
+  <rect x="310" y="160" width="130" height="65" rx="4" fill="#ffffff" stroke="#7c3aed" stroke-width="1.5" />
+  <text x="375" y="190" font-family="monospace, &#39;Courier New&#39;" font-size="11" font-weight="bold" fill="#6d28d9" text-anchor="middle">ram[7:0] (16b)</text>
+  <text x="375" y="208" font-family="monospace, &#39;Courier New&#39;" font-size="9" fill="#15803d" text-anchor="middle">$readmemh(MEM8x16)</text>
+
+  <rect x="490" y="170" width="110" height="45" rx="4" fill="#ffffff" stroke="#0284c7" stroke-width="1.5" />
+  <text x="545" y="197" font-family="monospace, &#39;Courier New&#39;" font-size="11" font-weight="bold" fill="#0369a1" text-anchor="middle">internal [15:0]</text>
+
+  <!-- Core 1 RAM Array & Reg -->
+  <rect x="310" y="360" width="130" height="65" rx="4" fill="#ffffff" stroke="#7c3aed" stroke-width="1.5" />
+  <text x="375" y="390" font-family="monospace, &#39;Courier New&#39;" font-size="11" font-weight="bold" fill="#6d28d9" text-anchor="middle">ram[2:0] (32b)</text>
+  <text x="375" y="408" font-family="monospace, &#39;Courier New&#39;" font-size="9" fill="#15803d" text-anchor="middle">$readmemh(MEM8x32)</text>
+
+  <rect x="490" y="370" width="110" height="45" rx="4" fill="#ffffff" stroke="#0284c7" stroke-width="1.5" />
+  <text x="545" y="397" font-family="monospace, &#39;Courier New&#39;" font-size="11" font-weight="bold" fill="#0369a1" text-anchor="middle">internal [31:0]</text>
+
+  <!-- Common Clock Routing -->
+  <path d="M 40 140 L 230 140" fill="none" stroke="#ea580c" stroke-width="2" marker-end="url(#arrow-clk)" />
+  <text x="50" y="133" font-family="monospace, &#39;Courier New&#39;" font-size="12" fill="#c2410c">clk</text>
+  
+  <!-- Clock distribution tree -->
+  <path d="M 210 140 L 210 300 L 230 300" fill="none" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="3,3" />
+  <path d="M 210 200 L 310 200" fill="none" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow-clk)" />
+  <path d="M 210 400 L 310 400" fill="none" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow-clk)" />
+  <circle cx="210" cy="140" r="3" fill="#ea580c" />
+  <circle cx="210" cy="200" r="3" fill="#ea580c" />
+  <circle cx="210" cy="300" r="3" fill="#ea580c" />
+  <circle cx="210" cy="400" r="3" fill="#ea580c" />
+
+  <!-- Clock symbols -->
+  <path d="M 310 NB 195 L ... " /> <!-- implicit via arrow -->
+
+  <!-- Shared Control Signals (wen, ren) -->
+  <!-- wen -->
+  <path d="M 40 175 L 310 175" fill="none" stroke="#0284c7" stroke-width="2" marker-end="url(#arrow)" />
+  <path d="M 175 175 L 175 375 L 310 375" fill="none" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="2,2" />
+  <circle cx="175" cy="175" r="3" fill="#0284c7" />
+  <text x="50" y="168" font-family="monospace, &#39;Courier New&#39;" font-size="12" fill="#0369a1">wen</text>
+
+  <!-- ren -->
+  <path d="M 40 260 L 490 260" fill="none" stroke="#0284c7" stroke-width="2" marker-end="url(#arrow)" />
+  <path d="M 120 260 L 120 460 L 490 460" fill="none" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="2,2" />
+  <circle cx="120" cy="260" r="3" fill="#0284c7" />
+  <text x="50" y="253" font-family="monospace, &#39;Courier New&#39;" font-size="12" fill="#0369a1">ren</text>
+
+  <!-- 8x16 Bus Inputs & Outputs -->
+  <!-- waddr8x16 -->
+  <path d="M 40 205 L 310 205" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-bus)" />
+  <line x1="80" y1="200" x2="88" y2="210" stroke="#2563eb" stroke-width="2" />
+  <text x="84" y="197" font-family="sans-serif" font-size="9" fill="#1d4ed8">3</text>
+  <text x="50" y="198" font-family="monospace, &#39;Courier New&#39;" font-size="11" fill="#1d4ed8">waddr8x16[2:0]</text>
+
+  <!-- raddr8x16 -->
+  <path d="M 40 235 L 290 235 L 290 190 L 310 190" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-bus)" />
+  <line x1="80" y1="230" x2="88" y2="240" stroke="#2563eb" stroke-width="2" />
+  <text x="84" y="227" font-family="sans-serif" font-size="9" fill="#1d4ed8">3</text>
+  <text x="50" y="228" font-family="monospace, &#39;Courier New&#39;" font-size="11" fill="#1d4ed8">raddr8x16[2:0]</text>
+
+  <!-- din8x16 -->
+  <path d="M 40 290 L 310 290" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-bus)" />
+  <line x1="80" y1="285" x2="88" y2="295" stroke="#2563eb" stroke-width="2" />
+  <text x="84" y="282" font-family="sans-serif" font-size="9" fill="#1d4ed8">16</text>
+  <text x="50" y="283" font-family="monospace, &#39;Courier New&#39;" font-size="11" fill="#1d4ed8">din8x16[15:0]</text>
+
+  <!-- dout8x16 -->
+  <path d="M 600 192 L 840 192" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-bus)" />
+  <line x1="740" y1="187" x2="748" y2="197" stroke="#2563eb" stroke-width="2" />
+  <text x="744" y="184" font-family="sans-serif" font-size="9" fill="#1d4ed8">16</text>
+  <text x="830" y="184" font-family="monospace, &#39;Courier New&#39;" font-size="11" fill="#1d4ed8" text-anchor="end">dout8x16[15:0]</text>
+  <text x="440" y="185" font-family="sans-serif" font-size="9" fill="#475569">ram[raddr]</text>
+
+  <!-- 8x32 Bus Inputs & Outputs -->
+  <!-- waddr8x32 -->
+  <path d="M 40 375 L 310 375" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-bus)" />
+  <line x1="80" y1="370" x2="88" y2="380" stroke="#2563eb" stroke-width="2" />
+  <text x="84" y="367" font-family="sans-serif" font-size="9" fill="#1d4ed8">3</text>
+  <text x="50" y="368" font-family="monospace, &#39;Courier New&#39;" font-size="11" fill="#1d4ed8">waddr8x32[2:0]</text>
+
+  <!-- raddr8x32 -->
+  <path d="M 40 405 L 290 405 L 290 380 L 310 380" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-bus)" />
+  <line x1="80" y1="400" x2="88" y2="410" stroke="#2563eb" stroke-width="2" />
+  <text x="84" y="397" font-family="sans-serif" font-size="9" fill="#1d4ed8">3</text>
+  <text x="50" y="398" font-family="monospace, &#39;Courier New&#39;" font-size="11" fill="#1d4ed8">raddr8x32[2:0]</text>
+
+  <!-- din8x32 -->
+  <path d="M 40 470 L 310 470" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-bus)" />
+  <line x1="80" y1="465" x2="88" y2="475" stroke="#2563eb" stroke-width="2" />
+  <text x="84" y="462" font-family="sans-serif" font-size="9" fill="#1d4ed8">32</text>
+  <text x="50" y="463" font-family="monospace, &#39;Courier New&#39;" font-size="11" fill="#1d4ed8">din8x32[31:0]</text>
+
+  <!-- dout8x32 -->
+  <path d="M 600 392 L 840 392" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-bus)" />
+  <line x1="740" y1="387" x2="748" y2="397" stroke="#2563eb" stroke-width="2" />
+  <text x="744" y="384" font-family="sans-serif" font-size="9" fill="#1d4ed8">32</text>
+  <text x="830" y="384" font-family="monospace, &#39;Courier New&#39;" font-size="11" fill="#1d4ed8" text-anchor="end">dout8x32[31:0]</text>
+  <text x="440" y="385" font-family="sans-serif" font-size="9" fill="#475569">ram[raddr]</text>
+
+  <!-- Internal Connections RAM to Reg -->
+  <path d="M 440 192 L 490 192" fill="none" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrow-bus)" />
+  <path d="M 440 392 L 490 392" fill="none" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrow-bus)" />
+
+  <!-- Legend / Key -->
+  <g transform="translate(230, 545)">
+    <line x1="0" y1="0" x2="20" y2="0" stroke="#0284c7" stroke-width="2" />
+    <text x="28" y="4" font-family="sans-serif" font-size="11" fill="#334155">Control Signal</text>
+
+    <line x1="130" y1="0" x2="150" y2="0" stroke="#2563eb" stroke-width="2.5" />
+    <text x="158" y="4" font-family="sans-serif" font-size="11" fill="#334155">Data/Address Bus</text>
+
+    <line x1="280" y1="0" x2="300" y2="0" stroke="#ea580c" stroke-width="2" />
+    <text x="308" y="4" font-family="sans-serif" font-size="11" fill="#334155">Clock</text>
+  </g>
+</svg>

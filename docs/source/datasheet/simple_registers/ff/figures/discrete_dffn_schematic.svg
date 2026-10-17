@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 420" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .module-box { fill: #ffffff; stroke: #3b82f6; stroke-width: 2.5; rx: 8px; ry: 8px; }
+      .header-bg { fill: #eff6ff; }
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #1e3a8a; }
+      .port-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 11px; fill: #1e293b; }
+      .wire { fill: none; stroke: #64748b; stroke-width: 2; }
+      .wire-clk { fill: none; stroke: #ef4444; stroke-width: 2; }
+      .arrow { fill: #64748b; }
+      .arrow-clk { fill: #ef4444; }
+      .label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; fill: #334155; text-anchor: middle; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 8 5 L 0 8 z" class="arrow" />
+    </marker>
+    <marker id="arrow-clk" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 8 5 L 0 8 z" class="arrow-clk" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" class="bg" />
+
+  <!-- Module Boundary Box -->
+  <rect x="50" y="30" width="750" height="360" rx="10" ry="10" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 5" />
+  <text x="70" y="55" class="title">discrete_dffn Architecture</text>
+
+  <!-- Inputs -->
+  <!-- clk_ni -->
+  <line x1="30" y1="135" x2="180" y2="135" class="wire-clk" marker-end="url(#arrow-clk)" />
+  <text x="40" y="127" fill="#ef4444" font-family="-apple-system, sans-serif" font-size="11px">clk_ni (active-low clk)</text>
+
+  <!-- d_i -->
+  <line x1="30" y1="280" x2="480" y2="280" class="wire" marker-end="url(#arrow)" />
+  <text x="40" y="272" class="port-text">d_i</text>
+
+  <!-- Clock Inversion Block -->
+  <rect x="180" y="90" width="180" height="90" class="module-box" />
+  <rect x="180" y="90" width="180" height="25" class="header-bg" />
+  <text x="270" y="107" class="label">Clock Inverter</text>
+  <text x="195" y="140" class="port-text">int_clk = ~clk_ni</text>
+
+  <!-- Inverted Clock Routing Path -->
+  <line x1="360" y1="135" x2="480" y2="135" class="wire-clk" />
+  <line x1="480" y1="135" x2="480" y2="230" class="wire-clk" marker-end="url(#arrow-clk)" />
+  <text x="375" y="127" fill="#ef4444" font-family="-apple-system, sans-serif" font-size="11px">int_clk</text>
+
+  <!-- Synchronous Register Block -->
+  <rect x="440" y="230" width="180" height="100" class="module-box" />
+  <rect x="440" y="230" width="180" height="25" class="header-bg" />
+  <text x="530" y="247" class="label">Flip-Flop Register</text>
+  <text x="455" y="280" class="port-text">d_o <= d_i</text>
+  <text x="455" y="315" fill="#ef4444" font-size="10px">Trigger: @(posedge int_clk)</text>
+
+  <!-- Output Path -->
+  <line x1="620" y1="280" x2="780" y2="280" class="wire" marker-end="url(#arrow)" />
+  <text x="640" y="272" class="port-text">d_o</text>
+
+</svg>

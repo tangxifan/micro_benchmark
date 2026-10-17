@@ -15,3 +15,11 @@ Simple Registers
    ff/index
    counters/index
    timers/index
+   clk_cond
+   clk_on_lut
+   rst_and_clk_on_lut
+   rst_cond
+   rst_on_lut
+   rst_on_lut_Nbit
+   pwm_cnt8
+   signal_gen/index

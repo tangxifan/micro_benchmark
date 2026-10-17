@@ -4,6 +4,66 @@ blinking:
   top_module: blinking
   cocotb_dir: simple_registers/blinking
 
+clk_cond:
+  source:
+    - simple_registers/clk_cond/clk_cond.v
+  top_module: clk_cond
+  cocotb_dir: simple_registers/clk_cond
+
+clk_on_lut:
+  source:
+    - simple_registers/clk_on_lut/clk_on_lut.v
+  top_module: clk_on_lut
+  cocotb_dir: simple_registers/clk_on_lut
+
+rst_and_clk_on_lut:
+  source:
+    - simple_registers/rst_and_clk_on_lut/rst_and_clk_on_lut.v
+  top_module: rst_and_clk_on_lut
+  cocotb_dir: simple_registers/rst_and_clk_on_lut
+
+rst_cond:
+  source:
+    - simple_registers/rst_cond/rst_cond.v
+  top_module: rst_cond
+  cocotb_dir: simple_registers/rst_cond
+
+rst_on_lut:
+  source:
+    - simple_registers/rst_on_lut_Nbit/rst_on_lut/rst_on_lut.v
+  top_module: rst_on_lut
+  cocotb_dir: simple_registers/rst_on_lut_Nbit/rst_on_lut
+
+rst_on_lut_4bit:
+  source:
+    - simple_registers/rst_on_lut_Nbit/rst_on_lut_4bit/rst_on_lut_4bit.v
+  top_module: rst_on_lut_4bit
+  cocotb_dir: simple_registers/rst_on_lut_Nbit/rst_on_lut_4bit
+
+rst_on_lut_8bit:
+  source:
+    - simple_registers/rst_on_lut_Nbit/rst_on_lut_8bit/rst_on_lut_8bit.v
+  top_module: rst_on_lut_8bit
+  cocotb_dir: simple_registers/rst_on_lut_Nbit/rst_on_lut_8bit
+
+signal_gen_clock_divider:
+  source:
+    - simple_registers/signal_gen/clock_divider/clock_divider.v
+  top_module: clock_divider
+  cocotb_dir: simple_registers/signal_gen/clock_divider
+
+signal_gen_pulse_generator:
+  source:
+    - simple_registers/signal_gen/pulse_generator/pulse_generator.v
+  top_module: pulse_generator
+  cocotb_dir: simple_registers/signal_gen/pulse_generator
+
+signal_gen_reset_generator:
+  source:
+    - simple_registers/signal_gen/reset_generator/reset_generator.v
+  top_module: reset_generator
+  cocotb_dir: simple_registers/signal_gen/reset_generator
+
 counter128_async_reset:
   source:
     - simple_registers/counters/counter128_async_reset/counter128_async_reset.v
@@ -116,6 +176,18 @@ dffnr:
     - simple_registers/ff/dffnr/dffnr.v
   top_module: dffnr
   cocotb_dir: simple_registers/ff/dffnr
+
+discrete_dffn:
+  source:
+    - simple_registers/ff/discrete_dffn/discrete_dffn.v
+  top_module: discrete_dffn
+  cocotb_dir: simple_registers/ff/discrete_dffn
+
+two_dff_inv_rst:
+  source:
+    - simple_registers/ff/two_dff_inv_rst/two_dff_inv_rst.v
+  top_module: two_dff_inv_rst
+  cocotb_dir: simple_registers/ff/two_dff_inv_rst
   
 counterup16_8clk_posedge_async_resetn:
   source:
@@ -191,11 +263,18 @@ clk_divider:
   top_module: clk_divider
   cocotb_dir: simple_registers/clk_divider  
 
+pwm_cnt8:
+  source:
+    - simple_registers/pwm/pwm_cnt8/pwm_cnt8.v
+    - simple_registers/pwm/pwm_cnt8/cnt_8.v
+  top_module: pwm_cnt8
+  cocotb_dir: simple_registers/pwm/pwm_cnt8    
+
 pwm_generator:
   source:
-    - simple_registers/pwm_generator/pwm_generator.v
+    - simple_registers/pwm/pwm_generator/pwm_generator.v
   top_module: pwm_generator
-  cocotb_dir: simple_registers/pwm_generator    
+  cocotb_dir: simple_registers/pwm/pwm_generator    
 
 rst_sync:
   source:

@@ -35,6 +35,18 @@ syn_spram_4x1:
   top_module: syn_spram_4x1
   cocotb_dir: ram/syn_spram_4x1
 
+dual_port_ram_8x16_8x32_mif:
+  source:
+    - ram/dual_port_ram_8x16_8x32_mif/dual_port_ram_8x16_8x32_mif.v
+  top_module: dual_port_ram_8x16_8x32_mif
+  cocotb_dir: ram/dual_port_ram_8x16_8x32_mif
+
+dual_port_ram_8x32_mif:
+  source:
+    - ram/dual_port_ram_8x32_mif/dual_port_ram_8x32_mif.v
+  top_module: dual_port_ram_8x32_mif
+  cocotb_dir: ram/dual_port_ram_8x32_mif
+
 dual_port_ram_8x16_mif:
   source:
     - ram/dual_port_ram_8x16_mif_multi_clk/dual_port_ram_8x16_mif/dual_port_ram_8x16_mif.v
