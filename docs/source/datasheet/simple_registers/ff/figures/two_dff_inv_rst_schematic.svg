@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 480" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .module-box { fill: #ffffff; stroke: #3b82f6; stroke-width: 2.5; rx: 8px; ry: 8px; }
+      .header-bg { fill: #eff6ff; }
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #1e3a8a; }
+      .port-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 11px; fill: #1e293b; }
+      .wire { fill: none; stroke: #64748b; stroke-width: 2; }
+      .wire-clk { fill: none; stroke: #ef4444; stroke-width: 2; }
+      .wire-rst { fill: none; stroke: #eab308; stroke-width: 2; }
+      .arrow { fill: #64748b; }
+      .arrow-clk { fill: #ef4444; }
+      .arrow-rst { fill: #eab308; }
+      .label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; fill: #334155; text-anchor: middle; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 8 5 L 0 8 z" class="arrow" />
+    </marker>
+    <marker id="arrow-clk" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 8 5 L 0 8 z" class="arrow-clk" />
+    </marker>
+    <marker id="arrow-rst" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 2 L 8 5 L 0 8 z" class="arrow-rst" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" class="bg" />
+
+  <!-- Module Boundary Box -->
+  <rect x="30" y="20" width="890" height="440" rx="10" ry="10" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 5" />
+  <text x="50" y="45" class="title">two_dff_inv_rst Architecture</text>
+
+  <!-- ==================== INPUTS ==================== -->
+  <!-- clk_i (Bottom bus) -->
+  <line x1="30" y1="420" x2="660" y2="420" class="wire-clk" />
+  <line x1="660" y1="420" x2="660" y2="360" class="wire-clk" marker-end="url(#arrow-clk)" />
+  <line x1="660" y1="360" x2="660" y2="200" class="wire-clk" marker-end="url(#arrow-clk)" />
+  <text x="40" y="410" fill="#ef4444" font-family="-apple-system, sans-serif" font-size="11px">clk_i</text>
+
+  <!-- rst_i (Top-middle reset tree) -->
+  <line x1="30" y1="150" x2="250" y2="150" class="wire-rst" />
+  <!-- Branch to FF 0 Reset -->
+  <line x1="250" y1="150" x2="580" y2="150" class="wire-rst" marker-end="url(#arrow-rst)" />
+  <!-- Branch down to Reset Inverter -->
+  <line x1="250" y1="150" x2="250" y2="310" class="wire-rst" />
+  <line x1="250" y1="310" x2="320" y2="310" class="wire-rst" marker-end="url(#arrow-rst)" />
+  <text x="40" y="140" fill="#d97706" font-family="-apple-system, sans-serif" font-size="11px">rst_i</text>
+
+  <!-- d_i (Top data bus) -->
+  <line x1="30" y1="80" x2="520" y2="80" class="wire" />
+  <line x1="520" y1="80" x2="520" y2="290" class="wire" />
+  <line x1="520" y1="130" x2="580" y2="130" class="wire" marker-end="url(#arrow)" />
+  <line x1="520" y1="290" x2="580" y2="290" class="wire" marker-end="url(#arrow)" />
+  <text x="40" y="70" class="port-text">d_i</text>
+
+  <!-- ==================== BLOCKS ==================== -->
+  <!-- Reset Inverter Block -->
+  <rect x="320" y="270" width="140" height="80" class="module-box" />
+  <rect x="320" y="270" width="140" height="25" class="header-bg" />
+  <text x="390" y="287" class="label">Reset Inverter</text>
+  <text x="335" y="320" class="port-text">int_rst = ~rst_i</text>
+
+  <!-- Inverted Reset Path (int_rst) -->
+  <line x1="460" y1="310" x2="580" y2="310" class="wire-rst" marker-end="url(#arrow-rst)" />
+
+  <!-- Flip-Flop 0 Block (d0_o) -->
+  <rect x="580" y="100" width="160" height="100" class="module-box" />
+  <rect x="580" y="100" width="160" height="25" class="header-bg" />
+  <text x="660" y="117" class="label">FF 0 (d0_o)</text>
+  <text x="595" y="150" class="port-text">rst_i active</text>
+  <text x="595" y="175" class="port-text">d0_o <= d_i</text>
+
+  <!-- Flip-Flop 1 Block (d1_o) -->
+  <rect x="580" y="260" width="160" height="100" class="module-box" />
+  <rect x="580" y="260" width="160" height="25" class="header-bg" />
+  <text x="660" y="277" class="label">FF 1 (d1_o)</text>
+  <text x="595" y="310" class="port-text">int_rst active</text>
+  <text x="595" y="335" class="port-text">d1_o <= d_i</text>
+
+  <!-- ==================== OUTPUTS ==================== -->
+  <!-- d0_o -->
+  <line x1="740" y1="150" x2="890" y2="150" class="wire" marker-end="url(#arrow)" />
+  <text x="800" y="140" class="port-text">d0_o</text>
+
+  <!-- d1_o -->
+  <line x1="740" y1="310" x2="890" y2="310" class="wire" marker-end="url(#arrow)" />
+  <text x="800" y="300" class="port-text">d1_o</text>
+
+</svg>

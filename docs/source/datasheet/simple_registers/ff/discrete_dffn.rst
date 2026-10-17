@@ -11,7 +11,7 @@ The ``discrete_dffn`` module implements a flip-flop triggered on an inverted (ne
 Source codes
 ~~~~~~~~~~~~
 
-See details in ``simple_registers/discrete_dffn.v``
+See details in ``simple_registers/ff/discrete_dffn.v``
 
 Block Diagram
 ~~~~~~~~~~~~~
