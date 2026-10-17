@@ -22,3 +22,4 @@ Simple Registers
    rst_on_lut
    rst_on_lut_Nbit
    pwm_cnt8
+   signal_gen/index
