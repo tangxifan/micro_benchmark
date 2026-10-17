@@ -6,8 +6,8 @@ Dual-Port RAM 8x16 MIF Single Clock
 Introduction
 ~~~~~~~~~~~~
 
-This benchmark tests Block RAM (BRAM) primitive inferencing, memory initialization (`.mif` files), and basic dual-port memory functionality[cite: 3].
-The module instantiates a single 256x16 dual-port RAM, with its own write clock (`clk_a`) and read clock (`clk_b`)[cite: 3].
+This benchmark tests Block RAM (BRAM) primitive inferencing, memory initialization (`.mif` files), and basic dual-port memory functionality.
+The module instantiates a single 256x16 dual-port RAM, with its own write clock (`clk_a`) and read clock (`clk_b`).
 
 Source codes
 ~~~~~~~~~~~~
@@ -26,7 +26,7 @@ Block Diagram
 Performance
 ~~~~~~~~~~~
 
-Expect to consume 1 BRAM primitive (or equivalent LUT RAM logic)[cite: 3].
+Expect to consume 1 BRAM primitive (or equivalent LUT RAM logic).
 
 .. list-table:: Estimated Resource Utilization
   :header-rows: 1

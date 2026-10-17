@@ -6,7 +6,7 @@
 Introduction
 ~~~~~~~~~~~~
 
-This benchmark tests a single-port random access memory (SPRAM) with a capacity of 4 bits, organized as a $4 \times 1$-bit array[cite: 1].
+This benchmark tests a single-port random access memory (SPRAM) with a capacity of 4 bits, organized as a :math:`4 \times 1`-bit array.
 The module supports synchronous write operations on the rising edge of the clock and asynchronous read operations.
 
 Source codes
