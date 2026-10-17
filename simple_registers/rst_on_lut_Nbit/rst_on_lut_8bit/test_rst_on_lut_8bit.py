@@ -2,10 +2,11 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
 
+
 @cocotb.test()
 async def test_rst_on_lut_8bit_functional(dut):
     """Testbench for rst_on_lut_8bit module verifying asynchronous reset register capture and 8-bit combinatorial output gating."""
-    
+
     # Start a 10ns period system clock (100 MHz)
     clock = Clock(dut.clk, 10, unit="ns")
     cocotb.start_soon(clock.start())
@@ -23,7 +24,7 @@ async def test_rst_on_lut_8bit_functional(dut):
     dut.rst.value = 1
     for i in range(8):
         getattr(dut, f"b{i}").value = 1
-        
+
     await Timer(5, unit="ns")
 
     q_val = str(dut.q.value)
@@ -31,7 +32,7 @@ async def test_rst_on_lut_8bit_functional(dut):
 
     if q_val not in ["x", "X", "Z"]:
         assert int(dut.q.value) == 0, f"Expected q=0 during active reset, got {int(dut.q.value)}"
-    
+
     for i in range(8):
         sig = getattr(dut, f"out{i}")
         val_str = str(sig.value)
@@ -44,7 +45,7 @@ async def test_rst_on_lut_8bit_functional(dut):
     expected_b_vals = [1, 0, 1, 0, 1, 1, 0, 0]
     for i, val in enumerate(expected_b_vals):
         getattr(dut, f"b{i}").value = val
-    
+
     await RisingEdge(dut.clk)
     await Timer(1, unit="ns")  # Allow combinatorial propagation settling
 

@@ -2,10 +2,11 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, FallingEdge, Timer
 
+
 @cocotb.test()
 async def test_discrete_dffn_functional(dut):
     """Testbench for discrete_dffn module verifying negative-edged clock triggering and data sampling."""
-    
+
     # Start a 10ns period clock on clk_ni (100 MHz)
     clock = Clock(dut.clk_ni, 10, unit="ns")
     cocotb.start_soon(clock.start())
@@ -30,11 +31,13 @@ async def test_discrete_dffn_functional(dut):
 
         # Safely retrieve string representations to prevent ValueError on uninitialized 'X' states
         d_o_val = str(dut.d_o.value)
-        
+
         cocotb.log.info(f"Vector {idx}: d_i={val} -> d_o={d_o_val}")
 
         # Verify sampled data matches after clock transition
         if d_o_val not in ["x", "X", "Z"]:
-            assert int(dut.d_o.value) == val, f"Mismatch: expected d_o={val}, got {int(dut.d_o.value)}"
+            assert (
+                int(dut.d_o.value) == val
+            ), f"Mismatch: expected d_o={val}, got {int(dut.d_o.value)}"
 
     cocotb.log.info("All discrete_dffn test cases completed successfully!")

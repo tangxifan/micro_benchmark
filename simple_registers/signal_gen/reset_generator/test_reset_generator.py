@@ -2,10 +2,11 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
 
+
 @cocotb.test()
 async def test_reset_generator(dut):
     """Testbench for reset_generator verifying active cycles counter and pulse toggle."""
-    
+
     # Start a 10ns period clock (100 MHz)
     clock = Clock(dut.clk, 10, unit="ns")
     cocotb.start_soon(clock.start())
@@ -23,9 +24,9 @@ async def test_reset_generator(dut):
     # Monitor output across clock cycles
     for cycle in range(50):
         await RisingEdge(dut.clk)
-        
+
         val_str = str(dut.pulse.value)
-        if all(c in '01' for c in val_str):
+        if all(c in "01" for c in val_str):
             current_pulse = int(dut.pulse.value)
             if current_pulse != initial_pulse:
                 toggle_count += 1

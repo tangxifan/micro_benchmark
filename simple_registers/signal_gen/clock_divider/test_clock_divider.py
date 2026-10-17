@@ -2,10 +2,11 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
 
+
 @cocotb.test()
 async def test_clock_divider(dut):
     """Testbench for clock_divider verifying division ratio and clk_out toggling."""
-    
+
     # Start a 10ns period input clock (100 MHz)
     clock = Clock(dut.clk_in, 10, unit="ns")
     cocotb.start_soon(clock.start())
@@ -23,7 +24,7 @@ async def test_clock_divider(dut):
     # Run simulation for enough cycles (CLK_DIVIDER_SIZE=8 means toggling every 128 cycles)
     for cycle in range(1000):
         await RisingEdge(dut.clk_in)
-        
+
         current_clk_out = int(dut.clk_out.value)
         if current_clk_out != initial_clk_out:
             toggle_count += 1

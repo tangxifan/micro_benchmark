@@ -2,10 +2,11 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
 
+
 @cocotb.test()
 async def test_pulse_generator(dut):
     """Testbench for pulse_generator verifying wait cycles, pulse width, and output toggles."""
-    
+
     # Start a 10ns period input clock (100 MHz)
     clock = Clock(dut.clk_in, 10, unit="ns")
     cocotb.start_soon(clock.start())
@@ -21,7 +22,7 @@ async def test_pulse_generator(dut):
     dut.pulse_end.value = 0
     dut.wait_cycle_counter.value = 0
     dut.pulse_width_counter.value = 0
-    
+
     await Timer(10, unit="ns")
 
     pulse_changes = 0
@@ -30,9 +31,9 @@ async def test_pulse_generator(dut):
     # Run simulation for enough cycles to observe the pulse window
     for cycle in range(100):
         await RisingEdge(dut.clk_in)
-        
+
         val_str = str(dut.pulse.value)
-        if all(c in '01' for c in val_str):
+        if all(c in "01" for c in val_str):
             current_val = int(dut.pulse.value)
             if current_val != prev_val:
                 pulse_changes += 1

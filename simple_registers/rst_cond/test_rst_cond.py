@@ -2,10 +2,11 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
 
+
 @cocotb.test()
 async def test_rst_cond_functional(dut):
     """Testbench for rst_cond module verifying conditioned asynchronous reset and synchronous data capture."""
-    
+
     # Start a 10ns period system clock (100 MHz)
     clock = Clock(dut.clk_i, 10, unit="ns")
     cocotb.start_soon(clock.start())
@@ -28,13 +29,15 @@ async def test_rst_cond_functional(dut):
     cocotb.log.info(f"Active Reset (rst_i=1, rst_cond_i=1) -> int_rst={int_rst_val}, q_o={q_val}")
 
     if q_val not in ["x", "X", "Z"]:
-        assert int(dut.q_o.value) == 0, f"Expected q_o=0 during active conditioned reset, got {int(dut.q_o.value)}"
+        assert (
+            int(dut.q_o.value) == 0
+        ), f"Expected q_o=0 during active conditioned reset, got {int(dut.q_o.value)}"
 
     # Test Case 2: Deassert Reset (int_rst = 0), Capture Data on clk_i
     dut.rst_i.value = 0
     dut.rst_cond_i.value = 0
     dut.d_i.value = 1
-    
+
     await RisingEdge(dut.clk_i)
     await Timer(1, unit="ns")  # Allow combinatorial propagation settling
 

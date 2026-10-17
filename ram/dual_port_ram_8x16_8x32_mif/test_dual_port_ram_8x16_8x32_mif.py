@@ -2,10 +2,11 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
 
+
 @cocotb.test()
 async def test_dual_port_ram_8x16_8x32(dut):
     """Testbench for dual_port_ram_8x16_8x32 verifying MIF preloading and dual-port read/write operations."""
-    
+
     # Start a 10ns period system clock (100 MHz)
     clock = Clock(dut.clk, 10, unit="ns")
     cocotb.start_soon(clock.start())
@@ -23,11 +24,11 @@ async def test_dual_port_ram_8x16_8x32(dut):
     await Timer(15, unit="ns")
     cocotb.log.info("Starting dual_port_ram_8x16_8x32 verification...")
 
-# Inside your testbench, let's test reading address 0 and check the value:
+    # Inside your testbench, let's test reading address 0 and check the value:
     dut.ren.value = 1
     dut.raddr8x16.value = 0
     dut.raddr8x32.value = 0
-    
+
     await RisingEdge(dut.clk)
     await RisingEdge(dut.clk)
     await Timer(1, unit="ns")
@@ -40,7 +41,7 @@ async def test_dual_port_ram_8x16_8x32(dut):
     dut.ren.value = 1
     dut.raddr8x16.value = 0
     dut.raddr8x32.value = 0
-    
+
     # Wait 2 clock edges for synchronous pipeline read latency (internal reg -> dout)
     await RisingEdge(dut.clk)
     await RisingEdge(dut.clk)
@@ -50,15 +51,19 @@ async def test_dual_port_ram_8x16_8x32(dut):
     dout32_str = str(dut.dout8x32.value)
 
     # Safely format values for logging without crashing on X/Z states
-    log16 = hex(int(dut.dout8x16.value)) if all(c in '01' for c in dout16_str) else dout16_str
-    log32 = hex(int(dut.dout8x32.value)) if all(c in '01' for c in dout32_str) else dout32_str
+    log16 = hex(int(dut.dout8x16.value)) if all(c in "01" for c in dout16_str) else dout16_str
+    log32 = hex(int(dut.dout8x32.value)) if all(c in "01" for c in dout32_str) else dout32_str
     cocotb.log.info(f"Initial Read -> dout8x16={log16}, dout8x32={log32}")
 
-    if all(c in '01' for c in dout16_str):
+    if all(c in "01" for c in dout16_str):
         # 0x138FEFFF loaded into a 16-bit register truncates to the lower 16 bits: 0xFEFF
-        assert dut.dout8x16.value == 0xFEFF, f"Expected dout8x16=0xFEFF from init_8x16.hex, got {hex(int(dut.dout8x16.value))}"
-    if all(c in '01' for c in dout32_str):
-        assert dut.dout8x32.value == 0xFFFFFFFF, f"Expected dout8x32=0xFFFFFFFF from init_8x32.hex, got {hex(int(dut.dout8x32.value))}"
+        assert (
+            dut.dout8x16.value == 0xFEFF
+        ), f"Expected dout8x16=0xFEFF from init_8x16.hex, got {hex(int(dut.dout8x16.value))}"
+    if all(c in "01" for c in dout32_str):
+        assert (
+            dut.dout8x32.value == 0xFFFFFFFF
+        ), f"Expected dout8x32=0xFFFFFFFF from init_8x32.hex, got {hex(int(dut.dout8x32.value))}"
 
     # =========================================================================
     # Test Case 2: Perform Write Operation (wen = 1)
@@ -90,13 +95,17 @@ async def test_dual_port_ram_8x16_8x32(dut):
     dout16_str = str(dut.dout8x16.value)
     dout32_str = str(dut.dout8x32.value)
 
-    log16 = hex(int(dut.dout8x16.value)) if all(c in '01' for c in dout16_str) else dout16_str
-    log32 = hex(int(dut.dout8x32.value)) if all(c in '01' for c in dout32_str) else dout32_str
+    log16 = hex(int(dut.dout8x16.value)) if all(c in "01" for c in dout16_str) else dout16_str
+    log32 = hex(int(dut.dout8x32.value)) if all(c in "01" for c in dout32_str) else dout32_str
     cocotb.log.info(f"Post-Write Read -> dout8x16={log16}, dout8x32={log32}")
 
-    if all(c in '01' for c in dout16_str):
-        assert dut.dout8x16.value == 0x1234, f"Expected dout8x16=0x1234, got {hex(int(dut.dout8x16.value))}"
-    if all(c in '01' for c in dout32_str):
-        assert dut.dout8x32.value == 0xDEADBEEF, f"Expected dout8x32=0xDEADBEEF, got {hex(int(dut.dout8x32.value))}"
+    if all(c in "01" for c in dout16_str):
+        assert (
+            dut.dout8x16.value == 0x1234
+        ), f"Expected dout8x16=0x1234, got {hex(int(dut.dout8x16.value))}"
+    if all(c in "01" for c in dout32_str):
+        assert (
+            dut.dout8x32.value == 0xDEADBEEF
+        ), f"Expected dout8x32=0xDEADBEEF, got {hex(int(dut.dout8x32.value))}"
 
     cocotb.log.info("All dual_port_ram_8x16_8x32 test cases completed successfully!")
