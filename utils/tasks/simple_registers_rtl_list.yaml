@@ -245,11 +245,18 @@ clk_divider:
   top_module: clk_divider
   cocotb_dir: simple_registers/clk_divider  
 
+pwm_cnt8:
+  source:
+    - simple_registers/pwm/pwm_cnt8/pwm_cnt8.v
+    - simple_registers/pwm/pwm_cnt8/cnt_8.v
+  top_module: pwm_cnt8
+  cocotb_dir: simple_registers/pwm/pwm_cnt8    
+
 pwm_generator:
   source:
-    - simple_registers/pwm_generator/pwm_generator.v
+    - simple_registers/pwm/pwm_generator/pwm_generator.v
   top_module: pwm_generator
-  cocotb_dir: simple_registers/pwm_generator    
+  cocotb_dir: simple_registers/pwm/pwm_generator    
 
 rst_sync:
   source:
