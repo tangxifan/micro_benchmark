@@ -135,6 +135,11 @@ discrete_dffn:
   top_module: discrete_dffn
   cocotb_dir: simple_registers/ff/discrete_dffn
 
+two_dff_inv_rst:
+  source:
+    - simple_registers/ff/two_dff_inv_rst/two_dff_inv_rst.v
+  top_module: two_dff_inv_rst
+  cocotb_dir: simple_registers/ff/two_dff_inv_rst
   
 counterup16_8clk_posedge_async_resetn:
   source:
