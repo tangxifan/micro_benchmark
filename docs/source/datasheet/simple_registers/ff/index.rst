@@ -7,3 +7,5 @@ Flip-Flops
    :maxdepth: 2
 
    dffnr
+
+   discrete_dffn
