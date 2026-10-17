@@ -15,3 +15,4 @@ Simple Registers
    ff/index
    counters/index
    timers/index
+   clk_cond
