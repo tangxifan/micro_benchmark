@@ -35,7 +35,6 @@ module reset_generator(
 
 `ifdef VIVADO_SYNTHESIS
 	initial begin
-		clkdiv_counter <= 0;
 		active_cycle_counter <= 0;
 		pulse <= INITIAL_VALUE;
 	end
