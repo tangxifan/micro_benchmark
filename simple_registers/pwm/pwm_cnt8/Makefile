@@ -4,8 +4,8 @@ SIM ?= icarus
 TOPLEVEL_LANG ?= verilog
 
 # Source files
+VERILOG_SOURCES += cnt_8.v
 VERILOG_SOURCES += pwm_cnt8.v
-VERILOG_SOURCES += cnt8.v
 
 # Top-level module name
 TOPLEVEL = pwm_cnt8
