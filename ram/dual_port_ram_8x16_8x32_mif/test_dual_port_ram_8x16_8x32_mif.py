@@ -85,12 +85,12 @@ async def test_dual_port_ram(dut):
             f"dout8x32 = 0x{val_32:08X} (Expected: 0x{write_data_32[addr]:08X})"
         )
 
-        assert val_16 == write_data_16[addr], (
-            f"Mismatch at 8x16 RAM address {addr}! Expected 0x{write_data_16[addr]:04X}, got 0x{val_16:04X}"
-        )
-        assert val_32 == write_data_32[addr], (
-            f"Mismatch at 8x32 RAM address {addr}! Expected 0x{write_data_32[addr]:08X}, got 0x{val_32:08X}"
-        )
+        assert (
+            val_16 == write_data_16[addr]
+        ), f"Mismatch at 8x16 RAM address {addr}! Expected 0x{write_data_16[addr]:04X}, got 0x{val_16:04X}"
+        assert (
+            val_32 == write_data_32[addr]
+        ), f"Mismatch at 8x32 RAM address {addr}! Expected 0x{write_data_32[addr]:08X}, got 0x{val_32:08X}"
 
     dut.ren.value = 0
     cocotb.log.info("dual_port_ram_8x16_8x32 simulation completed successfully!")
