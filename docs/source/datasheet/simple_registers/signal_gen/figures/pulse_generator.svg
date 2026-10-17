@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 480" width="100%" height="100%">
+  <defs>
+    <!-- Grid Pattern -->
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e2e8f0" stroke-width="0.5" />
+    </pattern>
+
+    <!-- Drop Shadow Filter -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="3" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.1" />
+    </filter>
+
+    <!-- Gradients -->
+    <linearGradient id="moduleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="100%" stop-color="#f1f5f9" />
+    </linearGradient>
+
+    <linearGradient id="blockGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f8fafc" />
+    </linearGradient>
+
+    <!-- Arrowheads -->
+    <marker id="arrow-clk" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ea580c" />
+    </marker>
+
+    <marker id="arrow-ctrl" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7" />
+    </marker>
+
+    <marker id="arrow-out" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb" />
+    </marker>
+
+    <marker id="arrow-int" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff" />
+  <rect width="100%" height="100%" fill="url(#grid)" />
+
+  <!-- Title Block -->
+  <text x="425" y="38" font-family="monospace, &#39;Courier New&#39;" font-size="18" font-weight="bold" fill="#0f172a" text-anchor="middle" letter-spacing="1">
+    pulse_generator Architecture
+  </text>
+  <text x="425" y="58" font-family="sans-serif" font-size="12" fill="#64748b" text-anchor="middle">
+    Configurable Delay & Pulse Width Waveform Generator
+  </text>
+
+  <!-- Main Module Container: pulse_generator -->
+  <rect x="120" y="80" width="610" height="340" rx="10" fill="url(#moduleGrad)" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)" />
+  <text x="140" y="108" font-family="monospace, &#39;Courier New&#39;" font-size="14" font-weight="bold" fill="#1d4ed8">
+    pulse_generator (Top)
+  </text>
+
+  <!-- Parameter Annotation -->
+  <text x="710" y="108" font-family="monospace, &#39;Courier New&#39;" font-size="10" fill="#64748b" text-anchor="end">
+    INITIAL_VALUE, WAIT_CYCLES, PULSE_WIDTH
+  </text>
+
+  <!-- Wait Counter Block -->
+  <rect x="200" y="150" width="200" height="110" rx="6" fill="url(#blockGrad)" stroke="#7c3aed" stroke-width="1.5" />
+  <text x="300" y="175" font-family="monospace, &#39;Courier New&#39;" font-size="12" font-weight="bold" fill="#6d28d9" text-anchor="middle">
+    wait_cycle_counter
+  </text>
+  <text x="300" y="195" font-family="sans-serif" font-size="10" fill="#475569" text-anchor="middle">
+    Wait Delay Logic
+  </text>
+  <text x="300" y="215" font-family="monospace, &#39;Courier New&#39;" font-size="10" fill="#0f172a" text-anchor="middle">
+    == WAIT_CYCLES
+  </text>
+  <path d="M 200 240 L 215 240 L 207 232 Z" fill="none" stroke="#ea580c" stroke-width="1.5" />
+
+  <!-- Pulse Counter & State Controller Block -->
+  <rect x="470" y="150" width="220" height="230" rx="6" fill="url(#blockGrad)" stroke="#0284c7" stroke-width="1.5" />
+  <text x="580" y="175" font-family="monospace, &#39;Courier New&#39;" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="middle">
+    Pulse Logic & Control
+  </text>
+  <text x="580" y="195" font-family="monospace, &#39;Courier New&#39;" font-size="10" fill="#475569" text-anchor="middle">
+    pulse_width_counter
+  </text>
+  
+  <!-- Flags inside controller -->
+  <rect x="490" y="210" width="180" height="65" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+  <text x="580" y="230" font-family="monospace, &#39;Courier New&#39;" font-size="10" fill="#334155" text-anchor="middle">
+    pulse_start  : reg
+  </text>
+  <text x="580" y="250" font-family="monospace, &#39;Courier New&#39;" font-size="10" fill="#334155" text-anchor="middle">
+    pulse_end    : reg
+  </text>
+
+  <!-- Output Stage inside controller -->
+  <rect x="490" y="295" width="180" height="65" rx="4" fill="#f0f9ff" stroke="#0284c7" stroke-width="1" />
+  <text x="580" y="320" font-family="monospace, &#39;Courier New&#39;" font-size="11" font-weight="bold" fill="#0369a1" text-anchor="middle">
+    pulse <= ~INITIAL_VAL
+  </text>
+  <text x="580" y="340" font-family="sans-serif" font-size="9" fill="#64748b" text-anchor="middle">
+    Active during PULSE_WIDTH
+  </text>
+  <path d="M 470 340 L 485 340 L 477 332 Z" fill="none" stroke="#ea580c" stroke-width="1.5" />
+
+  <!-- Input Pin: clk_in -->
+  <path d="M 40 240 L 200 240" fill="none" stroke="#ea580c" stroke-width="2" marker-end="url(#arrow-clk)" />
+  <text x="50" y="232" font-family="monospace, &#39;Courier New&#39;" font-size="12" fill="#c2410c">clk_in</text>
+  
+  <!-- Clock line extension to second block -->
+  <path d="M 170 240 L 170 340 L 470 340" fill="none" stroke="#ea580c" stroke-width="2" marker-end="url(#arrow-clk)" />
+
+  <!-- Input Pin: repeated -->
+  <path d="M 40 310 L 470 310" fill="none" stroke="#0284c7" stroke-width="2" marker-end="url(#arrow-ctrl)" />
+  <text x="50" y="302" font-family="monospace, &#39;Courier New&#39;" font-size="12" fill="#0369a1">repeated</text>
+
+  <!-- Internal Connection: pulse_start trigger -->
+  <path d="M 400 215 L 470 215" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow-int)" />
+  <text x="435" y="207" font-family="monospace, &#39;Courier New&#39;" font-size="9" fill="#475569" text-anchor="middle">pulse_start</text>
+
+  <!-- Output Pin: pulse -->
+  <path d="M 670 330 L 790 330" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-out)" />
+  <text x="780" y="322" font-family="monospace, &#39;Courier New&#39;" font-size="12" fill="#1d4ed8" text-anchor="end">pulse</text>
+
+  <!-- Legend / Key -->
+  <g transform="translate(200, 445)">
+    <line x1="0" y1="0" x2="20" y2="0" stroke="#ea580c" stroke-width="2" />
+    <text x="28" y="4" font-family="sans-serif" font-size="11" fill="#334155">Clock (clk_in)</text>
+
+    <line x1="140" y1="0" x2="160" y2="0" stroke="#0284c7" stroke-width="2" />
+    <text x="168" y="4" font-family="sans-serif" font-size="11" fill="#334155">Control Signal</text>
+
+    <line x1="280" y1="0" x2="300" y2="0" stroke="#64748b" stroke-width="2" />
+    <text x="308" y="4" font-family="sans-serif" font-size="11" fill="#334155">Internal Trigger</text>
+
+    <line x1="420" y1="0" x2="440" y2="0" stroke="#2563eb" stroke-width="2.5" />
+    <text x="448" y="4" font-family="sans-serif" font-size="11" fill="#334155">Pulse Output</text>
+  </g>
+</svg>
