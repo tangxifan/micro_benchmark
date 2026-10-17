@@ -6,8 +6,8 @@ Dual-Port RAM 16K (2048x8)
 Introduction
 ~~~~~~~~~~~~
 
-This benchmark tests Block RAM (BRAM) primitive inferencing and basic dual-port memory functionality[cite: 3].
-The module instantiates a 2048x8-bit dual-port RAM (``dual_port_sram_16kb``) with independent write and read address/control buses driven by a shared clock (``clk``)[cite: 3].
+This benchmark tests Block RAM (BRAM) primitive inferencing and basic dual-port memory functionality.
+The module instantiates a 2048x8-bit dual-port RAM (``dual_port_sram_16kb``) with independent write and read address/control buses driven by a shared clock (``clk``).
 
 Source codes
 ~~~~~~~~~~~~
@@ -26,7 +26,7 @@ Block Diagram
 Performance
 ~~~~~~~~~~~
 
-Expect to consume BRAM primitives (or equivalent memory logic resources)[cite: 3].
+Expect to consume BRAM primitives (or equivalent memory logic resources).
 
 .. list-table:: Estimated Resource Utilization
   :header-rows: 1

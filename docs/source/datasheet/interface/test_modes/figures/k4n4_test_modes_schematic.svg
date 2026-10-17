@@ -46,7 +46,7 @@
   <rect x="160" y="90" width="220" height="25" class="header-bg" />
   <text x="270" y="107" class="label">Combinational Logic</text>
   <text x="175" y="135" class="port-text">XOR = a ^ b ^ c</text>
-  <text x="175" y="160" class="port-text">XNOR = !XOR</text>
+  <text x="175" y="160" class="port-text">XNOR = ~XOR</text>
   <text x="175" y="185" class="port-text">OR / NOR (a, b, c)</text>
   <text x="210" y="210" class="port-text">AND / NAND (a, b, c)</text>
 
@@ -54,8 +54,8 @@
   <rect x="530" y="90" width="220" height="200" class="module-box" />
   <rect x="530" y="90" width="220" height="25" class="header-bg" />
   <text x="640" y="107" class="label">Synchronous Registers</text>
-  <text x="545" y="135" class="port-text">XOR_sync <= XOR</text>
-  <text x="545" y="160" class="port-text">XNOR_sync <= XNOR</text>
+  <text x="545" y="135" class="port-text">XOR_sync &lt;= XOR</text>
+  <text x="545" y="160" class="port-text">XNOR_sync &lt;= XNOR</text>
   <text x="545" y="185" class="port-text">OR_sync / NOR_sync</text>
   <text x="545" y="210" class="port-text">AND_sync / NAND_sync</text>
   <text x="545" y="265" fill="#ef4444" font-size="10px">Clocked by @(posedge clk)</text>

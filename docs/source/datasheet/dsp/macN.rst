@@ -6,7 +6,10 @@ N-bit Multiply-Accumulate Circuit (mac_N)
 Introduction
 ~~~~~~~~~~~~
 
-This module implements a parameterized $N$-bit multiply-accumulate (MAC) circuit, generalizing the 8-bit design created by Xifan Tang. It computes the arithmetic operation where input ``a`` is multiplied by input ``b``, and the product is added to input ``c`` (``out = a * b + c``). The data width is fully configurable via the ``DATA_WIDTH`` parameter.
+.. note:: The output of the MAC are truncated by half. In regular MAC, the output should contain at least ``2*N`` bits while it is reduced to ``N`` bits.
+
+This module implements a parameterized N-bit multiply-accumulate (MAC) circuit.
+It computes the arithmetic operation where input ``a`` is multiplied by input ``b``, and the product is added to input ``c`` (``out = a * b + c``). The data width is fully configurable via the ``DATA_WIDTH`` parameter.
 
 Source codes
 ~~~~~~~~~~~~
@@ -41,7 +44,7 @@ Block Diagram
 Performance
 ~~~~~~~~~~~
 
-Expect to consume hardware multiplier and adder resources scaling with the configured data width ($N$).
+Expect to consume hardware multiplier and adder resources scaling with the configured data width (N).
 
 .. warning:: The following resource utilization is just an estimation! Different tools in different versions may result differently.
 
@@ -57,89 +60,89 @@ Expect to consume hardware multiplier and adder resources scaling with the confi
     - Carry
     - DSP
     - BRAM
-  * - mac_2 ($N=2$)
-    - 3
-    - 1
+  * - mac_2
+    - 6
+    - 2
     - ~4
     - 0
     - ~2
     - 0
     - 0
-  * - mac_4 ($N=4$)
-    - 3
-    - 1
+  * - mac_4
+    - 12
+    - 4
     - ~8
     - 0
     - ~4
     - 0
     - 0
-  * - mac_6 ($N=6$)
-    - 3
-    - 1
+  * - mac_6
+    - 18
+    - 6
     - ~12
     - 0
     - ~6
     - 0
     - 0
-  * - mac_8 ($N=8$)
-    - 3
-    - 1
+  * - mac_8
+    - 24
+    - 8
     - ~16
     - 0
     - ~8
     - 1
     - 0
-  * - mac_9 ($N=9$)
-    - 3
-    - 1
+  * - mac_9
+    - 27
+    - 9
     - ~20
     - 0
     - ~9
     - 1
     - 0
-  * - mac_12 ($N=12$)
-    - 3
-    - 1
+  * - mac_12
+    - 36
+    - 12
     - ~36
     - 0
     - ~12
     - 1
     - 0
-  * - mac_16 ($N=16$)
-    - 3
-    - 1
+  * - mac_16
+    - 48
+    - 16
     - ~64
     - 0
     - ~16
     - 1
     - 0
-  * - mac_18 ($N=18$)
-    - 3
-    - 1
+  * - mac_18
+    - 54
+    - 18
     - ~80
     - 0
     - ~18
     - 1
     - 0
-  * - mac_20 ($N=20$)
-    - 3
-    - 1
+  * - mac_20
+    - 60
+    - 20
     - ~100
     - 0
     - ~20
     - 1 (cascaded)
     - 0
-  * - mac_32 ($N=32$)
-    - 3
-    - 1
+  * - mac_32
+    - 96
+    - 32
     - ~256
     - 0
     - ~32
     - 2 (cascaded)
     - 0
-  * - mac_36 ($N=36$)
-    - 3
-    - 1
+  * - mac_36
+    - 108
+    - 36
     - ~324
     - 0
     - ~36
