@@ -4,6 +4,12 @@ blinking:
   top_module: blinking
   cocotb_dir: simple_registers/blinking
 
+clk_cond:
+  source:
+    - simple_registers/clk_cond/clk_cond.v
+  top_module: clk_cond
+  cocotb_dir: simple_registers/clk_cond
+
 counter128_async_reset:
   source:
     - simple_registers/counters/counter128_async_reset/counter128_async_reset.v
