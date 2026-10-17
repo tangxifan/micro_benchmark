@@ -16,6 +16,13 @@ clk_on_lut:
   top_module: clk_on_lut
   cocotb_dir: simple_registers/clk_on_lut
 
+rst_and_clk_on_lut:
+  source:
+    - simple_registers/rst_and_clk_on_lut/rst_and_clk_on_lut.v
+  top_module: rst_and_clk_on_lut
+  cocotb_dir: simple_registers/rst_and_clk_on_lut
+
+
 counter128_async_reset:
   source:
     - simple_registers/counters/counter128_async_reset/counter128_async_reset.v
