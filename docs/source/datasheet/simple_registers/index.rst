@@ -19,3 +19,4 @@ Simple Registers
    clk_on_lut
    rst_and_clk_on_lut
    rst_cond
+   rst_on_lut
