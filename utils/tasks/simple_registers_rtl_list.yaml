@@ -22,6 +22,11 @@ rst_and_clk_on_lut:
   top_module: rst_and_clk_on_lut
   cocotb_dir: simple_registers/rst_and_clk_on_lut
 
+rst_cond:
+  source:
+    - simple_registers/rst_cond/rst_cond.v
+  top_module: rst_cond
+  cocotb_dir: simple_registers/rst_cond
 
 counter128_async_reset:
   source:
