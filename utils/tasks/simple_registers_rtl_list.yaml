@@ -128,6 +128,13 @@ dffnr:
     - simple_registers/ff/dffnr/dffnr.v
   top_module: dffnr
   cocotb_dir: simple_registers/ff/dffnr
+
+discrete_dffn:
+  source:
+    - simple_registers/ff/discrete_dffn/discrete_dffn.v
+  top_module: discrete_dffn
+  cocotb_dir: simple_registers/ff/discrete_dffn
+
   
 counterup16_8clk_posedge_async_resetn:
   source:
