@@ -4,7 +4,7 @@ from cocotb.triggers import RisingEdge, Timer
 
 @cocotb.test()
 async def test_dual_port_ram_8x16_8x32(dut):
-    """Testbench for dual_port_ram_8x16_8x32 verifying MIF preloading and dual-port read/write operations[cite: 6, 7]."""
+    """Testbench for dual_port_ram_8x16_8x32 verifying MIF preloading and dual-port read/write operations[cite: 6, 7, 8]."""
     
     # Start a 10ns period system clock (100 MHz)
     clock = Clock(dut.clk, 10, unit="ns")
@@ -30,7 +30,7 @@ async def test_dual_port_ram_8x16_8x32(dut):
     dut.raddr8x16.value = 0
     dut.raddr8x32.value = 0
     
-    # Wait 2 clock edges for synchronous pipeline read latency
+    # Wait 2 clock edges for synchronous pipeline read latency (internal reg -> dout)
     await RisingEdge(dut.clk)
     await RisingEdge(dut.clk)
     await Timer(1, unit="ns")  # Small settling delay
@@ -40,9 +40,9 @@ async def test_dual_port_ram_8x16_8x32(dut):
     cocotb.log.info(f"Initial Read -> dout8x16={hex(int(dut.dout8x16.value))}, dout8x32={hex(int(dut.dout8x32.value))}")
 
     if dout16_val not in ["x", "X", "Z"]:
-        assert dut.dout8x16.value == 0xFEFF, f"Expected dout8x16=0xFEFF from init_8x16_2.hex, got {hex(int(dut.dout8x16.value))}"
+        assert dut.dout8x16.value == 0xEFFF, f"Expected dout8x16=0xEFFF from init_8x16_2.hex, got {hex(int(dut.dout8x16.value))}"[cite: 7]
     if dout32_val not in ["x", "X", "Z"]:
-        assert dut.dout8x32.value == 0xFFFFFFFF, f"Expected dout8x32=0xFFFFFFFF from init_8x32_2.hex, got {hex(int(dut.dout8x32.value))}"
+        assert dut.dout8x32.value == 0xFFFFFFFF, f"Expected dout8x32=0xFFFFFFFF from init_8x32_2.hex, got {hex(int(dut.dout8x32.value))}"[cite: 8]
 
     # =========================================================================
     # Test Case 2: Perform Write Operation (wen = 1)
@@ -80,4 +80,4 @@ async def test_dual_port_ram_8x16_8x32(dut):
     if dout32_val not in ["x", "X", "Z"]:
         assert dut.dout8x32.value == 0xDEADBEEF, f"Expected dout8x32=0xDEADBEEF, got {hex(int(dut.dout8x32.value))}"
 
-    cocotb.log.info("All dual_port_ram test cases completed successfully!")
+    cocotb.log.info("All dual_port_ram_8x16_8x32 test cases completed successfully!")

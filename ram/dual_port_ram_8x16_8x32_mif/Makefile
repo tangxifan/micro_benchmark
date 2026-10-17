@@ -12,20 +12,18 @@ TOPLEVEL = dual_port_ram_8x16_8x32
 # Python test module filename (without .py)
 MODULE = test_dual_port_ram_8x16_8x32_mif
 
-# Pass the correct filename parameters to iverilog and format hex files
-# (This injects @<index> format into sim_build copies without altering your repo files)
-COMPILED_LANG=verilog
-#EXTRA_ARGS += -DPARAM_FILE_16=init_8x16.hex -DPARAM_FILE_32=init_8x32.hex
+# Preprocess hex files in the root directory so iverilog finds them at runtime
+all: preprocess_hex
 
-all: copy_hex
+preprocess_hex:
+	@grep -v '^[[:space:]]*//' $(PWD)/init_8x16_2.hex | \
+		sed 's/^[[:space:]]*\([0-9a-fA-F]\+\)[[:space:]]\+\(0x[0-9a-fA-F]*\)/@\1 \2/g' > $(PWD)/init_8x16.hex
+	@grep -v '^[[:space:]]*//' $(PWD)/init_8x32_2.hex | \
+		sed 's/^[[:space:]]*\([0-9a-fA-F]\+\)[[:space:]]\+\(0x[0-9a-fA-F]*\)/@\1 \2/g' > $(PWD)/init_8x32.hex
 
-copy_hex:
-	@mkdir -p sim_build
-	# Copy and transform files: prepend '@' to index numbers so $readmemh reads them correctly
-	@sed 's/^[[:space:]]*\([0-9a-fA-F]\+\)[[:space:]]\+\(0x[0-9a-fA-F]*\)/@\1 \2/g' $(PWD)/init_8x16.hex > sim_build/init_8x16_2.hex
-	@sed 's/^[[:space:]]*\([0-9a-fA-F]\+\)[[:space:]]\+\(0x[0-9a-fA-F]*\)/@\1 \2/g' $(PWD)/init_8x32.hex > sim_build/init_8x32_2.hex
-	# Also alias them to default names just in case
-	@cp sim_build/init_8x16_2.hex sim_build/init_8x16.hex
-	@cp sim_build/init_8x32_2.hex sim_build/init_8x32.hex
+# Clean up generated temporary files on make clean
+clean::
+	@rm -f $(PWD)/init_8x16.hex $(PWD)/init_8x32.hex
 
+# Include cocotb's standard Makefile rules
 include $(shell cocotb-config --makefiles)/Makefile.sim
