@@ -29,3 +29,7 @@ DSP
    mult_8_pipelined_Nclk
 
    dual_mult8_mix_regin
+
+   mult8_ram8
+
+   two_mult8_ram32
