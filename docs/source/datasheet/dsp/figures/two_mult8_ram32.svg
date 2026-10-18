@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 520" width="100%" height="100%">
+  <defs>
+    <!-- Grid Pattern -->
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e2e8f0" stroke-width="0.5" />
+    </pattern>
+
+    <!-- Drop Shadow Filter -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="3" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.1" />
+    </filter>
+
+    <!-- Gradients -->
+    <linearGradient id="moduleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="100%" stop-color="#f1f5f9" />
+    </linearGradient>
+
+    <linearGradient id="multGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0f9ff" />
+      <stop offset="100%" stop-color="#e0f2fe" />
+    </linearGradient>
+
+    <linearGradient id="ramGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#faf5ff" />
+      <stop offset="100%" stop-color="#f3e8ff" />
+    </linearGradient>
+
+    <!-- Arrowheads -->
+    <marker id="arrow-bus" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb" />
+    </marker>
+
+    <marker id="arrow-clk" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ea580c" />
+    </marker>
+
+    <marker id="arrow-split" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#7c3aed" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff" />
+  <rect width="100%" height="100%" fill="url(#grid)" />
+
+  <!-- Title Block -->
+  <text x="475" y="38" font-family="monospace, &#39;Courier New&#39;" font-size="18" font-weight="bold" fill="#0f172a" text-anchor="middle" letter-spacing="1">
+    two_mult8_ram32 Architecture
+  </text>
+  <text x="475" y="58" font-family="sans-serif" font-size="12" fill="#64748b" text-anchor="middle">
+    Dual 8-bit Multipliers with 32-bit Dual-Port RAM Storage
+  </text>
+
+  <!-- Main Module Container -->
+  <rect x="100" y="80" width="750" height="390" rx="10" fill="url(#moduleGrad)" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)" />
+  <text x="120" y="108" font-family="monospace, &#39;Courier New&#39;" font-size="14" font-weight="bold" fill="#1d4ed8">
+    two_mult8_ram32 (Top)
+  </text>
+
+  <!-- ================= MULTIPLIER 0 CHANNEL ================= -->
+  <rect x="180" y="130" width="220" height="130" rx="8" fill="url(#multGrad)" stroke="#0284c7" stroke-width="1.5" />
+  <circle cx="290" cy="180" r="22" fill="#ffffff" stroke="#0284c7" stroke-width="1.5" />
+  <text x="290" y="187" font-family="sans-serif" font-size="18" font-weight="bold" fill="#0369a1" text-anchor="middle">×</text>
+  <text x="290" y="225" font-family="monospace, &#39;Courier New&#39;" font-size="11" font-weight="bold" fill="#0369a1" text-anchor="middle">mult_y0[15:0]</text>
+
+  <!-- Inputs for Mult 0 -->
+  <path d="M 30 160 L 180 160" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-bus)" />
+  <text x="40" y="152" font-family="monospace, &#39;Courier New&#39;" font-size="11" fill="#1d4ed8">a0[7:0]</text>
+
+  <path d="M 30 200 L 180 200" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-bus)" />
+  <text x="40" y="192" font-family="monospace, &#39;Courier New&#39;" font-size="11" fill="#1d4ed8">b0[7:0]</text>
+
+
+  <!-- ================= MULTIPLIER 1 CHANNEL ================= -->
+  <rect x="180" y="280" width="220" height="130" rx="8" fill="url(#multGrad)" stroke="#0284c7" stroke-width="1.5" />
+  <circle cx="290" cy="330" r="22" fill="#ffffff" stroke="#0284c7" stroke-width="1.5" />
+  <text x="290" y="337" font-family="sans-serif" font-size="18" font-weight="bold" fill="#0369a1" text-anchor="middle">×</text>
+  <text x="290" y="375" font-family="monospace, &#39;Courier New&#39;" font-size="11" font-weight="bold" fill="#0369a1" text-anchor="middle">mult_y1[15:0]</text>
+
+  <!-- Inputs for Mult 1 -->
+  <path d="M 30 310 L 180 310" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-bus)" />
+  <text x="40" y="302" font-family="monospace, &#39;Courier New&#39;" font-size="11" fill="#1d4ed8">a1[7:0]</text>
+
+  <path d="M 30 350 L 180 350" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-bus)" />
+  <text x="40" y="342" font-family="monospace, &#39;Courier New&#39;" font-size="11" fill="#1d4ed8">b1[7:0]</text>
+
+
+  <!-- ================= DUAL PORT RAM BLOCK ================= -->
+  <rect x="520" y="170" width="220" height="200" rx="8" fill="url(#ramGrad)" stroke="#7c3aed" stroke-width="1.5" />
+  <text x="630" y="198" font-family="monospace, &#39;Courier New&#39;" font-size="13" font-weight="bold" fill="#6d28d9" text-anchor="middle">RAM0 (dual_port_ram_16k)</text>
+  <text x="630" y="215" font-family="sans-serif" font-size="10" fill="#64748b" text-anchor="middle">512 x 32-bit SRAM</text>
+
+  <text x="530" y="245" font-family="monospace, &#39;Courier New&#39;" font-size="9" fill="#475569">din[31:0]</text>
+  <text x="530" y="285" font-family="monospace, &#39;Courier New&#39;" font-size="9" fill="#475569">waddr[8:0]</text>
+  <text x="530" y="315" font-family="monospace, &#39;Courier New&#39;" font-size="9" fill="#475569">raddr[8:0]</text>
+  <text x="730" y="285" font-family="monospace, &#39;Courier New&#39;" font-size="9" fill="#475569" text-anchor="end">dout[31:0]</text>
+  <path d="M 520 345 L 530 345 L 525 338 Z" fill="none" stroke="#ea580c" stroke-width="1" />
+
+
+  <!-- ================= BUS CONCATENATION & ROUTING ================= -->
+  <!-- mult_y0 -> din[15:0] -->
+  <path d="M 400 180 L 460 180 L 460 235 L 520 235" fill="none" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow-split)" />
+  <!-- mult_y1 -> din[31:16] -->
+  <path d="M 400 330 L 460 330 L 460 255 L 520 255" fill="none" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow-split)" />
+
+  <!-- Concatenation Label -->
+  <text x="465" y="248" font-family="monospace, &#39;Courier New&#39;" font-size="9" fill="#7c3aed">{mult_y1, mult_y0}</text>
+
+
+  <!-- ================= CONTROL & ADDRESS BUSES ================= -->
+  <!-- waddr[8:0] -->
+  <path d="M 30 420 L 480 420 L 480 280 L 520 280" fill="none" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrow-bus)" />
+  <text x="40" y="412" font-family="monospace, &#39;Courier New&#39;" font-size="11" fill="#1d4ed8">waddr[8:0]</text>
+
+  <!-- raddr[8:0] -->
+  <path d="M 30 445 L 500 445 L 500 310 L 520 310" fill="none" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrow-bus)" />
+  <text x="40" y="437" font-family="monospace, &#39;Courier New&#39;" font-size="11" fill="#1d4ed8">raddr[8:0]</text>
+
+  <!-- clk -->
+  <path d="M 30 470 L 510 470 L 510 345 L 520 345" fill="none" stroke="#ea580c" stroke-width="1.5" marker-end="url(#arrow-clk)" />
+  <text x="40" y="462" font-family="monospace, &#39;Courier New&#39;" font-size="11" fill="#c2410c">clk</text>
+
+
+  <!-- ================= OUTPUT BUS ================= -->
+  <path d="M 740 280 L 880 280" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-bus)" />
+  <text x="870" y="272" font-family="monospace, &#39;Courier New&#39;" font-size="11" fill="#1d4ed8" text-anchor="end">out[31:0]</text>
+
+
+  <!-- Legend -->
+  <g transform="translate(180, 492)">
+    <line x1="0" y1="0" x2="20" y2="0" stroke="#2563eb" stroke-width="2" />
+    <text x="28" y="4" font-family="sans-serif" font-size="10" fill="#334155">Data / Addr Bus</text>
+
+    <line x1="150" y1="0" x2="170" y2="0" stroke="#7c3aed" stroke-width="2" />
+    <text x="178" y="4" font-family="sans-serif" font-size="10" fill="#334155">Concatenated Product Bus</text>
+
+    <line x1="360" y1="0" x2="380" y2="0" stroke="#ea580c" stroke-width="1.5" />
+    <text x="388" y="4" font-family="sans-serif" font-size="10" fill="#334155">Clock Input (clk)</text>
+  </g>
+</svg>
