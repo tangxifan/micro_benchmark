@@ -25,11 +25,11 @@ async def test_mult_4_pipelined(dut):
 
     # Test vectors: list of (a, b) tuples for 4-bit operands (0 to 15)[cite: 10]
     test_vectors = [
-        (3, 5),      # 3 * 5 = 15
-        (12, 10),    # 12 * 10 = 120
-        (15, 15),    # 15 * 15 = 225
-        (0, 9),      # 0 * 9 = 0
-        (7, 8),      # 7 * 8 = 56
+        (3, 5),  # 3 * 5 = 15
+        (12, 10),  # 12 * 10 = 120
+        (15, 15),  # 15 * 15 = 225
+        (0, 9),  # 0 * 9 = 0
+        (7, 8),  # 7 * 8 = 56
     ]
 
     # Queue to track expected results across the 2-cycle pipeline depth[cite: 10]
@@ -53,9 +53,9 @@ async def test_mult_4_pipelined(dut):
             cocotb.log.info(
                 f"[Pipeline Output] {check_a} * {check_b} = {actual} (Expected: {expected})"
             )
-            assert actual == expected, (
-                f"Pipeline mismatch for {check_a} * {check_b}! Expected {expected}, got {actual}"
-            )
+            assert (
+                actual == expected
+            ), f"Pipeline mismatch for {check_a} * {check_b}! Expected {expected}, got {actual}"
 
     # Drain remaining items in the pipeline queue
     while pipeline_queue:
@@ -66,8 +66,8 @@ async def test_mult_4_pipelined(dut):
         cocotb.log.info(
             f"[Pipeline Drain]  {check_a} * {check_b} = {actual} (Expected: {expected})"
         )
-        assert actual == expected, (
-            f"Pipeline drain mismatch for {check_a} * {check_b}! Expected {expected}, got {actual}"
-        )
+        assert (
+            actual == expected
+        ), f"Pipeline drain mismatch for {check_a} * {check_b}! Expected {expected}, got {actual}"
 
     cocotb.log.info("mult_4_pipelined simulation completed successfully!")

@@ -15,8 +15,8 @@ async def test_mult16(dut):
         (10, 20),
         (255, 255),
         (1000, 2000),
-        (65535, 1),          # Max 16-bit unsigned * 1
-        (65535, 65535),      # Max 16-bit unsigned multiplication (4294836225)
+        (65535, 1),  # Max 16-bit unsigned * 1
+        (65535, 65535),  # Max 16-bit unsigned multiplication (4294836225)
         (0xDEAD, 0x1234),
         (0xFFFF, 0x0002),
     ]
@@ -37,8 +37,8 @@ async def test_mult16(dut):
             f"0x{actual_product:08X} ({actual_product}) [Expected: 0x{expected_product:08X}]"
         )
 
-        assert actual_product == expected_product, (
-            f"Mismatch! {val_a} * {val_b}: Expected {expected_product}, got {actual_product}"
-        )
+        assert (
+            actual_product == expected_product
+        ), f"Mismatch! {val_a} * {val_b}: Expected {expected_product}, got {actual_product}"
 
     cocotb.log.info("mult16 simulation completed successfully!")

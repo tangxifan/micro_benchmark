@@ -47,7 +47,7 @@ async def test_mult8_ram8(dut):
     # Step 2: Read back from RAM addresses and verify
     for val_a, val_b, addr in test_vectors:
         dut.raddr.value = addr
-        
+
         # Dual-port RAM has a 1-cycle read latency
         await RisingEdge(dut.clk)
         await Timer(1, unit="ns")
@@ -59,8 +59,8 @@ async def test_mult8_ram8(dut):
             f"Read Addr {addr}: Product = {actual_product} (Expected: {expected_product})"
         )
 
-        assert actual_product == expected_product, (
-            f"Mismatch at address {addr}! Expected {expected_product}, got {actual_product}"
-        )
+        assert (
+            actual_product == expected_product
+        ), f"Mismatch at address {addr}! Expected {expected_product}, got {actual_product}"
 
     cocotb.log.info("mult8_ram8 simulation completed successfully!")

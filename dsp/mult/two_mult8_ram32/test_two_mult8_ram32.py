@@ -42,7 +42,7 @@ async def test_two_mult8_ram32(dut):
         dut.raddr.value = addr  # Drive raddr as well
 
         await RisingEdge(dut.clk)
-        
+
         mult0 = a0_val * b0_val
         mult1 = a1_val * b1_val
         expected_32bit = (mult1 << 16) | mult0
@@ -57,7 +57,7 @@ async def test_two_mult8_ram32(dut):
     # Step 2: Read back from RAM addresses and verify
     for a0_val, b0_val, a1_val, b1_val, addr in test_vectors:
         dut.raddr.value = addr
-        
+
         # Dual-port RAM has a 1-cycle read latency
         await RisingEdge(dut.clk)
         await Timer(1, unit="ns")
@@ -71,8 +71,8 @@ async def test_two_mult8_ram32(dut):
             f"Read Addr {addr}: out = 0x{actual_product:08X} (Expected: 0x{expected_product:08X})"
         )
 
-        assert actual_product == expected_product, (
-            f"Mismatch at address {addr}! Expected 0x{expected_product:08X}, got 0x{actual_product:08X}"
-        )
+        assert (
+            actual_product == expected_product
+        ), f"Mismatch at address {addr}! Expected 0x{expected_product:08X}, got 0x{actual_product:08X}"
 
     cocotb.log.info("two_mult8_ram32 simulation completed successfully!")

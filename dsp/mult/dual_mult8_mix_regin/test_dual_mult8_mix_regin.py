@@ -51,9 +51,9 @@ async def test_dual_mult8_mix_regin(dut):
         cocotb.log.info(
             f"[Combinational] {val_a} * {val_b} = {actual_out0} (Expected: {expected_out0})"
         )
-        assert actual_out0 == expected_out0, (
-            f"out0 mismatch! Expected {expected_out0}, got {actual_out0}"
-        )
+        assert (
+            actual_out0 == expected_out0
+        ), f"out0 mismatch! Expected {expected_out0}, got {actual_out0}"
 
         # -------------------------------------------------------------
         # 2. Check registered output (out1) after 1 clock cycle[cite: 7, 9]
@@ -67,8 +67,8 @@ async def test_dual_mult8_mix_regin(dut):
         cocotb.log.info(
             f"[Registered]    {val_a} * {val_b} = {actual_out1} (Expected: {expected_out1})"
         )
-        assert actual_out1 == expected_out1, (
-            f"out1 mismatch! Expected {expected_out1}, got {actual_out1}"
-        )
+        assert (
+            actual_out1 == expected_out1
+        ), f"out1 mismatch! Expected {expected_out1}, got {actual_out1}"
 
     cocotb.log.info("dual_mult8_mix_regin simulation completed successfully!")

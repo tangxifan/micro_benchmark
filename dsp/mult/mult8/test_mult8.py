@@ -36,8 +36,8 @@ async def test_mult8(dut):
             f"0x{actual_product:04X} ({actual_product}) [Expected: 0x{expected_product:04X}]"
         )
 
-        assert actual_product == expected_product, (
-            f"Mismatch! {val_a} * {val_b}: Expected {expected_product}, got {actual_product}"
-        )
+        assert (
+            actual_product == expected_product
+        ), f"Mismatch! {val_a} * {val_b}: Expected {expected_product}, got {actual_product}"
 
     cocotb.log.info("mult8 simulation completed successfully!")
