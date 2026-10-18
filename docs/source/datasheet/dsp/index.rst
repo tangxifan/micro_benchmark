@@ -20,6 +20,8 @@ DSP
    
    mult_NxN
 
+   multN
+
    pid_controller
 
    mult_N_pipelined

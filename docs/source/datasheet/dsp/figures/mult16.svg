@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="100%" height="100%">
+  <defs>
+    <!-- Grid Pattern -->
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e2e8f0" stroke-width="0.5" />
+    </pattern>
+
+    <!-- Drop Shadow Filter -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="3" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.1" />
+    </filter>
+
+    <!-- Gradients -->
+    <linearGradient id="moduleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="100%" stop-color="#f1f5f9" />
+    </linearGradient>
+
+    <linearGradient id="dspGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0f9ff" />
+      <stop offset="100%" stop-color="#e0f2fe" />
+    </linearGradient>
+
+    <!-- Arrowhead -->
+    <marker id="arrow-bus" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff" />
+  <rect width="100%" height="100%" fill="url(#grid)" />
+
+  <!-- Title Block -->
+  <text x="400" y="38" font-family="monospace, &#39;Courier New&#39;" font-size="18" font-weight="bold" fill="#0f172a" text-anchor="middle" letter-spacing="1">
+    mult16 Architecture
+  </text>
+  <text x="400" y="58" font-family="sans-serif" font-size="12" fill="#64748b" text-anchor="middle">
+    16-bit Unsigned Combinational Multiplier Top Module
+  </text>
+
+  <!-- Main Module Container: mult16 -->
+  <rect x="120" y="80" width="560" height="260" rx="10" fill="url(#moduleGrad)" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)" />
+  <text x="140" y="108" font-family="monospace, &#39;Courier New&#39;" font-size="14" font-weight="bold" fill="#1d4ed8">
+    mult16 (Top)
+  </text>
+
+  <!-- Parameter Annotation -->
+  <text x="660" y="108" font-family="monospace, &#39;Courier New&#39;" font-size="10" fill="#64748b" text-anchor="end">
+    parameter DATA_WIDTH = 16
+  </text>
+
+  <!-- DSP Submodule Block: DSP (mult_16) -->
+  <rect x="250" y="130" width="300" height="160" rx="8" fill="url(#dspGrad)" stroke="#0284c7" stroke-width="1.5" />
+  <text x="270" y="155" font-family="monospace, &#39;Courier New&#39;" font-size="13" font-weight="bold" fill="#0369a1">
+    DSP (mult_16)
+  </text>
+  <text x="530" y="155" font-family="monospace, &#39;Courier New&#39;" font-size="9" fill="#0284c7" text-anchor="end">
+    MODE=1'b0
+  </text>
+
+  <!-- Multiplier Symbol -->
+  <circle cx="400" cy="210" r="30" fill="#ffffff" stroke="#0284c7" stroke-width="1.5" />
+  <text x="400" y="217" font-family="sans-serif" font-size="22" font-weight="bold" fill="#0369a1" text-anchor="middle">
+    ×
+  </text>
+
+  <!-- Input Pin: a[15:0] -->
+  <path d="M 40 180 L 250 180" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-bus)" />
+  <text x="50" y="172" font-family="monospace, &#39;Courier New&#39;" font-size="11" fill="#1d4ed8">a[15:0]</text>
+
+  <!-- Input Pin: b[15:0] -->
+  <path d="M 40 240 L 250 240" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-bus)" />
+  <text x="50" y="232" font-family="monospace, &#39;Courier New&#39;" font-size="11" fill="#1d4ed8">b[15:0]</text>
+
+  <!-- Output Pin: out[31:0] -->
+  <path d="M 550 210 L 760 210" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-bus)" />
+  <text x="750" y="202" font-family="monospace, &#39;Courier New&#39;" font-size="11" fill="#1d4ed8" text-anchor="end">out[31:0]</text>
+
+  <!-- Internal Connections / Labels -->
+  <text x="260" y="175" font-family="monospace, &#39;Courier New&#39;" font-size="10" fill="#475569">.A</text>
+  <text x="260" y="235" font-family="monospace, &#39;Courier New&#39;" font-size="10" fill="#475569">.B</text>
+  <text x="540" y="205" font-family="monospace, &#39;Courier New&#39;" font-size="10" fill="#475569" text-anchor="end">.Y</text>
+
+  <!-- Legend -->
+  <g transform="translate(310, 360)">
+    <line x1="0" y1="0" x2="25" y2="0" stroke="#2563eb" stroke-width="2.5" />
+    <text x="33" y="4" font-family="sans-serif" font-size="11" fill="#334155">16/32-bit Data Bus</text>
+  </g>
+</svg>
