@@ -6,7 +6,7 @@ N-bit Combinatorial Multiplier (mult_NxN)
 Introduction
 ~~~~~~~~~~~~
 
-This module implements a parameterized $N$-bit combinatorial multiplier, generalizing the 2-bit design created by Xifan Tang. It multiplies two parameterized $N$-bit inputs, ``A`` and ``B``, and produces a wide product output ``Y`` of width $2N$ ($Y = A \times B$). Because it is purely combinatorial, outputs settle immediately upon input changes without requiring clock synchronization.
+This module implements a parameterized N-bit combinatorial multiplier, generalizing the 2-bit design created by Xifan Tang. It multiplies two parameterized $N$-bit inputs, ``A`` and ``B``, and produces a wide product output ``Y`` of width ``2N`` (:math:`Y = A \times B`). Because it is purely combinatorial, outputs settle immediately upon input changes without requiring clock synchronization.
 
 Source codes
 ~~~~~~~~~~~~
@@ -15,6 +15,8 @@ See details in
 
 - ``dsp/mult/mult_2x2``
 - ``dsp/mult/mult_4x4``
+- ``dsp/mult/mult_8``
+- ``dsp/mult/mult_16``
 
 Block Diagram
 ~~~~~~~~~~~~~
@@ -29,7 +31,7 @@ Block Diagram
 Performance
 ~~~~~~~~~~~
 
-Consumes combinatorial logic LUTs, carry chains, and potentially DSP blocks depending on the configured data width ($N$).
+Consumes combinatorial logic LUTs, carry chains, and potentially DSP blocks depending on the configured data width (``N``).
 
 .. warning:: The following resource utilization is just an estimation! Different tools in different versions may result differently.
 
@@ -45,7 +47,7 @@ Consumes combinatorial logic LUTs, carry chains, and potentially DSP blocks depe
     - Carry
     - DSP
     - BRAM
-  * - mult_2 ($N=2$)
+  * - mult_2 
     - 4
     - 4
     - ~4
@@ -53,7 +55,7 @@ Consumes combinatorial logic LUTs, carry chains, and potentially DSP blocks depe
     - ~2
     - 0
     - 0
-  * - mult_4 ($N=4$)
+  * - mult_4
     - 8
     - 8
     - ~16
@@ -61,7 +63,7 @@ Consumes combinatorial logic LUTs, carry chains, and potentially DSP blocks depe
     - ~8
     - 0
     - 0
-  * - mult_8 ($N=8$)
+  * - mult_8
     - 16
     - 16
     - ~64
@@ -69,7 +71,7 @@ Consumes combinatorial logic LUTs, carry chains, and potentially DSP blocks depe
     - ~16
     - 1
     - 0
-  * - mult_16 ($N=16$)
+  * - mult_16
     - 32
     - 32
     - ~256
@@ -77,7 +79,7 @@ Consumes combinatorial logic LUTs, carry chains, and potentially DSP blocks depe
     - ~32
     - 1
     - 0
-  * - mult_32 ($N=32$)
+  * - mult_32
     - 64
     - 64
     - ~1024
