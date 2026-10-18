@@ -88,6 +88,14 @@ mult_4x4:
   top_module: mult_4x4
   cocotb_dir: dsp/mult/mult_4x4
 
+dual_mult8_mix_regin:
+  source:
+    - dsp/mult/dual_mult8_mix_regin/dual_mult8_mix_design.v
+    - dsp/mult/dual_mult8_mix_regin/mult_8_regin.v
+    - dsp/mult/dual_mult8_mix_regin/mult_8.v
+  top_module: dual_mult8_mix_regin
+  cocotb_dir: dsp/mult/dual_mult8_mix_regin
+
 mult_8_pipelined:
   source:
     - dsp/mult_8_pipelined/mult_8_pipelined/mult_8_pipelined.v
