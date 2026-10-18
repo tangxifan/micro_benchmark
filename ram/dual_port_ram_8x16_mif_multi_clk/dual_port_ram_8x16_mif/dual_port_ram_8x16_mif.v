@@ -4,7 +4,7 @@
 ////////////////////////////////////////
 
 module dual_port_ram_8x16_mif #(
-    parameter RAM_INIT_FILE = "ram.mif"
+    parameter RAM_INIT_FILE = "init.hex"
 )(
     input  wire        clk_a,
     input  wire        we_a,
