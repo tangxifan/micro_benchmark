@@ -25,3 +25,5 @@ DSP
    mult_N_pipelined
 
    mult_8_pipelined_Nclk
+
+   dual_mult8_mix_regin
