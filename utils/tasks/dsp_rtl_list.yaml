@@ -124,7 +124,7 @@ two_mult8_ram32:
 
 dual_mult8_mix_regin:
   source:
-    - dsp/mult/dual_mult8_mix_regin/dual_mult8_mix_design.v
+    - dsp/mult/dual_mult8_mix_regin/dual_mult8_mix_regin.v
     - dsp/mult/dual_mult8_mix_regin/mult_8_regin.v
     - dsp/mult/dual_mult8_mix_regin/mult_8.v
   top_module: dual_mult8_mix_regin
