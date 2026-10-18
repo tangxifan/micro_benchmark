@@ -16,6 +16,7 @@ See details in
 
 - ``mult_8_pipelined/mult_8_pipelined``
 - ``mult/mult_2_pipelined``
+- ``mult/mult_4_pipelined``
 
 Block Diagram
 ~~~~~~~~~~~~~

@@ -76,6 +76,12 @@ mult_2_pipelined:
   top_module: mult_2_pipelined
   cocotb_dir: dsp/mult/mult_2_pipelined
 
+mult_4_pipelined:
+  source:
+    - dsp/mult/mult_4_pipelined/mult_4_pipelined.v
+  top_module: mult_4_pipelined
+  cocotb_dir: dsp/mult/mult_4_pipelined
+
 mult_2x2:
   source:
     - dsp/mult/mult_2x2/mult_2x2.v
@@ -87,6 +93,42 @@ mult_4x4:
     - dsp/mult/mult_4x4/mult_4x4.v
   top_module: mult_4x4
   cocotb_dir: dsp/mult/mult_4x4
+
+mult8:
+  source:
+    - dsp/mult/mult8/mult8.v
+    - dsp/mult/mult8/mult_8.v
+  top_module: mult_8
+  cocotb_dir: dsp/mult/mult8
+
+mult16:
+  source:
+    - dsp/mult/mult16/mult16.v
+    - dsp/mult/mult16/mult_16.v
+  top_module: mult_16
+  cocotb_dir: dsp/mult/mult16
+
+mult8_ram8:
+  source:
+    - dsp/mult/mult8_ram8/mult8_ram8.v
+    - dsp/mult/mult8_ram8/dual_port_ram_1k.v
+  top_module: mult8_ram8
+  cocotb_dir: dsp/mult/mult8_ram8
+
+two_mult8_ram32:
+  source:
+    - dsp/mult/two_mult8_ram32/two_mult8_ram32.v
+    - dsp/mult/two_mult8_ram32/dual_port_ram_16k.v
+  top_module: two_mult8_ram32
+  cocotb_dir: dsp/mult/two_mult8_ram32
+
+dual_mult8_mix_regin:
+  source:
+    - dsp/mult/dual_mult8_mix_regin/dual_mult8_mix_regin.v
+    - dsp/mult/dual_mult8_mix_regin/mult_8_regin.v
+    - dsp/mult/dual_mult8_mix_regin/mult_8.v
+  top_module: dual_mult8_mix_regin
+  cocotb_dir: dsp/mult/dual_mult8_mix_regin
 
 mult_8_pipelined:
   source:

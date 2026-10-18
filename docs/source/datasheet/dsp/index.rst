@@ -20,8 +20,16 @@ DSP
    
    mult_NxN
 
+   multN
+
    pid_controller
 
    mult_N_pipelined
 
    mult_8_pipelined_Nclk
+
+   dual_mult8_mix_regin
+
+   mult8_ram8
+
+   two_mult8_ram32
