@@ -12,7 +12,7 @@ output [2*DATA_WIDTH - 1 : 0] out;
   mult_16 #(.MODE(1'b0)) DSP (
 		.A(a),
 		.B(b),
-		.Y(out),
+		.Y(out)
 	);
 
 endmodule
