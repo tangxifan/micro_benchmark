@@ -39,12 +39,12 @@ async def test_dual_port_ram_8x16_mif(dut):
         await RisingEdge(dut.clk)
         await RisingEdge(dut.clk)
         await Timer(1, unit="ns")  # Small propagation delay
-        
+
         actual_val = int(dut.dout.value)
         cocotb.log.info(f"Read Addr {addr}: 0x{actual_val:04X} (Expected: 0x{expected_val:04X})")
-        assert actual_val == expected_val, (
-            f"Init mismatch at addr {addr}! Expected 0x{expected_val:04X}, got 0x{actual_val:04X}"
-        )
+        assert (
+            actual_val == expected_val
+        ), f"Init mismatch at addr {addr}! Expected 0x{expected_val:04X}, got 0x{actual_val:04X}"
 
     # 2. Test Dynamic Write and Read Operations (covering addresses 3-6 which were uninitialized in init.hex)
     cocotb.log.info("Testing dynamic write and read operations on addresses 3-6...")
@@ -75,9 +75,11 @@ async def test_dual_port_ram_8x16_mif(dut):
         await Timer(1, unit="ns")
 
         actual_val = int(dut.dout.value)
-        cocotb.log.info(f"Read back Addr {addr}: 0x{actual_val:04X} (Expected: 0x{expected_wdata:04X})")
-        assert actual_val == expected_wdata, (
-            f"Write/Read mismatch at addr {addr}! Expected 0x{expected_wdata:04X}, got 0x{actual_val:04X}"
+        cocotb.log.info(
+            f"Read back Addr {addr}: 0x{actual_val:04X} (Expected: 0x{expected_wdata:04X})"
         )
+        assert (
+            actual_val == expected_wdata
+        ), f"Write/Read mismatch at addr {addr}! Expected 0x{expected_wdata:04X}, got 0x{actual_val:04X}"
 
     cocotb.log.info("dual_port_ram_8x16_mif simulation completed successfully!")
