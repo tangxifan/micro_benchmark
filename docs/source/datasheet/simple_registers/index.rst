@@ -16,6 +16,7 @@ Simple Registers
    counters/index
    timers/index
    clk_cond
+   clk_gate
    clk_on_lut
    rst_and_clk_on_lut
    rst_cond
