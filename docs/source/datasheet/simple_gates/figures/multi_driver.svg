@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 540" width="100%" height="100%">
+  <defs>
+    <!-- Grid Pattern -->
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e2e8f0" stroke-width="0.5" />
+    </pattern>
+
+    <!-- Drop Shadow Filter -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="3" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.1" />
+    </filter>
+
+    <!-- Gradients -->
+    <linearGradient id="moduleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="100%" stop-color="#f1f5f9" />
+    </linearGradient>
+
+    <linearGradient id="regGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f8fafc" />
+    </linearGradient>
+
+    <linearGradient id="adderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0f9ff" />
+      <stop offset="100%" stop-color="#e0f2fe" />
+    </linearGradient>
+
+    <!-- Arrowheads -->
+    <marker id="arrow-wire" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb" />
+    </marker>
+
+    <marker id="arrow-clk" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ea580c" />
+    </marker>
+
+    <marker id="arrow-rst" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#dc2626" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff" />
+  <rect width="100%" height="100%" fill="url(#grid)" />
+
+  <!-- Title Block -->
+  <text x="460" y="38" font-family="monospace, &#39;Courier New&#39;" font-size="18" font-weight="bold" fill="#0f172a" text-anchor="middle" letter-spacing="1">
+    multi_driver Architecture
+  </text>
+  <text x="460" y="58" font-family="sans-serif" font-size="12" fill="#64748b" text-anchor="middle">
+    2-Stage Pipelined Multi-Driver Addition Module with Async Reset
+  </text>
+
+  <!-- Main Module Container -->
+  <rect x="100" y="80" width="720" height="410" rx="10" fill="url(#moduleGrad)" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)" />
+  <text x="120" y="108" font-family="monospace, &#39;Courier New&#39;" font-size="14" font-weight="bold" fill="#1d4ed8">
+    multi_driver (Top)
+  </text>
+
+  <!-- ================= CHANNEL A PIPELINE ================= -->
+  <!-- Stage 1 Input Registers -->
+  <rect x="220" y="130" width="110" height="50" rx="5" fill="url(#regGrad)" stroke="#7c3aed" stroke-width="1.5" />
+  <text x="275" y="160" font-family="monospace, &#39;Courier New&#39;" font-size="11" font-weight="bold" fill="#6d28d9" text-anchor="middle">ina1_reg</text>
+
+  <rect x="220" y="195" width="110" height="50" rx="5" fill="url(#regGrad)" stroke="#7c3aed" stroke-width="1.5" />
+  <text x="275" y="225" font-family="monospace, &#39;Courier New&#39;" font-size="11" font-weight="bold" fill="#6d28d9" text-anchor="middle">ina2_reg</text>
+
+  <!-- Adder Stage -->
+  <rect x="380" y="155" width="80" height="65" rx="6" fill="url(#adderGrad)" stroke="#0284c7" stroke-width="1.5" />
+  <text x="420" y="193" font-family="sans-serif" font-size="20" font-weight="bold" fill="#0369a1" text-anchor="middle">+</text>
+
+  <!-- Stage 2 Output Register -->
+  <rect x="510" y="155" width="120" height="65" rx="5" fill="url(#regGrad)" stroke="#7c3aed" stroke-width="1.5" />
+  <text x="570" y="193" font-family="monospace, &#39;Courier New&#39;" font-size="11" font-weight="bold" fill="#6d28d9" text-anchor="middle">outa_reg[1:0]</text>
+
+  <!-- Channel A Connections -->
+  <path d="M 30 155 L 220 155" fill="none" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrow-wire)" />
+  <text x="40" y="147" font-family="monospace, &#39;Courier New&#39;" font-size="10" fill="#1d4ed8">ina1</text>
+
+  <path d="M 30 220 L 220 220" fill="none" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrow-wire)" />
+  <text x="40" y="212" font-family="monospace, &#39;Courier New&#39;" font-size="10" fill="#1d4ed8">ina2</text>
+
+  <path d="M 330 155 L 355 155 L 355 175 L 380 175" fill="none" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrow-wire)" />
+  <path d="M 330 220 L 355 220 L 355 200 L 380 200" fill="none" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrow-wire)" />
+
+  <path d="M 460 187 L 510 187" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-wire)" />
+  <text x="485" y="179" font-family="monospace, &#39;Courier New&#39;" font-size="9" fill="#475569" text-anchor="middle">[1:0]</text>
+
+  <path d="M 630 187 L 850 187" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-wire)" />
+  <text x="840" y="179" font-family="monospace, &#39;Courier New&#39;" font-size="10" fill="#1d4ed8" text-anchor="end">outa[1:0]</text>
+
+
+  <!-- ================= CHANNEL B PIPELINE ================= -->
+  <!-- Stage 1 Input Registers -->
+  <rect x="220" y="280" width="110" height="50" rx="5" fill="url(#regGrad)" stroke="#7c3aed" stroke-width="1.5" />
+  <text x="275" y="310" font-family="monospace, &#39;Courier New&#39;" font-size="11" font-weight="bold" fill="#6d28d9" text-anchor="middle">inb1_reg</text>
+
+  <rect x="220" y="345" width="110" height="50" rx="5" fill="url(#regGrad)" stroke="#7c3aed" stroke-width="1.5" />
+  <text x="275" y="375" font-family="monospace, &#39;Courier New&#39;" font-size="11" font-weight="bold" fill="#6d28d9" text-anchor="middle">inb2_reg</text>
+
+  <!-- Adder Stage -->
+  <rect x="380" y="305" width="80" height="65" rx="6" fill="url(#adderGrad)" stroke="#0284c7" stroke-width="1.5" />
+  <text x="420" y="343" font-family="sans-serif" font-size="20" font-weight="bold" fill="#0369a1" text-anchor="middle">+</text>
+
+  <!-- Stage 2 Output Register (Multi-Driver Source) -->
+  <rect x="510" y="305" width="120" height="65" rx="5" fill="url(#regGrad)" stroke="#7c3aed" stroke-width="1.5" />
+  <text x="570" y="343" font-family="monospace, &#39;Courier New&#39;" font-size="11" font-weight="bold" fill="#6d28d9" text-anchor="middle">outb_reg[1:0]</text>
+
+  <!-- Channel B Connections -->
+  <path d="M 30 305 L 220 305" fill="none" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrow-wire)" />
+  <text x="40" y="297" font-family="monospace, &#39;Courier New&#39;" font-size="10" fill="#1d4ed8">inb1</text>
+
+  <path d="M 30 370 L 220 370" fill="none" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrow-wire)" />
+  <text x="40" y="362" font-family="monospace, &#39;Courier New&#39;" font-size="10" fill="#1d4ed8">inb2</text>
+
+  <path d="M 330 305 L 355 305 L 355 325 L 380 325" fill="none" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrow-wire)" />
+  <path d="M 330 370 L 355 370 L 355 350 L 380 350" fill="none" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrow-wire)" />
+
+  <path d="M 460 337 L 510 337" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-wire)" />
+  <text x="485" y="329" font-family="monospace, &#39;Courier New&#39;" font-size="9" fill="#475569" text-anchor="middle">[1:0]</text>
+
+  <!-- Dual Driver Fan-out from outb_reg -->
+  <path d="M 630 337 L 690 337 L 690 310 L 850 310" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-wire)" />
+  <path d="M 690 337 L 690 365 L 850 365" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-wire)" />
+  <circle cx="690" cy="337" r="3" fill="#2563eb" />
+
+  <text x="840" y="302" font-family="monospace, &#39;Courier New&#39;" font-size="10" fill="#1d4ed8" text-anchor="end">outb1[1:0]</text>
+  <text x="840" y="357" font-family="monospace, &#39;Courier New&#39;" font-size="10" fill="#1d4ed8" text-anchor="end">outb2[1:0]</text>
+
+
+  <!-- ================= CONTROL SIGNALS ================= -->
+  <!-- clk -->
+  <path d="M 30 435 L 160 435 L 160 170 L 220 170" fill="none" stroke="#ea580c" stroke-width="1.5" marker-end="url(#arrow-clk)" />
+  <path d="M 160 235 L 220 235" fill="none" stroke="#ea580c" stroke-width="1.5" marker-end="url(#arrow-clk)" />
+  <path d="M 160 320 L 220 320" fill="none" stroke="#ea580c" stroke-width="1.5" marker-end="url(#arrow-clk)" />
+  <path d="M 160 385 L 220 385" fill="none" stroke="#ea580c" stroke-width="1.5" marker-end="url(#arrow-clk)" />
+  <path d="M 160 435 L 490 435 L 490 195 L 510 195" fill="none" stroke="#ea580c" stroke-width="1.5" marker-end="url(#arrow-clk)" />
+  <path d="M 490 345 L 510 345" fill="none" stroke="#ea580c" stroke-width="1.5" marker-end="url(#arrow-clk)" />
+  <text x="40" y="427" font-family="monospace, &#39;Courier New&#39;" font-size="10" fill="#c2410c">clk</text>
+
+  <!-- rst_n (Active-Low Reset) -->
+  <path d="M 30 465 L 140 465 L 140 180 L 220 180" fill="none" stroke="#dc2626" stroke-width="1.5" marker-end="url(#arrow-rst)" />
+  <path d="M 140 245 L 220 245" fill="none" stroke="#dc2626" stroke-width="1.5" marker-end="url(#arrow-rst)" />
+  <path d="M 140 330 L 220 330" fill="none" stroke="#dc2626" stroke-width="1.5" marker-end="url(#arrow-rst)" />
+  <path d="M 140 395 L 220 395" fill="none" stroke="#dc2626" stroke-width="1.5" marker-end="url(#arrow-rst)" />
+  <path d="M 140 465 L 480 465 L 480 205 L 510 205" fill="none" stroke="#dc2626" stroke-width="1.5" marker-end="url(#arrow-rst)" />
+  <path d="M 480 355 L 510 355" fill="none" stroke="#dc2626" stroke-width="1.5" marker-end="url(#arrow-rst)" />
+  <text x="40" y="457" font-family="monospace, &#39;Courier New&#39;" font-size="10" fill="#dc2626">rst_n</text>
+
+
+  <!-- Legend -->
+  <g transform="translate(180, 502)">
+    <line x1="0" y1="0" x2="20" y2="0" stroke="#2563eb" stroke-width="1.5" />
+    <text x="28" y="4" font-family="sans-serif" font-size="10" fill="#334155">Data Bus / Signal</text>
+
+    <line x1="160" y1="0" x2="180" y2="0" stroke="#ea580c" stroke-width="1.5" />
+    <text x="188" y="4" font-family="sans-serif" font-size="10" fill="#334155">Clock (clk)</text>
+
+    <line x1="290" y1="0" x2="310" y2="0" stroke="#dc2626" stroke-width="1.5" />
+    <text x="318" y="4" font-family="sans-serif" font-size="10" fill="#334155">Async Reset (rst_n)</text>
+  </g>
+</svg>

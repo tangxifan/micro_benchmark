@@ -14,3 +14,4 @@ Simple Gates
    and2_pipelined
    and4
    or2
+   multi_driver
