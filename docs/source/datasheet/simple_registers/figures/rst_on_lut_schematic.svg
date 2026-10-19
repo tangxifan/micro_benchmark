@@ -59,14 +59,14 @@
   <rect x="520" y="80" width="180" height="120" class="module-box" />
   <rect x="520" y="80" width="180" height="25" class="header-bg" />
   <text x="610" y="97" class="label">Register (q)</text>
-  <text x="535" y="130" class="port-text">if (rst) q <= 0</text>
-  <text x="535" y="150" class="port-text">else q <= a</text>
+  <text x="535" y="130" class="port-text">if (rst) q = 0</text>
+  <text x="535" y="150" class="port-text">else q = a</text>
 
   <!-- Combinational Logic (out) -->
   <rect x="520" y="230" width="180" height="100" class="module-box" />
   <rect x="520" y="230" width="180" height="25" class="header-bg" />
   <text x="610" y="247" class="label">LUT Logic (out)</text>
-  <text x="535" y="285" class="port-text">out = b & ~rst</text>
+  <text x="535" y="285" class="port-text">out = b and not rst</text>
 
   <!-- Outputs -->
   <!-- q -->
@@ -76,5 +76,4 @@
   <!-- out -->
   <line x1="700" y1="280" x2="800" y2="280" class="wire" marker-end="url(#arrow)" />
   <text x="720" y="272" class="port-text">out</text>
-
 </svg>

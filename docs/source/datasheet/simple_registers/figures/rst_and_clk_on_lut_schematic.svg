@@ -32,69 +32,56 @@
   <rect x="30" y="20" width="890" height="500" rx="10" ry="10" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 5" />
   <text x="50" y="45" class="title">rst_and_clk_on_lut Architecture</text>
 
-  <!-- ==================== INPUTS ==================== -->
-  <!-- rst (Top control wire) -->
+  <!-- Inputs -->
+  <!-- rst -->
   <line x1="30" y1="80" x2="300" y2="80" class="wire-rst" />
-  <!-- Branch down to LUT out0 -->
   <line x1="300" y1="80" x2="300" y2="280" class="wire-rst" />
   <line x1="300" y1="280" x2="560" y2="280" class="wire-rst" marker-end="url(#arrow-rst)" />
-  <!-- Branch right to Register rst -->
   <line x1="300" y1="80" x2="560" y2="80" class="wire-rst" marker-end="url(#arrow-rst)" />
   <text x="40" y="70" fill="#d97706" font-family="-apple-system, sans-serif" font-size="11px">rst</text>
 
-  <!-- clk (Middle control wire) -->
+  <!-- clk -->
   <line x1="30" y1="180" x2="240" y2="180" class="wire-clk" />
-  <!-- Branch to Register clk -->
   <line x1="240" y1="180" x2="240" y2="150" class="wire-clk" />
   <line x1="240" y1="150" x2="560" y2="150" class="wire-clk" marker-end="url(#arrow-clk)" />
-  <!-- Branch to LUT out1 -->
   <line x1="240" y1="180" x2="240" y2="440" class="wire-clk" />
   <line x1="240" y1="440" x2="560" y2="440" class="wire-clk" marker-end="url(#arrow-clk)" />
   <text x="40" y="170" fill="#ef4444" font-family="-apple-system, sans-serif" font-size="11px">clk</text>
 
-  <!-- Data a -->
+  <!-- Data Signals -->
   <line x1="30" y1="110" x2="560" y2="110" class="wire" marker-end="url(#arrow)" />
   <text x="40" y="102" class="port-text">a</text>
 
-  <!-- Data b -->
   <line x1="30" y1="240" x2="560" y2="240" class="wire" marker-end="url(#arrow)" />
   <text x="40" y="232" class="port-text">b</text>
 
-  <!-- Data c -->
   <line x1="30" y1="400" x2="560" y2="400" class="wire" marker-end="url(#arrow)" />
   <text x="40" y="392" class="port-text">c</text>
 
-  <!-- ==================== LOGIC BLOCKS ==================== -->
-  <!-- Async Register q -->
+  <!-- Logic Blocks -->
   <rect x="560" y="60" width="180" height="110" class="module-box" />
   <rect x="560" y="60" width="180" height="25" class="header-bg" />
   <text x="650" y="77" class="label">Register (q)</text>
-  <text x="575" y="105" class="port-text">if (rst) q <= 0</text>
-  <text x="575" y="125" class="port-text">else q <= a</text>
+  <text x="575" y="105" class="port-text">if (rst) q = 0</text>
+  <text x="575" y="125" class="port-text">else q = a</text>
 
-  <!-- LUT out0 Block -->
   <rect x="560" y="210" width="180" height="100" class="module-box" />
   <rect x="560" y="210" width="180" height="25" class="header-bg" />
   <text x="650" y="227" class="label">LUT (out0)</text>
-  <text x="575" y="265" class="port-text">out0 = b & ~rst</text>
+  <text x="575" y="265" class="port-text">out0 = b and not rst</text>
 
-  <!-- LUT out1 Block -->
   <rect x="560" y="370" width="180" height="100" class="module-box" />
   <rect x="560" y="370" width="180" height="25" class="header-bg" />
   <text x="650" y="387" class="label">LUT (out1)</text>
-  <text x="575" y="425" class="port-text">out1 = c & ~clk</text>
+  <text x="575" y="425" class="port-text">out1 = c and not clk</text>
 
-  <!-- ==================== OUTPUTS ==================== -->
-  <!-- q -->
+  <!-- Outputs -->
   <line x1="740" y1="110" x2="890" y2="110" class="wire" marker-end="url(#arrow)" />
   <text x="800" y="100" class="port-text">q</text>
 
-  <!-- out0 -->
   <line x1="740" y1="260" x2="890" y2="260" class="wire" marker-end="url(#arrow)" />
   <text x="800" y="250" class="port-text">out0</text>
 
-  <!-- out1 -->
   <line x1="740" y1="420" x2="890" y2="420" class="wire" marker-end="url(#arrow)" />
   <text x="800" y="410" class="port-text">out1</text>
-
 </svg>
