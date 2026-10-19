@@ -63,3 +63,9 @@ or2:
     - simple_gates/or2/or2.v
   top_module: or2
   cocotb_dir: simple_gates/or2
+
+multi_driver:
+  source:
+    - simple_gates/multi_driver/multi_driver.v
+  top_module: multi_driver
+  cocotb_dir: simple_gates/multi_driver
