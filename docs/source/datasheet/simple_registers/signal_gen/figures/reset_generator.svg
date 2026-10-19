@@ -80,10 +80,10 @@
     Pulse Output Register
   </text>
   <text x="590" y="215" font-family="monospace, &#39;Courier New&#39;" font-size="10" fill="#334155" text-anchor="middle">
-    pulse <= INITIAL_VALUE
+    pulse = INITIAL_VALUE
   </text>
   <text x="590" y="245" font-family="monospace, &#39;Courier New&#39;" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">
-    pulse <= ~pulse
+    pulse = not pulse
   </text>
 
   <!-- Input Pin: clk -->
