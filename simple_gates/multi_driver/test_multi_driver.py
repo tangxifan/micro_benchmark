@@ -22,8 +22,12 @@ async def test_multi_driver(dut):
 
     await Timer(3, unit="ns")
     assert int(dut.outa.value) == 0, f"Reset failed for outa! Expected 0, got {int(dut.outa.value)}"
-    assert int(dut.outb1.value) == 0, f"Reset failed for outb1! Expected 0, got {int(dut.outb1.value)}"
-    assert int(dut.outb2.value) == 0, f"Reset failed for outb2! Expected 0, got {int(dut.outb2.value)}"
+    assert (
+        int(dut.outb1.value) == 0
+    ), f"Reset failed for outb1! Expected 0, got {int(dut.outb1.value)}"
+    assert (
+        int(dut.outb2.value) == 0
+    ), f"Reset failed for outb2! Expected 0, got {int(dut.outb2.value)}"
     cocotb.log.info("Asynchronous reset verified successfully.")
 
     # Release reset
@@ -69,13 +73,13 @@ async def test_multi_driver(dut):
     # Verify outputs through the pipeline queue
     # Note: Due to 2-cycle latency, outputs align after 2 clock edges
     # Let's run a direct checked loop for clarity:
-    
+
     cocotb.log.info("Running direct stimulus-response pipeline checks...")
-    
+
     stimuli = [
-        (1, 0, 0, 1), # expected outa = 1, outb = 1
-        (1, 1, 1, 0), # expected outa = 2, outb = 1
-        (0, 0, 1, 1), # expected outa = 0, outb = 2
+        (1, 0, 0, 1),  # expected outa = 1, outb = 1
+        (1, 1, 1, 0),  # expected outa = 2, outb = 1
+        (0, 0, 1, 1),  # expected outa = 0, outb = 2
     ]
 
     for ina1_v, ina2_v, inb1_v, inb2_v in stimuli:
@@ -85,7 +89,7 @@ async def test_multi_driver(dut):
         dut.inb2.value = inb2_v
 
         await RisingEdge(dut.clk)
-        await RisingEdge(dut.clk) # 2-cycle pipeline latency
+        await RisingEdge(dut.clk)  # 2-cycle pipeline latency
         await Timer(1, unit="ns")
 
         exp_a = ina1_v + ina2_v
@@ -95,7 +99,9 @@ async def test_multi_driver(dut):
         act_b1 = int(dut.outb1.value)
         act_b2 = int(dut.outb2.value)
 
-        cocotb.log.info(f"Checked: outa={act_a} (exp {exp_a}), outb1={act_b1}, outb2={act_b2} (exp {exp_b})")
+        cocotb.log.info(
+            f"Checked: outa={act_a} (exp {exp_a}), outb1={act_b1}, outb2={act_b2} (exp {exp_b})"
+        )
         assert act_a == exp_a, f"outa mismatch! Expected {exp_a}, got {act_a}"
         assert act_b1 == exp_b, f"outb1 mismatch! Expected {exp_b}, got {act_b1}"
         assert act_b2 == exp_b, f"outb2 mismatch! Expected {exp_b}, got {act_b2}"

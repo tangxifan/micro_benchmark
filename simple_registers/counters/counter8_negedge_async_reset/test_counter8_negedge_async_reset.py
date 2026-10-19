@@ -16,9 +16,7 @@ async def test_counter8_negedge_async_reset(dut):
     # 1. Test Asynchronous Reset
     dut.reset.value = 1
     await Timer(2, unit="ns")
-    assert int(dut.result.value) == 0, (
-        f"Reset failed! Expected 0, got {int(dut.result.value)}"
-    )
+    assert int(dut.result.value) == 0, f"Reset failed! Expected 0, got {int(dut.result.value)}"
     cocotb.log.info("Asynchronous reset verified successfully.")
 
     # Release reset
@@ -35,25 +33,23 @@ async def test_counter8_negedge_async_reset(dut):
         expected_count = (expected_count + 1) & 0xFF
         actual_count = int(dut.result.value)
 
-        cocotb.log.info(
-            f"Cycle {i+1}: Count = {actual_count} (Expected: {expected_count})"
-        )
-        assert actual_count == expected_count, (
-            f"Count mismatch at cycle {i+1}! Expected {expected_count}, got {actual_count}"
-        )
+        cocotb.log.info(f"Cycle {i+1}: Count = {actual_count} (Expected: {expected_count})")
+        assert (
+            actual_count == expected_count
+        ), f"Count mismatch at cycle {i+1}! Expected {expected_count}, got {actual_count}"
 
     # 3. Test Asynchronous Reset during operation
     dut.reset.value = 1
     await Timer(2, unit="ns")
-    assert int(dut.result.value) == 0, (
-        f"Mid-operation reset failed! Expected 0, got {int(dut.result.value)}"
-    )
+    assert (
+        int(dut.result.value) == 0
+    ), f"Mid-operation reset failed! Expected 0, got {int(dut.result.value)}"
 
     dut.reset.value = 0
     await FallingEdge(dut.clkn)
     await Timer(1, unit="ns")
-    assert int(dut.result.value) == 1, (
-        f"Recovery after reset failed! Expected 1, got {int(dut.result.value)}"
-    )
+    assert (
+        int(dut.result.value) == 1
+    ), f"Recovery after reset failed! Expected 1, got {int(dut.result.value)}"
 
     cocotb.log.info("counter8_negedge_async_reset simulation completed successfully!")
