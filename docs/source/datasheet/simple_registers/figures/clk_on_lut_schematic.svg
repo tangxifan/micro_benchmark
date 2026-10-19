@@ -28,42 +28,35 @@
   <text x="70" y="55" class="title">clk_on_lut Architecture</text>
 
   <!-- Inputs -->
-  <!-- clk (split to sequential and combinatorial paths) -->
   <line x1="30" y1="120" x2="200" y2="120" class="wire-clk" />
-  <!-- Branch to Register -->
   <line x1="200" y1="120" x2="200" y2="300" class="wire-clk" />
   <line x1="200" y1="300" x2="480" y2="300" class="wire-clk" marker-end="url(#arrow-clk)" />
-  <!-- Branch to LUT / AND gate -->
   <line x1="200" y1="120" x2="480" y2="120" class="wire-clk" marker-end="url(#arrow-clk)" />
-  <text x="40" y="112" fill="#ef4444" font-family="-apple-system, sans-serif" font-size="11px">clk (clock / data input)</text>
+  <text x="40" y="112" fill="#ef4444" font-family="-apple-system, sans-serif" font-size="11px">clk (clock input)</text>
 
-  <!-- Input a -->
   <line x1="30" y1="260" x2="480" y2="260" class="wire" marker-end="url(#arrow)" />
   <text x="40" y="252" class="port-text">a</text>
 
-  <!-- Input b -->
   <line x1="30" y1="160" x2="480" y2="160" class="wire" marker-end="url(#arrow)" />
   <text x="40" y="152" class="port-text">b</text>
 
-  <!-- Combinatorial Logic Block (LUT / AND Gate) -->
+  <!-- Combinatorial Logic Block -->
   <rect x="480" y="80" width="180" height="110" class="module-box" />
   <rect x="480" y="80" width="180" height="25" class="header-bg" />
   <text x="570" y="97" class="label">Combinational LUT</text>
-  <text x="495" y="130" class="port-text">out = b & clk</text>
+  <text x="495" y="130" class="port-text">out = b and clk</text>
 
   <!-- Synchronous Register Block -->
   <rect x="480" y="230" width="180" height="110" class="module-box" />
   <rect x="480" y="230" width="180" height="25" class="header-bg" />
   <text x="570" y="247" class="label">Flip-Flop Register</text>
-  <text x="495" y="280" class="port-text">q <= a</text>
-  <text x="495" y="325" fill="#ef4444" font-size="10px">Clock: @(posedge clk)</text>
+  <text x="495" y="280" class="port-text">q = a</text>
+  <text x="495" y="325" fill="#ef4444" font-size="10px">Clock: posedge clk</text>
 
   <!-- Outputs -->
-  <!-- out -->
   <line x1="660" y1="135" x2="780" y2="135" class="wire" marker-end="url(#arrow)" />
   <text x="680" y="127" class="port-text">out</text>
 
-  <!-- q -->
   <line x1="660" y1="285" x2="780" y2="285" class="wire" marker-end="url(#arrow)" />
   <text x="680" y="277" class="port-text">q</text>
 

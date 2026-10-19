@@ -1,39 +1,66 @@
-///////////////////////////////////////////
-//  Functionality: Single-Instance Dual-Port RAM (8x16) with Memory Preload
-//  Author:        Xifan Tang
-////////////////////////////////////////
+//-----------------------------------------------------
+// Design Name : dual_port_ram_8x16_mif
+// File Name   : dual_port_ram_8x16_mif.v
+// Function    : Dual port RAM 8x16bit with memory initialization file (MIF)
+// Coder       : Xifan Tang
+//-----------------------------------------------------
 
 module dual_port_ram_8x16_mif #(
-    parameter RAM_INIT_FILE = "init.hex"
+  parameter MEM_FILE = "init.hex" // provide a name of MIF file in HEX format
 )(
-    input  wire        clk_a,
-    input  wire        we_a,
-    input  wire [7:0]  addr_a,
-    input  wire [15:0] din_a,
-    
-    input  wire        clk_b,
-    input  wire [7:0]  addr_b,
-    output reg  [15:0] dout_b
+  input clk,
+  input wen,
+  input ren,
+  input [2:0] waddr,
+  input [2:0] raddr,
+  input [15:0] din,
+  output [15:0] dout
 );
 
-    reg [15:0] ram [0:255];
+    dual_port_sram_128 #(
+      .MEM_FILE(MEM_FILE)
+    ) memory_0 (
+      .wclk    (clk),
+      .wen    (wen),
+      .waddr    (waddr),
+      .data_in  (din),
+      .rclk    (clk),
+      .ren    (ren),
+      .raddr    (raddr),
+      .data_out    (dout) );
 
-    initial begin
-        if (RAM_INIT_FILE != "") begin
-            $readmemh(RAM_INIT_FILE, ram);
-        end
-    end
+endmodule
 
-    // Port A - Synchronous Write
-    always @(posedge clk_a) begin
-        if (we_a) begin
-            ram[addr_a] <= din_a;
-        end
-    end
+module dual_port_sram_128 #(
+  parameter MEM_FILE = "init.hex" // provide a name of MIF file in HEX format
+)(
+  input wclk,
+  input wen,
+  input [2:0] waddr,
+  input [15:0] data_in,
+  input rclk,
+  input ren,
+  input [2:0] raddr,
+  output [15:0] data_out
+);
 
-    // Port B - Synchronous Read
-    always @(posedge clk_b) begin
-        dout_b <= ram[addr_b];
+  reg [15:0] ram[7:0];
+  reg [15:0] internal;
+
+  initial $readmemh(MEM_FILE, ram);
+
+  assign data_out = internal;
+
+  always @(posedge wclk) begin
+    if(wen) begin
+      ram[waddr] <= data_in;
     end
+  end
+
+  always @(posedge rclk) begin
+    if(ren) begin
+      internal <= ram[raddr];
+    end
+  end
 
 endmodule

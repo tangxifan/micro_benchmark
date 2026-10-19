@@ -71,32 +71,32 @@
   <rect x="580" y="60" width="180" height="110" class="module-box" />
   <rect x="580" y="60" width="180" height="25" class="header-bg" />
   <text x="670" y="77" class="label">Register (q)</text>
-  <text x="595" y="105" class="port-text">if (rst) q <= 0</text>
-  <text x="595" y="125" class="port-text">else q <= a</text>
+  <text x="595" y="105" class="port-text">if (rst) q = 0</text>
+  <text x="595" y="125" class="port-text">else q = a</text>
 
   <!-- LUT out0 Block -->
   <rect x="580" y="190" width="180" height="80" class="module-box" />
   <rect x="580" y="190" width="180" height="25" class="header-bg" />
   <text x="670" y="207" class="label">LUT (out0)</text>
-  <text x="595" y="242" class="port-text">out0 = b0 & ~rst</text>
+  <text x="595" y="242" class="port-text">out0 = b0 and not rst</text>
 
   <!-- LUT out1 Block -->
   <rect x="580" y="290" width="180" height="80" class="module-box" />
   <rect x="580" y="290" width="180" height="25" class="header-bg" />
   <text x="670" y="307" class="label">LUT (out1)</text>
-  <text x="595" y="342" class="port-text">out1 = b1 & ~rst</text>
+  <text x="595" y="342" class="port-text">out1 = b1 and not rst</text>
 
   <!-- LUT out2 Block -->
   <rect x="580" y="390" width="180" height="80" class="module-box" />
   <rect x="580" y="390" width="180" height="25" class="header-bg" />
   <text x="670" y="407" class="label">LUT (out2)</text>
-  <text x="595" y="442" class="port-text">out2 = b2 & ~rst</text>
+  <text x="595" y="442" class="port-text">out2 = b2 and not rst</text>
 
   <!-- LUT out3 Block -->
   <rect x="580" y="490" width="180" height="80" class="module-box" />
   <rect x="580" y="490" width="180" height="25" class="header-bg" />
   <text x="670" y="507" class="label">LUT (out3)</text>
-  <text x="595" y="542" class="port-text">out3 = b3 & ~rst</text>
+  <text x="595" y="542" class="port-text">out3 = b3 and not rst</text>
 
   <!-- ==================== OUTPUTS ==================== -->
   <!-- q -->
@@ -115,5 +115,4 @@
 
   <line x1="760" y1="530" x2="880" y2="530" class="wire" marker-end="url(#arrow)" />
   <text x="800" y="520" class="port-text">out3</text>
-
 </svg>

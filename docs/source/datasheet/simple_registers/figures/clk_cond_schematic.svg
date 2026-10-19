@@ -44,7 +44,7 @@
   <rect x="180" y="80" width="180" height="110" class="module-box" />
   <rect x="180" y="80" width="180" height="25" class="header-bg" />
   <text x="270" y="97" class="label">Clock Gating Logic</text>
-  <text x="195" y="130" class="port-text">int_clk = clk_cond_i & clk_i</text>
+  <text x="195" y="130" class="port-text">int_clk = clk_cond_i and clk_i</text>
 
   <!-- Conditioned Internal Clock Output Path -->
   <line x1="360" y1="135" x2="520" y2="135" class="wire-clk" />

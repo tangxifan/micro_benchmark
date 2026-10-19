@@ -10,6 +10,12 @@ clk_cond:
   top_module: clk_cond
   cocotb_dir: simple_registers/clk_cond
 
+clk_gate:
+  source:
+    - simple_registers/clk_gate/clk_gate.v
+  top_module: clk_gate
+  cocotb_dir: simple_registers/clk_gate
+
 clk_on_lut:
   source:
     - simple_registers/clk_on_lut/clk_on_lut.v
