@@ -1,7 +1,7 @@
 .. _datasheet_simple_gates_multi_driver:
 
-Pipelined Multi-Driver Addition Module (multi_driver)
------------------------------------------------------
+multi_driver
+------------
 
 Introduction
 ~~~~~~~~~~~~
