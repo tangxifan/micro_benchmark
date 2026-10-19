@@ -1,7 +1,7 @@
-.. _datasheet_dual_port_ram_8x16_mif:
+.. _datasheet_ram_dual_port_ram_8x16_mif:
 
-Dual-Port 8x16 RAM with MIF Initialization (dual_port_ram_8x16_mif)
-------------------------------------------------------------------
+dual_port_ram_8x16_mif
+----------------------
 
 Introduction
 ~~~~~~~~~~~~
