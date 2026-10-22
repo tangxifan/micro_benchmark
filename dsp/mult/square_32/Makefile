@@ -1,0 +1,17 @@
+# Makefile
+
+# defaults
+SIM ?= icarus
+
+TOPLEVEL_LANG ?= verilog
+
+VERILOG_SOURCES += square_32.v
+
+# TOPLEVEL is the name of the toplevel module in your Verilog or VHDL file
+TOPLEVEL = square_32
+
+# MODULE is the basename of the Python test file
+MODULE = test_square_32
+
+# include cocotb's make rules to take care of the simulator setup
+include $(shell cocotb-config --makefiles)/Makefile.sim

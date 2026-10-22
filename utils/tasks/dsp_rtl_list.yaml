@@ -94,6 +94,18 @@ mult_4x4:
   top_module: mult_4x4
   cocotb_dir: dsp/mult/mult_4x4
 
+mult_32x32:
+  source:
+    - dsp/mult/mult_32x32/mult_32x32.v
+  top_module: mult_32x32
+  cocotb_dir: dsp/mult/mult_32x32
+
+square_32:
+  source:
+    - dsp/mult/square_32/square_32.v
+  top_module: square_32
+  cocotb_dir: dsp/mult/square_32
+
 mult8:
   source:
     - dsp/mult/mult8/mult8.v
