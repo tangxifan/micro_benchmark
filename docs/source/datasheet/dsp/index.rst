@@ -22,6 +22,8 @@ DSP
 
    multN
 
+   square_32
+
    pid_controller
 
    mult_N_pipelined

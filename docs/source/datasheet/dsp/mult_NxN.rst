@@ -17,6 +17,7 @@ See details in
 - ``dsp/mult/mult_4x4``
 - ``dsp/mult/mult_8``
 - ``dsp/mult/mult_16``
+- ``dsp/mult/mult_32x32``
 
 Block Diagram
 ~~~~~~~~~~~~~

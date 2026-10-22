@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <!-- Arrowhead markers -->
+    <marker id="arrow-dark" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#333"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#28a745"/>
+    </marker>
+    <style>
+      .boundary { fill: #f8f9fa; stroke: #ced4da; stroke-width: 2; rx: 8; ry: 8; }
+      .subbox { fill: #e8f4fd; stroke: #007bff; stroke-width: 1.5; rx: 4; ry: 4; }
+      .title { font-family: sans-serif; font-size: 14px; font-weight: bold; fill: #212529; text-anchor: middle; }
+      .subtitle { font-family: sans-serif; font-size: 10px; font-style: italic; fill: #6c757d; text-anchor: middle; }
+      .label { font-family: sans-serif; font-size: 12px; fill: #333; }
+      .wire-green { fill: none; stroke: #28a745; stroke-width: 1.5; marker-end: url(#arrow-green); }
+      .wire-green-plain { fill: none; stroke: #28a745; stroke-width: 1.5; }
+      .wire-dark { fill: none; stroke: #333333; stroke-width: 1.5; marker-end: url(#arrow-dark); }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff"/>
+
+  <!-- Outer System Boundary -->
+  <rect x="40" y="30" width="720" height="390" class="boundary"/>
+  <text x="400" y="55" class="title">square_32 (Combinatorial Square)</text>
+
+  <!-- ==================== SUB-BLOCK ==================== -->
+
+  <!-- Combinatorial Multiplier Sub-Block -->
+  <rect x="280" y="110" width="260" height="140" class="subbox"/>
+  <text x="410" y="150" class="title" font-size="12px">Combinatorial Multiplier</text>
+  <text x="410" y="170" class="subtitle">Y = A * A</text>
+  <text x="410" y="195" class="subtitle" font-size="9px">DATA_WIDTH = 32</text>
+  <text x="292" y="144" class="label" font-size="10px">op0</text>
+  <text x="292" y="204" class="label" font-size="10px">op1</text>
+
+  <!-- ==================== INPUT WIRE (LEFT) ==================== -->
+
+  <!-- Input A, which fans out to both operands -->
+  <text x="65" y="175" class="label" font-weight="bold">A [31:0]</text>
+  <path d="M 130,170 L 220,170" class="wire-green-plain"/>
+  <circle cx="220" cy="170" r="3" fill="#28a745"/>
+  <path d="M 220,170 L 220,140 L 280,140" class="wire-green"/>
+  <path d="M 220,170 L 220,200 L 280,200" class="wire-green"/>
+
+  <!-- ==================== OUTPUT WIRE (RIGHT) ==================== -->
+
+  <!-- Wide Output Wire Y -->
+  <text x="560" y="172" class="label" font-weight="bold">Y [63:0]</text>
+  <path d="M 540,180 L 635,180" class="wire-dark"/>
+
+</svg>
